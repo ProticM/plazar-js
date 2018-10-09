@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/ProticM/plazar-js/issues"
   },
-  "homepage": "https://github.com/ProticM/plazar-js#readme"
+  "homepage": "https://github.com/ProticM/plazar-js#readme",
+  "dependencies": {}
 }
