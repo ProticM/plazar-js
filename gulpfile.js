@@ -18,7 +18,7 @@ var source = [
 ];
 
 var banner = function() {
-    return '// Plazar JS';
+    return '// Plazar JS' + '\n';
 };
 
 gulp.task('build', function(){
