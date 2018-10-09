@@ -12,13 +12,17 @@
   },
   "keywords": [],
   "author": "Milos Protic",
-  "licenses": [{
-    "type": "MIT",
-    "url":"https://github.com/ProticM/plazar-js/blob/master/LICENSE"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/ProticM/plazar-js/blob/master/LICENSE"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/ProticM/plazar-js/issues"
   },
   "homepage": "https://github.com/ProticM/plazar-js#readme",
-  "dependencies": {}
+  "dependencies": {
+    "save-dev": "^2.0.0"
+  }
 }
