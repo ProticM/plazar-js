@@ -49,7 +49,7 @@
             selector = (match ? dataItem.selector : undefined);
             fn = (match ? dataItem.fn : undefined);
             dataItem = null;
-            targetMatches = match || e.target == this;
+            targetMatches = match; //|| e.target == this;
 
             if (targetMatches) {
                 target = e.target;
