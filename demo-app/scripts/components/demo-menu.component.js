@@ -2,7 +2,7 @@ plz.define('menu-component', function() {
 
     var _buildTemplate = function(me) {
         plz.forEach(me.items, function(item) {
-            var el = plz.dom.parseTemplate('<li data-view="' + item.view + '"><a class="menu-item">' + 
+            var el = plz.dom.parseTemplate('<li"><a data-view="' + item.view + '" class="menu-item">' + 
                 item.text + '</a></li>');
             plz.dom.append(me.html, el);
         }, me);
