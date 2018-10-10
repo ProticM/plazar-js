@@ -14,6 +14,9 @@ plz.define('layout-component', {
         },{
             text: 'About',
             view: 'about-component'
+        },{
+            text: 'Todo',
+            view: 'todo-component'
         }]
     }, {
         type: 'menu-component',

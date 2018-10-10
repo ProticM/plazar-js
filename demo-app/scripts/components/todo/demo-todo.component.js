@@ -1,6 +1,6 @@
-plz.define('about-component', {
+plz.define('todo-component', {
     ownerType: 'base-component',
     autoLoad: true,
-    template: '<p>Demo Application</p>',
+    template: '<div>Hello from todo!</div>',
     renderTo: 'section.app-body'
 });
