@@ -11,12 +11,12 @@ plz.define('layout-component', {
         items: [{
             text: 'Home',
             view: 'home-component'
-        },{
-            text: 'About',
-            view: 'about-component'
-        },{
+        }, {
             text: 'Todo',
             view: 'todo-component'
+        }, {
+            text: 'About',
+            view: 'about-component'
         }]
     }, {
         type: 'menu-component',
