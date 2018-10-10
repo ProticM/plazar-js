@@ -9,7 +9,7 @@ Documentation website is under construction
 
 ## Deploy
 
-PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to compile + minify the source into `dist/`.
+PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to compile + minify the source into `dist`.
 
 ```
 $ gulp build
