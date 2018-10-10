@@ -4,10 +4,23 @@
     <title>Plazar JS Demo Application</title>
 </head>
 <body>
-    <main class="app-body"></main>
+    <main class="app-layout" data-template="layout-component">
+        <header>
+            <nav class="top-menu"></nav>
+        </header>
+        <section>
+            <aside>
+                <nav class="side-menu"></nav>
+            </aside>
+            <section class="app-body"></section>
+        </section>
+    </main>
     <script src="../dist/plazar-js.min.js"></script>
     <script src="app/components/base/demo-base.component.js"></script>
-    <script src="app/components/demo-home.component.js"></script>
+    <script src="app/components/demo-layout.component.js"></script>
+    <script src="app/components/demo-menu.component.js"></script>
+    <script src="app/components/home/demo-home.component.js"></script>
+    <script src="app/components/about/demo-about.component.js"></script>
     <script src="app/app.js"></script>
 </body>
 </html>
