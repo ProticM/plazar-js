@@ -11,7 +11,7 @@ plz.define('todo-component', function() {
     return {
         ownerType: 'base-component',
         autoLoad: true,
-        template: '<div>' +
+        template: '<div>' + // template can also be retrieved from the server via ajax Setup config
             '<div class="field">' + 
                 '<label class="label">Add:</label>' + 
                 '<div class="control">' + 
@@ -25,10 +25,9 @@ plz.define('todo-component', function() {
             '</div>' + 
             '<div class="field is-grouped">' + 
                 '<div class="control">' + 
-                    '<button class="button is-primary btn-add">Add</button>' + 
+                    '<button class="button btn-add">Add</button>' + 
                 '</div>' +
             '</div>' + 
-            '<br />' +
             '<div class="tile is-ancestor is-marginless">' + 
                 '<div class="tile is-vertical"><p class="title">' + 
                     '<article data-each="todos" class="tile is-child notification" data-attr-class="cssStyle">' + 
@@ -62,6 +61,8 @@ plz.define('todo-component', function() {
                 title: this.viewModel.newTodo.title(),
                 cssStyle: _styles[random]
             });
+            this.viewModel.newTodo.text = '';
+            this.viewModel.newTodo.title = '';
         }
     };
 
