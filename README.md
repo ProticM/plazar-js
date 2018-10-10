@@ -14,3 +14,8 @@ PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following ta
 ```
 $ gulp build
 ```
+
+## Bugs and Issues
+
+1. A bug is taken into account only if it can be reproduced on the latest master.
+2. Open an issue on GitHub and provide a demonstration of the bug [JSFiddle](http://jsfiddle.net/)
