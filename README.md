@@ -7,7 +7,7 @@ It's leaning on Object-Oriented-Principles (OOP) and it's build with plain JavaS
 
 Documentation website is under construction
 
-#### Deploy
+## Deploy
 
 PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to compile + minify the source into `dist/`.
 
