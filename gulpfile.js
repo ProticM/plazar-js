@@ -22,9 +22,15 @@ var banner = function() {
 };
 
 gulp.task('build', function(){
-    return gulp.src(source)
-        .pipe(concat('plazar-js.min.js'))
+    plz = gulp.src(source)
+        .pipe(concat('plazar-js.js'))
+        .pipe(header(banner()))
+        .pipe(gulp.dest('dist'));
+
+    plzMin = plz.pipe(concat('plazar-js.min.js'))
         .pipe(uglify())
         .pipe(header(banner()))
         .pipe(gulp.dest('dist'));
+
+    return plzMin;
 });
