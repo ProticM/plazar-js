@@ -52,18 +52,23 @@ plz.define('todo-component', function() {
                 selector: 'button.btn-add',
                 fn: 'addTodo'
             });
+            
+            this.viewModel.todos = this.todoService.get();
             this.base(arguments);
         },
         addTodo: function() {
             var random = Math.floor((Math.random() * (5 - 0) + 0));
-            this.viewModel.todos.push({
+            var todo = {
                 text: this.viewModel.newTodo.text(),
                 title: this.viewModel.newTodo.title(),
                 cssStyle: _styles[random]
-            });
+            };
+            this.viewModel.todos.push(todo);
             this.viewModel.newTodo.text = '';
             this.viewModel.newTodo.title = '';
-        }
+            this.todoService.put(todo);
+        },
+        require: ['todo-service']
     };
 
 });
