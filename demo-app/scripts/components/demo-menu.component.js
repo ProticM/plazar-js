@@ -52,7 +52,6 @@ plz.define('menu-component', function() {
             fn: 'itemClick'
         }],
         itemClick: function (el) {
-            debugger;
             var view = el.getAttribute('data-view');
             _toggleActiveState(el);
             this.changeView(view);
