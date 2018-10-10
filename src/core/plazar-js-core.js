@@ -254,7 +254,9 @@
 
         args = Array.prototype.slice.call(arguments, 2);
         proxy = function () {
-            return fn.apply(context || this, args.concat(Array.prototype.slice.call(arguments)));
+            var c = plz.isComponent(context) && context.destroyed ? 
+                plz.getInstanceOf(context.type) : context;
+            return fn.apply(c || this, args.concat(Array.prototype.slice.call(arguments)));
         };
 
         return proxy;
