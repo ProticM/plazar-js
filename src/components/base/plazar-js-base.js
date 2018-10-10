@@ -48,7 +48,7 @@
                         var isArray = plz.isArray(_properties[key]);
                         var isObject = plz.isObject(_properties[key]);
 
-                        me[key] = isArray ? _properties[key].slice() : (isObject ? plz.assignTo(me[key], plz.obj.clone(_properties[key])) : _properties[key]);
+                        me[key] = isArray ? _properties[key].slice() : (isObject ? plz.assignTo({}, plz.obj.clone(_properties[key])) : _properties[key]);
                     };
                 });
 

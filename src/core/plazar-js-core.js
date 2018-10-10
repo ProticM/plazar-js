@@ -34,7 +34,7 @@
 
     var _assignTo = function (target, source, clone) { 
 
-        var assign = function (target, source) { // polyfill
+        var assign = function (target) { // polyfill
 
             if (plz.isEmpty(target)) {
                 throw new TypeError(_const.canNotConvertNullOrEmptyObj);
@@ -47,7 +47,9 @@
 
                 if (!plz.isEmpty(nextSource)) {
                     for (var nextKey in nextSource) {
-                        if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                        if(plz.isObject(nextSource[nextKey])) {
+                            to[nextKey] = assign({}, nextSource[nextKey]);
+                        } else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
                             to[nextKey] = nextSource[nextKey];
                         };
                     };
@@ -56,12 +58,9 @@
             return to;
         };
 
-
-        var assignSupported = ('assign' in Object); // assign is ECMAScript 6 feature
-        var fn = assignSupported ? Object.assign : assign;
         var c = plz.isEmpty(clone) ? true : clone;
-        var t = c ? fn({}, target) : target, result;
-        result = fn(t, source);
+        var t = c ? assign({}, target) : target, result;
+        result = assign(t, source);
         assign = null;
         return result;
     }; // this is object helper and it's here due to possible circular reference in modular environment (plz.obj.assignTo synonym)
