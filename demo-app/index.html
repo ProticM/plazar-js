@@ -1,19 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Plazar JS Demo Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <link href="css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <main class="app-layout" data-template="layout-component">
-        <header>
-            <nav class="top-menu"></nav>
+        <header class="container">
+            <nav class="top-menu menu"></nav>
         </header>
-        <section>
-            <aside>
-                <nav class="side-menu"></nav>
-            </aside>
-            <section class="app-body"></section>
+        <section class="container">
+            <div class="columns">
+                <aside class="column is-one-fifth menu side-menu"></aside>
+                <section class="app-body column"></section>
+            </div>
         </section>
     </main>
     <script src="../dist/plazar-js.min.js"></script>

@@ -6,7 +6,7 @@ plz.define('layout-component', {
         type: 'home-component'
     }, {
         type: 'menu-component',
-        renderTo: 'nav.side-menu',
+        renderTo: '.side-menu',
         alias: 'sideMenu',
         items: [{
             text: 'Home',

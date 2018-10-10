@@ -1,9 +1,9 @@
 plz.define('menu-component', function() {
 
     var _buildTemplate = function(me) {
-        plz.forEach(me.items, function(item, idx) {
-            var el = plz.dom.parseTemplate('<li class="menu-item" data-view="' + item.view + '">' + 
-                item.text + '</li>');
+        plz.forEach(me.items, function(item) {
+            var el = plz.dom.parseTemplate('<li data-view="' + item.view + '"><a class="menu-item">' + 
+                item.text + '</a></li>');
             plz.dom.append(me.html, el);
         }, me);
     };
@@ -12,7 +12,7 @@ plz.define('menu-component', function() {
         ownerType: 'base-component',
         autoLoad: true,
         template: '<ul></ul>',
-        style: 'list-style:none',
+        css: ['menu-list'],
         items: [],
         init: function() {
             _buildTemplate(this);
@@ -20,7 +20,7 @@ plz.define('menu-component', function() {
         },
         handlers: [{
             on: 'click',
-            selector: 'li.menu-item',
+            selector: 'a.menu-item',
             fn: 'itemClick'
         }],
         itemClick: function (el) {
