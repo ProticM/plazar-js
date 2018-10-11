@@ -17,6 +17,12 @@ plz.define('todo-service', function() {
         },
         put: function(todo) {
             _todos.push(todo);
+        },
+        delete: function(idx) {
+            plz.arr.removeAt(_todos, idx);
+        },
+        clear: function(idx) {
+            plz.arr.clear(_todos);
         }
     }
 });

@@ -15,7 +15,7 @@ plz.define('layout-component', {
             components: [{
                 type: 'menu-component',
                 items: [{
-                    text: 'Description',
+                    text: 'What is PlazarJS?',
                     view: 'description-component',
                 }]
             }]
