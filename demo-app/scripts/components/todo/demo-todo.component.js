@@ -28,14 +28,13 @@ plz.define('todo-component', function() {
                     '<button class="button btn-add">Add</button>' + 
                 '</div>' +
             '</div>' + 
-            '<div class="tile is-ancestor is-marginless">' + 
-                '<div class="tile is-vertical"><p class="title">' + 
-                    '<article data-each="todos" class="tile is-child notification" data-attr-class="cssStyle">' + 
-                        '<p class="title">{title}</p>' +
-                        '<p class="subtitle">{text}</p>' +
-                    '</article>' + 
-                '</p></div>' +
-            '</div>' + 
+            '<article data-each="todos" data-attr-class="cssStyle" class="message">' + 
+                '<div class="message-header">' + 
+                    '<p>{title}</p>' + 
+                    '<button class="delete btn-delete" data-attr-[data-idx]="$index" aria-label="delete"></button>' + 
+                '</div>' + 
+                '<div class="message-body">{text}</div>' + 
+            '</article>' + 
         '</div>',
         renderTo: 'section.app-body',
         viewModel: {
@@ -46,6 +45,15 @@ plz.define('todo-component', function() {
                 cssStyle: 'is-primary'
             }
         },
+        handlers: [{
+            on: 'click',
+            selector: 'button.btn-delete',
+            fn: function(el) { // can be inline fn or component fn (name: String)
+                var idx = el.getAttribute('data-idx');
+                plz.arr.removeAt(this.viewModel.todos, idx);
+                this.todoService.delete(idx);
+            }
+        }],
         init: function() {
             this.handle({ // example of dynamic event
                 on: 'click',
