@@ -63,7 +63,6 @@ plz.define('todo-component', function() {
             this.base(arguments);
         },
         addTodo: function() {
-            var random = Math.floor((Math.random() * (5 - 0) + 0));
             var todo = {
                 text: this.viewModel.newTodo.text(),
                 title: this.viewModel.newTodo.title(),
