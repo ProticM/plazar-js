@@ -58,8 +58,12 @@ plz.define('todo-component', function() {
                 selector: 'button.btn-add',
                 fn: 'addTodo'
             });
+
+            var todos = this.todoService.get();
+            plz.forEach(todos, function(todo) {
+                this.viewModel.todos.push(plz.obj.clone(todo));
+            }, this);
             
-            this.viewModel.todos = this.todoService.get();
             this.base(arguments);
         },
         addTodo: function() {
@@ -72,7 +76,7 @@ plz.define('todo-component', function() {
             this.viewModel.newTodo.text = '';
             this.viewModel.newTodo.title = '';
             this.todoService.put(todo);
-            this.publish('todo-added');
+            this.publish('todo-added', todo);
         },
         require: ['todo-service']
     };

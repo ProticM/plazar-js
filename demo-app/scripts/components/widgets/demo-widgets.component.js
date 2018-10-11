@@ -3,7 +3,7 @@ plz.define('widgets-component', {
     mixins: ['page-mixin'],
     template: '<div class="panel"><p class="panel-heading">' + 
         'Example widgets are built in purpose of this demo. Hopefully this project will grow and we will build set of controls to be supported out of the box.</p>' +
-        '<div class="panel-block columns is-marginless">' +
+        '<div class="columns is-marginless">' +
         '<div class="column todo"></div>' +
         '<div class="column grid"></div>' +
         '</div>' +
@@ -13,23 +13,17 @@ plz.define('widgets-component', {
         type: 'todo-component',
         renderTo: 'div.todo',
         mixins: []
-    },{
+    }, {
         type: 'grid-component',
         renderTo: 'div.grid',
         mixins: [],
         columns: [{
-            text: 'Column 1',
-            dataIndex: 'c1'
+            text: 'Title',
+            dataIndex: 'title'
         },{
-            text: 'Column 2',
-            dataIndex: 'c2'
+            text: 'Text',
+            dataIndex: 'text'
         }],
-        data: [[{
-            dataIndex: 'c1',
-            value: 'Hello'
-        }, {
-            dataIndex: 'c2',
-            value: 'Hello Column 2'
-        }]]
+        data: []
     }]
 });
