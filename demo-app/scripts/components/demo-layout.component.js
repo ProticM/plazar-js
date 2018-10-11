@@ -25,6 +25,9 @@ plz.define('layout-component', {
             text: 'Todo',
             view: 'todo-component'
         }, {
+            text: 'Example Widgets',
+            view: 'widgets-component'
+        }, {
             text: 'About',
             view: 'about-component'
         }]

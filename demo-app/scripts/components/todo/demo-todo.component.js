@@ -11,7 +11,7 @@ plz.define('todo-component', function() {
     return {
         ownerType: 'base-component',
         mixins: ['page-mixin'],
-        template: '<div>' + // template can also be retrieved from the server via ajax Setup config
+        template: '<div>' + // template can also be retrieved from the server via ajaxSetup config
             '<div class="field">' + 
                 '<label class="label">Add:</label>' + 
                 '<div class="control">' + 
