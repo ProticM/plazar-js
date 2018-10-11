@@ -72,6 +72,7 @@ plz.define('todo-component', function() {
             this.viewModel.newTodo.text = '';
             this.viewModel.newTodo.title = '';
             this.todoService.put(todo);
+            this.publish('todo-added');
         },
         require: ['todo-service']
     };
