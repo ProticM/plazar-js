@@ -13,7 +13,7 @@ plz.define('todo-component', function() {
         mixins: ['page-mixin'],
         template: '<div>' + // template can also be retrieved from the server via ajaxSetup config
             '<div class="field">' + 
-                '<label class="label">Add:</label>' + 
+                '<label class="label">TODO:</label>' + 
                 '<div class="control">' + 
                     '<input class="input" data-value="newTodo.title" placeholder="Example: Shopping" />' + 
                 '</div>' + 
@@ -28,7 +28,7 @@ plz.define('todo-component', function() {
                     '<button class="button btn-add">Add</button>' + 
                 '</div>' +
             '</div>' + 
-            '<article data-each="todos" data-attr-class="cssStyle" class="message">' + 
+            '<article data-each="todos" class="message">' + 
                 '<div class="message-header">' + 
                     '<p>{title}</p>' + 
                     '<button class="delete btn-delete" data-attr-[data-idx]="$index" aria-label="delete"></button>' + 
@@ -42,7 +42,8 @@ plz.define('todo-component', function() {
             newTodo: {
                 text: '',
                 title: '',
-                cssStyle: 'is-primary'
+                cssStyle: 'is-primary',
+                isCompleted: false
             }
         },
         handlers: [{
