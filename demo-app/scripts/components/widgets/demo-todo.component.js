@@ -1,13 +1,5 @@
 plz.define('todo-component', function() {
     
-    var _styles = [
-        'is-primary',
-        'is-warning',
-        'is-info',
-        'is-success',
-        'is-danger'
-    ];
-
     return {
         ownerType: 'base-component',
         mixins: ['page-mixin'],
@@ -33,7 +25,13 @@ plz.define('todo-component', function() {
                     '<p>{title}</p>' + 
                     '<button class="delete btn-delete" data-attr-[data-idx]="$index" aria-label="delete"></button>' + 
                 '</div>' + 
-                '<div class="message-body">{text}</div>' + 
+                '<div class="message-body">{text}' +
+                    '<div class="tags has-addons is-marginless">' +
+                        '<span class="tag is-marginless">Done</span>' +
+                        '<span data-visible="isCompleted" class="tag is-success"><input data-checked="isCompleted" type="checkbox"/></span>' +
+                        '<span data-hidden="isCompleted" class="tag is-danger"><input data-checked="isCompleted" type="checkbox"/></span>' +
+                    '</div>' +
+                '</div>' + 
             '</article>' + 
         '</div>',
         renderTo: 'section.app-body',
@@ -42,7 +40,6 @@ plz.define('todo-component', function() {
             newTodo: {
                 text: '',
                 title: '',
-                cssStyle: 'is-primary',
                 isCompleted: false
             }
         },
@@ -70,7 +67,7 @@ plz.define('todo-component', function() {
             var todo = {
                 text: this.viewModel.newTodo.text(),
                 title: this.viewModel.newTodo.title(),
-                cssStyle: _styles[random]
+                isCompleted: false
             };
             this.viewModel.todos.push(todo);
             this.viewModel.newTodo.text = '';

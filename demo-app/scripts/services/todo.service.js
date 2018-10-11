@@ -3,11 +3,11 @@ plz.define('todo-service', function() {
     var _todos = [{
         title: 'Kids',
         text: 'Pick up kids from kindergarten',
-        cssStyle: 'is-success'
+        isCompleted: true
     }, {
         title: 'Happy wife',
         text: 'Buy flowers',
-        cssStyle: 'is-warning'
+        isCompleted: false
     }];
 
     return {
