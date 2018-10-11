@@ -22,10 +22,10 @@ plz.define('grid-component', function() {
             '<div class="panel-heading mb-1 bl-0 br-0 bt-0">{title}</div>' +
             '<div class="p-1">' +
             '<div class="columns is-marginless">' +
-                '<div class="column is-marginless b-1" data-each="columns" data-attr-idx="$index" data-attr-[data-dindex]="dataIndex">{text}</div>' +
+                '<div class="column is-marginless b-1" data-each="columns" data-attr-[data-colidx]="$index" data-attr-[data-dindex]="dataIndex">{text}</div>' +
             '</div>' +
             '<div class="columns is-marginless" data-each="data as row">' +
-                '<div class="column is-marginless" data-each="$root.columns" data-attr-[data-rowidx]="$root.getRowIndex" data-attr-[data-idx]="$index" data-text="$root.getColumnValue" data-attr-[data-dindex]="dataIndex"></div>' +
+                '<div class="column is-marginless" data-each="$root.columns" data-attr-[data-rowidx]="$root.getRowIndex" data-attr-[data-colidx]="$index" data-text="$root.getColumnValue" data-attr-[data-dindex]="dataIndex"></div>' +
             '</div>' +
             '<div>' +
         '</div>',
@@ -39,11 +39,10 @@ plz.define('grid-component', function() {
                 return idx;
             },
             getColumnValue: function() {
-                debugger;
-                var idx = this.el.getAttribute('data-idx');
+                var colIdx = this.el.getAttribute('data-colidx');
                 var rowIdx = this.el.getAttribute('data-rowidx');
                 var column = this.vm.data.getAt(rowIdx);
-                return column.value;
+                return column[colIdx].value;
             }
         },
         init: function() {

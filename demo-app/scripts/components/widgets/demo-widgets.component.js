@@ -24,6 +24,12 @@ plz.define('widgets-component', {
             text: 'Text',
             dataIndex: 'text'
         }],
-        data: []
+        data: [[{
+            dataIndex: 'c1',
+            value: 'Hello'
+        }, {
+            dataIndex: 'c2',
+            value: 'Hello Column 2'
+        }]]
     }]
 });

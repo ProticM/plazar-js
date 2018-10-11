@@ -292,7 +292,7 @@
                 return null;
             };
 
-            return this[0][index];
+            return this[index];
         };
 
         observableArray.prototype.removeAll = function () {
