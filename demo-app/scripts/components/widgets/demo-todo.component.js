@@ -1,5 +1,5 @@
 plz.define('todo-component', function() {
-    
+
     return {
         ownerType: 'base-component',
         mixins: ['page-mixin'],
@@ -26,10 +26,10 @@ plz.define('todo-component', function() {
                     '<button class="delete btn-delete" data-attr-[data-idx]="$index" aria-label="delete"></button>' + 
                 '</div>' + 
                 '<div class="message-body">{text}' +
-                    '<div class="tags has-addons is-marginless">' +
-                        '<span class="tag is-marginless">Done</span>' +
-                        '<span data-visible="isCompleted" class="tag is-success"><input data-checked="isCompleted" type="checkbox"/></span>' +
-                        '<span data-hidden="isCompleted" class="tag is-danger"><input data-checked="isCompleted" type="checkbox"/></span>' +
+                    '<div class="tags has-addons is-marginless d-inline-block is-pulled-right">' +
+                        '<span data-visible="isCompleted" class="tag is-marginless is-success d-inline-block"><input data-checked="isCompleted" class="is-marginless" type="checkbox"/></span>' +
+                        '<span data-hidden="isCompleted" class="tag is-marginless is-danger d-inline-block"><input data-checked="isCompleted" class="is-marginless" type="checkbox"/></span>' +
+                        '<span class="tag is-marginless d-inline-block">Done</span>' +
                     '</div>' +
                 '</div>' + 
             '</article>' + 
