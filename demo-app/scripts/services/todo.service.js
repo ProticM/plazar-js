@@ -1,14 +1,22 @@
 plz.define('todo-service', function() {
 
     var _todos = [{
+        id: 1,
         title: 'Kids',
         text: 'Pick up kids from kindergarten',
         isCompleted: true
     }, {
+        id: 2,
         title: 'Happy wife',
         text: 'Buy flowers',
         isCompleted: false
     }];
+
+    var _get = function(isCompleted) {
+        return plz.arr.filter(function(todo) {
+            return (isCompleted == todo.isCompleted) ? true : false;
+        }, _todos);
+    };
 
     return {
         ownerType: 'class',
@@ -26,9 +34,10 @@ plz.define('todo-service', function() {
             plz.arr.clear(_todos);
         },
         getCompleted: function() {
-            return plz.arr.filter(function(todo) {
-                return todo.isCompleted;
-            }, _todos);
+            return _get(true);
+        },
+        getUnCompleted: function() {
+            return _get(false);
         }
     }
 });

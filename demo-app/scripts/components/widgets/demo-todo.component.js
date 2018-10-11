@@ -65,18 +65,32 @@ plz.define('todo-component', function() {
             }, this);
             
             this.base(arguments);
+
+            plz.forEach(this.viewModel.todos, function(todo) { // subscribe to all pre-loaded todos
+                var me = this;
+                todo.isCompleted.subscribe(function() {
+                    me.onStatusChange(todo);
+                });
+            }, this);
         },
         addTodo: function() {
             var todo = {
+                id: this.viewModel.todos.length + 1,
                 text: this.viewModel.newTodo.text(),
                 title: this.viewModel.newTodo.title(),
                 isCompleted: false
-            };
+            }, me = this;
             this.viewModel.todos.push(todo);
             this.viewModel.newTodo.text = '';
             this.viewModel.newTodo.title = '';
             this.todoService.put(todo);
             this.publish('todo-added', todo);
+            todo.isCompleted.subscribe(function() {
+                me.onStatusChange(todo);
+            });
+        },
+        onStatusChange: function(todo) {
+            this.publish('todo-updated', todo);
         },
         require: ['todo-service']
     };

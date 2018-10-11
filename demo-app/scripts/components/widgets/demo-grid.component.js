@@ -1,20 +1,5 @@
 plz.define('grid-component', function() {
 
-    var _addTodos = function(me, todos) {
-        var keys = plz.obj.getKeys(todos[0]);
-        plz.forEach(todos, function(todo) {
-            var row = [];
-            plz.forEach(keys, function(key) {
-                row.push({
-                    value: plz.isFunction(todo[key]) ? todo[key](): todo[key],
-                    dataIndex: key.toLowerCase()
-                });
-            }, this);
-            this.viewModel.data.push(row);
-
-        }, me);
-    };
-
     return {
         ownerType: 'base-component',
         mixins: ['page-mixin'],
@@ -31,7 +16,7 @@ plz.define('grid-component', function() {
         '</div>',
         renderTo: 'section.app-body',
         viewModel: {
-            title: 'Completed TODOS:',
+            title: 'Uncompleted TODOS:',
             columns: [],
             data: [],
             getRowIndex: function() {
@@ -47,16 +32,49 @@ plz.define('grid-component', function() {
         },
         init: function() {
             this.viewModel.columns = this.columns;
-            var completedTodos = this.todoService.getCompleted();
-            _addTodos(this, completedTodos);
+            var todos = this.todoService.get(), me = this;
+            this.loadData();
 
             this.subscribe({
                 'todo-added': function(todo) {
-                    var todo = plz.binder.toJSON(todo);
-                    _addTodos(this, [todo]);
+                    var jTodo = plz.binder.toJSON(todo);
+                    me.addTodos([jTodo]);
+                }
+            });
+
+            this.subscribe({
+                'todo-updated': function(todo) {
+                    var jTodo = plz.binder.toJSON(todo);
+                    plz.arr.find(function(todo){
+                        return todo.id == jTodo.id;
+                    }, todos).isCompleted = jTodo.isCompleted;
+                    me.loadData();
                 }
             });
             this.base(arguments);
+        },
+        loadData: function(clear) {
+            plz.arr.clear(this.viewModel.data);
+            var uncompletedTodos = this.todoService.getUnCompleted();
+            this.addTodos(uncompletedTodos);
+        },
+        addTodos: function(todos) {
+            var keys;
+            if(plz.isEmpty(todos)) {
+                return;
+            };
+            keys = plz.obj.getKeys(todos[0]);
+            plz.forEach(todos, function(todo) {
+                var row = [];
+                plz.forEach(keys, function(key) {
+                    row.push({
+                        value: plz.isFunction(todo[key]) ? todo[key](): todo[key],
+                        dataIndex: key.toLowerCase()
+                    });
+                }, this);
+                this.viewModel.data.push(row);
+    
+            }, this);
         },
         require: ['todo-service']
     };

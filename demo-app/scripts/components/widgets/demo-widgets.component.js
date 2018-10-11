@@ -18,18 +18,15 @@ plz.define('widgets-component', {
         renderTo: 'div.grid',
         mixins: [],
         columns: [{
+            text: 'No.',
+            dataIndex: 'id'
+        }, {
             text: 'Title',
             dataIndex: 'title'
         },{
             text: 'Text',
             dataIndex: 'text'
         }],
-        data: [[{
-            dataIndex: 'c1',
-            value: 'Hello'
-        }, {
-            dataIndex: 'c2',
-            value: 'Hello Column 2'
-        }]]
+        data: []
     }]
 });
