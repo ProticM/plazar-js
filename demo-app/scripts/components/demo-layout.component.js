@@ -3,6 +3,8 @@ plz.define('layout-component', {
     templateSelector: 'layout-component',
     autoLoad: true,
     components: [{
+        type: 'header-component'
+    }, {
         type: 'home-component'
     }, {
         type: 'menu-component',
