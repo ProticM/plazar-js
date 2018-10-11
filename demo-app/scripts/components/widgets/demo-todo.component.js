@@ -58,7 +58,7 @@ plz.define('todo-component', function() {
                 selector: 'button.btn-add',
                 fn: 'addTodo'
             });
-
+            plz.arr.clear(this.viewModel.todos); // TODO: See why viewModel still has todos after destroy
             var todos = this.todoService.get();
             plz.forEach(todos, function(todo) {
                 this.viewModel.todos.push(plz.obj.clone(todo));

@@ -53,7 +53,7 @@ plz.define('grid-component', function() {
             });
             this.base(arguments);
         },
-        loadData: function(clear) {
+        loadData: function() {
             plz.arr.clear(this.viewModel.data);
             var uncompletedTodos = this.todoService.getUnCompleted();
             this.addTodos(uncompletedTodos);
