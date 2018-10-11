@@ -881,7 +881,7 @@ plz.defineStatic('binder', function () {
                 return null;
             };
 
-            return this[index];
+            return this[0][index];
         };
 
         observableArray.prototype.removeAll = function () {
@@ -1054,7 +1054,7 @@ plz.defineStatic('binder', function () {
 
             prop = this.vm[this.prop];
             var isFn = plz.isFunction(prop);
-            return isFn ? this.vm[this.prop]() : this.vm[this.prop];
+            return isFn ? this.vm[this.prop].call(this) : this.vm[this.prop];
         };
 
         binding.prototype.setValue = function (value) {
@@ -1375,6 +1375,7 @@ plz.defineStatic('binder', function () {
                 }
             },
             'attr': {
+                priority: 2,
                 bind: function () {
                     this.el.removeAttribute(this.bindingAttr);
                 },
