@@ -47,6 +47,13 @@ plz.define('grid-component', function() {
                     me.loadData();
                 }
             });
+
+            this.subscribe({
+                'todo-deleted': function() {
+                    me.loadData();
+                }
+            });
+
             this.base(arguments);
         },
         loadData: function() {

@@ -50,6 +50,7 @@ plz.define('todo-component', function() {
                 var idx = el.getAttribute('data-idx');
                 plz.arr.removeAt(this.viewModel.todos, idx);
                 this.todoService.delete(idx);
+                this.publish('todo-deleted');
             }
         }],
         init: function() {
