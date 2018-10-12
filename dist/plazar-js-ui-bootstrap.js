@@ -1,4 +1,5 @@
-﻿plz.define('ui-component', function () {
+// Plazar JS Bootstrap UI
+plz.define('ui-component', function () {
     'use strict';
 
     var _const = {
@@ -20,6 +21,7 @@
 
             this.subscribe({
                 'render-complete': function () {
+
                     if (plz.isFunction(this.parseTemplate) && !plz.isEmpty(this.template)) {
                         this.parseTemplate();
                     };
@@ -75,6 +77,7 @@
         }
     };
 });
+
 plz.define('ui-form-field-mix', function () {
     'use strict';
 
@@ -109,6 +112,7 @@ plz.define('ui-form-field-mix', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-alert', function () {
     'use strict';
 
@@ -168,6 +172,7 @@ plz.define('ui-bootstrap-alert', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-breadcrumb', function () {
     'use strict';
 
@@ -205,6 +210,7 @@ plz.define('ui-bootstrap-breadcrumb', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-button-group', function () {
     'use strict';
 
@@ -238,6 +244,7 @@ plz.define('ui-bootstrap-button-group', function () {
         parseTemplate: _parseTemplate
     };
 });
+
 plz.define('ui-bootstrap-button-toolbar', function () {
     'use strict';
 
@@ -266,30 +273,42 @@ plz.define('ui-bootstrap-button-toolbar', function () {
         parseTemplate: _parseTemplate
     };
 });
+
 plz.define('ui-bootstrap-button', function () {
     'use strict';
 
     var _parseTemplate = function () {
-        var hasSize = !plz.isEmpty(this.size);
-        this.html.innerText = this.text;
+        var hasSize = !plz.isEmpty(this.size), hasHref = !plz.isEmpty(this.href);
+        this.html.innerHTML = this.text;
         this.addCss(('btn-' + this.appearance + (hasSize ? ' btn-' + this.size : '')));
         this.addCss((!plz.isEmpty(this.align) ? 'pull-' + this.align : ''));
-        this.html.setAttribute('type', this.buttonType);
-    };
+        this.html.setAttribute((hasHref ? 'href' : 'type'), (hasHref ? this.href : this.buttonType));
+	};
 
-    return {
-        ownerType: 'ui-component',
+	return {
+		ownerType: 'ui-component',
         appearance: 'primary',
         text: 'Button',
         buttonType: 'button',
         template: '<button class="btn"></button>',
+        load: function () {
+            if (!plz.isEmpty(this.href)) {
+                this.template = this.template.replace('<button', '<a').replace('button>', 'a>');
+            };
+            this.base(arguments)
+        },
+        init: function () {
+            if (plz.isEmpty(this.href)) {
+                this.handle({
+                    on: 'click',
+                    fn: 'onClick'
+                });
+            };
+            this.base(arguments);
+        },
         parseTemplate: _parseTemplate,
-        handlers: [{
-            on: 'click',
-            fn: 'onClick'
-        }],
-        onClick: function () {
-            throw new Error('Not implemented!');
+		onClick: function () {
+			throw new Error('Not implemented!');
         },
         toggle: function () {
             $(this.html).button('toggle');
@@ -299,14 +318,24 @@ plz.define('ui-bootstrap-button', function () {
             this.base(arguments);
         },
         setDisabled: function (value) {
+            // TODO: link disable
             if (plz.isEmpty(value) || value == true) {
                 this.html.setAttribute('disabled', '');
             } else {
                 this.html.removeAttribute('disabled');
             };
+        },
+        setText: function (value) {
+
+            if (plz.isEmpty(value)) {
+                return;
+            };
+
+            this.html.innerHTML = value;
         }
-    };
+	};
 });
+
 plz.define('ui-bootstrap-card', function () {
     'use strict';
 
@@ -319,6 +348,10 @@ plz.define('ui-bootstrap-card', function () {
 
         plz.dom.append(this.html, (this.header ? ('<div class="' + headerClasses + '">' + (plz.isEmpty(this.header.text) ? '' : this.header.text) + '</div>') : ''));
         plz.dom.append(this.html, (this.body ? '<div class="' + bodyClasses + '"></div>' : ''));
+
+        if (this.block) {
+            this.html.className = this.html.className.replace('card', 'card-block');
+        };
 
         var bodyEl = plz.dom.findElement(this.html, 'div.card-body');
 
@@ -362,6 +395,7 @@ plz.define('ui-bootstrap-card', function () {
     return {
         ownerType: 'ui-component',
         template: '<div class="card"></div>',
+        block: false,
         bodyCss: [],
         headerCss: [],
         footerCss: [],
@@ -380,10 +414,25 @@ plz.define('ui-bootstrap-card', function () {
             _createButtons(this);
             this.base(arguments);
         },
-        buttons: [],
-        parseTemplate: _parseTemplate
+        buttons:[],
+        parseTemplate: _parseTemplate,
+        setHeaderText: function (value) {
+
+            var header;
+            if (plz.isEmpty(value)) {
+                return;
+            };
+
+            header = plz.dom.findElement(this.html, 'div.card-header');
+            if (plz.isEmpty(header)) {
+                return;
+            };
+
+            header.innerHTML = value;
+        }
     };
 });
+
 plz.define('ui-bootstrap-carousel', function () {
     'use strict';
 
@@ -478,6 +527,7 @@ plz.define('ui-bootstrap-carousel', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-collapse', function () {
     'use strict';
 
@@ -521,6 +571,7 @@ plz.define('ui-bootstrap-collapse', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-container', function () {
     'use strict';
 
@@ -545,18 +596,17 @@ plz.define('ui-bootstrap-container', function () {
 
     var _parseJumbotron = function (me, jumbotron) {
 
-        var hasBtn, hasLeadText, hasTitle, hasDivider, btn, mainContainer;
+        var hasBtn, hasLeadText, hasTitle, hasDivider, mainContainer;
         if (plz.isEmpty(jumbotron)) {
             return;
         };
 
-        hasBtn = !plz.isEmpty(jumbotron.button);
+        hasBtn = !plz.isEmpty(jumbotron.buttons);
         hasLeadText = !plz.isEmpty(jumbotron.leadText);
         hasTitle = !plz.isEmpty(jumbotron.title);
         hasDivider = !plz.isEmpty(jumbotron.divider);
-        btn = {};
         mainContainer = me.html;
-
+        
         if (me.fluid) {
             plz.dom.append(me.html, '<div class="container' + (jumbotron.innerFluid ? '-fluid' : '') + ' jumbotron-body"></div>');
             mainContainer = plz.dom.findElement(me.html, 'div.jumbotron-body');
@@ -579,14 +629,17 @@ plz.define('ui-bootstrap-container', function () {
             };
 
             plz.dom.append(mainContainer, '<p class="lead jumbotron-button"></p>');
-            plz.obj.assignTo(btn, jumbotron.button, false);
-            btn.renderTo = 'p.lead.jumbotron-button';
+            plz.forEach(jumbotron.buttons, function (button) {
+                var btn = {};
+                plz.obj.assignTo(btn, button, false);
+                btn.renderTo = 'p.lead.jumbotron-button';
 
-            if (plz.isEmpty(btn.type)) {
-                btn.type = 'ui-bootstrap-button';
-            };
+                if (plz.isEmpty(btn.type)) {
+                    btn.type = 'ui-bootstrap-button';
+                };
 
-            me.components.push(btn);
+                me.components.push(btn);
+            });
         };
     };
 
@@ -598,6 +651,7 @@ plz.define('ui-bootstrap-container', function () {
         body: '', // can be html
         components: [],
         parseTemplate: function () {
+
             var cls = this.renderAs == 'row' ? 'row' :
                 (this.renderAs == 'form-row' ? 'form-row' : (this.renderAs == 'column' ? _getColumnSizeClass(this.column) :
                     (this.renderAs == 'jumbotron' ? (this.fluid ? 'jumbotron jumbotron-fluid' : 'jumbotron') :
@@ -606,22 +660,24 @@ plz.define('ui-bootstrap-container', function () {
             var hasChildren = !plz.isEmpty(this.components);
             this.addCss(cls);
             this.html.innerHTML = (hasChildren ? '' : (plz.isEmpty(this.body) ? '' : this.body));
-            
-            if (!hasChildren && this.renderAs == 'jumbotron') {
+
+            if (this.renderAs == 'jumbotron') {
                 _parseJumbotron(this, this.jumbotron);
             };
         }
     };
 });
+
 plz.define('ui-bootstrap-dropdown', function () {
     'use strict';
 
     var _parseTemplate = function () {
         var hasSize = !plz.isEmpty(this.size), btn, hasPosition =
-            !plz.isEmpty(this.dropPosition), hasHeader = !plz.isEmpty(this.menuHeaderText);
+            !plz.isEmpty(this.dropPosition), hasHeader = !plz.isEmpty(this.menuHeaderText),
+            hasAppearance = !plz.isEmpty(this.appearance);
 
         if (this.split) {
-            plz.dom.prepend(this.html, '<button type="button" class="btn btn-' + this.appearance + '">' + this.text + '</button>');
+            plz.dom.prepend(this.html, '<button type="button" class="btn' + (hasAppearance ? (' btn-' + this.appearance) : '') + '">' + this.text + '</button>');
             this.html.className = this.html.className.replace('dropdown', 'btn-group');
         };
 
@@ -630,8 +686,8 @@ plz.define('ui-bootstrap-dropdown', function () {
             this.addCss(('drop' + this.dropPosition));
         };
 
-        var btn = plz.dom.findElement(this.html, 'button.dropdown-toggle');
-        this.addCss((' btn-' + this.appearance + (hasSize ? (' btn-' + this.size) : '') + (this.split ? ' dropdown-toggle-split' : '')), btn);
+        var btn = plz.dom.findElement(this.html, (this.inNav ? 'a' : 'button') + '.dropdown-toggle');
+        this.addCss(((hasAppearance ? ('btn-' + this.appearance) : '') + (hasSize ? (' btn-' + this.size) : '') + (this.split ? ' dropdown-toggle-split' : '')), btn);
         btn[this.split ? 'innerHTML' : 'innerText'] = (this.split ? '<span class="sr-only">Toggle Dropdown</span>' : this.text);
 
         var cls = 'dropdown-menu';
@@ -657,6 +713,16 @@ plz.define('ui-bootstrap-dropdown', function () {
     return {
         ownerType: 'ui-component',
         template: '<div class="dropdown"><button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button></div>',
+        load: function () {
+            var parent = this.traceUp();
+            var isInNav = !plz.isEmpty(parent) && plz.arr.contains([parent.type, parent.ownerType], 'ui-bootstrap-navbar');
+            this.inNav = this.inNav || isInNav;
+            if (this.inNav) {
+                this.template = '<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a></div>';
+                this.appearance = null;
+            };
+            this.base(arguments);
+        },
         containerElement: 'div.dropdown-menu',
         appearance: 'primary',
         text: 'Dropdown',
@@ -675,6 +741,7 @@ plz.define('ui-bootstrap-dropdown', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-form', function () {
     'use strict';
 
@@ -736,6 +803,7 @@ plz.define('ui-bootstrap-form', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-grid', function () {
     'use strict';
 
@@ -797,6 +865,7 @@ plz.define('ui-bootstrap-grid', function () {
         parseTemplate: _parseTemplate
     };
 });
+
 plz.define('ui-bootstrap-input-group', function () {
     'use strict';
 
@@ -849,9 +918,9 @@ plz.define('ui-bootstrap-input-group', function () {
                 type: 'ui-bootstrap-input',
                 inputType: 'text'
             } : {
-                    type: 'ui-bootstrap-select',
-                    dataSource: this.input.dataSource || []
-                };
+                type: 'ui-bootstrap-select',
+                dataSource: this.input.dataSource || []
+            };
 
             plz.arr.clear(this.components);
             this.components = [];
@@ -893,6 +962,7 @@ plz.define('ui-bootstrap-input-group', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-input', function () {
     'use strict';
 
@@ -923,7 +993,7 @@ plz.define('ui-bootstrap-input', function () {
                 input.setAttribute('aria-describedby', ('help_' + this.id));
                 plz.dom.insertAfter(input, '<small class="form-text text-muted" id="help_' + this.id + '">' + this.helpText + '</small>');
             };
-
+            
         };
 
         if (plz.arr.contains(['checkbox', 'radio'], this.inputType)) {
@@ -993,10 +1063,10 @@ plz.define('ui-bootstrap-input', function () {
         labelText: '',
         simple: false,
         helpText: '',
-        handlers: [{
-            on: 'change',
+		handlers: [{
+			on: 'change',
             fn: 'onChange'
-        }],
+		}],
         onChange: function (e) {
             throw new Error('Not implemented!');
         },
@@ -1021,8 +1091,9 @@ plz.define('ui-bootstrap-input', function () {
 
             label = null;
         }
-    };
+	};
 });
+
 plz.define('ui-bootstrap-list-group', function () {
     'use strict';
 
@@ -1040,7 +1111,11 @@ plz.define('ui-bootstrap-list-group', function () {
         };
 
         plz.forEach(this.menuItems, function (menuItem, idx) {
-            var actionable, link, contentCls, href;
+            var actionable, link, contentCls, href, jsVoid = 'javascript:void(0)';
+
+            if (this.noHash && this.mode != 'tab' && plz.isEmpty(menuItem.href)) {
+                menuItem.href = !plz.isEmpty(this.href) ? this.href.replace('#', jsVoid) : jsVoid;
+            };
 
             if (plz.isEmpty(menuItem.href)) {
                 throw new Error('Each menu item must have [href] property configured');
@@ -1064,7 +1139,7 @@ plz.define('ui-bootstrap-list-group', function () {
             if (this.mode == 'tab') {
                 link.setAttribute('data-toggle', 'list');
                 link.setAttribute('role', 'tab');
-                href = (menuItem.href.replace('#', ''));
+                href = menuItem.href.replace('#', '');
                 contentCls = idx == 0 ? ('tab-pane active tab-' + href) : ('tab-pane tab-' + href);
                 plz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel">' + menuItem.text + 'content' + '</div>');
             };
@@ -1144,6 +1219,7 @@ plz.define('ui-bootstrap-list-group', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-modal', function () {
     'use strict';
 
@@ -1289,6 +1365,7 @@ plz.define('ui-bootstrap-modal', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-nav', function () {
     'use strict';
 
@@ -1415,16 +1492,17 @@ plz.define('ui-bootstrap-nav', function () {
         }
     };
 });
+
 plz.define('ui-bootstrap-navbar', function () {
     'use strict';
 
     var _allowedComponents = [
-        'ui-bootstrap-dropdown',
-        'ui-bootstrap-input-group'
+        'ui-bootstrap-dropdown'
+        //'ui-bootstrap-input-group'
     ];
 
-    var _parseTemplate = function () {
-        var prefix = this.sticky ? 'sticky' : 'fixed';
+	var _parseTemplate = function () {
+		var prefix = this.sticky ? 'sticky' : 'fixed';
         var hasMenuItems = !plz.isEmpty(this.menu) && !plz.isEmpty(this.menu.items);
 
         this.toggler = this.toggler || hasMenuItems;
@@ -1433,11 +1511,11 @@ plz.define('ui-bootstrap-navbar', function () {
             var isTextType = this.brand.type == 'text';
             var brand = plz.dom.createElement('a');
 
-            brand.setAttribute('href', (this.brand.link || '#'));
+            brand.setAttribute('href', (this.brand.href || '#'));
             this.addCss('navbar-brand', brand);
 
             if (isTextType) {
-                brand.innerHTML = this.brand.value;
+				brand.innerHTML = this.brand.value;
             } else {
                 var brandImg = plz.dom.createElement('img');
                 brandImg.setAttribute('src', this.brand.url);
@@ -1445,11 +1523,11 @@ plz.define('ui-bootstrap-navbar', function () {
             };
 
             plz.dom.append(this.html, brand);
-        };
+		};
 
-        if (this.toggler) {
-            plz.dom.append(this.html, '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse_' + this.id + '"><span class="navbar-toggler-icon"></span></button>');
-        };
+		if (this.toggler) {
+			plz.dom.append(this.html, '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse_' + this.id + '"><span class="navbar-toggler-icon"></span></button>');
+		};
 
         if (hasMenuItems) {
             plz.dom.append(this.html, '<div class="collapse navbar-collapse" id="collapse_' + this.id + '"></div>');
@@ -1458,7 +1536,7 @@ plz.define('ui-bootstrap-navbar', function () {
             var menuPos = this.menu.position || 'left'; // left by default
             var hPositionClass = 'm'.concat(menuPos == 'left' ? 'r-' : 'l-').concat('auto');
 
-            plz.dom.append(collapse, '<ul class="navbar-nav ' + hPositionClass + '"></ul>');
+            plz.dom.append(collapse, '<ul class="navbar-nav ' + hPositionClass + '"></ul>'); 
 
             var ul = plz.dom.findElement(collapse, 'ul.navbar-nav');
             plz.forEach(this.menu.items, function (menuItem) {
@@ -1466,7 +1544,7 @@ plz.define('ui-bootstrap-navbar', function () {
                     menuItem.renderTo = 'ul.navbar-nav';
                     this.components.push(menuItem);
                 } else {
-                    plz.dom.append(ul, '<li class="nav-item"><a class="nav-link" href="' + (menuItem.link || '#') + '">' + menuItem.text + '</a></li>');
+                    plz.dom.append(ul, '<li class="nav-item"><a class="nav-link" href="' + (menuItem.href || '#') + '">' + menuItem.text + '</a></li>');
                 };
             }, this);
         };
@@ -1475,7 +1553,7 @@ plz.define('ui-bootstrap-navbar', function () {
             .concat(this.position).concat(' navbar-')
             .concat(this.theme).concat(' bg-')
             .concat(this.theme).concat(' navbar-expand-lg'));
-    };
+	};
 
     return {
         ownerType: 'ui-component',
@@ -1484,20 +1562,21 @@ plz.define('ui-bootstrap-navbar', function () {
         theme: 'light',
         components: [],
         menu: {},
-        brand: {
-            type: 'text',
-            value: 'My app'
-        },
-        sticky: false,
-        toggler: false,
-        parseTemplate: _parseTemplate
-    };
+		brand: {
+			type: 'text',
+			value: 'My app'
+		},
+		sticky: false,
+		toggler: false,
+		parseTemplate: _parseTemplate
+	};
 });
-plz.define('ui-bootstrap-progress', function () {
-    'use strict';
 
-    var _parseTemplate = function () {
-        var progressBar = plz.dom.findElement(this.html, 'div.progress-bar'),
+plz.define('ui-bootstrap-progress', function () {
+	'use strict';
+
+	var _parseTemplate = function () {
+		var progressBar = plz.dom.findElement(this.html, 'div.progress-bar'),
             hasAppearance = !plz.isEmpty(this.appearance),
             hasNowValue = !plz.isEmpty(this.values.now) && this.values.now > 0,
             max = this.values.max || 100,
@@ -1506,40 +1585,41 @@ plz.define('ui-bootstrap-progress', function () {
         this.html.setAttribute('aria-valuemin', min);
         this.html.setAttribute('aria-valuemax', max);
 
-        this.addCss((hasAppearance ? ('bg-' + this.appearance) : ''), progressBar);
-        this.addCss((this.animated ? ('progress-bar-striped progress-bar-animated') : ''), progressBar);
+		this.addCss((hasAppearance ? ('bg-' + this.appearance) : ''), progressBar);
+		this.addCss((this.animated ? ('progress-bar-striped progress-bar-animated') : ''), progressBar);
 
         if (hasNowValue) {
             this.addStyle(('width:' + this.values.now + '%'), progressBar);
-            this.html.setAttribute('aria-valuenow', this.values.now);
-        };
+			this.html.setAttribute('aria-valuenow', this.values.now);
+		};
 
         if (this.showValue && hasNowValue) {
-            progressBar.innerText = (this.values.now + '%');
+			progressBar.innerText = (this.values.now + '%');
         };
-    };
+	};
 
-    return {
-        ownerType: 'ui-component',
-        template: '<div class="progress"><div class="progress-bar" role="progressbar"></div></div>',
-        showValue: true,
-        animated: false,
-        values: {
-            min: 0,
-            now: 25,
-            max: 100
-        },
-        parseTemplate: _parseTemplate,
-        setValues: function (values) {
-            if (plz.isEmpty(values)) {
-                return;
-            };
+	return {
+		ownerType: 'ui-component',
+		template: '<div class="progress"><div class="progress-bar" role="progressbar"></div></div>',
+		showValue: true,
+		animated: false,
+		values: {
+			min: 0,
+			now: 25,
+			max: 100
+		},
+		parseTemplate: _parseTemplate,
+		setValues: function (values) {
+			if (plz.isEmpty(values)) {
+				return;
+			};
 
-            this.values = values;
-            this.parseTemplate();
-        }
-    };
+			this.values = values;
+			this.parseTemplate();
+		}
+	};
 });
+
 plz.define('ui-bootstrap-select', function () {
     'use strict';
 
@@ -1566,7 +1646,7 @@ plz.define('ui-bootstrap-select', function () {
 
     return {
         ownerType: 'ui-component',
-        labelText: '',
+        labelText:'',
         template: '<select></select>',
         mixins: ['ui-form-field-mix'],
         dataSource: [],
@@ -1592,7 +1672,3 @@ plz.define('ui-bootstrap-select', function () {
         }
     };
 });
-
-
-
-

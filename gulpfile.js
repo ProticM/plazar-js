@@ -17,11 +17,47 @@ var source = [
     'src/components/plazar-js-mixin.js'
 ];
 
-var banner = function() {
-    return '// Plazar JS' + '\n';
+var bootstrapSource = [
+    'src/ui/bootstrap/base/ui-base.component.js',
+    'src/ui/bootstrap/mixins/form-field.mixin.js',
+    'src/ui/bootstrap/components/ui-alert.component.js',
+    'src/ui/bootstrap/components/ui-breadcrumb.component.js',
+    'src/ui/bootstrap/components/ui-button-group.component.js',
+    'src/ui/bootstrap/components/ui-button-toolbar.component.js',
+    'src/ui/bootstrap/components/ui-button.component.js',
+    'src/ui/bootstrap/components/ui-card.component.js',
+    'src/ui/bootstrap/components/ui-carousel.component.js',
+    'src/ui/bootstrap/components/ui-collapse.component.js',
+    'src/ui/bootstrap/components/ui-container.component.js',
+    'src/ui/bootstrap/components/ui-dropdown.component.js',
+    'src/ui/bootstrap/components/ui-form.component.js',
+    'src/ui/bootstrap/components/ui-grid.component.js',
+    'src/ui/bootstrap/components/ui-input-group.component.js',
+    'src/ui/bootstrap/components/ui-input.component.js',
+    'src/ui/bootstrap/components/ui-list-group.component.js',
+    'src/ui/bootstrap/components/ui-modal.component.js',
+    'src/ui/bootstrap/components/ui-nav.component.js',
+    'src/ui/bootstrap/components/ui-navbar.component.js',
+    'src/ui/bootstrap/components/ui-progress.component.js',
+    'src/ui/bootstrap/components/ui-select.component.js'
+];
+
+var banner = function(bootstrap) {
+    return (bootstrap ? '// Plazar JS Bootstrap UI' : '// Plazar JS') + '\n';
 };
 
 gulp.task('build', function(){
+    
+    plzBootstrap = gulp.src(bootstrapSource)
+        .pipe(concat('plazar-js-ui-bootstrap.js'))
+        .pipe(header(banner(true)))
+        .pipe(gulp.dest('dist'));
+
+    plzBootstrapMin = plzBootstrap.pipe(concat('plazar-js-ui-bootstrap.min.js'))
+        .pipe(uglify())
+        .pipe(header(banner(true)))
+        .pipe(gulp.dest('dist'));
+    
     plz = gulp.src(source)
         .pipe(concat('plazar-js.js'))
         .pipe(header(banner()))
