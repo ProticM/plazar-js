@@ -23,16 +23,18 @@ plz.define('todo-component', function() {
                     '<button class="button btn-add">Add</button>' + 
                 '</div>' +
             '</div>' + 
-            '<article data-each="todos as todo" class="message">' + 
+            '<article data-each="todos as todo" data-visible="todos.hasData" class="message">' + 
                 '<div class="message-body"><span class="has-text-weight-semibold">{title}</span> - <span>{text}</span>' +
                     '<div class="tags has-addons is-marginless d-inline-block is-pulled-right">' +
                         '<span class="tag is-marginless d-inline-block is-italic has-background-white" data-visible="isCompleted">Done</span>' +
                         '<span class="tag is-marginless d-inline-block is-italic has-background-white" data-hidden="isCompleted">Not Done</span>' +
                         '<span data-visible="isCompleted" class="tag is-marginless is-success d-inline-block"><input data-checked="isCompleted" class="is-marginless" type="checkbox"/></span>' +
                         '<span data-hidden="isCompleted" class="tag is-marginless is-danger d-inline-block"><input data-checked="isCompleted" class="is-marginless" type="checkbox"/></span>' +
+                        '<span data-attr-[data-idx]="$index" class="tag is-marginless d-inline-block cursor-pointer btn-delete">Remove</span>' +
                     '</div>' +
                 '</div>' + 
             '</article>' + 
+            '<article data-hidden="todos.hasData" class="has-text-centered p-1">No data available</article>' +
             '</div>' +
         '</div>',
         renderTo: 'section.app-body',
@@ -46,7 +48,7 @@ plz.define('todo-component', function() {
         },
         handlers: [{
             on: 'click',
-            selector: 'button.btn-delete',
+            selector: 'span.btn-delete',
             fn: function(el) { // can be inline fn or component fn (name: String)
                 var idx = el.getAttribute('data-idx');
                 plz.arr.removeAt(this.viewModel.todos, idx);

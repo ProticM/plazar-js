@@ -9,9 +9,10 @@ plz.define('grid-component', function() {
             '<div class="columns is-marginless">' +
                 '<div class="column is-marginless b-1" data-each="columns" data-attr-[data-colidx]="$index" data-attr-[data-dindex]="dataIndex" data-html="text"></div>' +
             '</div>' +
-            '<div class="columns is-marginless" data-each="data as row">' +
+            '<div class="columns is-marginless" data-each="data as row" data-visible="data.hasData">' +
                 '<div class="column is-marginless" data-each="$root.columns" data-attr-[data-rowidx]="$root.getRowIndex" data-attr-[data-colidx]="$index" data-text="$root.getColumnValue" data-attr-[data-dindex]="dataIndex"></div>' +
             '</div>' +
+            '<div class="has-text-centered p-1" data-hidden="data.hasData">No data available</div>' +
             '<div>' +
         '</div>',
         renderTo: 'section.app-body',

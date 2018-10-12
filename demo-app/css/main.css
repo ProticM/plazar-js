@@ -51,3 +51,6 @@ header.main-navbar > nav {
     background-color: #35baf6;
     color: #fff;
 }
+.cursor-pointer {
+    cursor: pointer;
+}
