@@ -5,7 +5,7 @@ It's leaning on Object-Oriented-Principles (OOP) and it's build with plain JavaS
 
 ## Getting Started and Documentation
 
-Documentation website is under construction
+Documentation website is under construction.
 
 ## Deploy
 
@@ -18,13 +18,13 @@ $ gulp build
 ## Bugs and Issues
 
 1. A bug is taken into account only if it can be reproduced on the latest master.
-2. Open an issue on GitHub to request a fix
+2. Open an issue on GitHub to request a fix.
 
 ## Browser Support
 
-PlazarJS supports all latest web and mobile browsers
+PlazarJS supports all latest web and mobile browsers.
 
 ### IE Browser Support
 
-1. Usage under version 11 is not recommended
-2. Every implementation/change is done in a way to ignore IE version 10 and lower
+1. Usage under version 11 is not recommended.
+2. Every implementation/change is done in a way to ignore IE version 10 and lower.
