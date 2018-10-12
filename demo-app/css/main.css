@@ -44,3 +44,6 @@ header.main-navbar > nav {
     -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
+.has-text-lightblue {
+    color: #3273dc!important
+}
