@@ -2,6 +2,7 @@ plz.define('layout-component', {
     ownerType: 'base-component',
     templateSelector: 'layout-component',
     autoLoad: true,
+    currentView: 'home-component',
     components: [{
         type: 'header-component'
     }, {

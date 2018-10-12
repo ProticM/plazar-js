@@ -1,19 +1,17 @@
 plz.define('base-component', {
     ownerType: 'component',
-    currentView: 'home-component',
     changeView: function(componentType) {
-        var oldC, layoutC;
-        if(plz.isEmpty(componentType) || componentType == this.currentView) {
+        var oldC, layoutC = plz.getInstanceOf('layout-component');
+        if(plz.isEmpty(componentType) || componentType == layoutC.currentView) {
             return;
         };
 
-        oldC = plz.getInstanceOf(this.currentView);
+        oldC = plz.getInstanceOf(layoutC.currentView);
         if(!plz.isEmpty(oldC)) {
             oldC.destroy();
         };
         
-        this.currentView = componentType;
-        layoutC = plz.getInstanceOf('layout-component');
+        layoutC.currentView = componentType;
         layoutC.addChild({
             type: componentType
         });
