@@ -18,7 +18,7 @@ plz.define('widgets-component', {
         renderTo: 'div.grid',
         mixins: [],
         columns: [{
-            text: 'No.',
+            text: '&#x2116;',
             dataIndex: 'id'
         }, {
             text: 'Title',

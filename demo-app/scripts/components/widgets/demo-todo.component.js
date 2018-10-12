@@ -23,12 +23,13 @@ plz.define('todo-component', function() {
                     '<button class="button btn-add">Add</button>' + 
                 '</div>' +
             '</div>' + 
-            '<article data-each="todos" class="message">' + 
+            '<article data-each="todos as todo" class="message">' + 
                 '<div class="message-body"><span class="has-text-weight-semibold">{title}</span> - <span>{text}</span>' +
                     '<div class="tags has-addons is-marginless d-inline-block is-pulled-right">' +
+                        '<span class="tag is-marginless d-inline-block is-italic has-background-white" data-visible="isCompleted">Done</span>' +
+                        '<span class="tag is-marginless d-inline-block is-italic has-background-white" data-hidden="isCompleted">Not Done</span>' +
                         '<span data-visible="isCompleted" class="tag is-marginless is-success d-inline-block"><input data-checked="isCompleted" class="is-marginless" type="checkbox"/></span>' +
                         '<span data-hidden="isCompleted" class="tag is-marginless is-danger d-inline-block"><input data-checked="isCompleted" class="is-marginless" type="checkbox"/></span>' +
-                        '<span class="tag is-marginless d-inline-block">Done</span>' +
                     '</div>' +
                 '</div>' + 
             '</article>' + 

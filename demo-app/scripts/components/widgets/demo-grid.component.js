@@ -7,7 +7,7 @@ plz.define('grid-component', function() {
             '<div class="panel-heading mb-1 bl-0 br-0 bt-0 panel-heading-widget">{title}</div>' +
             '<div class="p-1">' +
             '<div class="columns is-marginless">' +
-                '<div class="column is-marginless b-1" data-each="columns" data-attr-[data-colidx]="$index" data-attr-[data-dindex]="dataIndex">{text}</div>' +
+                '<div class="column is-marginless b-1" data-each="columns" data-attr-[data-colidx]="$index" data-attr-[data-dindex]="dataIndex" data-html="text"></div>' +
             '</div>' +
             '<div class="columns is-marginless" data-each="data as row">' +
                 '<div class="column is-marginless" data-each="$root.columns" data-attr-[data-rowidx]="$root.getRowIndex" data-attr-[data-colidx]="$index" data-text="$root.getColumnValue" data-attr-[data-dindex]="dataIndex"></div>' +
