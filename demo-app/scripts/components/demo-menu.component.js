@@ -4,7 +4,7 @@ plz.define('menu-component', function() {
         plz.forEach(me.items, function(item, idx) {
             var cls = item.isActive ? 'menu-item is-active' : 'menu-item';
             var liCls = 'li-menu-item-' + idx;
-            var link = plz.dom.parseTemplate('<a class="' + cls + '">' + item.text + '</a>');
+            var link = plz.dom.parseTemplate('<a class="' + cls + ' has-text-white">' + item.text + '</a>');
             
             if(!plz.isEmpty(item.view)) {
                 this.addAttr({

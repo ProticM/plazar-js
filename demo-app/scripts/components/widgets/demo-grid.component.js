@@ -3,7 +3,7 @@ plz.define('grid-component', function() {
     return {
         ownerType: 'base-component',
         mixins: ['page-mixin'],
-        template: '<div class="panel b-1">' +
+        template: '<div class="panel b-1 has-background-white">' +
             '<div class="panel-heading mb-1 bl-0 br-0 bt-0">{title}</div>' +
             '<div class="p-1">' +
             '<div class="columns is-marginless">' +
