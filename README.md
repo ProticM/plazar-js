@@ -24,7 +24,7 @@ $ gulp build
 
 PlazarJS supports all latest web and mobile browsers.
 
-##### IE Browser Support
+#### IE Browser Support
 
 1. Usage under version 11 is not recommended.
 2. Every implementation/change is done in a way to ignore IE version 10 and lower.
