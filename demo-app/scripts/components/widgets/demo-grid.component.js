@@ -31,8 +31,8 @@ plz.define('grid-component', function() {
             }
         },
         init: function() {
+            var me = this;
             this.viewModel.columns = this.columns;
-            var todos = this.todoService.get(), me = this;
             this.loadData();
 
             this.subscribe({
