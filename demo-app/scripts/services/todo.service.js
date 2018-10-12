@@ -30,8 +30,14 @@ plz.define('todo-service', function() {
         delete: function(idx) {
             plz.arr.removeAt(_todos, idx);
         },
-        clear: function(idx) {
+        clear: function() {
             plz.arr.clear(_todos);
+        },
+        update: function(todo) {
+            var jTodo = plz.binder.toJSON(todo);
+            plz.arr.find(function(item) {
+                return item.id == jTodo.id;
+            }, _todos).isCompleted = jTodo.isCompleted;
         },
         getCompleted: function() {
             return _get(true);

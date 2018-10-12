@@ -59,6 +59,7 @@ plz.define('todo-component', function() {
                 fn: 'addTodo'
             });
             plz.arr.clear(this.viewModel.todos); // TODO: See why viewModel still has todos after destroy
+            debugger;
             var todos = this.todoService.get();
             plz.forEach(todos, function(todo) {
                 this.viewModel.todos.push(plz.obj.clone(todo));
@@ -90,6 +91,7 @@ plz.define('todo-component', function() {
             });
         },
         onStatusChange: function(todo) {
+            this.todoService.update(todo);
             this.publish('todo-updated', todo);
         },
         require: ['todo-service']

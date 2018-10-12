@@ -44,10 +44,6 @@ plz.define('grid-component', function() {
 
             this.subscribe({
                 'todo-updated': function(todo) {
-                    var jTodo = plz.binder.toJSON(todo);
-                    plz.arr.find(function(todo){
-                        return todo.id == jTodo.id;
-                    }, todos).isCompleted = jTodo.isCompleted;
                     me.loadData();
                 }
             });
