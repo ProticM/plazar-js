@@ -3,6 +3,24 @@
 PlazarJS is a versatile framework build to enrich developers expirience in terms of simplicity and speed of application development. 
 It's leaning on Object-Oriented-Principles (OOP) and it's build with plain JavaScript and you should feel free to use it on every device where JavaScript is supported, which is literally every device alive &#x263A; The framework it self has no dependencies (Hooray &#x263A;) and was built by a JavaScript lover/enthusiast with a strong desire to make this development world a better place.
 
+## Core Features
+
+1. Modularity
+2. Components
+3. Mixins
+4. Classes
+5. Scalability
+6. Inheritance
+7. Bindings and Templating
+8. Inline Templates
+9. Pre-Rendered Templates (attach the component to already rendered html)
+10. Async Templates and/or ViewModel loading
+11. Utils (Array, Object, String...)
+
+## Bootstrap Integration (Bootstrap-UI)
+
+PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.0 which are ready to use in your app out of the box.
+
 ## Getting Started and Documentation
 
 Documentation website is under construction.
