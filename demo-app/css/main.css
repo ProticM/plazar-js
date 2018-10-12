@@ -47,3 +47,7 @@ header.main-navbar > nav {
 .has-text-lightblue {
     color: #3273dc!important
 }
+.panel-heading-widget {
+    background-color: #35baf6;
+    color: #fff;
+}

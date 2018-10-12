@@ -3,14 +3,17 @@ plz.define('todo-component', function() {
     return {
         ownerType: 'base-component',
         mixins: ['page-mixin'],
-        template: '<div>' + // template can also be retrieved from the server via ajaxSetup config
+        template: '<div class="panel b-1 has-background-white">' + // template can also be retrieved from the server via ajaxSetup config
+            '<div class="panel-heading mb-1 bl-0 br-0 bt-0 panel-heading-widget">Create TODO</div>' +
+            '<div class="p-1">' +
             '<div class="field">' + 
-                '<label class="label">TODO:</label>' + 
+                '<label class="label">Title:</label>' + 
                 '<div class="control">' + 
                     '<input class="input" data-value="newTodo.title" placeholder="Example: Shopping" />' + 
                 '</div>' + 
             '</div>' + 
             '<div class="field">' + 
+                '<label class="label">Description:</label>' + 
                 '<div class="control">' + 
                     '<textarea class="textarea" data-value="newTodo.text" placeholder="Example: Go to the grocery store"></textarea>' + 
                 '</div>' + 
@@ -21,11 +24,7 @@ plz.define('todo-component', function() {
                 '</div>' +
             '</div>' + 
             '<article data-each="todos" class="message">' + 
-                '<div class="message-header">' + 
-                    '<p>{title}</p>' + 
-                    '<button class="delete btn-delete" data-attr-[data-idx]="$index" aria-label="delete"></button>' + 
-                '</div>' + 
-                '<div class="message-body">{text}' +
+                '<div class="message-body"><span class="has-text-weight-semibold">{title}</span> - <span>{text}</span>' +
                     '<div class="tags has-addons is-marginless d-inline-block is-pulled-right">' +
                         '<span data-visible="isCompleted" class="tag is-marginless is-success d-inline-block"><input data-checked="isCompleted" class="is-marginless" type="checkbox"/></span>' +
                         '<span data-hidden="isCompleted" class="tag is-marginless is-danger d-inline-block"><input data-checked="isCompleted" class="is-marginless" type="checkbox"/></span>' +
@@ -33,6 +32,7 @@ plz.define('todo-component', function() {
                     '</div>' +
                 '</div>' + 
             '</article>' + 
+            '</div>' +
         '</div>',
         renderTo: 'section.app-body',
         viewModel: {

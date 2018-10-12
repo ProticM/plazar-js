@@ -4,7 +4,7 @@ plz.define('grid-component', function() {
         ownerType: 'base-component',
         mixins: ['page-mixin'],
         template: '<div class="panel b-1 has-background-white">' +
-            '<div class="panel-heading mb-1 bl-0 br-0 bt-0">{title}</div>' +
+            '<div class="panel-heading mb-1 bl-0 br-0 bt-0 panel-heading-widget">{title}</div>' +
             '<div class="p-1">' +
             '<div class="columns is-marginless">' +
                 '<div class="column is-marginless b-1" data-each="columns" data-attr-[data-colidx]="$index" data-attr-[data-dindex]="dataIndex">{text}</div>' +
@@ -16,7 +16,7 @@ plz.define('grid-component', function() {
         '</div>',
         renderTo: 'section.app-body',
         viewModel: {
-            title: 'Uncompleted TODOS:',
+            title: 'Uncompleted TODOS',
             columns: [],
             data: [],
             getRowIndex: function() {
