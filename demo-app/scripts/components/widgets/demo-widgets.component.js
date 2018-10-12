@@ -7,6 +7,7 @@ plz.define('widgets-component', {
         '<div class="column todo"></div>' +
         '<div class="column grid"></div>' +
         '</div>' +
+        '<div class="columns is-marginless"><div class="column user"></div></div>' +
     '</div>',
     renderTo: 'section.app-body',
     components: [{
@@ -28,5 +29,8 @@ plz.define('widgets-component', {
             dataIndex: 'text'
         }],
         data: []
+    }, {
+        type: 'user-component',
+        renderTo: 'div.user'
     }]
 });

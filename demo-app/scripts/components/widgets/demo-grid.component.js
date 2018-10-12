@@ -15,7 +15,7 @@ plz.define('grid-component', function() {
             '<div class="has-text-centered p-1" data-hidden="data.hasData">No data available</div>' +
             '<div>' +
         '</div>',
-        renderTo: 'section.app-body',
+        renderTo: 'root', // default renderTo, this can be overridden when adding this component as a child
         viewModel: {
             title: 'Uncompleted TODOS',
             columns: [],
