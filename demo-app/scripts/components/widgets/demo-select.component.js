@@ -27,10 +27,19 @@ plz.define('select-component', function() {
         label: null,
         helpText: null,
         options: [],
+        init: function() {
+            this.base(arguments);
+            this.handle({
+                on: 'change',
+                fn: 'onChange',
+                selector: 'select'
+            });
+        },
         render: function() {
             this.base(arguments);
             _buildTemplate(this);
-        }
+        },
+        onChange: function() { }
     };
 
 });

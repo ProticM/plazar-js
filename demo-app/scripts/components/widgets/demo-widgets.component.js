@@ -61,6 +61,9 @@ plz.define('widgets-component', {
             value: 2,
             text: 'San Francisco'
         }],
-        helpText: 'Some help from this text'
+        helpText: 'Some help from this text',
+        onChange: function(el) {
+            alert(el.value);
+        }
     }]
 });
