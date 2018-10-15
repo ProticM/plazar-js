@@ -46,3 +46,10 @@ PlazarJS supports all latest web and mobile browsers.
 
 1. Usage under version 10 is not recommended.
 2. Every implementation/change is done in a way to ignore IE version 9 and lower.
+
+## Plans
+
+Some of the next major releases would be:
+
+1. Core Plazar-UI (set of controls out of the box). This will eliminate the need for any external CSS framework integration. Of course, you would still be able to integrate any or them if you choose so.
+2. Typescript support (if shown as required by the community)
