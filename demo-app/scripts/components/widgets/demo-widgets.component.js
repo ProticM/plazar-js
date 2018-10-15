@@ -25,7 +25,7 @@ plz.define('widgets-component', {
             text: 'Title',
             dataIndex: 'title'
         },{
-            text: 'Text',
+            text: 'Description',
             dataIndex: 'text'
         }],
         data: []
