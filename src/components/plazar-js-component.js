@@ -250,7 +250,6 @@
                 replace = child.$replace;
             if (plz.isEmpty(child) || plz.isEmpty(child.type)) {
                 throw new Error(_const.addChildParamErr);
-                return;
             };
 
             delete child.$replace;

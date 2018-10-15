@@ -34,9 +34,19 @@ plz.define('widgets-component', {
         renderTo: 'div.user'
     }, {
         type: 'input-component',
-        renderAfter: 'div.grid',
+        renderTo: 'div.grid',
+        alias: 'nameField',
         label: {
-            text: 'Hello'
-        }
+            text: 'Name:'
+        },
+        placeholder: 'Enter name'
+    }, {
+        type: 'input-component',
+        renderTo: 'div.grid',
+        alias: 'surnameField',
+        label: {
+            text: 'Surname:'
+        },
+        placeholder: 'Enter surname'
     }]
 });
