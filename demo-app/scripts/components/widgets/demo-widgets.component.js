@@ -32,5 +32,11 @@ plz.define('widgets-component', {
     }, {
         type: 'user-component',
         renderTo: 'div.user'
+    }, {
+        type: 'input-component',
+        renderAfter: 'div.grid',
+        label: {
+            text: 'Hello'
+        }
     }]
 });

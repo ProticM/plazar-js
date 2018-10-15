@@ -53,7 +53,8 @@
         },
         traceUp: function () {
             return plz.isEmpty(this.parentComponent) ? null :
-                plz.getInstanceOf(this.parentComponent.id);
+            (!plz.isEmpty(this.parentComponent.$ref) ? this.parentComponent.$ref 
+                : plz.getInstanceOf(this.parentComponent.id));
         },
         traceDown: function (value) { // can be type, id or alias if defined on a component
             if (plz.isEmpty(this.components)) {
@@ -205,6 +206,11 @@
                 plz.arr.clear(childrenToInitialize);
                 childrenToInitialize = null;
             };
+
+            if(!plz.isEmpty(this.parentComponent) && !plz.isEmpty(this.parentComponent.ref)) {
+                this.parentComponent.$ref = null;
+                delete this.parentComponent.$ref;
+            };
         },
         subscribe: function (triggers) {
             if (plz.isEmpty(triggers) || !plz.isObject(triggers)) {
@@ -261,6 +267,10 @@
             instance.parentComponent = {
                 type: this.type,
                 id: this.id
+            };
+
+            if(!plz.isEmpty(instance.renderAfter) || !plz.isEmpty(instance.renderBefore)) {
+                instance.parentComponent.$ref = this;
             };
 
             if (!plz.isEmpty(index) && !replace) {
