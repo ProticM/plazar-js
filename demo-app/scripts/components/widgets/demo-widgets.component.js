@@ -48,5 +48,19 @@ plz.define('widgets-component', {
             text: 'Surname:'
         },
         placeholder: 'Enter surname'
+    }, {
+        type: 'select-component',
+        renderTo: 'div.grid',
+        label: {
+            text: 'City:'
+        },
+        options: [{
+            value: 1,
+            text: 'New York'
+        },{
+            value: 2,
+            text: 'San Francisco'
+        }],
+        helpText: 'Some help from this text'
     }]
 });
