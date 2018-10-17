@@ -181,6 +181,53 @@ plz.define('bootstrap-ui-layout-component', {
                     }]
                 }]
             }]
+        }, {
+            type: 'ui-bootstrap-input-group',
+            css: ['mb-2'],
+            addon: [{
+                renderAs: {
+                    type: 'ui-bootstrap-input',
+                    inputType: 'checkbox',
+                    onChange: function() {
+                        alert('change')
+                    }
+                }
+            }, {
+                renderAs: {
+                    type: 'text',
+                    text: '$'
+                },
+                position: 'append'
+            }, {
+                renderAs: {
+                    type: 'text',
+                    text: '0.00'
+                },
+                position: 'append'
+            }]
+        }]
+    }, {
+        type: 'ui-bootstrap-container',
+        fluid: true,
+        components: [{
+            type: 'ui-bootstrap-input-group',
+            css: ['mb-3'],
+            addon: [{
+                renderAs: {
+                    type: 'ui-bootstrap-dropdown',
+                    appearance: 'outline-secondary',
+                    split: true,
+                    text: 'Actions',
+                    menuItems: [{
+                        text: 'Action 1'
+                    }, {
+                        text: 'Action 2'
+                    }],
+                    onChange: function() {
+                        alert('change')
+                    }
+                }
+            }]
         }]
     }]
 });
