@@ -205,11 +205,7 @@ plz.define('bootstrap-ui-layout-component', {
                 },
                 position: 'append'
             }]
-        }]
-    }, {
-        type: 'ui-bootstrap-container',
-        fluid: true,
-        components: [{
+        }, {
             type: 'ui-bootstrap-input-group',
             css: ['mb-3'],
             addon: [{
