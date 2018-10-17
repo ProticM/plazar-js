@@ -30,7 +30,7 @@ plz.define('bootstrap-ui-header-component', {
         css: ['form-inline'],
         renderTo: 'div.navbar-collapse',
         button: {
-            appearance: 'success'
+            appearance: 'outline-success'
         },
         components: [{
             type: 'ui-bootstrap-input',
