@@ -32,11 +32,12 @@ plz.define('bootstrap-ui-layout-component', {
                 renderAs: 'column',
                 column: {
                     lg: 4,
-                    md: 2,
-                    sm: 3
+                    md: 6,
+                    sm: 12
                 },
                 components: [{
                     type: 'ui-bootstrap-card',
+                    css: ['mb-2'],
                     headerCss: ['bg-info text-white'],
                     header: {
                         text: 'Lorem Ipsum'
@@ -56,11 +57,12 @@ plz.define('bootstrap-ui-layout-component', {
                 renderAs: 'column',
                 column: {
                     lg: 4,
-                    md: 4,
-                    sm: 1
+                    md: 6,
+                    sm: 12
                 },                
                 components: [{
                     type: 'ui-bootstrap-card',
+                    css: ['mb-2'],
                     header: {
                         text: 'Simple Form'
                     },
@@ -97,11 +99,12 @@ plz.define('bootstrap-ui-layout-component', {
                 renderAs: 'column',
                 column: {
                     lg: 4,
-                    md: 4,
-                    sm: 1
+                    md: 12,
+                    sm: 12
                 },
                 components: [{
                     type: 'ui-bootstrap-card',
+                    css: ['mb-2'],
                     headerCss: ['d-flex justify-content-center'],
                     components: [{
                         type: 'ui-bootstrap-button-toolbar',
@@ -124,7 +127,6 @@ plz.define('bootstrap-ui-layout-component', {
                                 type: 'ui-bootstrap-dropdown',
                                 appearance: 'outline-secondary',
                                 size: 'sm',
-                                split: true,
                                 text: 'Dropdown Button',
                                 menuItems: [{
                                     text: 'Menu Item 1.1'
@@ -137,16 +139,20 @@ plz.define('bootstrap-ui-layout-component', {
                         type: 'ui-bootstrap-button',
                         appearance: 'link',
                         size: 'sm',
-                        text: 'Show alert',
+                        text: 'Click to add alert!',
                         onClick: function() {
                             var parent = this.traceUp();
                             parent.addChild({
                                 type: 'ui-bootstrap-alert',
                                 dismissible: true,
                                 appearance: 'danger',
-                                text: 'This alert was created dynamically!'
+                                text: 'This alert was created dynamically! We can dismiss this one'
                             });
                         }
+                    }, {
+                        type: 'ui-bootstrap-alert',
+                        appearance: 'success',
+                        text: 'This alert was created upon parent component initialization with dismissible option disabled!'
                     }, {
                         type: 'ui-bootstrap-list-group',
                         renderTo: 'div.card-footer',
@@ -157,6 +163,18 @@ plz.define('bootstrap-ui-layout-component', {
                         },{
                             text: 'List Item 2',
                             href: 'javascript:void(0)'
+                        }]
+                    }, , {
+                        type: 'ui-bootstrap-dropdown',
+                        renderTo: 'div.card-footer',
+                        appearance: 'info',
+                        css: ['mt-2'],
+                        split: true,
+                        text: 'Dropdown Button Split',
+                        menuItems: [{
+                            text: 'Menu Item 1.1'
+                        }, {
+                            text: 'Menu Item 1.2'
                         }]
                     }]
                 }]
