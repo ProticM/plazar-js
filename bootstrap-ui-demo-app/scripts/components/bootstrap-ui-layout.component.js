@@ -37,6 +37,7 @@ plz.define('bootstrap-ui-layout-component', {
                 },
                 components: [{
                     type: 'ui-bootstrap-card',
+                    headerCss: ['bg-info text-white'],
                     header: {
                         text: 'Lorem Ipsum'
                     },
