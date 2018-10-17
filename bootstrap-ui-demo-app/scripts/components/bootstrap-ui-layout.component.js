@@ -25,6 +25,18 @@ plz.define('bootstrap-ui-layout-component', {
         type: 'ui-bootstrap-container',
         renderTo: 'root',
         components:[{
+            type: 'ui-bootstrap-breadcrumb',
+            crumbs: [{
+                text: 'Main Page'
+            }, {
+                text: 'Sub Page 1',
+                asLink: true
+            }, {
+                text: 'Sub Page 1',
+                asLink: true,
+                isActive: true
+            }]
+        }, {
             type: 'ui-bootstrap-container',
             renderAs: 'row',
             components:[{
