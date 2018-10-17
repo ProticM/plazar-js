@@ -4,9 +4,9 @@
     var _parseTemplate = function () {
 
         var hasImage = !plz.isEmpty(this.image), image, pos, method;
-        var bodyClasses = 'card-body '.concat(this.bodyCss.join(' ')).trim();
-        var headerClasses = 'card-header '.concat(this.headerCss.join(' ')).trim();
-        var footerClasses = 'card-footer '.concat(this.footerCss.join(' ')).trim();
+        var bodyClasses = 'card-body '.concat(this.body ? (!plz.isEmpty(this.body.css) ? this.body.css : []).join(' ') : '').trim();
+        var headerClasses = 'card-header '.concat(this.header ? (!plz.isEmpty(this.header.css) ? this.header.css : []).join(' ') : '').trim();
+        var footerClasses = 'card-footer '.concat(this.footer ? (!plz.isEmpty(this.footer.css) ? this.footer.css : []).join(' ') : '').trim();
 
         plz.dom.append(this.html, (this.header ? ('<div class="' + headerClasses + '">' + (plz.isEmpty(this.header.text) ? '' : this.header.text) + '</div>') : ''));
         plz.dom.append(this.html, (this.body ? '<div class="' + bodyClasses + '"></div>' : ''));
@@ -58,9 +58,6 @@
         ownerType: 'ui-component',
         template: '<div class="card"></div>',
         block: false,
-        bodyCss: [],
-        headerCss: [],
-        footerCss: [],
         containerElement: '> div.card-body',
         header: {
             text: ''

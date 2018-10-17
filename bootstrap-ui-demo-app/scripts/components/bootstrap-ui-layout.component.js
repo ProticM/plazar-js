@@ -38,14 +38,16 @@ plz.define('bootstrap-ui-layout-component', {
                 components: [{
                     type: 'ui-bootstrap-card',
                     css: ['mb-2'],
-                    headerCss: ['bg-info text-white'],
                     header: {
-                        text: 'Lorem Ipsum'
+                        text: 'Lorem Ipsum',
+                        css: ['bg-dark text-white']
                     },
                     footer: {
-                        text: 'Some Footer Text'
+                        text: 'Some Footer Text',
+                        css: ['bg-dark text-white']
                     },
                     body: {
+                        css: ['bg-info text-white'],
                         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
                             'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ' + 
                                 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ' +
@@ -64,7 +66,7 @@ plz.define('bootstrap-ui-layout-component', {
                     type: 'ui-bootstrap-card',
                     css: ['mb-2'],
                     header: {
-                        text: 'Simple Form'
+                        text: 'Simple Form (no footer)'
                     },
                     footer: false,
                     components:[{
