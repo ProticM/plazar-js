@@ -19,7 +19,7 @@ It's leaning on Object-Oriented-Principles (OOP) and it's build with plain JavaS
 
 ## Bootstrap Integration (Bootstrap-UI)
 
-PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.0 which are ready to use in your app out of the box.
+PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
 
 ## Getting Started and Documentation
 
