@@ -81,7 +81,7 @@
 
     return {
         ownerType: 'ui-bootstrap-component',
-        mixins: ['ui-form-field-mix'],
+        mixins: ['ui-bootstrap-form-field-mix'],
         inputType: 'text',
         inForm: false,
         readonly: false,

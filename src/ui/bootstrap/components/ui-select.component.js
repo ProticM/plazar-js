@@ -26,7 +26,7 @@
         ownerType: 'ui-bootstrap-component',
         labelText:'',
         template: '<select></select>',
-        mixins: ['ui-form-field-mix'],
+        mixins: ['ui-bootstrap-form-field-mix'],
         dataSource: [],
         custom: false,
         multiple: false,

@@ -78,7 +78,7 @@ plz.define('ui-bootstrap-component', function () {
     };
 });
 
-plz.define('ui-form-field-mix', function () {
+plz.define('ui-bootstrap-form-field-mix', function () {
     'use strict';
 
     var _getHtml = function (me) {
@@ -1042,7 +1042,7 @@ plz.define('ui-bootstrap-input', function () {
 
     return {
         ownerType: 'ui-bootstrap-component',
-        mixins: ['ui-form-field-mix'],
+        mixins: ['ui-bootstrap-form-field-mix'],
         inputType: 'text',
         inForm: false,
         readonly: false,
@@ -1644,7 +1644,7 @@ plz.define('ui-bootstrap-select', function () {
         ownerType: 'ui-bootstrap-component',
         labelText:'',
         template: '<select></select>',
-        mixins: ['ui-form-field-mix'],
+        mixins: ['ui-bootstrap-form-field-mix'],
         dataSource: [],
         custom: false,
         multiple: false,

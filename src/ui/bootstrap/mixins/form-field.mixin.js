@@ -1,4 +1,4 @@
-﻿plz.define('ui-form-field-mix', function () {
+﻿plz.define('ui-bootstrap-form-field-mix', function () {
     'use strict';
 
     var _getHtml = function (me) {
