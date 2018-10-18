@@ -230,7 +230,7 @@ var plz;
     };
 
     var _forEach = function (subject, fn, scope) {
-        var length = subject.length, i = 0;
+        var length = (_isEmpty(subject) ? 0 : subject.length), i = 0;
         for (; i < length; i++) {
             var result = fn.call(scope || subject[i], subject[i], i, subject);
             if (result == false) {
