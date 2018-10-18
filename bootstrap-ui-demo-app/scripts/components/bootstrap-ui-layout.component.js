@@ -94,7 +94,10 @@ plz.define('bootstrap-ui-layout-component', {
                         }, {
                             type: 'ui-bootstrap-input',
                             inputType: 'checkbox',
-                            labelText: 'Check me'
+                            labelText: 'Check me',
+                            onChange: function() {
+                                alert('check change');
+                            }
                         }, {
                             type: 'ui-bootstrap-dropdown',
                             appearance: 'outline-secondary',
@@ -105,6 +108,20 @@ plz.define('bootstrap-ui-layout-component', {
                             }, {
                                 text: 'Menu Item 3.2'
                             }]
+                        }, {
+                            type: 'ui-bootstrap-select',
+                            labelText: 'Pick an Option',
+                            css: ['mb-2'],
+                            dataSource: [{
+                                id: 1,
+                                value: 'Option 1'
+                            },{
+                                id: 2,
+                                value: 'Option 2'
+                            }],
+                            onChange: function() {
+                                alert('select change');
+                            }
                         }]
                     }]
                 }]
