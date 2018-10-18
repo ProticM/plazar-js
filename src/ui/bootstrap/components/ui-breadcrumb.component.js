@@ -17,7 +17,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<nav aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>',
         parseTemplate: _parseTemplate,
         crumbs: [],

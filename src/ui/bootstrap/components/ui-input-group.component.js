@@ -25,7 +25,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="input-group"></div>',
         parseTemplate: function () {
             var hasSize = !plz.isEmpty(this.size), addons = plz.isArray(this.addon) ? this.addon : [this.addon];

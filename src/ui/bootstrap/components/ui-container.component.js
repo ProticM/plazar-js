@@ -70,7 +70,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div></div>',
         renderAs: 'container', // can be row, form-row, container, column, jumbotron
         fluid: false,

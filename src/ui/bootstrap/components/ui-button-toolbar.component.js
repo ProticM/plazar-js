@@ -6,7 +6,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         groups: [],
         init: function () {
 

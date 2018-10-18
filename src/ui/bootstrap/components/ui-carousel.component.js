@@ -53,7 +53,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="carousel slide" data-ride="carousel"></div>',
         indicators: true,
         interval: 5000,

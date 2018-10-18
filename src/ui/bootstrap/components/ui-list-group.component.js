@@ -71,7 +71,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         menuItems: [],
         actionable: false,
         flushed: false,

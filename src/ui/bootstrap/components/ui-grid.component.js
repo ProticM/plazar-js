@@ -46,7 +46,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         fluid: false,
         rows: [{
             css: [],

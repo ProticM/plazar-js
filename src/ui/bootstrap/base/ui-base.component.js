@@ -1,4 +1,4 @@
-﻿plz.define('ui-component', function () {
+﻿plz.define('ui-bootstrap-component', function () {
     'use strict';
 
     var _const = {

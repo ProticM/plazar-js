@@ -10,7 +10,7 @@
 	};
 
 	return {
-		ownerType: 'ui-component',
+		ownerType: 'ui-bootstrap-component',
         appearance: 'primary',
         text: 'Button',
         buttonType: 'button',

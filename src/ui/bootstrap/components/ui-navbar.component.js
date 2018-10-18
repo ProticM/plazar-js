@@ -61,7 +61,7 @@
 	};
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         position: 'top',
         template: '<nav></nav>',
         theme: 'light',

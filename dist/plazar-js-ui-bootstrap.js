@@ -1,5 +1,5 @@
 // Plazar JS Bootstrap UI
-plz.define('ui-component', function () {
+plz.define('ui-bootstrap-component', function () {
     'use strict';
 
     var _const = {
@@ -143,7 +143,7 @@ plz.define('ui-bootstrap-alert', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="alert" role="alert"><div>',
         appearance: 'primary',
         text: '',
@@ -192,7 +192,7 @@ plz.define('ui-bootstrap-breadcrumb', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<nav aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>',
         parseTemplate: _parseTemplate,
         crumbs: [],
@@ -222,7 +222,7 @@ plz.define('ui-bootstrap-button-group', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         buttons: [],
         renderAs: 'group',
         init: function () {
@@ -252,7 +252,7 @@ plz.define('ui-bootstrap-button-toolbar', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         groups: [],
         init: function () {
 
@@ -285,7 +285,7 @@ plz.define('ui-bootstrap-button', function () {
 	};
 
 	return {
-		ownerType: 'ui-component',
+		ownerType: 'ui-bootstrap-component',
         appearance: 'primary',
         text: 'Button',
         buttonType: 'button',
@@ -392,7 +392,7 @@ plz.define('ui-bootstrap-card', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="card"></div>',
         block: false,
         containerElement: '> div.card-body',
@@ -484,7 +484,7 @@ plz.define('ui-bootstrap-carousel', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="carousel slide" data-ride="carousel"></div>',
         indicators: true,
         interval: 5000,
@@ -640,7 +640,7 @@ plz.define('ui-bootstrap-container', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div></div>',
         renderAs: 'container', // can be row, form-row, container, column, jumbotron
         fluid: false,
@@ -707,7 +707,7 @@ plz.define('ui-bootstrap-dropdown', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="dropdown"><button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button></div>',
         load: function () {
             var parent = this.traceUp();
@@ -756,7 +756,7 @@ plz.define('ui-bootstrap-form', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<form></form>',
         inline: false,
         components: [],
@@ -848,7 +848,7 @@ plz.define('ui-bootstrap-grid', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         fluid: false,
         rows: [{
             css: [],
@@ -889,7 +889,7 @@ plz.define('ui-bootstrap-input-group', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="input-group"></div>',
         parseTemplate: function () {
             var hasSize = !plz.isEmpty(this.size), addons = plz.isArray(this.addon) ? this.addon : [this.addon];
@@ -1041,7 +1041,7 @@ plz.define('ui-bootstrap-input', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         mixins: ['ui-form-field-mix'],
         inputType: 'text',
         inForm: false,
@@ -1163,7 +1163,7 @@ plz.define('ui-bootstrap-list-group', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         menuItems: [],
         actionable: false,
         flushed: false,
@@ -1267,7 +1267,7 @@ plz.define('ui-bootstrap-modal', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         containerElement: 'div.modal-body',
         renderTo: 'body',
         autoLoad: true,
@@ -1435,7 +1435,7 @@ plz.define('ui-bootstrap-nav', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         position: 'left',
         template: '<nav class="nav"></nav>',
         components: [],
@@ -1552,7 +1552,7 @@ plz.define('ui-bootstrap-navbar', function () {
 	};
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         position: 'top',
         template: '<nav></nav>',
         theme: 'light',
@@ -1595,7 +1595,7 @@ plz.define('ui-bootstrap-progress', function () {
 	};
 
 	return {
-		ownerType: 'ui-component',
+		ownerType: 'ui-bootstrap-component',
 		template: '<div class="progress"><div class="progress-bar" role="progressbar"></div></div>',
 		showValue: true,
 		animated: false,
@@ -1641,7 +1641,7 @@ plz.define('ui-bootstrap-select', function () {
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         labelText:'',
         template: '<select></select>',
         mixins: ['ui-form-field-mix'],

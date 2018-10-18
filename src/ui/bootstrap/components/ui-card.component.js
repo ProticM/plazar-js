@@ -55,7 +55,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="card"></div>',
         block: false,
         containerElement: '> div.card-body',

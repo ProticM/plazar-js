@@ -25,7 +25,7 @@
 	};
 
 	return {
-		ownerType: 'ui-component',
+		ownerType: 'ui-bootstrap-component',
 		template: '<div class="progress"><div class="progress-bar" role="progressbar"></div></div>',
 		showValue: true,
 		animated: false,

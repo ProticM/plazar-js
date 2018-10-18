@@ -9,7 +9,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         buttons: [],
         renderAs: 'group',
         init: function () {

@@ -16,7 +16,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<form></form>',
         inline: false,
         components: [],

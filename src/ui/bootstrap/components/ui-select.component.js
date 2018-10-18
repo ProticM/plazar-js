@@ -23,7 +23,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         labelText:'',
         template: '<select></select>',
         mixins: ['ui-form-field-mix'],

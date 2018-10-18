@@ -28,7 +28,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         template: '<div class="alert" role="alert"><div>',
         appearance: 'primary',
         text: '',

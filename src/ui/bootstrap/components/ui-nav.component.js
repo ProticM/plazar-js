@@ -71,7 +71,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         position: 'left',
         template: '<nav class="nav"></nav>',
         components: [],

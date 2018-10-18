@@ -49,7 +49,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         containerElement: 'div.modal-body',
         renderTo: 'body',
         autoLoad: true,

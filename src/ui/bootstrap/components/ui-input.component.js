@@ -80,7 +80,7 @@
     };
 
     return {
-        ownerType: 'ui-component',
+        ownerType: 'ui-bootstrap-component',
         mixins: ['ui-form-field-mix'],
         inputType: 'text',
         inForm: false,
