@@ -23,7 +23,7 @@ PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com
 
 ## Getting Started and Documentation
 
-Documentation website is under construction.
+http://www.plazarjs.com
 
 ## Deploy
 
