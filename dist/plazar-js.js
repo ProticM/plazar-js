@@ -2147,8 +2147,8 @@ plz.define('component', function () {
         },
         render: function () {
             var templateSelectorEmpty = plz.isEmpty(this.templateSelector), me = this,
-                renderToDefined, container, child, childDomIdx, classes, renderBeforeDefined,
-                renderAfterDefined, siblingContainer, insertBeforeOrAfter;
+                renderToDefined, container, child, childDomIdx, renderBeforeDefined,
+                renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector;
             this.html = !templateSelectorEmpty ? plz.dom.getByAttr(this.templateSelector) :
                 plz.dom.clone(plz.dom.parseTemplate(this.template)), me = this;
             this.addAttr({
@@ -2165,35 +2165,34 @@ plz.define('component', function () {
             };
 
             renderToDefined = !plz.isEmpty(this.renderTo);
-            if (!renderToDefined) {
+            renderAfterDefined = !plz.isEmpty(this.renderAfter);
+            renderBeforeDefined = !plz.isEmpty(this.renderBefore);
+
+            if (!renderToDefined && !renderAfterDefined && !renderBeforeDefined) {
                 throw new Error(_const.tplContainerNotDefined);
             };
 
-            container = plz.dom.getEl(this.renderTo);
+            containerSelector = renderToDefined ? this.renderTo : (renderBeforeDefined ? 
+                this.renderBefore : this.renderAfter);
+            container = plz.dom.getEl(containerSelector);
             if (plz.isEmpty(container)) {
                 throw new Error(_const.tplContainerNotFound);
             };
 
-            renderAfterDefined = !plz.isEmpty(this.renderAfter);
-            renderBeforeDefined = !plz.isEmpty(this.renderBefore);
-
-            if (renderBeforeDefined && renderAfterDefined) {
-                throw new Error(_const.renderBeforeAndAfterDefined);
-            };
-
             insertBeforeOrAfter = function (selector, method) {
                 var parent = me.traceUp();
-                siblingContainer = plz.dom.getEl(selector, { rootEl: parent.html, all: false });
+                var rootEl = !plz.isEmpty(parent) ? parent.html : document;
+                siblingContainer = plz.dom.getEl(selector, { rootEl: rootEl, all: false });
                 plz.dom[method](siblingContainer, me.html);
                 me.html = plz.dom.getEl('*[data-componentid="' + me.id + '"]', { // get the dom reference since we will inject html string
-                    rootEl: parent.html, all: false
+                    rootEl: rootEl, all: false
                 });
             };
 
             if (renderBeforeDefined) {
-                insertBeforeOrAfter(this.renderBefore, 'insertBefore');
+                insertBeforeOrAfter(containerSelector, 'insertBefore');
             } else if (renderAfterDefined) {
-                insertBeforeOrAfter(this.renderAfter, 'insertAfter');
+                insertBeforeOrAfter(containerSelector, 'insertAfter');
             } else if (!plz.isEmpty(this.insertAt)) {
                 child = this.traceUp().childAt(this.insertAt);
                 childDomIdx = plz.isEmpty(child) ? 0 : plz.dom.indexOf(child.html);
