@@ -2038,8 +2038,9 @@ plz.define('component', function () {
 
     var _const = {
         tplSourceNotDefined: 'Template source not defined. Please define one of these options in your component config: 1. [template]; 2. [templateSelector]; 3. [ajaxSetup.url]',
-        tplContainerNotDefined: 'Template container selector not defined. Please define one of these options in your component config: 1. [renderTo]; 2. [templateSelector];',
-        tplContainerNotFound: 'Template container not found. Please review one of these options in your component config: 1. [renderTo]; 2. [templateSelector];',
+        tplContainerNotDefined: 'Template container selector not defined. Please define one of these options in your component config: 1. [renderTo]; 2. [templateSelector]; 3. [renderBefore]; 4. [renderAfter];',
+        tplContainerNotFound: 'Template container not found. Please review one of these options in your component config: 1. [renderTo]; 2. [templateSelector]; 3. [renderBefore]; 4. [renderAfter];',
+        tplContainerNotFoundWithinComponent: 'Template container not found within parent retrieved via selector: [{0}]. Please review one of these options in your component config: 1. [renderTo]; 2. [templateSelector]; 3. [renderBefore]; 4. [renderAfter];',
         loadingMaskMarkup: '<div class="loading-mask" style="color:#fff;background-color: #fff;position:absolute;top:0;left:0;bottom:0;width:100%;text-align:center;vertical-align:middle;height:100%">'
             .concat('<p style="position: absolute;top:40%;left:41.5%;background-color: #fff;padding: 5px;border: 1px solid #f1f1f1;color: #c0c0c0;z-index:1">loading...</p></div>'),
         addChildParamErr: 'Component you\'re trying to add, or it\'s [type] property has not been provided via parameter for [addChild] function. Example invocation: parent.addChild({ type: \'myType\' })',
@@ -2114,7 +2115,6 @@ plz.define('component', function () {
 
             if (templateEmpty && templateSelectorEmpty && urlEmpty) {
                 throw new Error(_const.tplSourceNotDefined);
-                return;
             };
 
             if (urlEmpty) {
@@ -2148,7 +2148,7 @@ plz.define('component', function () {
         render: function () {
             var templateSelectorEmpty = plz.isEmpty(this.templateSelector), me = this,
                 renderToDefined, container, child, childDomIdx, renderBeforeDefined,
-                renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector;
+                renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector, isChild, containerErr;
             this.html = !templateSelectorEmpty ? plz.dom.getByAttr(this.templateSelector) :
                 plz.dom.clone(plz.dom.parseTemplate(this.template)), me = this;
             this.addAttr({
@@ -2172,11 +2172,15 @@ plz.define('component', function () {
                 throw new Error(_const.tplContainerNotDefined);
             };
 
-            containerSelector = renderToDefined ? this.renderTo : (renderBeforeDefined ? 
-                this.renderBefore : this.renderAfter);
+            isChild = !plz.isEmpty(this.parentComponent);
+            containerSelector = (isChild ? plz.str.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
+                (renderToDefined ? this.renderTo : (renderBeforeDefined ? this.renderBefore : this.renderAfter)));
             container = plz.dom.getEl(containerSelector);
+
             if (plz.isEmpty(container)) {
-                throw new Error(_const.tplContainerNotFound);
+                containerErr = (isChild ? plz.str.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
+                    _const.tplContainerNotFound);
+                throw new Error(containerErr);
             };
 
             insertBeforeOrAfter = function (selector, method) {
