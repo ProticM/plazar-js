@@ -280,7 +280,7 @@ plz.define('ui-bootstrap-button', function () {
         var hasSize = !plz.isEmpty(this.size), hasHref = !plz.isEmpty(this.href);
         this.html.innerHTML = this.text;
         this.addCss(('btn-' + this.appearance + (hasSize ? ' btn-' + this.size : '')));
-        this.addCss((!plz.isEmpty(this.align) ? 'pull-' + this.align : ''));
+        this.addCss((!plz.isEmpty(this.align) ? 'float-' + this.align : ''));
         this.html.setAttribute((hasHref ? 'href' : 'type'), (hasHref ? this.href : this.buttonType));
 	};
 
