@@ -769,7 +769,7 @@ plz.define('ui-bootstrap-form', function () {
         },
         init: function () {
 
-            plz.forEach(this.components, function (component, idx) {
+            plz.forEach(this.components, function (component) {
                 component.inForm = component.type == 'ui-bootstrap-input';
             }, this);
 
@@ -779,14 +779,13 @@ plz.define('ui-bootstrap-form', function () {
                     text: this.button.text || 'Submit',
                     appearance: this.button.appearance || 'primary',
                     buttonType: this.button.type || 'submit',
-                    css: this.button.css || []
+                    css: this.button.css || [],
+                    align: this.button.align || 'right'
                 };
 
-                if (this.button.onClick) {
+                if (plz.isFunction(this.button.onClick)) {
                     button.onClick = this.button.onClick;
                 };
-
-                button.css.push(('float-' + this.button.align));
 
                 this.components.push(button);
             };
