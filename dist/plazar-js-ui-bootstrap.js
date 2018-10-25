@@ -748,7 +748,7 @@ plz.define('ui-bootstrap-form', function () {
             this.setAttribute('action', this.action);
         };
 
-        if (hasAction) {
+        if (hasMethod) {
             this.setAttribute('method', this.method);
         };
 
