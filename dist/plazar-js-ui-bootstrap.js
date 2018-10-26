@@ -890,7 +890,7 @@ plz.define('ui-bootstrap-input-group', function () {
 
     var _const = {
         addonEmpty: 'Component of type [ui-bootstrap-input-group] requires at least one addon. See addon config docs.',
-        unsupportedInputType: 'Provided input type is not supported. Please use one of the following: \'text\' or \'select\''
+        unsupportedInputType: 'Provided input type is not supported. Please use one of the following: \'ui-bootstrap-input\' or \'ui-bootstrap-select\''
     };
 
     var _allowedComponents = [
@@ -915,32 +915,24 @@ plz.define('ui-bootstrap-input-group', function () {
         ownerType: 'ui-bootstrap-component',
         template: '<div class="input-group"></div>',
         parseTemplate: function () {
-            var hasSize = !plz.isEmpty(this.size), addons = plz.isArray(this.addon) ? this.addon : [this.addon];
+            var hasSize = !plz.isEmpty(this.size);
             this.addCss((hasSize ? ('input-group-' + this.size) : ''));
         },
         input: {
-            type: 'text' // or select
+            type: 'ui-bootstrap-input' // or ui-bootstrap-select
         },
         init: function () {
-            var addons, input, addons, wrapper, component;
+            var addons, addons, wrapper, component;
 
             if (plz.isEmpty(this.addon)) {
                 throw new Error(_const.addonEmpty);
             };
 
-            if (!plz.arr.contains(['text', 'select'], this.input.type)) {
+            if (!plz.arr.contains(['ui-bootstrap-input', 'ui-bootstrap-select'], this.input.type)) {
                 throw new Error(_const.unsupportedInputType);
             };
 
             addons = plz.isArray(this.addon) ? this.addon : [this.addon];
-            input = this.input.type == 'text' ? {
-                type: 'ui-bootstrap-input',
-                inputType: 'text'
-            } : {
-                type: 'ui-bootstrap-select',
-                dataSource: this.input.dataSource || []
-            };
-
             plz.arr.clear(this.components);
             this.components = [];
 
@@ -951,7 +943,7 @@ plz.define('ui-bootstrap-input-group', function () {
                 };
 
                 if (addon.position == 'append') {
-                    input.renderAfter = 'div.input-group-prepend';
+                    this.input.renderAfter = 'div.input-group-prepend';
                 };
 
                 wrapper = _getAddonWrapper(this, addon), component = {};
@@ -977,7 +969,7 @@ plz.define('ui-bootstrap-input-group', function () {
             }, this);
 
             this.base(arguments);
-            this.addChild(input);
+            this.addChild(this.input);
         }
     };
 });
