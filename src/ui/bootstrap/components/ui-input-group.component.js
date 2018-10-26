@@ -2,7 +2,7 @@
     'use strict';
 
     var _const = {
-        addonEmpty: 'Component of type [ui - bootstrap - input - group] requires at least one addon. See addon config docs.',
+        addonEmpty: 'Component of type [ui-bootstrap-input-group] requires at least one addon. See addon config docs.',
         unsupportedInputType: 'Provided input type is not supported. Please use one of the following: \'text\' or \'select\''
     };
 
