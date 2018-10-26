@@ -826,13 +826,16 @@ plz.define('ui-bootstrap-grid', function () {
         this.addCss((this.fluid ? 'container-fluid' : 'container'));
 
         plz.forEach(this.rows, function (row, idx) {
-            var rowEl = plz.dom.createElement('div');
-            if(row.generateId) {
+            var rowEl = plz.dom.createElement('div'), 
+                generateRowId = !plz.isEmpty(row.id) || row.generateId;
+
+            if(generateRowId) {
                 me.addAttr({
                     name: 'id',
                     value: row.id || ('row-' + idx)
                 }, rowEl);
             };
+            
             me.addCss('row', rowEl);
             if (!plz.isEmpty(row.css)) {
                 me.addCss(row.css.join(' '), rowEl);
@@ -841,14 +844,15 @@ plz.define('ui-bootstrap-grid', function () {
 
             plz.forEach(row.columns, function (column, idx) {
                 var sizeClass = _getColumnSizeClass(column.size),
-                    columnEl = plz.dom.createElement('div');
+                    columnEl = plz.dom.createElement('div'),
+                    generateColumnId = !plz.isEmpty(column.id) || column.generateId;
 
                 me.addCss(sizeClass, columnEl);
                 if (!plz.isEmpty(column.css)) {
                     me.addCss(column.css, columnEl);
                 };
 
-                if(column.generateId) {
+                if(generateColumnId) {
                     me.addAttr({
                         name: 'id',
                         value: column.id || ('column-' + idx)
