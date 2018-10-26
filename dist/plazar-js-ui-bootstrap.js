@@ -825,15 +825,21 @@ plz.define('ui-bootstrap-grid', function () {
         var me = this;
         this.addCss((this.fluid ? 'container-fluid' : 'container'));
 
-        plz.forEach(this.rows, function (row) {
+        plz.forEach(this.rows, function (row, idx) {
             var rowEl = plz.dom.createElement('div');
+            if(row.generateId) {
+                me.addAttr({
+                    name: 'id',
+                    value: row.id || ('row-' + idx)
+                }, rowEl);
+            };
             me.addCss('row', rowEl);
             if (!plz.isEmpty(row.css)) {
                 me.addCss(row.css.join(' '), rowEl);
             };
             plz.dom.append(me.html, rowEl);
 
-            plz.forEach(row.columns, function (column) {
+            plz.forEach(row.columns, function (column, idx) {
                 var sizeClass = _getColumnSizeClass(column.size),
                     columnEl = plz.dom.createElement('div');
 
@@ -841,6 +847,17 @@ plz.define('ui-bootstrap-grid', function () {
                 if (!plz.isEmpty(column.css)) {
                     me.addCss(column.css, columnEl);
                 };
+
+                if(column.generateId) {
+                    me.addAttr({
+                        name: 'id',
+                        value: column.id || ('column-' + idx)
+                    }, columnEl);
+                };
+
+                columnEl.innerHTML = !plz.isEmpty(column.text) ? 
+                    column.text : '';
+
                 plz.dom.append(rowEl, columnEl);
             });
         });
@@ -850,8 +867,11 @@ plz.define('ui-bootstrap-grid', function () {
         ownerType: 'ui-bootstrap-component',
         fluid: false,
         rows: [{
+            generateId: false,
             css: [],
             columns: [{
+                generateId: false,
+                text: '',
                 size: _defaultColSize,
                 css: []
             }]
