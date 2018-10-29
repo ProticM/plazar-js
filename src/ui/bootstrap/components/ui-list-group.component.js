@@ -21,11 +21,12 @@
                 menuItem.href = !plz.isEmpty(this.href) ? this.href.replace('#', jsVoid) : jsVoid;
             };
 
-            if (plz.isEmpty(menuItem.href)) {
+            actionable = (this.actionable || this.mode == 'tab');
+
+            if (actionable && plz.isEmpty(menuItem.href)) {
                 throw new Error('Each menu item must have [href] property configured');
             };
 
-            actionable = (this.actionable || this.mode == 'tab');
             link = plz.dom.createElement((actionable ? 'a' : 'li'));
             this.addCss((actionable ? 'list-group-item' : 'list-group-item list-group-item-action'), link);
 
