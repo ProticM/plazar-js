@@ -29,7 +29,7 @@ plazar-js has a set of components styled with [Bootstrap](http://getbootstrap.co
 
 ## Getting Started and Documentation
 
-Detailed documentation can be found <a href="http://www.plazarjs.com" target="_blank">here</a>.
+Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
 ## Deploy
 
@@ -46,7 +46,7 @@ $ gulp build
 
 ## Browser Support
 
-plazar-js supports all ECMAScript 5 compliant browsers. Check out the <a href="http://kangax.github.io/compat-table/es5/" target="_blank">compatibility table</a>.
+plazar-js supports all ECMAScript 5 compliant browsers. Check out the <a href="http://kangax.github.io/compat-table/es5/">compatibility table</a>.
 
 #### IE Browser Support
 
