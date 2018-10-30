@@ -1318,7 +1318,7 @@ plz.define('ui-bootstrap-modal', function () {
                     renderTo: 'div.modal-footer',
                     text: button,
                     onClick: function (e) {
-                        me.buttonHandler.call(this, e, button);
+                        me.onButtonClick.call(this, e, button);
                         if (me.autoHide) {
                             me.hide();
                         };
@@ -1358,7 +1358,7 @@ plz.define('ui-bootstrap-modal', function () {
         update: function () {
             $(this.html).modal('handleUpdate');
         },
-        buttonHandler: function () { },
+        onButtonClick: function () { },
         onModalShown: function (e) {
             this.publish('shown-bs-modal', e);
         },

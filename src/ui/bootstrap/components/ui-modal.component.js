@@ -84,7 +84,7 @@
                     renderTo: 'div.modal-footer',
                     text: button,
                     onClick: function (e) {
-                        me.buttonHandler.call(this, e, button);
+                        me.onButtonClick.call(this, e, button);
                         if (me.autoHide) {
                             me.hide();
                         };
@@ -124,7 +124,7 @@
         update: function () {
             $(this.html).modal('handleUpdate');
         },
-        buttonHandler: function () { },
+        onButtonClick: function () { },
         onModalShown: function (e) {
             this.publish('shown-bs-modal', e);
         },
