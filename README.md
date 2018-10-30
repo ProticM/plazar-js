@@ -23,17 +23,17 @@ It's leaning on Object-Oriented-Principles (OOP) and it's build with plain JavaS
 10. Async Templates and/or ViewModel loading
 11. Utils (Array, Object, String...)
 
-## Bootstrap Integration (Bootstrap-UI)
+## Bootstrap Integration (bootstrap-ui)
 
-PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
+plazar-js has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
 
 ## Getting Started and Documentation
 
-http://www.plazarjs.com
+Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
 ## Deploy
 
-PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to deploy the source into `dist`.
+plazar-js uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to deploy the source into `dist`.
 
 ```
 $ gulp build
@@ -46,7 +46,7 @@ $ gulp build
 
 ## Browser Support
 
-PlazarJS supports all latest web and mobile browsers.
+plazar-js supports all latest web and mobile browsers.
 
 #### IE Browser Support
 
@@ -57,5 +57,5 @@ PlazarJS supports all latest web and mobile browsers.
 
 Some of the next major releases would be:
 
-1. Core Plazar-UI (set of controls out of the box). This will eliminate the need for any external CSS framework integration. Of course, you would still be able to integrate any of them if you choose so.
+1. Core plazar-ui (set of controls out of the box). This will eliminate the need for any external CSS framework integration. Of course, you would still be able to integrate any of them if you choose so.
 2. Typescript support.
