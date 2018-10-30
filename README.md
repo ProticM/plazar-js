@@ -1,5 +1,5 @@
 <p align="center">
-  <a>
+  <a href="https://github.com/ProticM/plazar-js">
     <img src="http://www.plazarjs.com/content/images/logo-large.png" width="200" height="200" />
   </a>
   <h1 align="center">plazar-js</h1>
