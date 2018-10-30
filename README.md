@@ -55,7 +55,11 @@ plazar-js supports all ECMAScript 5 compliant browsers. Check out the <a href="h
 
 ## Plans
 
-Some of the next major releases would be:
+Some of the next major releases will contain:
 
 1. Core plazar-ui (set of controls out of the box). This will eliminate the need for any external CSS framework integration. Of course, you would still be able to integrate any of them if you choose so.
 2. Typescript support.
+
+## Licence
+
+<a href="https://opensource.org/licenses/MIT">MIT</a>
