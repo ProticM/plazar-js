@@ -1436,16 +1436,16 @@ plz.define('ui-bootstrap-nav', function () {
                 cls += menuItem.active ? ' active' : '';
                 this.addCss(cls, link);
                 link.innerText = menuItem.text;
-                link.setAttribute('href', (menuItem.href || '#'));
 
                 if (this.mode == 'tab') {
                     link.setAttribute('data-toggle', (this.pills ? 'pill' : 'tab'));
                     link.setAttribute('role', 'tab');
                     href = (menuItem.href.replace('#', ''));
                     contentCls = idx == 0 ? ('tab-pane active tab-' + href) : ('tab-pane tab-' + href);
-                    plz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel">' + menuItem.text + 'content' + '</div>');
+                    plz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel">' + menuItem.text + ' content' + '</div>');
                 };
 
+                link.setAttribute('href', (menuItem.href || '#'));
                 plz.dom.append(html, link);
             };
 
