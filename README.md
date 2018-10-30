@@ -1,7 +1,13 @@
-# PlazarJS
-
-PlazarJS is a versatile framework build to enrich developers expirience in terms of simplicity and speed of application development. 
+<p align="center">
+  <a>
+    <img src="http://www.plazarjs.com/content/images/logo-large.png" width="200" height="200" />
+  </a>
+  <h1 align="center">plazar-js</h1>
+  <p align="center">
+Is a versatile framework build to enrich developers expirience in terms of simplicity and speed of application development. 
 It's leaning on Object-Oriented-Principles (OOP) and it's build with plain JavaScript and you should feel free to use it on every device where JavaScript is supported, which is literally every device alive &#x263A; The framework it self has no dependencies (Hooray &#x263A;) and was built by a JavaScript lover/enthusiast with a strong desire to make this development world a better place.
+</p>
+</p>
 
 ## Core Features
 
@@ -52,4 +58,4 @@ PlazarJS supports all latest web and mobile browsers.
 Some of the next major releases would be:
 
 1. Core Plazar-UI (set of controls out of the box). This will eliminate the need for any external CSS framework integration. Of course, you would still be able to integrate any of them if you choose so.
-2. Typescript support (if shown as required by the community).
+2. Typescript support.
