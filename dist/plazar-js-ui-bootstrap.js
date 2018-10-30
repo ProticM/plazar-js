@@ -1394,18 +1394,17 @@ plz.define('ui-bootstrap-nav', function () {
     ];
 
     var _parseTemplate = function () {
-        var hasMenuItems = !plz.isEmpty(this.menuItems),
-            hasPosition = !plz.isEmpty(this.position),
-            hasMode = !plz.isEmpty(this.mode),
+        var hasPosition = !plz.isEmpty(this.position),
             html = this.mode == 'tab' ? plz.dom.findElement(this.html, 'div.nav.nav-tabs') : this.html,
-            parent, tabContent;
+            tabContent;
 
         this.addCss(hasPosition ? ('justify-content-' + this.position) : '', html);
         this.addCss(this.vertical ? 'flex-column' : '', html);
         this.addCss(plz.isObject(this.fill) ? ('nav-' + this.fill.type) : (this.fill ? 'nav-fill' : ''), html);
 
         if (this.pills) {
-            html.className = html.className.replace('nav-tabs', 'nav-pills');
+            html.className = (this.mode == 'tab') ? html.className.replace('nav-tabs', 'nav-pills') : 
+                html.className + ' nav-pills';
         };
 
         if (this.mode == 'tab') {
@@ -1421,7 +1420,7 @@ plz.define('ui-bootstrap-nav', function () {
                 throw new Error(_const.componentsNotAllowedInTabMode);
             };
 
-            if (plz.arr.contains(_allowedComponents, menuItem.type)) {
+            if (isComponent) {
                 menuItem.renderTo = 'root';
                 this.components.push(menuItem);
             } else {
@@ -1455,9 +1454,10 @@ plz.define('ui-bootstrap-nav', function () {
 
     return {
         ownerType: 'ui-bootstrap-component',
-        position: 'left',
+        position: 'start',
         template: '<nav class="nav"></nav>',
         components: [],
+        mode: 'nav',
         load: function () {
             this.template = (this.mode == 'tab') ? '<nav><div class="nav nav-tabs" role="tablist"></div></nav>' :
                 '<nav class="nav"></nav>';
