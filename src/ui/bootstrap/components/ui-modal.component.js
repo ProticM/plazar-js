@@ -124,6 +124,9 @@
         update: function () {
             $(this.html).modal('handleUpdate');
         },
+        toggle: function () {
+            $(this.html).modal('toggle');
+        },
         onButtonClick: function () { },
         onModalShown: function (e) {
             this.publish('shown-bs-modal', e);
