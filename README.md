@@ -46,7 +46,7 @@ $ gulp build
 
 ## Browser Support
 
-plazar-js supports all latest web and mobile browsers.
+plazar-js supports all ECMAScript 5 compliant browsers. Check out the <a href="http://kangax.github.io/compat-table/es5/">compatibility table</a>.
 
 #### IE Browser Support
 
