@@ -372,13 +372,12 @@
         return _get(this, typeOrIdOrAlias, true, all);
     };
 
-    plz.definitions = [];
-
     plz.defineApplication = function (config) {
-        config.instances = [];
-        var rootComponents = config.components;
+        var rootComponents = !plz.isEmpty(config.components) && plz.isArray(config.components) ? 
+            config.components : [];
         delete config.components;
-        plz.application = config;
+        delete config.instances; // making sure that we do not override the instances array if passed accidentally via config
+        _assignTo(plz.application, config);
 
         if (_isEmpty(window[config.namespace])) {
             this.ns(config.namespace, config);
@@ -405,6 +404,10 @@
         return res;
     };
 
+    plz.definitions = [];
+    plz.application = {
+        instances: []
+    };
     plz.define = _define;
     plz.create = _create;
     plz.toObject = _toObject;
