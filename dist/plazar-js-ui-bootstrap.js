@@ -1533,7 +1533,7 @@ plz.define('ui-bootstrap-navbar', function () {
 				brand.innerHTML = this.brand.value;
             } else {
                 var brandImg = plz.dom.createElement('img');
-                brandImg.setAttribute('src', this.brand.url);
+                brandImg.setAttribute('src', this.brand.imageSrc);
                 plz.dom.append(brand, brandImg);
             };
 
@@ -1565,8 +1565,7 @@ plz.define('ui-bootstrap-navbar', function () {
         };
 
         this.addCss('navbar '.concat(prefix).concat('-')
-            .concat(this.position).concat(' navbar-')
-            .concat(this.theme).concat(' bg-')
+            .concat(this.position).concat(' bg-')
             .concat(this.theme).concat(' navbar-expand-lg'));
 	};
 
