@@ -64,8 +64,7 @@ plazar-js supports all ECMAScript 5 compliant browsers. Check out the <a href="h
 
 #### IE Browser Support
 
-1. Usage under version 10 is not recommended.
-2. Every implementation/change is done in a way to ignore IE version 9 and lower.
+Every implementation/change is done in a way to ignore IE version 9 and lower.
 
 ## Plans
 
