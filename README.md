@@ -101,12 +101,12 @@ plz.create({
     },
     components: [{
         type: 'ui-bootstrap-input',
-        labelText: 'Name:',
-        placeholder: 'Enter name...'
+        labelText: 'Email:',
+        placeholder: 'Enter email...'
     }, {
         type: 'ui-bootstrap-input',
-        labelText: 'Surname:',
-        placeholder: 'Enter surname...',
+        labelText: 'Password:',
+        placeholder: 'Enter password...',
         css: ['mb-2']
     }, {
         type: 'ui-bootstrap-input',
