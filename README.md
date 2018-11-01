@@ -8,6 +8,16 @@ Is a versatile framework build to enrich the developer experience in terms of si
 </p>
 </p>
 
+## Installation
+
+Place the script tag on your page
+```
+<script src="..script-path/plazar-js.min.js"> 
+```
+Optionally, you can include Bootstrap UI 
+```
+<script src="..script-path/plazar-js-ui-bootstrap.min.js">
+```
 ## Core Features
 
 1. Modularity
