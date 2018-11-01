@@ -306,9 +306,7 @@ plz.define('ui-bootstrap-button', function () {
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
-		onClick: function () {
-			throw new Error('Not implemented!');
-        },
+		onClick: function () { },
         toggle: function () {
             $(this.html).button('toggle');
         },
@@ -1078,9 +1076,7 @@ plz.define('ui-bootstrap-input', function () {
 			on: 'change',
             fn: 'onChange'
 		}],
-        onChange: function (e) {
-            throw new Error('Not implemented!');
-        },
+        onChange: function (e) { },
         prependLabel: function (template) {
 
             if (plz.isEmpty(this.labelText) || plz.arr.contains(['checkbox', 'radio'], this.inputType)) {
@@ -1673,9 +1669,7 @@ plz.define('ui-bootstrap-select', function () {
             on: 'change',
             fn: 'onChange'
         }],
-        onChange: function () {
-            throw new Error('Not implemented!');
-        },
+        onChange: function () { },
         setDataSource: function (data) {
             if (plz.isEmpty(data) || plz.isEmpty(this.html)) {
                 return;

@@ -102,9 +102,7 @@
 			on: 'change',
             fn: 'onChange'
 		}],
-        onChange: function (e) {
-            throw new Error('Not implemented!');
-        },
+        onChange: function (e) { },
         prependLabel: function (template) {
 
             if (plz.isEmpty(this.labelText) || plz.arr.contains(['checkbox', 'radio'], this.inputType)) {

@@ -37,9 +37,7 @@
             on: 'change',
             fn: 'onChange'
         }],
-        onChange: function () {
-            throw new Error('Not implemented!');
-        },
+        onChange: function () { },
         setDataSource: function (data) {
             if (plz.isEmpty(data) || plz.isEmpty(this.html)) {
                 return;

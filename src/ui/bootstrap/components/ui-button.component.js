@@ -31,9 +31,7 @@
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
-		onClick: function () {
-			throw new Error('Not implemented!');
-        },
+		onClick: function () { },
         toggle: function () {
             $(this.html).button('toggle');
         },
