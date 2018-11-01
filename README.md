@@ -21,7 +21,7 @@ Optionally, you can include Bootstrap UI:
 
 ## Introduction
 
-The framework itself has no dependencies and by leaning on Object-Oriented-Principles (OOP) it can easily be used to create a large Single-Page Application or it can be integrated to a portion of a web page where a dynamic workflow is required.
+The framework itself has no dependencies and by leaning on Object-Oriented-Principles (OOP) it can easily be used to create a large Single-Page Application or it can be integrated to a portion of a web page where dynamic workflow is required.
 
 ##### TL;DR
 
