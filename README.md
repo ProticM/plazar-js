@@ -96,27 +96,27 @@ plz.create({
   renderTo: 'body', 
   type: 'ui-bootstrap-card',
   header: {
-      text: 'Login', 
-      css: ['bg-info', 'text-white'] 
+    text: 'Login', 
+    css: ['bg-info', 'text-white'] 
   },
   components: [{
-      type: 'ui-bootstrap-input',
-      labelText: 'Email:',
-      placeholder: 'Enter email...'
+    type: 'ui-bootstrap-input',
+    labelText: 'Email:',
+    placeholder: 'Enter email...'
   }, {
-      type: 'ui-bootstrap-input',
-      labelText: 'Password:',
-      placeholder: 'Enter password...',
-      css: ['mb-2']
+    type: 'ui-bootstrap-input',
+    labelText: 'Password:',
+    placeholder: 'Enter password...',
+    css: ['mb-2']
   }, {
-      type: 'ui-bootstrap-input',
-      inputType: 'checkbox',
-      labelText: 'Remember me'
+    type: 'ui-bootstrap-input',
+    inputType: 'checkbox',
+    labelText: 'Remember me'
   }],
   buttons: [{
-      text: 'Login',
-      appearance: 'outline-info',
-      align: 'right'
+    text: 'Login',
+    appearance: 'outline-info',
+    align: 'right'
   }]
   // other configs 
 });
