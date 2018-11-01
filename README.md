@@ -11,11 +11,11 @@ Is a versatile framework build to enrich the developer experience in terms of si
 ## Installation
 
 Place the script tag on your page:
-```
+```html
 <script src="..script-path/plazar-js.min.js"> 
 ```
 Optionally, you can include Bootstrap UI:
-```
+```html
 <script src="..script-path/plazar-js-ui-bootstrap.min.js">
 ```
 
