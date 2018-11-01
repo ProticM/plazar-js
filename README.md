@@ -31,7 +31,7 @@ The framework itself has no dependencies and by leaning on Object-Oriented-Princ
 4. Override parent method implementation.
 5. Each method overridden in a child type can call its parent by invoking `this.base(arguments)`.
 
-## Core Features
+##### Core Features
 
 1. Modularity
 2. Components
@@ -45,13 +45,13 @@ The framework itself has no dependencies and by leaning on Object-Oriented-Princ
 10. Async Templates and/or ViewModel loading
 11. Utils (Array, Object, String...)
 
-## Bootstrap Integration (bootstrap-ui)
-
-plazar-js has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
-
 ## Getting Started and Documentation
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
+
+## Bootstrap Integration (bootstrap-ui)
+
+plazar-js has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
 
 ## Deploy
 
