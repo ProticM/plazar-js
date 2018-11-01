@@ -21,7 +21,7 @@ Optionally, you can include Bootstrap UI:
 
 ## Introduction
 
-The framework itself has no dependencies and by leaning on Object-Oriented-Principles (OOP) it can easily be used to create a large Single-Page Application or it can be integrated to a portion of a web page where dynamic workflow is required. It is written in plain JavaScript and built to be flexible. For example, in ReactJS everything is JavaScript, and Angular has a forceful opinion about how your application should be constructed. PlazarJS is designed to help you build the application the way you want it without forcing you to follow a path you don't think is suitable for the application you are developing. The main focus is on good old trio, Html, CSS and JavaScript.
+The framework itself has no dependencies and by leaning on Object-Oriented-Principles (OOP) it can easily be used to create a large Single-Page Application or it can be integrated to a portion of a web page where dynamic workflow is required. It is written in plain JavaScript and built to be flexible. For example, in ReactJS everything is JavaScript, and Angular has a forceful opinion about how your application should be constructed. PlazarJS is designed to help you build the application the way you want it without forcing you to follow a path you don't think is suitable for the application you are developing. The main focus is on good old trio, HTML, CSS and JavaScript.
 
 ##### TL;DR
 
@@ -46,6 +46,41 @@ The framework itself has no dependencies and by leaning on Object-Oriented-Princ
 11. Utils (Array, Object, String...)
 
 ## Getting Started and Documentation
+
+A quick example:
+
+```js
+plz.define('user', {
+    ownerType: 'class',
+    name: 'John',
+    surname: 'Doe'
+}).create(); // automatically creates the class upon definition
+
+plz.define('my-component', {
+    ownerType: 'component',
+    template: '<div>My name is: {name}, and my surname is: {surname}</div>',
+    renderTo: 'body',
+    autoLoad: true,
+    viewModel: {
+        name: '',
+        surname: ''
+    },
+    setUserData: function(user) {
+        this.viewModel.surname = user.surname;
+    }
+});
+
+var component = plz.define('my-child-component', {
+    ownerType: 'my-component',
+    setUserData: function(user) {
+        this.viewModel.name = user.name;
+        this.base(user);
+    }
+}).create(); // automatically creates the component upon definition
+
+var user = plz.getInstanceOf('user');
+component.setUserData(user);
+```
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
