@@ -51,31 +51,31 @@ A quick example:
 
 ```javascript
 plz.define('user', {
-    ownerType: 'class',
-    name: 'John',
-    surname: 'Doe'
+  ownerType: 'class',
+  name: 'John',
+  surname: 'Doe'
 }).create(); // automatically creates the class upon definition
 
 plz.define('my-component', {
-    ownerType: 'component',
-    template: '<div>My name is: {name}, and my surname is: {surname}</div>',
-    renderTo: 'body',
-    autoLoad: true,
-    viewModel: {
-        name: '',
-        surname: ''
-    },
-    setUserData: function(user) {
-        this.viewModel.surname = user.surname;
-    }
+  ownerType: 'component',
+  template: '<div>My name is: {name}, and my surname is: {surname}</div>',
+  renderTo: 'body',
+  autoLoad: true,
+  viewModel: {
+      name: '',
+      surname: ''
+  },
+  setUserData: function(user) {
+      this.viewModel.surname = user.surname;
+  }
 });
 
 var component = plz.define('my-child-component', {
-    ownerType: 'my-component',
-    setUserData: function(user) {
-        this.viewModel.name = user.name;
-        this.base(user);
-    }
+  ownerType: 'my-component',
+  setUserData: function(user) {
+      this.viewModel.name = user.name;
+      this.base(user);
+  }
 }).create(); // automatically creates the component upon definition
 
 var user = plz.getInstanceOf('user');
@@ -92,33 +92,33 @@ A quick example:
 
 ```javascript 
 plz.create({ 
-    autoLoad: true, 
-    renderTo: 'body', 
-    type: 'ui-bootstrap-card',
-    header: {
-        text: 'Login', 
-        css: ['bg-info', 'text-white'] 
-    },
-    components: [{
-        type: 'ui-bootstrap-input',
-        labelText: 'Email:',
-        placeholder: 'Enter email...'
-    }, {
-        type: 'ui-bootstrap-input',
-        labelText: 'Password:',
-        placeholder: 'Enter password...',
-        css: ['mb-2']
-    }, {
-        type: 'ui-bootstrap-input',
-        inputType: 'checkbox',
-        labelText: 'Remember me'
-    }],
-    buttons: [{
-        text: 'Login',
-        appearance: 'outline-info',
-        align: 'right'
-    }]
-    // other configs 
+  autoLoad: true, 
+  renderTo: 'body', 
+  type: 'ui-bootstrap-card',
+  header: {
+      text: 'Login', 
+      css: ['bg-info', 'text-white'] 
+  },
+  components: [{
+      type: 'ui-bootstrap-input',
+      labelText: 'Email:',
+      placeholder: 'Enter email...'
+  }, {
+      type: 'ui-bootstrap-input',
+      labelText: 'Password:',
+      placeholder: 'Enter password...',
+      css: ['mb-2']
+  }, {
+      type: 'ui-bootstrap-input',
+      inputType: 'checkbox',
+      labelText: 'Remember me'
+  }],
+  buttons: [{
+      text: 'Login',
+      appearance: 'outline-info',
+      align: 'right'
+  }]
+  // other configs 
 });
 ```
 Output:
