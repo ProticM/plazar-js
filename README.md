@@ -95,31 +95,30 @@ plz.create({
     autoLoad: true, 
     renderTo: 'body', 
     type: 'ui-bootstrap-card',
-    css: ['mb-4'],
     header: {
-    text: 'Login', 
-    css: ['bg-info', 'text-white'] 
-  },
-  components: [{
-    type: 'ui-bootstrap-input',
-    labelText: 'Name:',
-    placeholder: 'Enter name...'
-  }, {
-    type: 'ui-bootstrap-input',
-    labelText: 'Surname:',
-    placeholder: 'Enter surname...',
-    css: ['mb-2']
-  }, {
-    type: 'ui-bootstrap-input',
-    inputType: 'checkbox',
-    labelText: 'Remember me'
-  }],
-  buttons: [{
-    text: 'Login',
-    appearance: 'outline-info',
-    align: 'right'
-  }]
-  // other configs 
+        text: 'Login', 
+        css: ['bg-info', 'text-white'] 
+    },
+    components: [{
+        type: 'ui-bootstrap-input',
+        labelText: 'Name:',
+        placeholder: 'Enter name...'
+    }, {
+        type: 'ui-bootstrap-input',
+        labelText: 'Surname:',
+        placeholder: 'Enter surname...',
+        css: ['mb-2']
+    }, {
+        type: 'ui-bootstrap-input',
+        inputType: 'checkbox',
+        labelText: 'Remember me'
+    }],
+    buttons: [{
+        text: 'Login',
+        appearance: 'outline-info',
+        align: 'right'
+    }]
+    // other configs 
 });
 ```
 Output:
