@@ -10,11 +10,11 @@ Is a versatile framework build to enrich the developer experience in terms of si
 
 ## Installation
 
-Place the script tag on your page
+Place the script tag on your page:
 ```
 <script src="..script-path/plazar-js.min.js"> 
 ```
-Optionally, you can include Bootstrap UI 
+Optionally, you can include Bootstrap UI:
 ```
 <script src="..script-path/plazar-js-ui-bootstrap.min.js">
 ```
@@ -22,6 +22,14 @@ Optionally, you can include Bootstrap UI
 ## Introduction
 
 The framework itself has no dependencies and by leaning on Object-Oriented-Principles (OOP) it can easily be used to create a large Single-Page Application or it can be integrated to a portion of a web page where a dynamic workflow is required.
+
+##### TL;DR
+
+1. Can define components, mixins or classes by invoking `plz.define`.
+2. Reuse each type later in the app as much as needed. One type, multiple instances.
+3. Extend each type with another by setting the `ownerType`.
+4. Override parent method implementation.
+5. Each method overridden in a child type can call its parent by invoking `this.base(arguments)`.
 
 ## Core Features
 
