@@ -130,7 +130,7 @@
     };
 
     var _create = function (config) {
-        var isObject, type, item, instance;
+        var isObject, type, item, instance, params;
 
         if (plz.isEmpty(config)) {
             throw new Error(_const.canNotCreate);
@@ -139,11 +139,14 @@
         isObject = plz.isObject(config);
         type = isObject ? config.type : config;
         item = plz.getDefinitionOf(type);
-        instance = new item();
-
+        
         if (isObject) {
+            params = _assignTo({}, config, false);
+            delete params.type;
+            instance = new item(params);
             plz.assignTo(instance, config, false);
         } else {
+            instance = new item();
             instance.type = type;
         };
 
