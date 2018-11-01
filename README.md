@@ -71,4 +71,4 @@ Some of the next major releases will contain:
 
 ## Licence
 
-<a href="https://opensource.org/licenses/MIT">MIT</a>
+<a href="https://github.com/ProticM/plazar-js/blob/master/LICENSE">MIT</a>
