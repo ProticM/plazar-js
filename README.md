@@ -49,7 +49,7 @@ The framework itself has no dependencies and by leaning on Object-Oriented-Princ
 
 A quick example:
 
-```js
+```javascript
 plz.define('user', {
     ownerType: 'class',
     name: 'John',
@@ -87,6 +87,45 @@ Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 ## Bootstrap Integration (bootstrap-ui)
 
 PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
+
+A quick example:
+
+```javascript 
+plz.create({ 
+    autoLoad: true, 
+    renderTo: 'body', 
+    type: 'ui-bootstrap-card',
+    css: ['mb-4'],
+    header: {
+    text: 'Login', 
+    css: ['bg-info', 'text-white'] 
+  },
+  components: [{
+    type: 'ui-bootstrap-input',
+    labelText: 'Name:',
+    placeholder: 'Enter name...'
+  }, {
+    type: 'ui-bootstrap-input',
+    labelText: 'Surname:',
+    placeholder: 'Enter surname...',
+    css: ['mb-2']
+  }, {
+    type: 'ui-bootstrap-input',
+    inputType: 'checkbox',
+    labelText: 'Remember me'
+  }],
+  buttons: [{
+    text: 'Login',
+    appearance: 'outline-info',
+    align: 'right'
+  }]
+  // other configs 
+});
+```
+Output:
+<p align="center">
+  <img src="http://www.plazarjs.com/content/images/bootstrap-example.png" width="600" />
+</p>
 
 ## Deploy
 
