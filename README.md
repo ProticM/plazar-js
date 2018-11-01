@@ -2,7 +2,7 @@
   <a href="https://github.com/ProticM/plazar-js">
     <img src="http://www.plazarjs.com/content/images/logo-large.png" width="200" height="200" />
   </a>
-  <h1 align="center">plazar-js</h1>
+  <h1 align="center">PlazarJS</h1>
   <p align="center">
 Is a versatile framework build to enrich the developer experience in terms of simplicity and speed of application development.
 </p>
@@ -51,11 +51,11 @@ Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
 ## Bootstrap Integration (bootstrap-ui)
 
-plazar-js has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
+PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
 
 ## Deploy
 
-plazar-js uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to deploy the source into `dist`.
+PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to deploy the source into `dist`.
 
 ```
 $ gulp build
@@ -68,7 +68,7 @@ $ gulp build
 
 ## Browser Support
 
-plazar-js supports all ECMAScript 5 compliant browsers. Check out the <a href="http://kangax.github.io/compat-table/es5/">compatibility table</a>.
+PlazarJS supports all ECMAScript 5 compliant browsers. Check out the <a href="http://kangax.github.io/compat-table/es5/">compatibility table</a>.
 
 #### IE Browser Support
 
