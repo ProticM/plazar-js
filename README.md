@@ -123,7 +123,7 @@ plz.create({
 ```
 Output:
 <p align="center">
-  <img src="http://www.plazarjs.com/content/images/bootstrap-example.png" width="600" />
+  
 </p>
 
 ## Deploy
