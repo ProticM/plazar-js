@@ -128,6 +128,8 @@ Output:
   </a>
 </p>
 
+Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
+
 ## Deploy
 
 PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to deploy the source into `dist`.
