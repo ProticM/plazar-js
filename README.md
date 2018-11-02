@@ -62,19 +62,19 @@ plz.define('my-component', {
   renderTo: 'body',
   autoLoad: true,
   viewModel: {
-      name: '',
-      surname: ''
+    name: '',
+    surname: ''
   },
   setUserData: function(user) {
-      this.viewModel.surname = user.surname;
+    this.viewModel.surname = user.surname;
   }
 });
 
 var component = plz.define('my-child-component', {
   ownerType: 'my-component',
   setUserData: function(user) {
-      this.viewModel.name = user.name;
-      this.base(user);
+    this.viewModel.name = user.name;
+    this.base(user);
   }
 }).create(); // automatically creates the component upon definition
 
@@ -123,7 +123,9 @@ plz.create({
 ```
 Output:
 <p align="center">
-  <img src="http://www.plazarjs.com/content/images/bootstrap-example-2.png" width="600" />
+  <a href="https://github.com/ProticM/plazar-js">
+    <img src="http://www.plazarjs.com/content/images/bootstrap-example-2.png" width="600" />
+  </a>
 </p>
 
 ## Deploy
