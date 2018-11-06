@@ -1,4 +1,4 @@
-﻿plz.define('ui-bootstrap-grid', function () {
+﻿pz.define('ui-bootstrap-grid', function () {
     'use strict';
 
     var _defaultColSize = 12;
@@ -7,16 +7,16 @@
         var _default = 'col-' + _defaultColSize,
             lg, md, sm;
 
-        if (plz.isEmpty(size)) {
+        if (pz.isEmpty(size)) {
             return _default;
         };
 
-        lg = !plz.isEmpty(size.lg) ? 'col-lg-' + size.lg : '';
-        md = !plz.isEmpty(size.md) ? ' col-md-' + size.md : '';
-        sm = !plz.isEmpty(size.sm) ? ' col-sm-' + size.sm : '';
+        lg = !pz.isEmpty(size.lg) ? 'col-lg-' + size.lg : '';
+        md = !pz.isEmpty(size.md) ? ' col-md-' + size.md : '';
+        sm = !pz.isEmpty(size.sm) ? ' col-sm-' + size.sm : '';
 
         var css = lg + md + sm;
-        return !plz.isEmpty(css) ?
+        return !pz.isEmpty(css) ?
             css : _default;
     };
 
@@ -24,9 +24,9 @@
         var me = this;
         this.addCss((this.fluid ? 'container-fluid' : 'container'));
 
-        plz.forEach(this.rows, function (row, idx) {
-            var rowEl = plz.dom.createElement('div'), 
-                generateRowId = !plz.isEmpty(row.id) || row.generateId;
+        pz.forEach(this.rows, function (row, idx) {
+            var rowEl = pz.dom.createElement('div'), 
+                generateRowId = !pz.isEmpty(row.id) || row.generateId;
 
             if(generateRowId) {
                 me.addAttr({
@@ -36,18 +36,18 @@
             };
             
             me.addCss('row', rowEl);
-            if (!plz.isEmpty(row.css)) {
+            if (!pz.isEmpty(row.css)) {
                 me.addCss(row.css.join(' '), rowEl);
             };
-            plz.dom.append(me.html, rowEl);
+            pz.dom.append(me.html, rowEl);
 
-            plz.forEach(row.columns, function (column, idx) {
+            pz.forEach(row.columns, function (column, idx) {
                 var sizeClass = _getColumnSizeClass(column.size),
-                    columnEl = plz.dom.createElement('div'),
-                    generateColumnId = !plz.isEmpty(column.id) || column.generateId;
+                    columnEl = pz.dom.createElement('div'),
+                    generateColumnId = !pz.isEmpty(column.id) || column.generateId;
 
                 me.addCss(sizeClass, columnEl);
-                if (!plz.isEmpty(column.css)) {
+                if (!pz.isEmpty(column.css)) {
                     me.addCss(column.css, columnEl);
                 };
 
@@ -58,10 +58,10 @@
                     }, columnEl);
                 };
 
-                columnEl.innerHTML = !plz.isEmpty(column.text) ? 
+                columnEl.innerHTML = !pz.isEmpty(column.text) ? 
                     column.text : '';
 
-                plz.dom.append(rowEl, columnEl);
+                pz.dom.append(rowEl, columnEl);
             });
         });
     };

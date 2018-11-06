@@ -1,23 +1,23 @@
-﻿plz.define('ui-bootstrap-modal', function () {
+﻿pz.define('ui-bootstrap-modal', function () {
     'use strict';
 
     var _primaryButtons = ['Yes', 'Ok'];
 
     var _parseTemplate = function () {
-        var headerMarkup = '<div class="modal-header"><h5 class="modal-title">' + (this.header ? (plz.isEmpty(this.header.text) ? '' : this.header.text) : '') +
+        var headerMarkup = '<div class="modal-header"><h5 class="modal-title">' + (this.header ? (pz.isEmpty(this.header.text) ? '' : this.header.text) : '') +
             '</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>',
-            bodyMarkup = '<div class="modal-body">' + (this.body ? (plz.isEmpty(this.body.text) ? '' : this.body.text) : '') + '</div>',
-            footerMarkup = '<div class="modal-footer">' + (this.footer ? (plz.isEmpty(this.footer.text) ? '' : this.footer.text) : '') + '</div>',
-            modalContent = plz.dom.findElement(this.html, 'div.modal-content'),
-            header = plz.dom.findElement(this.html, 'div.modal-header > h5.modal-title'),
-            body = plz.dom.findElement(this.html, 'div.modal-body'),
-            footer = plz.dom.findElement(this.html, 'div.modal-footer'),
-            modal, hasSize = !plz.isEmpty(this.size);
+            bodyMarkup = '<div class="modal-body">' + (this.body ? (pz.isEmpty(this.body.text) ? '' : this.body.text) : '') + '</div>',
+            footerMarkup = '<div class="modal-footer">' + (this.footer ? (pz.isEmpty(this.footer.text) ? '' : this.footer.text) : '') + '</div>',
+            modalContent = pz.dom.findElement(this.html, 'div.modal-content'),
+            header = pz.dom.findElement(this.html, 'div.modal-header > h5.modal-title'),
+            body = pz.dom.findElement(this.html, 'div.modal-body'),
+            footer = pz.dom.findElement(this.html, 'div.modal-footer'),
+            modal, hasSize = !pz.isEmpty(this.size);
 
         var addOrUpdate = function (el, markup, value) {
-            if (plz.isEmpty(el)) {
-                plz.dom.append(modalContent, markup);
-            } else if (plz.isObject(value)) {
+            if (pz.isEmpty(el)) {
+                pz.dom.append(modalContent, markup);
+            } else if (pz.isObject(value)) {
                 el.innerHTML += value.text;
             };
         };
@@ -27,12 +27,12 @@
         addOrUpdate(footer, (this.footer ? footerMarkup : ''), this.footer);
 
         if (this.centered) {
-            modal = plz.dom.findElement(this.html, 'div.modal-dialog');
+            modal = pz.dom.findElement(this.html, 'div.modal-dialog');
             this.addCss('modal-dialog-centered', modal);
         };
 
         if (hasSize) {
-            modal = plz.dom.findElement(this.html, 'div.modal-dialog');
+            modal = pz.dom.findElement(this.html, 'div.modal-dialog');
             this.addCss(('modal-' + this.size), modal);
         };
 
@@ -43,8 +43,8 @@
     };
 
     var _hasComponentsForSpecificRender = function (me, cssClass) {
-        return plz.arr.contains(me.components, function (item) {
-            return (plz.isEmpty(item.renderTo) && me.containerElement == ('div.' + cssClass)) || item.renderTo.indexOf(cssClass);
+        return pz.arr.contains(me.components, function (item) {
+            return (pz.isEmpty(item.renderTo) && me.containerElement == ('div.' + cssClass)) || item.renderTo.indexOf(cssClass);
         });
     };
 
@@ -75,12 +75,12 @@
             var buttons = this.buttons.split('_'), me = this,
                 hasBodyComponents;
             this.components = this.components || [];
-            this.footer = !plz.isEmpty(this.buttons) || this.footer;
+            this.footer = !pz.isEmpty(this.buttons) || this.footer;
 
-            plz.forEach(buttons, function (button) {
+            pz.forEach(buttons, function (button) {
                 this.components.push({
                     type: 'ui-bootstrap-button',
-                    appearance: (plz.arr.contains(_primaryButtons, button) || buttons.length == 1) ? 'primary' : 'secondary',
+                    appearance: (pz.arr.contains(_primaryButtons, button) || buttons.length == 1) ? 'primary' : 'secondary',
                     renderTo: 'div.modal-footer',
                     text: button,
                     onClick: function (e) {
@@ -92,13 +92,13 @@
                 });
             }, this);
 
-            var hasBodyComponents = !plz.isEmpty(this.components) && _hasComponentsForSpecificRender(this, 'modal-body');
+            var hasBodyComponents = !pz.isEmpty(this.components) && _hasComponentsForSpecificRender(this, 'modal-body');
 
             if (hasBodyComponents) {
                 this.body = true;
             };
 
-            this.handlers = plz.arr.merge((this.handlers || []), [{
+            this.handlers = pz.arr.merge((this.handlers || []), [{
                 on: 'show.bs.modal',
                 fn: 'onModalShow'
             }, {

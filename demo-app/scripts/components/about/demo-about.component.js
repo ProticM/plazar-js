@@ -1,4 +1,4 @@
-plz.define('about-component', {
+pz.define('about-component', {
     ownerType: 'base-component',
     mixins: ['page-mixin'],
     template: '<p>Demo Application</p>',

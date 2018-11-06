@@ -1,4 +1,4 @@
-plz.define('user-component', {
+pz.define('user-component', {
     ownerType: 'base-component',
     autoLoad: true,
     template: '<div class="columns b-1 is-marginless has-background-white">' +

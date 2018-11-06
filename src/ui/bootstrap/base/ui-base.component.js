@@ -1,4 +1,4 @@
-﻿plz.define('ui-bootstrap-component', function () {
+﻿pz.define('ui-bootstrap-component', function () {
     'use strict';
 
     var _const = {
@@ -7,7 +7,7 @@
 
     var _initPlugin = function (me, type) {
         var plugin = me[type];
-        if (plz.isEmpty(plugin) || !plz.isObject(plugin)) {
+        if (pz.isEmpty(plugin) || !pz.isObject(plugin)) {
             return;
         };
 
@@ -21,7 +21,7 @@
             this.subscribe({
                 'render-complete': function () {
 
-                    if (plz.isFunction(this.parseTemplate) && !plz.isEmpty(this.template)) {
+                    if (pz.isFunction(this.parseTemplate) && !pz.isEmpty(this.template)) {
                         this.parseTemplate();
                     };
 
@@ -35,14 +35,14 @@
         },
 
         prependLabel: function (template) {
-            if (plz.isEmpty(this.labelText)) {
+            if (pz.isEmpty(this.labelText)) {
                 return;
             };
 
-            var label = plz.dom.createElement('label');
+            var label = pz.dom.createElement('label');
             label.innerText = this.labelText;
             this.addCss('col-form-label', label);
-            plz.dom.insertBefore(this.html, label);
+            pz.dom.insertBefore(this.html, label);
             label = null;
         },
 
@@ -56,15 +56,15 @@
 
         handle: function (handler) { // override handlers binding since we need bootstrap/jquery custom events
             var me = this, $html = $(this.html);
-            var fn = plz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
+            var fn = pz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
 
-            if (plz.isEmpty(fn)) {
+            if (pz.isEmpty(fn)) {
                 throw new Error(_const.handlerFnNotProvided);
             };
 
-            var hasSelector = !plz.isEmpty(handler.selector);
-            var args = hasSelector ? [handler.on, handler.selector, plz.proxy(fn, handler.scope || me)] :
-                [handler.on, plz.proxy(fn, handler.scope || me)];
+            var hasSelector = !pz.isEmpty(handler.selector);
+            var args = hasSelector ? [handler.on, handler.selector, pz.proxy(fn, handler.scope || me)] :
+                [handler.on, pz.proxy(fn, handler.scope || me)];
             $html.on.apply($html, args);
         },
 

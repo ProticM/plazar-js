@@ -1,8 +1,8 @@
-﻿plz.define('ui-bootstrap-form-field-mix', function () {
+﻿pz.define('ui-bootstrap-form-field-mix', function () {
     'use strict';
 
     var _getHtml = function (me) {
-        return me.inputType == 'text' ? (plz.dom.findElement(me.html, 'input') || me.html)
+        return me.inputType == 'text' ? (pz.dom.findElement(me.html, 'input') || me.html)
             : me.html;
     };
 

@@ -1,4 +1,4 @@
-plz.define('todo-component', function() {
+pz.define('todo-component', function() {
 
     return {
         ownerType: 'base-component',
@@ -51,7 +51,7 @@ plz.define('todo-component', function() {
             selector: 'span.btn-delete',
             fn: function(el) { // can be inline fn or component fn (name: String)
                 var idx = el.getAttribute('data-idx');
-                plz.arr.removeAt(this.viewModel.todos, idx);
+                pz.arr.removeAt(this.viewModel.todos, idx);
                 this.todoService.delete(idx);
                 this.publish('todo-deleted');
             }
@@ -62,15 +62,15 @@ plz.define('todo-component', function() {
                 selector: 'button.btn-add',
                 fn: 'addTodo'
             });
-            plz.arr.clear(this.viewModel.todos); // TODO: See why viewModel still has todos after destroy
+            pz.arr.clear(this.viewModel.todos); // TODO: See why viewModel still has todos after destroy
             var todos = this.todoService.get();
-            plz.forEach(todos, function(todo) {
-                this.viewModel.todos.push(plz.obj.clone(todo));
+            pz.forEach(todos, function(todo) {
+                this.viewModel.todos.push(pz.obj.clone(todo));
             }, this);
             
             this.base(arguments);
 
-            plz.forEach(this.viewModel.todos, function(todo) { // subscribe to all pre-loaded todos
+            pz.forEach(this.viewModel.todos, function(todo) { // subscribe to all pre-loaded todos
                 var me = this;
                 todo.isCompleted.subscribe(function() {
                     me.onStatusChange(todo);

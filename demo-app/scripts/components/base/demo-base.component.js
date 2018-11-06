@@ -1,13 +1,13 @@
-plz.define('base-component', {
+pz.define('base-component', {
     ownerType: 'component',
     changeView: function(componentType) {
-        var oldC, layoutC = plz.getInstanceOf('layout-component');
-        if(plz.isEmpty(componentType) || componentType == layoutC.currentView) {
+        var oldC, layoutC = pz.getInstanceOf('layout-component');
+        if(pz.isEmpty(componentType) || componentType == layoutC.currentView) {
             return;
         };
 
-        oldC = plz.getInstanceOf(layoutC.currentView);
-        if(!plz.isEmpty(oldC)) {
+        oldC = pz.getInstanceOf(layoutC.currentView);
+        if(!pz.isEmpty(oldC)) {
             oldC.destroy();
         };
         

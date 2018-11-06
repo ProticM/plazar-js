@@ -1,4 +1,4 @@
-﻿plz.define('ui-bootstrap-container', function () {
+﻿pz.define('ui-bootstrap-container', function () {
     'use strict';
 
     var _defaultColSize = 12;
@@ -7,60 +7,60 @@
         var _default = 'col-' + _defaultColSize,
             lg, md, sm, css;
 
-        if (plz.isEmpty(size)) {
+        if (pz.isEmpty(size)) {
             return _default;
         };
 
-        lg = !plz.isEmpty(size.lg) ? 'col-lg-' + size.lg : '';
-        md = !plz.isEmpty(size.md) ? ' col-md-' + size.md : '';
-        sm = !plz.isEmpty(size.sm) ? ' col-sm-' + size.sm : '';
+        lg = !pz.isEmpty(size.lg) ? 'col-lg-' + size.lg : '';
+        md = !pz.isEmpty(size.md) ? ' col-md-' + size.md : '';
+        sm = !pz.isEmpty(size.sm) ? ' col-sm-' + size.sm : '';
 
         css = lg + md + sm;
-        return !plz.isEmpty(css) ?
+        return !pz.isEmpty(css) ?
             css : _default;
     };
 
     var _parseJumbotron = function (me, jumbotron) {
 
         var hasBtn, hasLeadText, hasTitle, hasDivider, mainContainer;
-        if (plz.isEmpty(jumbotron)) {
+        if (pz.isEmpty(jumbotron)) {
             return;
         };
 
-        hasBtn = !plz.isEmpty(jumbotron.buttons);
-        hasLeadText = !plz.isEmpty(jumbotron.leadText);
-        hasTitle = !plz.isEmpty(jumbotron.title);
-        hasDivider = !plz.isEmpty(jumbotron.divider);
+        hasBtn = !pz.isEmpty(jumbotron.buttons);
+        hasLeadText = !pz.isEmpty(jumbotron.leadText);
+        hasTitle = !pz.isEmpty(jumbotron.title);
+        hasDivider = !pz.isEmpty(jumbotron.divider);
         mainContainer = me.html;
         
         if (me.fluid) {
-            plz.dom.append(me.html, '<div class="container' + (jumbotron.innerFluid ? '-fluid' : '') + ' jumbotron-body"></div>');
-            mainContainer = plz.dom.findElement(me.html, 'div.jumbotron-body');
+            pz.dom.append(me.html, '<div class="container' + (jumbotron.innerFluid ? '-fluid' : '') + ' jumbotron-body"></div>');
+            mainContainer = pz.dom.findElement(me.html, 'div.jumbotron-body');
         };
 
         if (hasTitle) {
             var size = jumbotron.title.size || 4;
             var text = jumbotron.title.text || 'Welcome';
-            plz.dom.append(mainContainer, '<h1 class="display-' + size + '">' + text + '</h1>');
+            pz.dom.append(mainContainer, '<h1 class="display-' + size + '">' + text + '</h1>');
         };
 
         if (hasLeadText) {
-            plz.dom.append(mainContainer, '<p class="lead">' + jumbotron.leadText + '</p>');
+            pz.dom.append(mainContainer, '<p class="lead">' + jumbotron.leadText + '</p>');
         };
 
         if (hasBtn) {
 
             if (hasDivider) {
-                plz.dom.append(mainContainer, '<hr class="my-' + (jumbotron.divider.size || 4) + '">');
+                pz.dom.append(mainContainer, '<hr class="my-' + (jumbotron.divider.size || 4) + '">');
             };
 
-            plz.dom.append(mainContainer, '<p class="lead jumbotron-button"></p>');
-            plz.forEach(jumbotron.buttons, function (button) {
+            pz.dom.append(mainContainer, '<p class="lead jumbotron-button"></p>');
+            pz.forEach(jumbotron.buttons, function (button) {
                 var btn = {};
-                plz.obj.assignTo(btn, button, false);
+                pz.obj.assignTo(btn, button, false);
                 btn.renderTo = 'p.lead.jumbotron-button';
 
-                if (plz.isEmpty(btn.type)) {
+                if (pz.isEmpty(btn.type)) {
                     btn.type = 'ui-bootstrap-button';
                 };
 
@@ -83,9 +83,9 @@
                     (this.renderAs == 'jumbotron' ? (this.fluid ? 'jumbotron jumbotron-fluid' : 'jumbotron') :
                         (this.fluid ? 'container-fluid' : 'container'))));
 
-            var hasChildren = !plz.isEmpty(this.components);
+            var hasChildren = !pz.isEmpty(this.components);
             this.addCss(cls);
-            this.html.innerHTML = (hasChildren ? '' : (plz.isEmpty(this.body) ? '' : this.body));
+            this.html.innerHTML = (hasChildren ? '' : (pz.isEmpty(this.body) ? '' : this.body));
 
             if (this.renderAs == 'jumbotron') {
                 _parseJumbotron(this, this.jumbotron);

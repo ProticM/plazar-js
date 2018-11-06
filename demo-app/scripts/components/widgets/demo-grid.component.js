@@ -1,4 +1,4 @@
-plz.define('grid-component', function() {
+pz.define('grid-component', function() {
 
     return {
         ownerType: 'base-component',
@@ -38,7 +38,7 @@ plz.define('grid-component', function() {
 
             this.subscribe({
                 'todo-added': function(todo) {
-                    var jTodo = plz.binder.toJSON(todo);
+                    var jTodo = pz.binder.toJSON(todo);
                     me.addTodos([jTodo]);
                 }
             });
@@ -58,21 +58,21 @@ plz.define('grid-component', function() {
             this.base(arguments);
         },
         loadData: function() {
-            plz.arr.clear(this.viewModel.data);
+            pz.arr.clear(this.viewModel.data);
             var uncompletedTodos = this.todoService.getUnCompleted();
             this.addTodos(uncompletedTodos);
         },
         addTodos: function(todos) {
             var keys;
-            if(plz.isEmpty(todos)) {
+            if(pz.isEmpty(todos)) {
                 return;
             };
-            keys = plz.obj.getKeys(todos[0]);
-            plz.forEach(todos, function(todo) {
+            keys = pz.obj.getKeys(todos[0]);
+            pz.forEach(todos, function(todo) {
                 var row = [];
-                plz.forEach(keys, function(key) {
+                pz.forEach(keys, function(key) {
                     row.push({
-                        value: plz.isFunction(todo[key]) ? todo[key](): todo[key],
+                        value: pz.isFunction(todo[key]) ? todo[key](): todo[key],
                         dataIndex: key.toLowerCase()
                     });
                 }, this);

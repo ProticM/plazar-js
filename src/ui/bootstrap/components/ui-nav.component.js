@@ -1,4 +1,4 @@
-﻿plz.define('ui-bootstrap-nav', function () {
+﻿pz.define('ui-bootstrap-nav', function () {
     'use strict';
 
     var _const = {
@@ -11,13 +11,13 @@
     ];
 
     var _parseTemplate = function () {
-        var hasPosition = !plz.isEmpty(this.position),
-            html = this.mode == 'tab' ? plz.dom.findElement(this.html, 'div.nav.nav-tabs') : this.html,
+        var hasPosition = !pz.isEmpty(this.position),
+            html = this.mode == 'tab' ? pz.dom.findElement(this.html, 'div.nav.nav-tabs') : this.html,
             tabContent;
 
         this.addCss(hasPosition ? ('justify-content-' + this.position) : '', html);
         this.addCss(this.vertical ? 'flex-column' : '', html);
-        this.addCss(plz.isObject(this.fill) ? ('nav-' + this.fill.type) : (this.fill ? 'nav-fill' : ''), html);
+        this.addCss(pz.isObject(this.fill) ? ('nav-' + this.fill.type) : (this.fill ? 'nav-fill' : ''), html);
 
         if (this.pills) {
             html.className = (this.mode == 'tab') ? html.className.replace('nav-tabs', 'nav-pills') : 
@@ -25,13 +25,13 @@
         };
 
         if (this.mode == 'tab') {
-            plz.dom.insertAfter(html, '<div class="tab-content"></div>');
+            pz.dom.insertAfter(html, '<div class="tab-content"></div>');
             tabContent = html.nextSibling;
         };
 
-        plz.forEach(this.menuItems, function (menuItem, idx) {
+        pz.forEach(this.menuItems, function (menuItem, idx) {
             var cls, link, href, contentCls,
-                isComponent = plz.arr.contains(_allowedComponents, menuItem.type);
+                isComponent = pz.arr.contains(_allowedComponents, menuItem.type);
 
             if (isComponent && this.mode == 'tab') {
                 throw new Error(_const.componentsNotAllowedInTabMode);
@@ -42,12 +42,12 @@
                 this.components.push(menuItem);
             } else {
 
-                if (plz.isEmpty(menuItem.href)) {
+                if (pz.isEmpty(menuItem.href)) {
                     throw new Error(_const.hrefIsRequired);
                 };
 
                 cls = this.fill ? 'nav-item nav-link' : 'nav-link',
-                    link = plz.dom.createElement('a');
+                    link = pz.dom.createElement('a');
 
                 cls += menuItem.css ? (' ' + menuItem.css.join(' ')) : '';
                 cls += menuItem.active ? ' active' : '';
@@ -59,11 +59,11 @@
                     link.setAttribute('role', 'tab');
                     href = (menuItem.href.replace('#', ''));
                     contentCls = idx == 0 ? ('tab-pane active tab-' + href) : ('tab-pane tab-' + href);
-                    plz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel">' + menuItem.text + ' content' + '</div>');
+                    pz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel">' + menuItem.text + ' content' + '</div>');
                 };
 
                 link.setAttribute('href', (menuItem.href || '#'));
-                plz.dom.append(html, link);
+                pz.dom.append(html, link);
             };
 
         }, this);
@@ -82,7 +82,7 @@
         },
         init: function () {
             if (this.mode == 'tab') {
-                this.handlers = plz.arr.merge((this.handlers || []), [{
+                this.handlers = pz.arr.merge((this.handlers || []), [{
                     on: 'show.bs.tab',
                     fn: 'onTabShow'
                 }, {

@@ -1,4 +1,4 @@
-plz.define('home-component', {
+pz.define('home-component', {
     ownerType: 'base-component',
     mixins: ['page-mixin'],
     template: '<div>Welcome to PlazarJS Demo Application. This demo uses <a class="has-text-lightblue" href="https://bulma.io/" target="_blank">Bulma CSS Framework</a> ' + 

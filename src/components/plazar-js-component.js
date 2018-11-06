@@ -1,4 +1,4 @@
-﻿plz.define('component', function () {
+﻿pz.define('component', function () {
     'use strict';
 
     var _const = {
@@ -31,34 +31,34 @@
 
             var templateSelectorEmpty;
 
-            if (plz.isEmpty(this.viewModel) || !plz.isFunction(this.applyBindings)) {
+            if (pz.isEmpty(this.viewModel) || !pz.isFunction(this.applyBindings)) {
                 return;
             };
 
-            templateSelectorEmpty = plz.isEmpty(this.templateSelector);
+            templateSelectorEmpty = pz.isEmpty(this.templateSelector);
             this.applyBindings();
 
             if (!templateSelectorEmpty) {
-                var tpl = plz.dom.getByAttr(this.templateSelector);
-                plz.dom.replaceWith(tpl, this.html);
+                var tpl = pz.dom.getByAttr(this.templateSelector);
+                pz.dom.replaceWith(tpl, this.html);
                 tpl = null;
             };
 
             this.publish('bindings-complete', null, this);
         },
         applyBindings: function () {
-            plz.binder.bind(this.html, this.viewModel);
+            pz.binder.bind(this.html, this.viewModel);
         },
         unapplyBindings: function () {
-            plz.binder.unbind(this.viewModel);
+            pz.binder.unbind(this.viewModel);
         },
         traceUp: function () {
-            return plz.isEmpty(this.parentComponent) ? null :
-            (!plz.isEmpty(this.parentComponent.$ref) ? this.parentComponent.$ref 
-                : plz.getInstanceOf(this.parentComponent.id));
+            return pz.isEmpty(this.parentComponent) ? null :
+            (!pz.isEmpty(this.parentComponent.$ref) ? this.parentComponent.$ref 
+                : pz.getInstanceOf(this.parentComponent.id));
         },
         traceDown: function (value) { // can be type, id or alias if defined on a component
-            if (plz.isEmpty(this.components)) {
+            if (pz.isEmpty(this.components)) {
                 return null;
             };
 
@@ -67,15 +67,15 @@
                     childComponent.id == value || childComponent.alias == value;
                 return conditionOk;
             }).map(function (childComponent) {
-                return plz.getInstanceOf(childComponent.id);
+                return pz.getInstanceOf(childComponent.id);
             });
 
             return children.length == 1 ? children[0] : children;
         },
         load: function () {
-            var templateSelectorEmpty = plz.isEmpty(this.templateSelector),
-                templateEmpty = plz.isEmpty(this.template),
-                urlEmpty = plz.isEmpty(this.ajaxSetup) || plz.isEmpty(this.ajaxSetup.url),
+            var templateSelectorEmpty = pz.isEmpty(this.templateSelector),
+                templateEmpty = pz.isEmpty(this.template),
+                urlEmpty = pz.isEmpty(this.ajaxSetup) || pz.isEmpty(this.ajaxSetup.url),
                 componentLoaded;
 
             if (templateEmpty && templateSelectorEmpty && urlEmpty) {
@@ -88,20 +88,20 @@
             };
 
             this.showLoadingMask();
-            componentLoaded = plz.proxy(function (result) {
+            componentLoaded = pz.proxy(function (result) {
                 var res = this.ajaxSetup.dataType == 'text' ? {
                     template: result.data
                 } : result.data;
 
-                this.viewModel = !plz.isEmpty(res.viewModel) ? res.viewModel :
+                this.viewModel = !pz.isEmpty(res.viewModel) ? res.viewModel :
                     this.viewModel;
-                this.template = !plz.isEmpty(res.template) ? res.template :
-                    plz.dom.getByAttr(this.templateSelector).outerHTML;
+                this.template = !pz.isEmpty(res.template) ? res.template :
+                    pz.dom.getByAttr(this.templateSelector).outerHTML;
                 this.publish('load-complete', null, this);
                 this.render();
             }, this);
 
-            plz.http.get({
+            pz.http.get({
                 url: this.ajaxSetup.url,
                 dataType: this.ajaxSetup.dataType,
                 data: this.ajaxSetup.data,
@@ -111,11 +111,11 @@
             componentLoaded = null;
         },
         render: function () {
-            var templateSelectorEmpty = plz.isEmpty(this.templateSelector), me = this,
+            var templateSelectorEmpty = pz.isEmpty(this.templateSelector), me = this,
                 renderToDefined, container, child, childDomIdx, renderBeforeDefined,
                 renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector, isChild, containerErr;
-            this.html = !templateSelectorEmpty ? plz.dom.getByAttr(this.templateSelector) :
-                plz.dom.clone(plz.dom.parseTemplate(this.template)), me = this;
+            this.html = !templateSelectorEmpty ? pz.dom.getByAttr(this.templateSelector) :
+                pz.dom.clone(pz.dom.parseTemplate(this.template)), me = this;
             this.addAttr({
                 name: 'data-componentId',
                 value: this.id
@@ -129,31 +129,31 @@
                 return;
             };
 
-            renderToDefined = !plz.isEmpty(this.renderTo);
-            renderAfterDefined = !plz.isEmpty(this.renderAfter);
-            renderBeforeDefined = !plz.isEmpty(this.renderBefore);
+            renderToDefined = !pz.isEmpty(this.renderTo);
+            renderAfterDefined = !pz.isEmpty(this.renderAfter);
+            renderBeforeDefined = !pz.isEmpty(this.renderBefore);
 
             if (!renderToDefined && !renderAfterDefined && !renderBeforeDefined) {
                 throw new Error(_const.tplContainerNotDefined);
             };
 
-            isChild = !plz.isEmpty(this.parentComponent);
-            containerSelector = (isChild ? plz.str.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
+            isChild = !pz.isEmpty(this.parentComponent);
+            containerSelector = (isChild ? pz.str.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
                 (renderToDefined ? this.renderTo : (renderBeforeDefined ? this.renderBefore : this.renderAfter)));
-            container = plz.dom.getEl(containerSelector);
+            container = pz.dom.getEl(containerSelector);
 
-            if (plz.isEmpty(container)) {
-                containerErr = (isChild ? plz.str.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
+            if (pz.isEmpty(container)) {
+                containerErr = (isChild ? pz.str.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
                     _const.tplContainerNotFound);
                 throw new Error(containerErr);
             };
 
             insertBeforeOrAfter = function (selector, method) {
                 var parent = me.traceUp();
-                var rootEl = !plz.isEmpty(parent) ? parent.html : document;
-                siblingContainer = plz.dom.getEl(selector, { rootEl: rootEl, all: false });
-                plz.dom[method](siblingContainer, me.html);
-                me.html = plz.dom.getEl('*[data-componentid="' + me.id + '"]', { // get the dom reference since we will inject html string
+                var rootEl = !pz.isEmpty(parent) ? parent.html : document;
+                siblingContainer = pz.dom.getEl(selector, { rootEl: rootEl, all: false });
+                pz.dom[method](siblingContainer, me.html);
+                me.html = pz.dom.getEl('*[data-componentid="' + me.id + '"]', { // get the dom reference since we will inject html string
                     rootEl: rootEl, all: false
                 });
             };
@@ -162,12 +162,12 @@
                 insertBeforeOrAfter(containerSelector, 'insertBefore');
             } else if (renderAfterDefined) {
                 insertBeforeOrAfter(containerSelector, 'insertAfter');
-            } else if (!plz.isEmpty(this.insertAt)) {
+            } else if (!pz.isEmpty(this.insertAt)) {
                 child = this.traceUp().childAt(this.insertAt);
-                childDomIdx = plz.isEmpty(child) ? 0 : plz.dom.indexOf(child.html);
-                plz.dom.insertAt(container, this.html, childDomIdx);
+                childDomIdx = pz.isEmpty(child) ? 0 : pz.dom.indexOf(child.html);
+                pz.dom.insertAt(container, this.html, childDomIdx);
             } else {
-                plz.dom[this.replace ? 'replaceWith' : 'append'](container, this.html);
+                pz.dom[this.replace ? 'replaceWith' : 'append'](container, this.html);
             };
 
             this.publish('render-complete', null, this);
@@ -178,8 +178,8 @@
             var me = this, childrenToInitialize;
             this.bindViewModel();
 
-            if (!plz.isEmpty(this.handlers)) {
-                plz.forEach(this.handlers, function (handler) {
+            if (!pz.isEmpty(this.handlers)) {
+                pz.forEach(this.handlers, function (handler) {
                     me.handle(handler);
                 });
             };
@@ -188,10 +188,10 @@
             this.initialized = true;
             this.publish('init-complete', null, this);
 
-            if (!plz.isEmpty(this.components)) {
+            if (!pz.isEmpty(this.components)) {
                 childrenToInitialize = this.components.reduce(function (acc, cmpRef, idx) {
-                    var cmp = plz.isEmpty(cmpRef.id) ? null : me.traceDown(cmpRef.id);
-                    var needInitialization = plz.isEmpty(cmp) || !cmp.initialized;
+                    var cmp = pz.isEmpty(cmpRef.id) ? null : me.traceDown(cmpRef.id);
+                    var needInitialization = pz.isEmpty(cmp) || !cmp.initialized;
                     if (needInitialization) {
                         acc.push({
                             index: idx,
@@ -201,48 +201,48 @@
                     return acc;
                 }, []);
 
-                plz.forEach(childrenToInitialize, function (item) {
+                pz.forEach(childrenToInitialize, function (item) {
                     item.component.$replace = true;
                     me.addChild(item.component, item.index);
                 });
 
-                plz.arr.clear(childrenToInitialize);
+                pz.arr.clear(childrenToInitialize);
                 childrenToInitialize = null;
             };
 
-            if(!plz.isEmpty(this.parentComponent) && !plz.isEmpty(this.parentComponent.ref)) {
+            if(!pz.isEmpty(this.parentComponent) && !pz.isEmpty(this.parentComponent.ref)) {
                 this.parentComponent.$ref = null;
                 delete this.parentComponent.$ref;
             };
         },
         subscribe: function (triggers) {
-            if (plz.isEmpty(triggers) || !plz.isObject(triggers)) {
+            if (pz.isEmpty(triggers) || !pz.isObject(triggers)) {
                 return;
             };
 
-            this.triggers = plz.obj.assignTo(this.triggers, triggers);
+            this.triggers = pz.obj.assignTo(this.triggers, triggers);
         },
         publish: function (name, params, component) {
             var me = this;
 
             var fire = function (component, params) {
-                var trg = plz.isEmpty(component.triggers) ? null :
+                var trg = pz.isEmpty(component.triggers) ? null :
                     component.triggers[name];
-                if (!plz.isEmpty(trg)) {
+                if (!pz.isEmpty(trg)) {
                     trg.call(component, params);
                 };
             };
 
-            if (!plz.isEmpty(component)) {
-                var isString = plz.isString(component);
-                var c = isString ? plz.getInstanceOf(component)
+            if (!pz.isEmpty(component)) {
+                var isString = pz.isString(component);
+                var c = isString ? pz.getInstanceOf(component)
                     : component;
                 fire(c, params);
                 return;
             };
 
-            plz.application.instances.filter(function (instance) { // events are allowed only on components
-                return plz.isComponent(instance);
+            pz.application.instances.filter(function (instance) { // events are allowed only on components
+                return pz.isComponent(instance);
             }).forEach(function (component) {
                 fire(component, params);
             });
@@ -251,7 +251,7 @@
 
             var hasChildren, parentSelector, instance, childReference, idx, renderTo,
                 replace = child.$replace;
-            if (plz.isEmpty(child) || plz.isEmpty(child.type)) {
+            if (pz.isEmpty(child) || pz.isEmpty(child.type)) {
                 throw new Error(_const.addChildParamErr);
             };
 
@@ -259,11 +259,11 @@
             parentSelector = '*[data-componentid="' + this.id + '"]';
 
             child.autoLoad = false; // prevent auto load since we might be missing [renderTo] from config
-            instance = plz.create(child);
+            instance = pz.create(child);
             renderTo = child.renderTo || instance.renderTo;
 
-            instance.renderTo = plz.isEmpty(renderTo) ?
-                parentSelector.concat(!plz.isEmpty(this.containerElement) ? ' ' + this.containerElement : '') :
+            instance.renderTo = pz.isEmpty(renderTo) ?
+                parentSelector.concat(!pz.isEmpty(this.containerElement) ? ' ' + this.containerElement : '') :
                 (renderTo == 'root' ? parentSelector : parentSelector.concat(' ').concat(renderTo));
 
             instance.parentComponent = {
@@ -271,11 +271,11 @@
                 id: this.id
             };
 
-            if(!plz.isEmpty(instance.renderAfter) || !plz.isEmpty(instance.renderBefore)) {
+            if(!pz.isEmpty(instance.renderAfter) || !pz.isEmpty(instance.renderBefore)) {
                 instance.parentComponent.$ref = this;
             };
 
-            if (!plz.isEmpty(index) && !replace) {
+            if (!pz.isEmpty(index) && !replace) {
                 instance.insertAt = index;
             };
 
@@ -283,7 +283,7 @@
                 instance.load();
             };
 
-            hasChildren = !plz.isEmpty(this.components);
+            hasChildren = !pz.isEmpty(this.components);
             if (!hasChildren) {
                 this.components = [];
             };
@@ -293,11 +293,11 @@
                 id: instance.id
             };
 
-            if (!plz.isEmpty(instance.alias)) {
+            if (!pz.isEmpty(instance.alias)) {
                 childReference.alias = instance.alias;
             };
 
-            if (!plz.isEmpty(index)) {
+            if (!pz.isEmpty(index)) {
                 this.components.splice(index, (replace ? 1 : 0), childReference);
             } else {
                 this.components.push(childReference);
@@ -308,44 +308,44 @@
         },
         handle: function (handler) {
             var me = this;
-            var fn = plz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
-            if (plz.isEmpty(fn)) {
+            var fn = pz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
+            if (pz.isEmpty(fn)) {
                 throw new Error(_const.handlerFnNotProvided);
             };
-            var args = [handler.on, me.html, handler.selector, plz.proxy(fn, handler.scope || me)];
-            plz.dom.on.apply(plz.dom, args);
+            var args = [handler.on, me.html, handler.selector, pz.proxy(fn, handler.scope || me)];
+            pz.dom.on.apply(pz.dom, args);
         },
         showLoadingMask: function () {
-            var renderToDefined = !plz.isEmpty(this.renderTo), container;
+            var renderToDefined = !pz.isEmpty(this.renderTo), container;
             if (!this.showLoading) {
                 return;
             };
 
             var container = this.html;
-            if (plz.isEmpty(container)) {
-                container = renderToDefined ? plz.dom.getEl(this.renderTo) : plz.dom.getByAttr(this.templateSelector);
+            if (pz.isEmpty(container)) {
+                container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getByAttr(this.templateSelector);
             };
 
-            if (!plz.isEmpty(container)) {
-                plz.dom.append(container, _const.loadingMaskMarkup);
+            if (!pz.isEmpty(container)) {
+                pz.dom.append(container, _const.loadingMaskMarkup);
             };
             container = null;
         },
         hideLoadingMask: function () {
-            var renderToDefined = !plz.isEmpty(this.renderTo), container;
+            var renderToDefined = !pz.isEmpty(this.renderTo), container;
             if (!this.showLoading) {
                 return;
             };
 
             container = this.html;
-            if (plz.isEmpty(container)) {
-                container = renderToDefined ? plz.dom.getEl(this.renderTo) : plz.dom.getByAttr(this.templateSelector);
+            if (pz.isEmpty(container)) {
+                container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getByAttr(this.templateSelector);
             };
 
-            if (!plz.isEmpty(container)) {
-                var mask = plz.dom.findElement(container, 'div.loading-mask');
-                if (!plz.isEmpty(mask)) {
-                    plz.dom.remove(mask);
+            if (!pz.isEmpty(container)) {
+                var mask = pz.dom.findElement(container, 'div.loading-mask');
+                if (!pz.isEmpty(mask)) {
+                    pz.dom.remove(mask);
                     mask = null;
                 };
             };
@@ -354,7 +354,7 @@
         },
         lastChild: function () {
 
-            if (plz.isEmpty(this.components)) {
+            if (pz.isEmpty(this.components)) {
                 return null;
             };
 
@@ -365,27 +365,27 @@
         },
         childAt: function (index) {
 
-            if (plz.isEmpty(this.components) || plz.isEmpty(index)) {
+            if (pz.isEmpty(this.components) || pz.isEmpty(index)) {
                 return null;
             };
 
             var childRef = this.components[index];
 
-            if (plz.isEmpty(childRef)) {
+            if (pz.isEmpty(childRef)) {
                 return null;
             };
 
-            var childComponent = plz.getInstanceOf(childRef.id);
+            var childComponent = pz.getInstanceOf(childRef.id);
             return childComponent || null;
         },
         removeChild: function (component, destroy) {
 
             var doDestroy, compIndex;
-            if (plz.isEmpty(component)) {
+            if (pz.isEmpty(component)) {
                 return;
             };
 
-            doDestroy = plz.isEmpty(destroy) ? true : destroy;
+            doDestroy = pz.isEmpty(destroy) ? true : destroy;
             compIndex = this.childIndex(component);
 
             if (doDestroy) {
@@ -399,15 +399,15 @@
             component = null;
         },
         childCount: function () {
-            return plz.isEmpty(this.components) ? 0 : this.components.length;
+            return pz.isEmpty(this.components) ? 0 : this.components.length;
         },
         childIndex: function (component) {
             var resultIdx = -1;
-            if (plz.isEmpty(component)) {
+            if (pz.isEmpty(component)) {
                 return resultIdx;
             };
 
-            plz.arr.find(function (child, idx) {
+            pz.arr.find(function (child, idx) {
                 if (child.id == component.id) {
                     resultIdx = idx;
                 };
@@ -420,7 +420,7 @@
         destroy: function () {
             var me, parent;
 
-            if (!plz.isEmpty(this.templateSelector)) {
+            if (!pz.isEmpty(this.templateSelector)) {
                 throw new Error(_const.canNotDestroyComponent);
             };
 
@@ -428,19 +428,19 @@
 
             this.publish('before-destroy', null, this);
             this.destroyChildren();
-            plz.dom.off(this.html);
-            if (!plz.isEmpty(this.viewModel)) {
+            pz.dom.off(this.html);
+            if (!pz.isEmpty(this.viewModel)) {
                 this.unapplyBindings();
             };
-            plz.dom.remove(this.html);
+            pz.dom.remove(this.html);
             this.html = null;
             this.triggers = null;
             this.viewModel = null;
-            plz.arr.clear(this.components);
-            plz.arr.clear(this.handlers);
-            plz.arr.clear(this.mixins);
+            pz.arr.clear(this.components);
+            pz.arr.clear(this.handlers);
+            pz.arr.clear(this.mixins);
             parent = this.traceUp();
-            if (!plz.isEmpty(parent)) {
+            if (!pz.isEmpty(parent)) {
                 parent.removeChild(this, false);
             };
             this.destroyed = true;
@@ -449,10 +449,10 @@
         },
         destroyChildren: function () {
             var child, instance;
-            while (!plz.isEmpty(this.components) &&
-                ((child = this.components[0]) != null) && !plz.isEmpty(child.id)) {
+            while (!pz.isEmpty(this.components) &&
+                ((child = this.components[0]) != null) && !pz.isEmpty(child.id)) {
 
-                instance = plz.getInstanceOf(child.id);
+                instance = pz.getInstanceOf(child.id);
                 instance.destroy();
                 instance = null;
             };
@@ -460,67 +460,67 @@
         addCss: function (value, el) {
 
             var isArray, hasClasses, html, cls;
-            if (plz.isEmpty(value)) {
+            if (pz.isEmpty(value)) {
                 return;
             };
 
-            html = plz.isEmpty(el) ? this.html : (plz.isString(el) ?
-                plz.dom.findElement(this.html, el) : el);
+            html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
+                pz.dom.findElement(this.html, el) : el);
 
-            if (plz.isEmpty(html)) {
+            if (pz.isEmpty(html)) {
                 return;
             };
 
-            isArray = plz.isArray(value);
-            hasClasses = !plz.isEmpty(html.className);
+            isArray = pz.isArray(value);
+            hasClasses = !pz.isEmpty(html.className);
 
             cls = isArray ? value.join(' ') : value;
             html.className += (hasClasses ? (' ' + cls) : cls);
         },
         addStyle: function (value, el) {
             var isArray, hasStyle, html, style;
-            if (plz.isEmpty(value)) {
+            if (pz.isEmpty(value)) {
                 return;
             };
 
-            html = plz.isEmpty(el) ? this.html : (plz.isString(el) ?
-                plz.dom.findElement(this.html, el) : el);
+            html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
+                pz.dom.findElement(this.html, el) : el);
 
-            if (plz.isEmpty(html)) {
+            if (pz.isEmpty(html)) {
                 return;
             };
 
-            isArray = plz.isArray(value);
-            hasStyle = !plz.isEmpty(html.style.cssText);
+            isArray = pz.isArray(value);
+            hasStyle = !pz.isEmpty(html.style.cssText);
 
             style = isArray ? value.join(' ') : value;
             html.style.cssText += (hasStyle ? (' ' + style) : style);
         },
         addAttr: function (value, el) {
             var html, isArray, val;
-            if (plz.isEmpty(value)) {
+            if (pz.isEmpty(value)) {
                 return;
             };
 
-            html = plz.isEmpty(el) ? this.html : (plz.isString(el) ?
-                plz.dom.findElement(this.html, el) : el);
+            html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
+                pz.dom.findElement(this.html, el) : el);
 
-            if (plz.isEmpty(html)) {
+            if (pz.isEmpty(html)) {
                 return;
             };
 
-            isArray = plz.isArray(value);
+            isArray = pz.isArray(value);
             val = isArray ? value : [value];
 
-            plz.forEach(val, function (attr) {
+            pz.forEach(val, function (attr) {
                 html.setAttribute(attr.name, attr.value);
             });
 
             val = null;
         },
         clearHtml: function () {
-            plz.forEach(this.html.childNodes, function (child) {
-                plz.dom.remove(child);
+            pz.forEach(this.html.childNodes, function (child) {
+                pz.dom.remove(child);
             }, this);
         }
     };

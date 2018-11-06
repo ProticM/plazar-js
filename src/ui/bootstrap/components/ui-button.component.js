@@ -1,11 +1,11 @@
-﻿plz.define('ui-bootstrap-button', function () {
+﻿pz.define('ui-bootstrap-button', function () {
     'use strict';
 
     var _parseTemplate = function () {
-        var hasSize = !plz.isEmpty(this.size), hasHref = !plz.isEmpty(this.href);
+        var hasSize = !pz.isEmpty(this.size), hasHref = !pz.isEmpty(this.href);
         this.html.innerHTML = this.text;
         this.addCss(('btn-' + this.appearance + (hasSize ? ' btn-' + this.size : '')));
-        this.addCss((!plz.isEmpty(this.align) ? 'float-' + this.align : ''));
+        this.addCss((!pz.isEmpty(this.align) ? 'float-' + this.align : ''));
         this.html.setAttribute((hasHref ? 'href' : 'type'), (hasHref ? this.href : this.buttonType));
 	};
 
@@ -16,13 +16,13 @@
         buttonType: 'button',
         template: '<button class="btn"></button>',
         load: function () {
-            if (!plz.isEmpty(this.href)) {
+            if (!pz.isEmpty(this.href)) {
                 this.template = this.template.replace('<button', '<a').replace('button>', 'a>');
             };
             this.base(arguments)
         },
         init: function () {
-            if (plz.isEmpty(this.href)) {
+            if (pz.isEmpty(this.href)) {
                 this.handle({
                     on: 'click',
                     fn: 'onClick'
@@ -41,7 +41,7 @@
         },
         setDisabled: function (value) {
             // TODO: link disable
-            if (plz.isEmpty(value) || value == true) {
+            if (pz.isEmpty(value) || value == true) {
                 this.html.setAttribute('disabled', '');
             } else {
                 this.html.removeAttribute('disabled');
@@ -49,7 +49,7 @@
         },
         setText: function (value) {
 
-            if (plz.isEmpty(value)) {
+            if (pz.isEmpty(value)) {
                 return;
             };
 

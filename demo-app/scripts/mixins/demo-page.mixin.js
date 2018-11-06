@@ -1,4 +1,4 @@
-plz.define('page-mixin', {
+pz.define('page-mixin', {
     ownerType: 'mixin',
     autoLoad: true
 });

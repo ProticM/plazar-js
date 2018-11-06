@@ -1,4 +1,4 @@
-﻿plz.defineStatic('http', function () {
+﻿pz.defineStatic('http', function () {
     'use strict';
 
     var _const = {
@@ -33,8 +33,8 @@
     var _checkMinimalConfiguration = function (options) {
         // add more if needed
 
-        var isOK = !plz.isEmpty(options.url) &&
-            !plz.isEmpty(options.method);
+        var isOK = !pz.isEmpty(options.url) &&
+            !pz.isEmpty(options.method);
 
         if (!isOK) {
             throw new Error(_const.minConfigNotProfided);
@@ -53,19 +53,19 @@
                 return;
             };
 
-            if (this.readyState == _const.requestStates.done && !plz.isEmpty(callback)) {
+            if (this.readyState == _const.requestStates.done && !pz.isEmpty(callback)) {
                 var result = {
                     request: this,
-                    data: (dataType == _types.data.json ? plz.toJSON(this.responseText) : this.responseText),
+                    data: (dataType == _types.data.json ? pz.toJSON(this.responseText) : this.responseText),
                     dataType: dataType
                 };
                 callback.call(this, result);
-                delete plz.http.requests[request.id];
+                delete pz.http.requests[request.id];
             };
         };
 
         xhr.onerror = function (e) {
-            delete plz.http.requests[request.id];
+            delete pz.http.requests[request.id];
 
             if (eCallback) {
                 eCallback(e.target);
@@ -82,8 +82,8 @@
 
         xhr.open(options.method, options.url, true);
 
-        if (plz.isString(options.data)) {
-            options.data = plz.toJSON(options.data);
+        if (pz.isString(options.data)) {
+            options.data = pz.toJSON(options.data);
         };
 
         xhr.send(options.data || null);
@@ -94,14 +94,14 @@
         latestRequestId: null,
         request: function (options) {
 
-            if (plz.isEmpty(options)) {
+            if (pz.isEmpty(options)) {
                 throw new Error(_const.optionsRequred);
             };
 
             _checkMinimalConfiguration(options);
 
             var request = {
-                id: plz.guid(),
+                id: pz.guid(),
                 aborted: false,
                 options: options,
                 xhr: _createXHR(),
@@ -122,7 +122,7 @@
             var requestToAbort = abortAll ? this.requests :
                 this.requests[this.latestRequestId];
 
-            if (plz.isEmpty(requestToAbort)) {
+            if (pz.isEmpty(requestToAbort)) {
                 return;
             };
 
@@ -133,8 +133,8 @@
                 return;
             };
 
-            requestIds = plz.obj.getKeys(requestToAbort);
-            plz.forEach(requestIds, function (id) {
+            requestIds = pz.obj.getKeys(requestToAbort);
+            pz.forEach(requestIds, function (id) {
                 var request = this.requests[id];
                 request.abort();
                 delete this.requests[id];
@@ -153,4 +153,4 @@
             return this.request(options);
         }
     }
-}, 'plz');
+}, 'pz');

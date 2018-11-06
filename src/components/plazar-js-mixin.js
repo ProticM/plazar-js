@@ -1,4 +1,4 @@
-﻿plz.define('mixin', function () {
+﻿pz.define('mixin', function () {
     'use strict';
 
     return {

@@ -1,8 +1,8 @@
-﻿plz.define('ui-bootstrap-form', function () {
+﻿pz.define('ui-bootstrap-form', function () {
     'use strict';
 
     var _parseTemplate = function () {
-        var hasAction = !plz.isEmpty(this.action), hasMethod = !plz.isEmpty(this.method);
+        var hasAction = !pz.isEmpty(this.action), hasMethod = !pz.isEmpty(this.method);
 
         if (hasAction) {
             this.setAttribute('action', this.action);
@@ -29,11 +29,11 @@
         },
         init: function () {
 
-            plz.forEach(this.components, function (component) {
+            pz.forEach(this.components, function (component) {
                 component.inForm = component.type == 'ui-bootstrap-input';
             }, this);
 
-            if (!plz.isEmpty(this.button)) {
+            if (!pz.isEmpty(this.button)) {
                 var button = {
                     type: 'ui-bootstrap-button',
                     text: this.button.text || 'Submit',
@@ -43,7 +43,7 @@
                     align: this.button.align || 'right'
                 };
 
-                if (plz.isFunction(this.button.onClick)) {
+                if (pz.isFunction(this.button.onClick)) {
                     button.onClick = this.button.onClick;
                 };
 

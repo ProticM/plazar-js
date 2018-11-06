@@ -1,4 +1,4 @@
-﻿plz.define('ui-bootstrap-carousel', function () {
+﻿pz.define('ui-bootstrap-carousel', function () {
     'use strict';
 
     var _getNavButton = function (id, type) {
@@ -16,35 +16,35 @@
         var indicators, me = this, prevBtn, nextBtn, item, inner, css, mainCss;
 
         if (this.indicators) {
-            plz.dom.append(this.html, '<ol class="carousel-indicators"></ol');
-            indicators = plz.dom.findElement(this.html, 'ol.carousel-indicators');
+            pz.dom.append(this.html, '<ol class="carousel-indicators"></ol');
+            indicators = pz.dom.findElement(this.html, 'ol.carousel-indicators');
         };
 
-        plz.dom.append(this.html, '<div class="carousel-inner"></div>');
-        inner = plz.dom.findElement(this.html, 'div.carousel-inner');
+        pz.dom.append(this.html, '<div class="carousel-inner"></div>');
+        inner = pz.dom.findElement(this.html, 'div.carousel-inner');
 
-        plz.forEach(this.slides, function (slide, index) {
+        pz.forEach(this.slides, function (slide, index) {
 
             if (me.indicators) {
-                plz.dom.append(indicators, '<li data-target="#carousel_' + me.id + '" data-slide-to="' + index + '"></li>');
+                pz.dom.append(indicators, '<li data-target="#carousel_' + me.id + '" data-slide-to="' + index + '"></li>');
             };
 
             mainCss = 'carousel-item' + ((index == 0 ? ' active' : '') + ' slide_' + index);
-            css = plz.isEmpty(slide.css) ? mainCss : (mainCss + ' ' + slide.css.join(' ')).trim();
-            item = plz.dom.parseTemplate('<div class="' + css + '">' + slide.text + '</div>');
+            css = pz.isEmpty(slide.css) ? mainCss : (mainCss + ' ' + slide.css.join(' ')).trim();
+            item = pz.dom.parseTemplate('<div class="' + css + '">' + slide.text + '</div>');
 
-            if (!plz.isEmpty(slide.caption)) {
-                plz.dom.append(item, '<div class="carousel-caption d-none d-md-block">' + slide.caption + '</div>');
+            if (!pz.isEmpty(slide.caption)) {
+                pz.dom.append(item, '<div class="carousel-caption d-none d-md-block">' + slide.caption + '</div>');
             };
 
-            plz.dom.append(inner, item);
+            pz.dom.append(inner, item);
         });
 
         prevBtn = _getNavButton(this.id, 'prev');
         nextBtn = _getNavButton(this.id, 'next');
 
-        plz.dom.append(this.html, prevBtn);
-        plz.dom.append(this.html, nextBtn);
+        pz.dom.append(this.html, prevBtn);
+        pz.dom.append(this.html, nextBtn);
 
     };
 

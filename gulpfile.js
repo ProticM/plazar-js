@@ -43,30 +43,30 @@ var bootstrapSource = [
 ];
 
 var banner = function(bootstrap) {
-    return (bootstrap ? '// Plazar JS Bootstrap UI' : '// Plazar JS') + '\n';
+    return (bootstrap ? '// PlazarJS Bootstrap UI' : '// PlazarJS') + '\n';
 };
 
 gulp.task('build', function(){
     
-    plzBootstrap = gulp.src(bootstrapSource)
+    pzBootstrap = gulp.src(bootstrapSource)
         .pipe(concat('plazar-js-ui-bootstrap.js'))
         .pipe(header(banner(true)))
         .pipe(gulp.dest('dist'));
 
-    plzBootstrapMin = plzBootstrap.pipe(concat('plazar-js-ui-bootstrap.min.js'))
+    pzBootstrapMin = pzBootstrap.pipe(concat('plazar-js-ui-bootstrap.min.js'))
         .pipe(uglify())
         .pipe(header(banner(true)))
         .pipe(gulp.dest('dist'));
     
-    plz = gulp.src(source)
+    pz = gulp.src(source)
         .pipe(concat('plazar-js.js'))
         .pipe(header(banner()))
         .pipe(gulp.dest('dist'));
 
-    plzMin = plz.pipe(concat('plazar-js.min.js'))
+    pzMin = pz.pipe(concat('plazar-js.min.js'))
         .pipe(uglify())
         .pipe(header(banner()))
         .pipe(gulp.dest('dist'));
 
-    return plzMin;
+    return pzMin;
 });

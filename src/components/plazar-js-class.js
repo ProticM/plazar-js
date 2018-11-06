@@ -1,4 +1,4 @@
-﻿plz.define('class', function () {
+﻿pz.define('class', function () {
     'use strict';
 
     return {

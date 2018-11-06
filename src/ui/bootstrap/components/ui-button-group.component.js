@@ -1,8 +1,8 @@
-﻿plz.define('ui-bootstrap-button-group', function () {
+﻿pz.define('ui-bootstrap-button-group', function () {
     'use strict';
 
     var _parseTemplate = function () {
-        var sizeCls = !plz.isEmpty(this.size) ? 'btn-group-' + this.size : '';
+        var sizeCls = !pz.isEmpty(this.size) ? 'btn-group-' + this.size : '';
         this.addCss((this.vertical ? 'btn-group-vertical ' + sizeCls : 'btn-group ' + sizeCls));
         this.html.setAttribute('aria-label', 'label_' + this.id);
         this.html.setAttribute('role', this.renderAs);
@@ -14,14 +14,14 @@
         renderAs: 'group',
         init: function () {
 
-            var buttons = plz.arr.map(function (button) {
-                return plz.isEmpty(button.type) ?
-                    plz.obj.assignTo(button, { type: 'ui-bootstrap-button' }, false) : button;
+            var buttons = pz.arr.map(function (button) {
+                return pz.isEmpty(button.type) ?
+                    pz.obj.assignTo(button, { type: 'ui-bootstrap-button' }, false) : button;
             }, this.buttons);
 
-            this.components = plz.arr.merge(this.components || [], buttons);
+            this.components = pz.arr.merge(this.components || [], buttons);
 
-            plz.arr.clear(this.buttons);
+            pz.arr.clear(this.buttons);
             delete this.buttons;
             this.base(arguments);
         },

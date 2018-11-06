@@ -1,4 +1,4 @@
-﻿plz.define('ui-bootstrap-input-group', function () {
+﻿pz.define('ui-bootstrap-input-group', function () {
     'use strict';
 
     var _const = {
@@ -13,22 +13,22 @@
     ];
 
     var _getAddonWrapper = function (me, addon) {
-        var wrapper = plz.dom.findElement(me.html, ('div.input-group-' + addon.position));
+        var wrapper = pz.dom.findElement(me.html, ('div.input-group-' + addon.position));
         return wrapper || (function () {
-            plz.dom[addon.position](me.html, '<div class="input-group-' + addon.position + '"></div>');
-            return plz.dom.findElement(me.html, ('div.input-group-' + addon.position));
+            pz.dom[addon.position](me.html, '<div class="input-group-' + addon.position + '"></div>');
+            return pz.dom.findElement(me.html, ('div.input-group-' + addon.position));
         })();
     };
 
     var _addTextWrapper = function (wrapper, text, tempCls) {
-        plz.dom.append(wrapper, '<div class="input-group-text' + (' ' + tempCls || '') + '">' + (text || '') + '</div>');
+        pz.dom.append(wrapper, '<div class="input-group-text' + (' ' + tempCls || '') + '">' + (text || '') + '</div>');
     };
 
     return {
         ownerType: 'ui-bootstrap-component',
         template: '<div class="input-group"></div>',
         parseTemplate: function () {
-            var hasSize = !plz.isEmpty(this.size);
+            var hasSize = !pz.isEmpty(this.size);
             this.addCss((hasSize ? ('input-group-' + this.size) : ''));
         },
         input: {
@@ -37,21 +37,21 @@
         init: function () {
             var addons, addons, wrapper, component;
 
-            if (plz.isEmpty(this.addon)) {
+            if (pz.isEmpty(this.addon)) {
                 throw new Error(_const.addonEmpty);
             };
 
-            if (!plz.arr.contains(['ui-bootstrap-input', 'ui-bootstrap-select'], this.input.type)) {
+            if (!pz.arr.contains(['ui-bootstrap-input', 'ui-bootstrap-select'], this.input.type)) {
                 throw new Error(_const.unsupportedInputType);
             };
 
-            addons = plz.isArray(this.addon) ? this.addon : [this.addon];
-            plz.arr.clear(this.components);
+            addons = pz.isArray(this.addon) ? this.addon : [this.addon];
+            pz.arr.clear(this.components);
             this.components = [];
 
-            plz.forEach(addons, function (addon, idx) {
+            pz.forEach(addons, function (addon, idx) {
 
-                if (plz.isEmpty(addon.position)) {
+                if (pz.isEmpty(addon.position)) {
                     addon.position = 'prepend';
                 };
 
@@ -60,7 +60,7 @@
                 };
 
                 wrapper = _getAddonWrapper(this, addon), component = {};
-                if (plz.arr.contains(_allowedComponents, addon.renderAs.type)) {
+                if (pz.arr.contains(_allowedComponents, addon.renderAs.type)) {
                     var renderTo = ('div.input-group-' + addon.position);
 
                     if (addon.renderAs.type == 'ui-bootstrap-input') {
@@ -73,7 +73,7 @@
                         component.custom = true;
                     };
 
-                    plz.obj.assignTo(component, addon.renderAs, false);
+                    pz.obj.assignTo(component, addon.renderAs, false);
                     component.renderTo = renderTo;
                     this.components.push(component);
                 } else {

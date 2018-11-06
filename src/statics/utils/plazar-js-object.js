@@ -1,4 +1,4 @@
-﻿plz.defineStatic('obj', function () {
+﻿pz.defineStatic('obj', function () {
     'use strict';
 
     var _const = {
@@ -8,7 +8,7 @@
     return {
 
         assignTo: function (target, source, clone) {
-            return plz.assignTo(target, source, clone);
+            return pz.assignTo(target, source, clone);
         },
 
         clone: function (obj) {
@@ -36,4 +36,4 @@
         }
     };
 
-}, 'plz');
+}, 'pz');

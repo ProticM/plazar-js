@@ -1,8 +1,8 @@
-﻿plz.define('ui-bootstrap-collapse', function () {
+﻿pz.define('ui-bootstrap-collapse', function () {
     'use strict';
 
     var _setIfNotEmpty = function (me, propName) {
-        if (!plz.isEmpty(me[propName])) {
+        if (!pz.isEmpty(me[propName])) {
             me.html.setAttribute(('data-' + propName), me[propName]);
         };
     };
@@ -23,7 +23,7 @@
         target: '',
         parent: '',
         init: function () {
-            plz.arr.clear(this.handlers);
+            pz.arr.clear(this.handlers);
             this.base(arguments);
         },
         toggle: function () {

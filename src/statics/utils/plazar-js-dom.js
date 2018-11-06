@@ -1,4 +1,4 @@
-﻿plz.defineStatic('dom', function () {
+﻿pz.defineStatic('dom', function () {
     'use strict';
 
     var _tagNameReg = /<([^\s>]+)(\s|>)+/;
@@ -16,17 +16,17 @@
 
     var _doInsert = function (element, newNode, where) {
 
-        if (plz.isEmpty(element) || plz.isEmpty(newNode)) {
+        if (pz.isEmpty(element) || pz.isEmpty(newNode)) {
             return;
         };
 
-        element.insertAdjacentHTML(where, (plz.isString(newNode) ?
+        element.insertAdjacentHTML(where, (pz.isString(newNode) ?
             newNode : newNode.outerHTML));
     };
 
     var _getListener = function (me, element, event) {
-        return plz.find(function (lst) {
-            return lst.el == element && (!plz.isEmpty(event) ? (lst.event == event) : true);
+        return pz.find(function (lst) {
+            return lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
         }, me.listeners);
     };
 
@@ -41,8 +41,8 @@
                     return item.type == e.type;
                 });
 
-            while (!plz.isEmpty(dataItem = data[i])
-                && !(match = plz.dom.elementMatches(e.target, dataItem.selector))) {
+            while (!pz.isEmpty(dataItem = data[i])
+                && !(match = pz.dom.elementMatches(e.target, dataItem.selector))) {
                 i++;
             };
 
@@ -56,8 +56,8 @@
             };
 
             if (!targetMatches) {
-                var parent = plz.dom.findParent(e.target, selector);
-                parentEmpty = plz.isEmpty(parent);
+                var parent = pz.dom.findParent(e.target, selector);
+                parentEmpty = pz.isEmpty(parent);
                 if (!parentEmpty) {
                     target = parent;
                 };
@@ -65,7 +65,7 @@
 
             triggerEvent = targetMatches || !parentEmpty;
 
-            if (triggerEvent && plz.isEmpty(target)) {
+            if (triggerEvent && pz.isEmpty(target)) {
                 target = this;
             };
 
@@ -81,7 +81,7 @@
         },
 
         replaceWith: function (node, newNode) {
-            if (plz.isEmpty(node) || plz.isEmpty(newNode)) {
+            if (pz.isEmpty(node) || pz.isEmpty(newNode)) {
                 return;
             };
 
@@ -90,11 +90,11 @@
         },
 
         append: function (parent, element) {
-            if (plz.isEmpty(parent) || plz.isEmpty(element)) {
+            if (pz.isEmpty(parent) || pz.isEmpty(element)) {
                 return;
             };
 
-            if (plz.isString(element)) {
+            if (pz.isString(element)) {
                 element = this.parseTemplate(element);
             };
 
@@ -115,7 +115,7 @@
 
         findElement: function (rootEl, selector, all) {
 
-            if (plz.isEmpty(selector)) {
+            if (pz.isEmpty(selector)) {
                 return null;
             };
 
@@ -134,7 +134,7 @@
 
         findParent: function (el, selector, stopSelector) {
             var retval = null, me = this;
-            while (!plz.isEmpty(el)) {
+            while (!pz.isEmpty(el)) {
                 if (this.elementMatches(el, selector)) {
                     retval = el;
                     break;
@@ -150,11 +150,11 @@
             // TODO: See if we can use only one collection (_delegate.data/this.listeners)
             var rootEl, lst;
 
-            if (plz.isEmpty(fn)) {
+            if (pz.isEmpty(fn)) {
                 return;
             };
 
-            rootEl = !plz.isEmpty(element) ? element : document;
+            rootEl = !pz.isEmpty(element) ? element : document;
             lst = _getListener(this, rootEl, event);
             _delegate.data.push({
                 selector: selector,
@@ -162,7 +162,7 @@
                 type: event
             });
 
-            if (!plz.isEmpty(lst)) {
+            if (!pz.isEmpty(lst)) {
                 return;
             };
 
@@ -185,7 +185,7 @@
             var root = options && options.rootEl || document;
             var method = getAll ? 'querySelectorAll' : 'querySelector';
             var element = root[method](selector);
-            return plz.isEmpty(element) ? null :
+            return pz.isEmpty(element) ? null :
                 ((element.length == 1 && element.nodeName != 'FORM') ? element[0] : element);
         },
 
@@ -194,20 +194,20 @@
                 regResult, wrapper, wrapperEmpty,
                 fragment, result;
 
-            if (!plz.isString(template)) {
+            if (!pz.isString(template)) {
                 return null;
             };
 
             trimmed = template.trim();
             regResult = _tagNameReg.exec(trimmed);
-            if (plz.isEmpty(regResult)) {
+            if (pz.isEmpty(regResult)) {
                 return null;
             };
 
             fragment = document.createDocumentFragment();
             tagName = regResult[1];
             wrapper = _wrapMap[tagName];
-            wrapperEmpty = plz.isEmpty(wrapper);
+            wrapperEmpty = pz.isEmpty(wrapper);
 
             temp = fragment.appendChild(this.createElement('div'));
             temp.innerHTML = wrapperEmpty ? trimmed : wrapper[1].concat(trimmed).concat(wrapper[2]);
@@ -238,7 +238,7 @@
         remove: function (element) {
             var parent;
 
-            if (plz.isEmpty(element)) {
+            if (pz.isEmpty(element)) {
                 return;
             };
 
@@ -249,18 +249,18 @@
 
         insertAt: function (parent, newNode, index) {
             var referenceNode;
-            if (plz.isEmpty(parent) || plz.isEmpty(index)) {
+            if (pz.isEmpty(parent) || pz.isEmpty(index)) {
                 return;
             };
 
-            if (plz.isEmpty(parent.childNodes)) {
+            if (pz.isEmpty(parent.childNodes)) {
                 this.prepend(parent, newNode);
                 return;
             };
 
             referenceNode = parent.childNodes[index];
 
-            if (plz.isEmpty(referenceNode)) {
+            if (pz.isEmpty(referenceNode)) {
                 throw new Error('Node at index: ' + index + ' was not found.');
             };
 
@@ -269,15 +269,15 @@
 
         off: function (element, event) {
 
-            var index, listener = plz.find(function (lst, idx) {
-                var found = lst.el == element && (!plz.isEmpty(event) ? (lst.event == event) : true);
+            var index, listener = pz.find(function (lst, idx) {
+                var found = lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
                 if (found) {
                     index = idx;
                 };
                 return found;
             }, this.listeners);
 
-            if (!plz.isEmpty(listener)) {
+            if (!pz.isEmpty(listener)) {
                 listener.el.removeEventListener(listener.event, _delegate.fn);
             };
 
@@ -294,4 +294,4 @@
         }
     }
 
-}, 'plz');
+}, 'pz');

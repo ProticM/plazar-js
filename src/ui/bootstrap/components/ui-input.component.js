@@ -1,16 +1,16 @@
-﻿plz.define('ui-bootstrap-input', function () {
+﻿pz.define('ui-bootstrap-input', function () {
     'use strict';
 
     var _parseTemplate = function () {
 
-        var clone, tpl, label, input, hasSize = !plz.isEmpty(this.size),
-            input = plz.dom.findElement(this.html, 'input') || this.html,
-            hasGroup = !plz.isEmpty(this.group);
+        var clone, tpl, label, input, hasSize = !pz.isEmpty(this.size),
+            input = pz.dom.findElement(this.html, 'input') || this.html,
+            hasGroup = !pz.isEmpty(this.group);
 
         this.addCss((hasSize ? ('form-control-' + this.size) : ''), input);
         input.setAttribute('id', ('input_' + this.id));
 
-        if (plz.arr.contains(['text'], this.inputType)) {
+        if (pz.arr.contains(['text'], this.inputType)) {
 
             if (!this.readonly) {
                 input.setAttribute('placeholder', this.placeholder);
@@ -24,14 +24,14 @@
                 input.setAttribute('readonly', '');
             };
 
-            if (!plz.isEmpty(this.helpText)) {
+            if (!pz.isEmpty(this.helpText)) {
                 input.setAttribute('aria-describedby', ('help_' + this.id));
-                plz.dom.insertAfter(input, '<small class="form-text text-muted" id="help_' + this.id + '">' + this.helpText + '</small>');
+                pz.dom.insertAfter(input, '<small class="form-text text-muted" id="help_' + this.id + '">' + this.helpText + '</small>');
             };
             
         };
 
-        if (plz.arr.contains(['checkbox', 'radio'], this.inputType)) {
+        if (pz.arr.contains(['checkbox', 'radio'], this.inputType)) {
 
             var isRadio = this.inputType == 'radio';
 
@@ -46,31 +46,31 @@
             };
 
             input.className = input.className.replace('form-control', 'form-check-input');
-            clone = plz.dom.clone(input);
-            tpl = plz.dom.createElement('div');
+            clone = pz.dom.clone(input);
+            tpl = pz.dom.createElement('div');
 
             this.addCss('form-check', tpl);
             this.addCss((this.inForm ? 'mb-3' : ''), tpl);
             this.addCss((this.inline ? 'form-check-inline' : ''), tpl);
-            plz.dom.append(tpl, clone);
+            pz.dom.append(tpl, clone);
 
-            if (!plz.isEmpty(this.labelText)) {
-                label = plz.dom.createElement('label');
+            if (!pz.isEmpty(this.labelText)) {
+                label = pz.dom.createElement('label');
                 label.innerText = this.labelText;
                 this.addCss('form-check-label', label);
                 label.setAttribute('for', ('input_' + this.id));
-                plz.dom.append(tpl, label);
+                pz.dom.append(tpl, label);
                 label = null;
             };
 
-            plz.dom.replaceWith(this.html, tpl);
+            pz.dom.replaceWith(this.html, tpl);
             this.html = tpl;
 
             //if (this.inForm) {
-            //    plz.dom.remove(input);
-            //    plz.dom.append(this.html, tpl);
+            //    pz.dom.remove(input);
+            //    pz.dom.append(this.html, tpl);
             //} else {
-            //    plz.dom.replaceWith(this.html, tpl);
+            //    pz.dom.replaceWith(this.html, tpl);
             //    this.html = tpl;
             //};
 
@@ -91,7 +91,7 @@
         load: function () {
             var css = this.inputType == 'file' ? 'form-control-file' : 'form-control';
             var input = '<input class="' + css + '" type="' + this.inputType + '"/>';
-            this.template = ((this.inForm && !plz.arr.contains(['checkbox', 'radio'], this.inputType)) ? '<div class="form-group">' + input + '</div>' : input);
+            this.template = ((this.inForm && !pz.arr.contains(['checkbox', 'radio'], this.inputType)) ? '<div class="form-group">' + input + '</div>' : input);
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
@@ -105,11 +105,11 @@
         onChange: function (e) { },
         prependLabel: function (template) {
 
-            if (plz.isEmpty(this.labelText) || plz.arr.contains(['checkbox', 'radio'], this.inputType)) {
+            if (pz.isEmpty(this.labelText) || pz.arr.contains(['checkbox', 'radio'], this.inputType)) {
                 return;
             };
 
-            var label = plz.dom.createElement('label'), hasSize = !plz.isEmpty(this.size);
+            var label = pz.dom.createElement('label'), hasSize = !pz.isEmpty(this.size);
             label.innerText = this.labelText;
 
             this.addCss('col-form-label', label);
@@ -117,9 +117,9 @@
             label.setAttribute('for', ('input_' + this.id));
 
             if (this.inForm) {
-                plz.dom.prepend(this.html, label);
+                pz.dom.prepend(this.html, label);
             } else {
-                plz.dom.insertBefore(this.html, label);
+                pz.dom.insertBefore(this.html, label);
             };
 
             label = null;

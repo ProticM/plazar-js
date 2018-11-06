@@ -1,4 +1,4 @@
-plz.define('bootstrap-ui-header-component', {
+pz.define('bootstrap-ui-header-component', {
     ownerType: 'ui-bootstrap-navbar',
     renderTo: 'header',
     replace: true,

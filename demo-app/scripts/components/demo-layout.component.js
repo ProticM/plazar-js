@@ -1,4 +1,4 @@
-plz.define('layout-component', {
+pz.define('layout-component', {
     ownerType: 'base-component',
     templateSelector: 'layout-component',
     autoLoad: true,

@@ -1,15 +1,15 @@
-﻿plz.define('ui-bootstrap-alert', function () {
+﻿pz.define('ui-bootstrap-alert', function () {
     'use strict';
 
     var _parseTemplate = function () {
 
         this.addCss('alert-'.concat(this.appearance));
 
-        var renderLink = !plz.isEmpty(this.link), animation;
-        var renderHeading = !plz.isEmpty(this.heading);
+        var renderLink = !pz.isEmpty(this.link), animation;
+        var renderHeading = !pz.isEmpty(this.heading);
 
         if (renderHeading) {
-            plz.dom.append(this.html, '<h' + (this.heading.size || 4) + ' class="alert-heading">' +
+            pz.dom.append(this.html, '<h' + (this.heading.size || 4) + ' class="alert-heading">' +
                 this.heading.text + '</h' + (this.heading.size || 4) + '>');
         };
 
@@ -23,7 +23,7 @@
         if (this.dismissible) {
             animation = this.dismissible.animation;
             this.addCss((!animation ? 'alert-dismissible' : 'alert-dismissible fade show'));
-            plz.dom.append(this.html, '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+            pz.dom.append(this.html, '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
         };
     };
 

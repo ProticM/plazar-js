@@ -1,22 +1,22 @@
-plz.define('select-component', function() {
+pz.define('select-component', function() {
     var _buildTemplate = function(me) {
-        var showLabel = !plz.isEmpty(me.label);
-        var showHelpText = !plz.isEmpty(me.helpText);
-        var hasLabelText = showLabel && !plz.isEmpty(me.label.text);
+        var showLabel = !pz.isEmpty(me.label);
+        var showHelpText = !pz.isEmpty(me.helpText);
+        var hasLabelText = showLabel && !pz.isEmpty(me.label.text);
         var field = '<div class="select"><select></select></div>', select;
         if(showLabel) {
-            plz.dom.append(me.html, '<label class="label">' + 
+            pz.dom.append(me.html, '<label class="label">' + 
                 (hasLabelText ? me.label.text : 'Label') + '</label>');
         };
 
-        plz.dom.append(me.html, field);
-        select = plz.dom.findElement(me.html, 'select');
-        plz.forEach(me.options, function(option) {
-            plz.dom.append(select, '<option value="' + option.value + '">' + option.text + '</option>');
+        pz.dom.append(me.html, field);
+        select = pz.dom.findElement(me.html, 'select');
+        pz.forEach(me.options, function(option) {
+            pz.dom.append(select, '<option value="' + option.value + '">' + option.text + '</option>');
         });
 
         if(showHelpText) {
-            plz.dom.append(me.html, '<p class="help">' + me.helpText + '</p>');
+            pz.dom.append(me.html, '<p class="help">' + me.helpText + '</p>');
         };
         
     };

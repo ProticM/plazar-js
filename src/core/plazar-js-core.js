@@ -1,5 +1,5 @@
-﻿var plz;
-(function (plz) {
+﻿var pz;
+(function (pz) {
     'use strict';
 
     var _const = {
@@ -30,13 +30,13 @@
             };
         };
         return null;
-    }; // this is array helper and it's here due to possible circular reference in modular environment (plz.arr.find synonym)
+    }; // this is array helper and it's here due to possible circular reference in modular environment (pz.arr.find synonym)
 
     var _assignTo = function (target, source, clone) { 
 
         var assign = function (target) { // polyfill
 
-            if (plz.isEmpty(target)) {
+            if (pz.isEmpty(target)) {
                 throw new TypeError(_const.canNotConvertNullOrEmptyObj);
             };
 
@@ -45,9 +45,9 @@
             for (var index = 1; index < arguments.length; index++) {
                 var nextSource = arguments[index];
 
-                if (!plz.isEmpty(nextSource)) {
+                if (!pz.isEmpty(nextSource)) {
                     for (var nextKey in nextSource) {
-                        if(plz.isObject(nextSource[nextKey])) {
+                        if(pz.isObject(nextSource[nextKey])) {
                             to[nextKey] = assign({}, nextSource[nextKey]);
                         } else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
                             to[nextKey] = nextSource[nextKey];
@@ -58,30 +58,30 @@
             return to;
         };
 
-        var c = plz.isEmpty(clone) ? true : clone;
+        var c = pz.isEmpty(clone) ? true : clone;
         var t = c ? assign({}, target) : target, result;
         result = assign(t, source);
         assign = null;
         return result;
-    }; // this is object helper and it's here due to possible circular reference in modular environment (plz.obj.assignTo synonym)
+    }; // this is object helper and it's here due to possible circular reference in modular environment (pz.obj.assignTo synonym)
 
     var _setRequiredInstances = function (obj) {
-        var requireDefined = !plz.isEmpty(obj.require) &&
-            plz.isArray(obj.require);
+        var requireDefined = !pz.isEmpty(obj.require) &&
+            pz.isArray(obj.require);
 
         if (!requireDefined) {
             return;
         };
 
-        plz.forEach(obj.require, function (requiredItemType) {
-            var instance = plz.getInstanceOf(requiredItemType)
-            var requiredItem = plz.isEmpty(instance) ?
-                plz.getDefinitionOf(requiredItemType) : instance;
-            var camelCaseName = plz.str.camelize(requiredItemType);
+        pz.forEach(obj.require, function (requiredItemType) {
+            var instance = pz.getInstanceOf(requiredItemType)
+            var requiredItem = pz.isEmpty(instance) ?
+                pz.getDefinitionOf(requiredItemType) : instance;
+            var camelCaseName = pz.str.camelize(requiredItemType);
 
-            if (!plz.isEmpty(requiredItem) && plz.isEmpty(obj[camelCaseName])) {
-                obj[camelCaseName] = !plz.isFunction(requiredItem) ? requiredItem :
-                    plz.create(requiredItemType);
+            if (!pz.isEmpty(requiredItem) && pz.isEmpty(obj[camelCaseName])) {
+                obj[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
+                    pz.create(requiredItemType);
             };
         });
     };
@@ -91,18 +91,18 @@
         var me = this, cls, obj, tBase,
             isMixin, method, args, skipInheritance;
 
-        if (plz.isEmpty(type) || plz.isEmpty(object)) {
+        if (pz.isEmpty(type) || pz.isEmpty(object)) {
             throw new Error(_const.canNotDefine);
         };
 
-        obj = plz.toObject(object);
-        skipInheritance = plz.isEmpty(obj.ownerType) ||
+        obj = pz.toObject(object);
+        skipInheritance = pz.isEmpty(obj.ownerType) ||
             (_const.coreBaseTypes.indexOf(type) != -1);
 
-        cls = skipInheritance ? plz.toFunction(obj) : (function () {
-            tBase = plz.getDefinitionOf(obj.ownerType);
-            isMixin = plz.isMixin(obj);
-            return isMixin ? plz.assignTo(obj, plz.assignTo({}, tBase.prototype), false) :
+        cls = skipInheritance ? pz.toFunction(obj) : (function () {
+            tBase = pz.getDefinitionOf(obj.ownerType);
+            isMixin = pz.isMixin(obj);
+            return isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
                 tBase.extend(obj);
         })();
 
@@ -132,28 +132,28 @@
     var _create = function (config) {
         var isObject, type, item, instance, params;
 
-        if (plz.isEmpty(config)) {
+        if (pz.isEmpty(config)) {
             throw new Error(_const.canNotCreate);
         };
 
-        isObject = plz.isObject(config);
+        isObject = pz.isObject(config);
         type = isObject ? config.type : config;
-        item = plz.getDefinitionOf(type);
+        item = pz.getDefinitionOf(type);
         
         if (isObject) {
             params = _assignTo({}, config, false);
             delete params.type;
             instance = new item(params);
-            plz.assignTo(instance, config, false);
+            pz.assignTo(instance, config, false);
         } else {
             instance = new item();
             instance.type = type;
         };
 
-        instance.id = plz.guid();
+        instance.id = pz.guid();
         _setRequiredInstances(instance);
 
-        if (plz.isComponent(instance) || plz.isClass(instance)) {
+        if (pz.isComponent(instance) || pz.isClass(instance)) {
             instance.applyMixins();
 
             if (instance.autoLoad) {
@@ -161,7 +161,7 @@
             };
         };
 
-        plz.application.instances.push(instance);
+        pz.application.instances.push(instance);
 
         return instance;
     };
@@ -257,8 +257,8 @@
 
         args = Array.prototype.slice.call(arguments, 2);
         proxy = function () {
-            var c = plz.isComponent(context) && context.destroyed ? 
-                plz.getInstanceOf(context.type) : context;
+            var c = pz.isComponent(context) && context.destroyed ? 
+                pz.getInstanceOf(context.type) : context;
             return fn.apply(c || this, args.concat(Array.prototype.slice.call(arguments)));
         };
 
@@ -314,7 +314,7 @@
             sourceArray,
             fnCallback = function (item) {
                 return i && (item.id == typeOrIdOrAlias || item.type == typeOrIdOrAlias) ||
-                    item.type == typeOrIdOrAlias || (!plz.isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
+                    item.type == typeOrIdOrAlias || (!pz.isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
             }, result;
 
         sourceArray = (i ? me.application.instances : me.definitions);
@@ -331,7 +331,7 @@
         };
 
         return parts.reduce(function (previous, current) {
-            if (plz.isString(previous)) {
+            if (pz.isString(previous)) {
                 return window[previous][current];
             };
 
@@ -339,58 +339,58 @@
         });
     };
 
-    plz.ns = function (name, config) {
+    pz.ns = function (name, config) {
         _defineNamespace(name, config || {});
     };
 
-    plz.defineStatic = function (type, object, namespace) {
+    pz.defineStatic = function (type, object, namespace) {
 
         var obj = _toObject(object);
         var ns = _isEmpty(namespace) ? 'statics' : namespace;
 
         if (_isEmpty(window[ns])) {
-            plz.ns(ns);
+            pz.ns(ns);
         };
 
         var o = _getObjectByNamespaceString(ns);
         if (_isEmpty(type)) {
-            plz.assignTo(o, obj, false);
+            pz.assignTo(o, obj, false);
         } else {
             o[type] = obj;
         };
     };
 
-    plz.getDefinitionOf = function (type) {
+    pz.getDefinitionOf = function (type) {
         var item = _get(this, type);
 
         if (_isEmpty(item)) {
-            var msg = plz.str.format(_const.typeNotFound, type);
+            var msg = pz.str.format(_const.typeNotFound, type);
             throw new Error(msg);
         };
 
         return item.definition;
     };
 
-    plz.getInstanceOf = function (typeOrIdOrAlias, all) {
+    pz.getInstanceOf = function (typeOrIdOrAlias, all) {
         return _get(this, typeOrIdOrAlias, true, all);
     };
 
-    plz.defineApplication = function (config) {
-        var rootComponents = !plz.isEmpty(config.components) && plz.isArray(config.components) ? 
+    pz.defineApplication = function (config) {
+        var rootComponents = !pz.isEmpty(config.components) && pz.isArray(config.components) ? 
             config.components : [];
         delete config.components;
         delete config.instances; // making sure that we do not override the instances array if passed accidentally via config
-        _assignTo(plz.application, config);
+        _assignTo(pz.application, config);
 
         if (_isEmpty(window[config.namespace])) {
             this.ns(config.namespace, config);
-            plz.assignTo(window[config.namespace], config, false);
+            pz.assignTo(window[config.namespace], config, false);
         } else {
-            plz.assignTo(window[config.namespace], config, false);
+            pz.assignTo(window[config.namespace], config, false);
         };
 
-        plz.forEach(rootComponents, function (item) {
-            var def = plz.getDefinitionOf(item);
+        pz.forEach(rootComponents, function (item) {
+            var def = pz.getDefinitionOf(item);
             if (_isFunction(def.create)) {
                 def.create();
             };
@@ -399,7 +399,7 @@
         _invokeIfExists('init', config);
     };
 
-    plz.find = function (callback, arr, scope) {
+    pz.find = function (callback, arr, scope) {
         var findFnSupported = ('find' in Array.prototype); // find is not supported in IE
         var res = findFnSupported ? arr.find(callback, scope) :
             _find(arr, callback, scope);
@@ -407,30 +407,30 @@
         return res;
     };
 
-    plz.definitions = [];
-    plz.application = {
+    pz.definitions = [];
+    pz.application = {
         instances: []
     };
-    plz.define = _define;
-    plz.create = _create;
-    plz.toObject = _toObject;
-    plz.toFunction = _toFunction;
-    plz.isTypeOf = _isTypeOf;
-    plz.isArray = _isArray;
-    plz.isObject = _isObject;
-    plz.isFunction = _isFunction;
-    plz.isString = _isString;
-    plz.isNodeList = _isNodeList;
-    plz.isEmpty = _isEmpty;
-    plz.is = _is;
-    plz.isComponent = _isComponent;
-    plz.isMixin = _isMixin;
-    plz.isClass = _isClass;
-    plz.forEach = _forEach;
-    plz.proxy = _proxy;
-    plz.guid = _guid;
-    plz.toJSON = _toJSON;
-    plz.assignTo = _assignTo;
-    plz.isInstanceOf = _isInstanceOf;
+    pz.define = _define;
+    pz.create = _create;
+    pz.toObject = _toObject;
+    pz.toFunction = _toFunction;
+    pz.isTypeOf = _isTypeOf;
+    pz.isArray = _isArray;
+    pz.isObject = _isObject;
+    pz.isFunction = _isFunction;
+    pz.isString = _isString;
+    pz.isNodeList = _isNodeList;
+    pz.isEmpty = _isEmpty;
+    pz.is = _is;
+    pz.isComponent = _isComponent;
+    pz.isMixin = _isMixin;
+    pz.isClass = _isClass;
+    pz.forEach = _forEach;
+    pz.proxy = _proxy;
+    pz.guid = _guid;
+    pz.toJSON = _toJSON;
+    pz.assignTo = _assignTo;
+    pz.isInstanceOf = _isInstanceOf;
 
-})(plz || (plz = {}));
+})(pz || (pz = {}));

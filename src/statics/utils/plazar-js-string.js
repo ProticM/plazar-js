@@ -1,9 +1,9 @@
-﻿plz.defineStatic('str', function () {
+﻿pz.defineStatic('str', function () {
     'use strict';
 
     return {
         camelize: function (str) {
-            if (plz.isEmpty(str)) {
+            if (pz.isEmpty(str)) {
                 return '';
             };
 
@@ -14,7 +14,7 @@
         },
 
         capitalize: function (str) {
-            if (plz.isEmpty(str)) {
+            if (pz.isEmpty(str)) {
                 return '';
             };
 
@@ -23,7 +23,7 @@
         },
 
         contains: function (str, value) {
-            return plz.isEmpty(str) || plz.isEmpty(value) ? false :
+            return pz.isEmpty(str) || pz.isEmpty(value) ? false :
                 str.indexOf(value) != -1;
         },
 
@@ -32,12 +32,12 @@
             var baseString = args[0];
             var params = args.splice(1), result = '';
 
-            if (plz.isEmpty(baseString) || plz.isEmpty(params)) {
+            if (pz.isEmpty(baseString) || pz.isEmpty(params)) {
                 return result;
             };
 
-            plz.forEach(params, function (param, idx) {
-                result = plz.isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
+            pz.forEach(params, function (param, idx) {
+                result = pz.isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
                     result.replace('{' + idx + '}', param);
             });
 
@@ -45,5 +45,5 @@
         }
     };
 
-}, 'plz');
+}, 'pz');
 

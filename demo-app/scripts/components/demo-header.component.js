@@ -1,4 +1,4 @@
-plz.define('header-component', {
+pz.define('header-component', {
     ownerType: 'base-component',
     autoLoad: true,
     renderTo: 'header.main-navbar',

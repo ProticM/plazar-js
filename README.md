@@ -25,7 +25,7 @@ The framework itself has no dependencies and by leaning on Object-Oriented-Princ
 
 ##### TL;DR
 
-1. Can define components, mixins or classes by invoking `plz.define`.
+1. Can define components, mixins or classes by invoking `pz.define`.
 2. Reuse each type later in the app as much as needed. One type, multiple instances.
 3. Extend each type with another by setting the `ownerType`.
 4. Override parent method implementation.
@@ -50,13 +50,13 @@ The framework itself has no dependencies and by leaning on Object-Oriented-Princ
 A quick example:
 
 ```javascript
-plz.define('user', {
+pz.define('user', {
   ownerType: 'class',
   name: 'John',
   surname: 'Doe'
 }).create(); // automatically creates the class upon definition
 
-plz.define('my-component', {
+pz.define('my-component', {
   ownerType: 'component',
   template: '<div>My name is: {name}, and my surname is: {surname}</div>',
   renderTo: 'body',
@@ -70,7 +70,7 @@ plz.define('my-component', {
   }
 });
 
-var component = plz.define('my-child-component', {
+var component = pz.define('my-child-component', {
   ownerType: 'my-component',
   setUserData: function(user) {
     this.viewModel.name = user.name;
@@ -78,7 +78,7 @@ var component = plz.define('my-child-component', {
   }
 }).create(); // automatically creates the component upon definition
 
-var user = plz.getInstanceOf('user');
+var user = pz.getInstanceOf('user');
 component.setUserData(user);
 ```
 
@@ -91,7 +91,7 @@ PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com
 A quick example:
 
 ```javascript 
-plz.create({ 
+pz.create({ 
   autoLoad: true, 
   renderTo: 'body', 
   type: 'ui-bootstrap-card',

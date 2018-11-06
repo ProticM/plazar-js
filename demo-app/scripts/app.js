@@ -1,4 +1,4 @@
-plz.defineApplication({
+pz.defineApplication({
     name: 'Demo App',
     namespace: 'demoApp',
     components: ['layout-component'],

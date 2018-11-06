@@ -1,4 +1,4 @@
-plz.define('bootstrap-ui-layout-component', {
+pz.define('bootstrap-ui-layout-component', {
     ownerType: 'component',
     templateSelector: 'app-layout',
     autoLoad: true,

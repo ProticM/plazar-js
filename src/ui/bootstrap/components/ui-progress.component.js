@@ -1,10 +1,10 @@
-﻿plz.define('ui-bootstrap-progress', function () {
+﻿pz.define('ui-bootstrap-progress', function () {
 	'use strict';
 
 	var _parseTemplate = function () {
-		var progressBar = plz.dom.findElement(this.html, 'div.progress-bar'),
-            hasAppearance = !plz.isEmpty(this.appearance),
-            hasNowValue = !plz.isEmpty(this.values.now) && this.values.now > 0,
+		var progressBar = pz.dom.findElement(this.html, 'div.progress-bar'),
+            hasAppearance = !pz.isEmpty(this.appearance),
+            hasNowValue = !pz.isEmpty(this.values.now) && this.values.now > 0,
             max = this.values.max || 100,
             min = this.values.min || 0, val;
 
@@ -36,7 +36,7 @@
 		},
 		parseTemplate: _parseTemplate,
 		setValues: function (values) {
-			if (plz.isEmpty(values)) {
+			if (pz.isEmpty(values)) {
 				return;
 			};
 

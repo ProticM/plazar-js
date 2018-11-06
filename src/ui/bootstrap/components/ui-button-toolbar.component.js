@@ -1,4 +1,4 @@
-﻿plz.define('ui-bootstrap-button-toolbar', function () {
+﻿pz.define('ui-bootstrap-button-toolbar', function () {
     'use strict';
 
     var _parseTemplate = function () {
@@ -10,14 +10,14 @@
         groups: [],
         init: function () {
 
-            var groups = plz.arr.map(function (group) {
-                return plz.isEmpty(group.type) ?
-                    plz.obj.assignTo(group, { type: 'ui-bootstrap-button-group' }, false) : group;
+            var groups = pz.arr.map(function (group) {
+                return pz.isEmpty(group.type) ?
+                    pz.obj.assignTo(group, { type: 'ui-bootstrap-button-group' }, false) : group;
             }, this.groups);
 
-            this.components = plz.arr.merge(this.components || [], groups);
+            this.components = pz.arr.merge(this.components || [], groups);
 
-            plz.arr.clear(this.groups);
+            pz.arr.clear(this.groups);
             delete this.groups;
 
             this.base(arguments);

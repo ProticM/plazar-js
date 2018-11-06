@@ -1,4 +1,4 @@
-plz.define('widgets-component', {
+pz.define('widgets-component', {
     ownerType: 'base-component',
     mixins: ['page-mixin'],
     template: '<div class="panel"><p class="panel-heading">' + 

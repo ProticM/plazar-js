@@ -1,4 +1,4 @@
-﻿plz.define('ui-bootstrap-list-group', function () {
+﻿pz.define('ui-bootstrap-list-group', function () {
     'use strict';
 
     var _const = {
@@ -10,34 +10,34 @@
         this.addCss((this.flushed ? 'list-group-flush' : ''));
 
         if (this.mode == 'tab') {
-            plz.dom.insertAfter(this.html, '<div class="tab-content"></div>');
+            pz.dom.insertAfter(this.html, '<div class="tab-content"></div>');
             tabContent = this.html.nextSibling;
         };
 
-        plz.forEach(this.menuItems, function (menuItem, idx) {
+        pz.forEach(this.menuItems, function (menuItem, idx) {
             var actionable, link, contentCls, href, jsVoid = 'javascript:void(0)';
 
-            if (this.noHash && this.mode != 'tab' && plz.isEmpty(menuItem.href)) {
-                menuItem.href = !plz.isEmpty(this.href) ? this.href.replace('#', jsVoid) : jsVoid;
+            if (this.noHash && this.mode != 'tab' && pz.isEmpty(menuItem.href)) {
+                menuItem.href = !pz.isEmpty(this.href) ? this.href.replace('#', jsVoid) : jsVoid;
             };
 
             actionable = (this.actionable || this.mode == 'tab');
 
-            if (actionable && plz.isEmpty(menuItem.href)) {
+            if (actionable && pz.isEmpty(menuItem.href)) {
                 throw new Error('Each menu item must have [href] property configured');
             };
 
-            link = plz.dom.createElement((actionable ? 'a' : 'li'));
+            link = pz.dom.createElement((actionable ? 'a' : 'li'));
             this.addCss((actionable ? 'list-group-item' : 'list-group-item list-group-item-action'), link);
 
             if (actionable) {
                 link.setAttribute('href', (menuItem.href || '#'));
             };
 
-            this.addCss((!plz.isEmpty(menuItem.appearance) ? ('list-group-item-' + menuItem.appearance) : ''), link);
+            this.addCss((!pz.isEmpty(menuItem.appearance) ? ('list-group-item-' + menuItem.appearance) : ''), link);
             link.innerText = menuItem.text || '';
 
-            if (!plz.isEmpty(menuItem.css)) {
+            if (!pz.isEmpty(menuItem.css)) {
                 this.addCss(menuItem.css, link);
             };
 
@@ -46,21 +46,21 @@
                 link.setAttribute('role', 'tab');
                 href = menuItem.href.replace('#', '');
                 contentCls = idx == 0 ? ('tab-pane active tab-' + href) : ('tab-pane tab-' + href);
-                plz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel">' + menuItem.text + 'content' + '</div>');
+                pz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel">' + menuItem.text + 'content' + '</div>');
             };
 
-            plz.dom.append(this.html, link);
+            pz.dom.append(this.html, link);
         }, this);
     };
 
     var _setEnabled = function (me, idx, value) {
-        if (plz.isEmpty(idx)) {
+        if (pz.isEmpty(idx)) {
             return;
         };
 
         var el = me.html.childNodes[idx];
-        if (plz.isEmpty(el)) {
-            var msg = plz.str.format(_const.elementAtIdxNotFound, idx);//_const.elementAtIdxNotFound.replace('{0}', idx);
+        if (pz.isEmpty(el)) {
+            var msg = pz.str.format(_const.elementAtIdxNotFound, idx);//_const.elementAtIdxNotFound.replace('{0}', idx);
             throw new Error(msg);
         };
 
@@ -80,7 +80,7 @@
         init: function () {
 
             if (this.mode == 'tab') {
-                this.handlers = plz.arr.merge((this.handlers || []), [{
+                this.handlers = pz.arr.merge((this.handlers || []), [{
                     on: 'show.bs.tab',
                     fn: 'onTabShow'
                 }, {

@@ -1,9 +1,9 @@
-﻿plz.defineStatic('arr', function () {
+﻿pz.defineStatic('arr', function () {
     'use strict';
 
     return {
         clear: function (array) {
-            if (plz.isEmpty(array)) {
+            if (pz.isEmpty(array)) {
                 return;
             };
 
@@ -11,16 +11,16 @@
         },
 
         find: function (callback, arr, scope) {
-            return plz.find(callback, arr, scope);
+            return pz.find(callback, arr, scope);
         },
 
         contains: function (array, item, fromIndex) {
-            var isFunction = plz.isFunction(item);
+            var isFunction = pz.isFunction(item);
 
             return isFunction ? (function () {
-                var el = plz.arr.find(item, array);
-                return !plz.isEmpty(el);
-            })() : plz.isEmpty(array) ? false : array.indexOf(item, fromIndex) != -1;
+                var el = pz.arr.find(item, array);
+                return !pz.isEmpty(el);
+            })() : pz.isEmpty(array) ? false : array.indexOf(item, fromIndex) != -1;
         },
 
         filter: function (callback, array) {
@@ -33,7 +33,7 @@
             var args = Array.prototype.slice.call(arguments),
                 resultArray = [];
 
-            plz.forEach(args, function (array) {
+            pz.forEach(args, function (array) {
                 resultArray = resultArray.concat(array);
             });
 
@@ -47,7 +47,7 @@
         },
 
         removeAt: function (array, index) {
-            if (plz.isEmpty(array) || plz.isEmpty(index)) {
+            if (pz.isEmpty(array) || pz.isEmpty(index)) {
                 return;
             };
 
@@ -55,4 +55,4 @@
         },
     };
 
-}, 'plz');
+}, 'pz');

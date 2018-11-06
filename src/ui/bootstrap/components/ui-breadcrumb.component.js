@@ -1,14 +1,14 @@
-﻿plz.define('ui-bootstrap-breadcrumb', function () {
+﻿pz.define('ui-bootstrap-breadcrumb', function () {
     'use strict';
 
     var _createCrumbs = function (me, crumbs) {
-        var ul = plz.dom.findElement(me.html, 'ol.breadcrumb');
-        plz.forEach(crumbs, function (crumb) {
+        var ul = pz.dom.findElement(me.html, 'ol.breadcrumb');
+        pz.forEach(crumbs, function (crumb) {
             var cls = crumb.isActive ? 'breadcrumb-item active' : 'breadcrumb-item';
             var attr = crumb.isActive ? ' aria-current="page"' : '';
             var text = crumb.asLink ? '<a href="' + (crumb.href || '#') + '">' + crumb.text + '</a>' : crumb.text;
 
-            plz.dom.append(ul, '<li class="' + cls + '"' + attr + '>' + text + '</li>');
+            pz.dom.append(ul, '<li class="' + cls + '"' + attr + '>' + text + '</li>');
         });
     };
 
@@ -24,11 +24,11 @@
         addCrumbs: function (crumb) {
             var isArray, method;
 
-            if (plz.isEmpty(crumb)) {
+            if (pz.isEmpty(crumb)) {
                 return;
             };
 
-            isArray = plz.isArray(crumb);
+            isArray = pz.isArray(crumb);
             method = isArray ? 'concat' : 'push';
             this.crumbs = this.crumbs[method](crumb);
             _createCrumbs(this, isArray ? crumb : [crumb]);

@@ -1,4 +1,4 @@
-﻿plz.defineStatic('binder', function () {
+﻿pz.defineStatic('binder', function () {
     'use strict';
 
     var observable, observableArray,
@@ -17,8 +17,8 @@
     };
 
     getBindingRegex = function () {
-        if (plz.isEmpty(bindingRegex)) {
-            bindingRegex = RegExp('^' + plz.binder.prefix + '-', 'i');
+        if (pz.isEmpty(bindingRegex)) {
+            bindingRegex = RegExp('^' + pz.binder.prefix + '-', 'i');
         };
 
         return bindingRegex;
@@ -33,9 +33,9 @@
 
         parts.pop();
         return parts.reduce(function (previous, current) {
-            var isString = plz.isString(previous);
+            var isString = pz.isString(previous);
             return isString ? window[previous][current] :
-                (plz.isEmpty(previous) ? null : previous[current]);
+                (pz.isEmpty(previous) ? null : previous[current]);
         }, target);
     };
 
@@ -52,24 +52,24 @@
 
     observe = function (value) {
         // TODO: Multidimensional arrays 
-        if (!plz.isObject(value) || value.$observed) {
+        if (!pz.isObject(value) || value.$observed) {
             return false;
         };
 
         var properties = Object.keys(value);
 
-        plz.forEach(properties, function (prop) {
+        pz.forEach(properties, function (prop) {
 
             var propValue = value[prop];
 
             var obsArray = observeArray(value, propValue, prop);
 
-            if (obsArray && !plz.isInstanceOf(value, observableArray)) {
+            if (obsArray && !pz.isInstanceOf(value, observableArray)) {
                 value[prop] = obsArray;
             };
 
-            if (!obsArray && !plz.isInstanceOf(value, observable) && !observe(propValue) &&
-                !plz.isFunction(propValue)) {
+            if (!obsArray && !pz.isInstanceOf(value, observable) && !observe(propValue) &&
+                !pz.isFunction(propValue)) {
                 value[prop] = new observable(value, prop);
             };
         });
@@ -80,7 +80,7 @@
 
     observeArray = function (obj, collection, prop) {
 
-        var isArray = plz.isArray(collection);
+        var isArray = pz.isArray(collection);
         var obsArray;
 
         if (!isArray) {
@@ -88,7 +88,7 @@
         };
 
         obsArray = new observableArray(obj, collection, prop);
-        plz.forEach(obsArray, function (item) {
+        pz.forEach(obsArray, function (item) {
             observe(item);
         });
 
@@ -143,7 +143,7 @@
                 return;
             };
 
-            plz.forEach(this.subscriptions, function (subscription) {
+            pz.forEach(this.subscriptions, function (subscription) {
                 subscription.update.call(this, subscription);
             }, this);
         };
@@ -161,7 +161,7 @@
                 return sub.id == bindingId;
             });
 
-            plz.forEach(bindingSubs, function (sub) {
+            pz.forEach(bindingSubs, function (sub) {
                 var idx = this.subscriptions.indexOf(sub);
                 this.subscriptions.splice(idx, 1);
             }, this);
@@ -231,7 +231,7 @@
 
         observableArray.prototype = [];
 
-        plz.forEach(observableMethods, function (methodName) {
+        pz.forEach(observableMethods, function (methodName) {
 
             var method = arrPrototype[methodName];
 
@@ -253,14 +253,14 @@
             };
         });
 
-        plz.forEach(normalMethods, function (methodName) {
+        pz.forEach(normalMethods, function (methodName) {
             observableArray.prototype[methodName] = arrPrototype[methodName];
         });
 
         observableArray.prototype.subscribe = function (callback, bindingId) {
 
             this.subscriptions.splice(0, this.subscriptions.length);
-            plz.forEach(observableMethods, function (action) {
+            pz.forEach(observableMethods, function (action) {
                 handleSubscriptions(this, true, action, callback, bindingId);
             }, this);
             callback = null;
@@ -272,7 +272,7 @@
                 return sub.id == bindingId;
             });
 
-            plz.forEach(bindingSubs, function (sub) {
+            pz.forEach(bindingSubs, function (sub) {
                 var idx = this.subscriptions.indexOf(sub);
                 this.subscriptions.splice(idx, 1);
             }, this);
@@ -288,7 +288,7 @@
 
         observableArray.prototype.getAt = function (index) {
 
-            if (plz.isEmpty(index)) {
+            if (pz.isEmpty(index)) {
                 return null;
             };
 
@@ -312,8 +312,8 @@
                 return;
             };
 
-            hasInterpolations = (el.textContent.indexOf(plz.binder.delimiters[0]) != -1 &&
-                el.textContent.indexOf(plz.binder.delimiters[1]) != -1);
+            hasInterpolations = (el.textContent.indexOf(pz.binder.delimiters[0]) != -1 &&
+                el.textContent.indexOf(pz.binder.delimiters[1]) != -1);
 
             if (!hasInterpolations) {
                 return;
@@ -343,8 +343,8 @@
                             keypaths.push(value);
                         };
 
-                        var result = (!plz.isEmpty(vmValue) ?
-                            (plz.isFunction(vmValue) ? vmValue() : vmValue) : template);
+                        var result = (!pz.isEmpty(vmValue) ?
+                            (pz.isFunction(vmValue) ? vmValue() : vmValue) : template);
                         vmValue = null;
                         return result;
                     });
@@ -364,13 +364,13 @@
             updateContent(elData, false);
 
             (function (me, elsData) {
-                plz.forEach(keypaths, function (keypath) {
+                pz.forEach(keypaths, function (keypath) {
                     var ctx = buildContext(keypath, me.vm, me.ctx);
                     var prop = keypath.split('.').pop();
                     var observer = ctx[prop];
                     if (observer) {
                         observer.subscribe(function () {
-                            plz.forEach(elsData, function (data) {
+                            pz.forEach(elsData, function (data) {
                                 updateContent(data, true);
                             });
                         });
@@ -404,7 +404,7 @@
         function binding(el, type, keypath, bindingAttr, view) {
             var result = parseAlias(keypath);
 
-            this.id = plz.guid();
+            this.id = pz.guid();
             this.el = el;
             this.view = view;
             this.type = type;
@@ -414,8 +414,8 @@
             this.prop = result.keypath.split('.').pop();
             this.rootVm = view.vm;
             this.vm = buildContext(result.keypath, view.vm, view.ctx);
-            this.binder = plz.binder.binders[this.type];
-            this.handler = this.binder.handler ? plz.proxy(this.binder.handler, this) : undefined;
+            this.binder = pz.binder.binders[this.type];
+            this.handler = this.binder.handler ? pz.proxy(this.binder.handler, this) : undefined;
             view = null;
             return this;
         };
@@ -446,7 +446,7 @@
             if (observer && observer.unsubscribe) {
                 observer.unsubscribe(this.id);
             };
-            if (plz.isFunction(this.binder.unbind)) {
+            if (pz.isFunction(this.binder.unbind)) {
                 this.binder.unbind.call(this);
             };
         };
@@ -464,7 +464,7 @@
             };
 
             prop = this.vm[this.prop];
-            var isFn = plz.isFunction(prop);
+            var isFn = pz.isFunction(prop);
             return isFn ? this.vm[this.prop].call(this) : this.vm[this.prop];
         };
 
@@ -494,23 +494,23 @@
         };
 
         function view(el, vm, ctx, index) {
-            this.els = plz.isArray(el) || plz.isNodeList(el) ? el : [el];
+            this.els = pz.isArray(el) || pz.isNodeList(el) ? el : [el];
             this.vm = vm;
             this.ctx = ctx || null;
-            this.index = !plz.isEmpty(index) ? index : null;
+            this.index = !pz.isEmpty(index) ? index : null;
             this.buildBindings();
             vm = null;
             return this;
         };
 
         view.prototype.bind = function () {
-            plz.forEach(this.bindings, function (binding) {
+            pz.forEach(this.bindings, function (binding) {
                 binding.bind();
             });
         };
 
         view.prototype.unbind = function () {
-            plz.forEach(this.bindings, function (binding) {
+            pz.forEach(this.bindings, function (binding) {
                 binding.unbind();
             });
         };
@@ -520,16 +520,16 @@
 
             var build = (function (me) {
                 return function (els) {
-                    plz.forEach(els, function (el) {
-                        var isBlock = (el.hasAttribute && el.hasAttribute(plz.binder.prefix + '-each')),
-                            attrs = isBlock ? [el.getAttributeNode(plz.binder.prefix + '-each')] : (el.attributes || []);
+                    pz.forEach(els, function (el) {
+                        var isBlock = (el.hasAttribute && el.hasAttribute(pz.binder.prefix + '-each')),
+                            attrs = isBlock ? [el.getAttributeNode(pz.binder.prefix + '-each')] : (el.attributes || []);
 
-                        plz.forEach(attrs, function (attr) {
+                        pz.forEach(attrs, function (attr) {
                             if (getBindingRegex().test(attr.name)) {
                                 var parts = parseAttrName(attr.name);
                                 var bType = parts[1], attrToBind = parts[2];
 
-                                if (!plz.isEmpty(plz.binder.binders[bType])) {
+                                if (!pz.isEmpty(pz.binder.binders[bType])) {
                                     var b = new binding(el, bType.toLowerCase(), attr.value, attr.name, me);
                                     if (attrToBind) { b.attrToBind = attrToBind; };
 
@@ -541,7 +541,7 @@
                         });
 
                         if (!isBlock) {
-                            plz.forEach(el.childNodes, function (childNode) {
+                            pz.forEach(el.childNodes, function (childNode) {
                                 build([childNode]);
                                 textParser.parse.call(me, childNode);
                             });
@@ -592,11 +592,11 @@
 
                 var properties = getProperties(value);
 
-                plz.forEach(properties, function (prop) {
+                pz.forEach(properties, function (prop) {
 
-                    var isObject = plz.isObject(value[prop]),
-                        isFunction = plz.isFunction(value[prop]),
-                        isObsArray = plz.isInstanceOf(value[prop], observableArray);
+                    var isObject = pz.isObject(value[prop]),
+                        isFunction = pz.isFunction(value[prop]),
+                        isObsArray = pz.isInstanceOf(value[prop], observableArray);
 
                     if (isObject) {
                         toJSON(value[prop], res);
@@ -608,10 +608,10 @@
                             return !isNaN(parseInt(key));
                         });
 
-                        plz.forEach(dataKeys, function (key) {
+                        pz.forEach(dataKeys, function (key) {
                             var item = value[prop][key];
-                            var val = (plz.isObject(item) ? toJSON(item, {}) :
-                                (plz.isFunction(item) ? item() : item));
+                            var val = (pz.isObject(item) ? toJSON(item, {}) :
+                                (pz.isFunction(item) ? item() : item));
                             res[prop].push(val);
                         });
                     };
@@ -644,7 +644,7 @@
                     event = isInput || isTextArea ? (('oninput' in window) ? 'input' : 'keyup') : 'change';
                     isText = isInput && this.el.type == 'text' || isTextArea;
 
-                    if ((isSelect || isText) && plz.isFunction(this.handler)) {
+                    if ((isSelect || isText) && pz.isFunction(this.handler)) {
                         this.el.removeEventListener(event, this.handler, false);
                         this.el.addEventListener(event, this.handler, false);
                         this.event = event;
@@ -692,9 +692,9 @@
 
                     var value = this.getValue(), template;
 
-                    plz.forEach(this.views, function (view) {
+                    pz.forEach(this.views, function (view) {
                         view.unbind();
-                        plz.forEach(view.els, function (el) {
+                        pz.forEach(view.els, function (el) {
                             el.parentNode.removeChild(el);
                             el = null;
                         });
@@ -703,7 +703,7 @@
 
                     this.views.splice(0, this.views.length);
 
-                    plz.forEach(value, function (item, idx) {
+                    pz.forEach(value, function (item, idx) {
 
                         if (this.alias) {
                             this.rootVm[this.alias] = item;
@@ -719,7 +719,7 @@
                     delete this.rootVm[this.alias];
                 },
                 unbind: function () {
-                    plz.forEach(this.views, function (view) {
+                    pz.forEach(this.views, function (view) {
                         view.unbind();
                     });
                 }
@@ -740,7 +740,7 @@
                     var value = val != undefined ? val : this.getValue();
                     this.el.removeAttribute(this.bindingAttr);
 
-                    if (!value && !plz.isEmpty(this.el.parentNode)) {
+                    if (!value && !pz.isEmpty(this.el.parentNode)) {
                         this.el.parentNode.removeChild(this.el);
                     };
                 }
@@ -749,7 +749,7 @@
                 priority: 2,
                 bind: function () {
                     var value = this.getValue();
-                    plz.binder.binders.if.bind.call(this, !value);
+                    pz.binder.binders.if.bind.call(this, !value);
                 }
             },
             'visible': {
@@ -770,11 +770,11 @@
             },
             'hidden': {
                 bind: function () {
-                    plz.binder.binders.visible.bind.call(this);
+                    pz.binder.binders.visible.bind.call(this);
                 },
                 react: function () {
                     var value = this.getValue();
-                    plz.binder.binders.visible.react.call(this, !value);
+                    pz.binder.binders.visible.react.call(this, !value);
                 }
             },
             'html': {
@@ -860,9 +860,9 @@
                 react: function () {
                     var value = this.getValue();
 
-                    plz.forEach(this.views, function (view) {
+                    pz.forEach(this.views, function (view) {
                         view.unbind();
-                        plz.forEach(view.els, function (el) {
+                        pz.forEach(view.els, function (el) {
                             el.parentNode.removeChild(el);
                             el = null;
                         });
@@ -871,7 +871,7 @@
 
                     this.views.splice(0, this.views.length);
 
-                    plz.forEach(value, function (item, idx) {
+                    pz.forEach(value, function (item, idx) {
                         var template = document.createElement('option');
                         template.setAttribute('data-value', this.binder.tempAttrs.val);
                         template.setAttribute('data-text', this.binder.tempAttrs.text);
@@ -885,11 +885,11 @@
                 }
             },
             unbind: function () {
-                plz.forEach(this.views, function (view) {
+                pz.forEach(this.views, function (view) {
                     view.unbind();
                 });
             }
         }
     };
 
-}, 'plz');
+}, 'pz');
