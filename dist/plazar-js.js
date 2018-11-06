@@ -50,6 +50,8 @@ var pz;
                     for (var nextKey in nextSource) {
                         if(pz.isObject(nextSource[nextKey])) {
                             to[nextKey] = assign({}, nextSource[nextKey]);
+                        } else if(pz.isArray(nextSource[nextKey])) {
+                            to[nextKey] = nextSource[nextKey].slice();
                         } else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
                             to[nextKey] = nextSource[nextKey];
                         };
