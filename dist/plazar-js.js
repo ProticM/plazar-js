@@ -1,6 +1,6 @@
-// Plazar JS
-var plz;
-(function (plz) {
+// PlazarJS
+var pz;
+(function (pz) {
     'use strict';
 
     var _const = {
@@ -31,13 +31,13 @@ var plz;
             };
         };
         return null;
-    }; // this is array helper and it's here due to possible circular reference in modular environment (plz.arr.find synonym)
+    }; // this is array helper and it's here due to possible circular reference in modular environment (pz.arr.find synonym)
 
     var _assignTo = function (target, source, clone) { 
 
         var assign = function (target) { // polyfill
 
-            if (plz.isEmpty(target)) {
+            if (pz.isEmpty(target)) {
                 throw new TypeError(_const.canNotConvertNullOrEmptyObj);
             };
 
@@ -46,9 +46,9 @@ var plz;
             for (var index = 1; index < arguments.length; index++) {
                 var nextSource = arguments[index];
 
-                if (!plz.isEmpty(nextSource)) {
+                if (!pz.isEmpty(nextSource)) {
                     for (var nextKey in nextSource) {
-                        if(plz.isObject(nextSource[nextKey])) {
+                        if(pz.isObject(nextSource[nextKey])) {
                             to[nextKey] = assign({}, nextSource[nextKey]);
                         } else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
                             to[nextKey] = nextSource[nextKey];
@@ -59,30 +59,30 @@ var plz;
             return to;
         };
 
-        var c = plz.isEmpty(clone) ? true : clone;
+        var c = pz.isEmpty(clone) ? true : clone;
         var t = c ? assign({}, target) : target, result;
         result = assign(t, source);
         assign = null;
         return result;
-    }; // this is object helper and it's here due to possible circular reference in modular environment (plz.obj.assignTo synonym)
+    }; // this is object helper and it's here due to possible circular reference in modular environment (pz.obj.assignTo synonym)
 
     var _setRequiredInstances = function (obj) {
-        var requireDefined = !plz.isEmpty(obj.require) &&
-            plz.isArray(obj.require);
+        var requireDefined = !pz.isEmpty(obj.require) &&
+            pz.isArray(obj.require);
 
         if (!requireDefined) {
             return;
         };
 
-        plz.forEach(obj.require, function (requiredItemType) {
-            var instance = plz.getInstanceOf(requiredItemType)
-            var requiredItem = plz.isEmpty(instance) ?
-                plz.getDefinitionOf(requiredItemType) : instance;
-            var camelCaseName = plz.str.camelize(requiredItemType);
+        pz.forEach(obj.require, function (requiredItemType) {
+            var instance = pz.getInstanceOf(requiredItemType)
+            var requiredItem = pz.isEmpty(instance) ?
+                pz.getDefinitionOf(requiredItemType) : instance;
+            var camelCaseName = pz.str.camelize(requiredItemType);
 
-            if (!plz.isEmpty(requiredItem) && plz.isEmpty(obj[camelCaseName])) {
-                obj[camelCaseName] = !plz.isFunction(requiredItem) ? requiredItem :
-                    plz.create(requiredItemType);
+            if (!pz.isEmpty(requiredItem) && pz.isEmpty(obj[camelCaseName])) {
+                obj[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
+                    pz.create(requiredItemType);
             };
         });
     };
@@ -92,18 +92,18 @@ var plz;
         var me = this, cls, obj, tBase,
             isMixin, method, args, skipInheritance;
 
-        if (plz.isEmpty(type) || plz.isEmpty(object)) {
+        if (pz.isEmpty(type) || pz.isEmpty(object)) {
             throw new Error(_const.canNotDefine);
         };
 
-        obj = plz.toObject(object);
-        skipInheritance = plz.isEmpty(obj.ownerType) ||
+        obj = pz.toObject(object);
+        skipInheritance = pz.isEmpty(obj.ownerType) ||
             (_const.coreBaseTypes.indexOf(type) != -1);
 
-        cls = skipInheritance ? plz.toFunction(obj) : (function () {
-            tBase = plz.getDefinitionOf(obj.ownerType);
-            isMixin = plz.isMixin(obj);
-            return isMixin ? plz.assignTo(obj, plz.assignTo({}, tBase.prototype), false) :
+        cls = skipInheritance ? pz.toFunction(obj) : (function () {
+            tBase = pz.getDefinitionOf(obj.ownerType);
+            isMixin = pz.isMixin(obj);
+            return isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
                 tBase.extend(obj);
         })();
 
@@ -133,28 +133,28 @@ var plz;
     var _create = function (config) {
         var isObject, type, item, instance, params;
 
-        if (plz.isEmpty(config)) {
+        if (pz.isEmpty(config)) {
             throw new Error(_const.canNotCreate);
         };
 
-        isObject = plz.isObject(config);
+        isObject = pz.isObject(config);
         type = isObject ? config.type : config;
-        item = plz.getDefinitionOf(type);
+        item = pz.getDefinitionOf(type);
         
         if (isObject) {
             params = _assignTo({}, config, false);
             delete params.type;
             instance = new item(params);
-            plz.assignTo(instance, config, false);
+            pz.assignTo(instance, config, false);
         } else {
             instance = new item();
             instance.type = type;
         };
 
-        instance.id = plz.guid();
+        instance.id = pz.guid();
         _setRequiredInstances(instance);
 
-        if (plz.isComponent(instance) || plz.isClass(instance)) {
+        if (pz.isComponent(instance) || pz.isClass(instance)) {
             instance.applyMixins();
 
             if (instance.autoLoad) {
@@ -162,7 +162,7 @@ var plz;
             };
         };
 
-        plz.application.instances.push(instance);
+        pz.application.instances.push(instance);
 
         return instance;
     };
@@ -258,8 +258,8 @@ var plz;
 
         args = Array.prototype.slice.call(arguments, 2);
         proxy = function () {
-            var c = plz.isComponent(context) && context.destroyed ? 
-                plz.getInstanceOf(context.type) : context;
+            var c = pz.isComponent(context) && context.destroyed ? 
+                pz.getInstanceOf(context.type) : context;
             return fn.apply(c || this, args.concat(Array.prototype.slice.call(arguments)));
         };
 
@@ -315,7 +315,7 @@ var plz;
             sourceArray,
             fnCallback = function (item) {
                 return i && (item.id == typeOrIdOrAlias || item.type == typeOrIdOrAlias) ||
-                    item.type == typeOrIdOrAlias || (!plz.isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
+                    item.type == typeOrIdOrAlias || (!pz.isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
             }, result;
 
         sourceArray = (i ? me.application.instances : me.definitions);
@@ -332,7 +332,7 @@ var plz;
         };
 
         return parts.reduce(function (previous, current) {
-            if (plz.isString(previous)) {
+            if (pz.isString(previous)) {
                 return window[previous][current];
             };
 
@@ -340,58 +340,58 @@ var plz;
         });
     };
 
-    plz.ns = function (name, config) {
+    pz.ns = function (name, config) {
         _defineNamespace(name, config || {});
     };
 
-    plz.defineStatic = function (type, object, namespace) {
+    pz.defineStatic = function (type, object, namespace) {
 
         var obj = _toObject(object);
         var ns = _isEmpty(namespace) ? 'statics' : namespace;
 
         if (_isEmpty(window[ns])) {
-            plz.ns(ns);
+            pz.ns(ns);
         };
 
         var o = _getObjectByNamespaceString(ns);
         if (_isEmpty(type)) {
-            plz.assignTo(o, obj, false);
+            pz.assignTo(o, obj, false);
         } else {
             o[type] = obj;
         };
     };
 
-    plz.getDefinitionOf = function (type) {
+    pz.getDefinitionOf = function (type) {
         var item = _get(this, type);
 
         if (_isEmpty(item)) {
-            var msg = plz.str.format(_const.typeNotFound, type);
+            var msg = pz.str.format(_const.typeNotFound, type);
             throw new Error(msg);
         };
 
         return item.definition;
     };
 
-    plz.getInstanceOf = function (typeOrIdOrAlias, all) {
+    pz.getInstanceOf = function (typeOrIdOrAlias, all) {
         return _get(this, typeOrIdOrAlias, true, all);
     };
 
-    plz.defineApplication = function (config) {
-        var rootComponents = !plz.isEmpty(config.components) && plz.isArray(config.components) ? 
+    pz.defineApplication = function (config) {
+        var rootComponents = !pz.isEmpty(config.components) && pz.isArray(config.components) ? 
             config.components : [];
         delete config.components;
         delete config.instances; // making sure that we do not override the instances array if passed accidentally via config
-        _assignTo(plz.application, config);
+        _assignTo(pz.application, config);
 
         if (_isEmpty(window[config.namespace])) {
             this.ns(config.namespace, config);
-            plz.assignTo(window[config.namespace], config, false);
+            pz.assignTo(window[config.namespace], config, false);
         } else {
-            plz.assignTo(window[config.namespace], config, false);
+            pz.assignTo(window[config.namespace], config, false);
         };
 
-        plz.forEach(rootComponents, function (item) {
-            var def = plz.getDefinitionOf(item);
+        pz.forEach(rootComponents, function (item) {
+            var def = pz.getDefinitionOf(item);
             if (_isFunction(def.create)) {
                 def.create();
             };
@@ -400,7 +400,7 @@ var plz;
         _invokeIfExists('init', config);
     };
 
-    plz.find = function (callback, arr, scope) {
+    pz.find = function (callback, arr, scope) {
         var findFnSupported = ('find' in Array.prototype); // find is not supported in IE
         var res = findFnSupported ? arr.find(callback, scope) :
             _find(arr, callback, scope);
@@ -408,35 +408,35 @@ var plz;
         return res;
     };
 
-    plz.definitions = [];
-    plz.application = {
+    pz.definitions = [];
+    pz.application = {
         instances: []
     };
-    plz.define = _define;
-    plz.create = _create;
-    plz.toObject = _toObject;
-    plz.toFunction = _toFunction;
-    plz.isTypeOf = _isTypeOf;
-    plz.isArray = _isArray;
-    plz.isObject = _isObject;
-    plz.isFunction = _isFunction;
-    plz.isString = _isString;
-    plz.isNodeList = _isNodeList;
-    plz.isEmpty = _isEmpty;
-    plz.is = _is;
-    plz.isComponent = _isComponent;
-    plz.isMixin = _isMixin;
-    plz.isClass = _isClass;
-    plz.forEach = _forEach;
-    plz.proxy = _proxy;
-    plz.guid = _guid;
-    plz.toJSON = _toJSON;
-    plz.assignTo = _assignTo;
-    plz.isInstanceOf = _isInstanceOf;
+    pz.define = _define;
+    pz.create = _create;
+    pz.toObject = _toObject;
+    pz.toFunction = _toFunction;
+    pz.isTypeOf = _isTypeOf;
+    pz.isArray = _isArray;
+    pz.isObject = _isObject;
+    pz.isFunction = _isFunction;
+    pz.isString = _isString;
+    pz.isNodeList = _isNodeList;
+    pz.isEmpty = _isEmpty;
+    pz.is = _is;
+    pz.isComponent = _isComponent;
+    pz.isMixin = _isMixin;
+    pz.isClass = _isClass;
+    pz.forEach = _forEach;
+    pz.proxy = _proxy;
+    pz.guid = _guid;
+    pz.toJSON = _toJSON;
+    pz.assignTo = _assignTo;
+    pz.isInstanceOf = _isInstanceOf;
 
-})(plz || (plz = {}));
+})(pz || (pz = {}));
 
-plz.defineStatic('http', function () {
+pz.defineStatic('http', function () {
     'use strict';
 
     var _const = {
@@ -471,8 +471,8 @@ plz.defineStatic('http', function () {
     var _checkMinimalConfiguration = function (options) {
         // add more if needed
 
-        var isOK = !plz.isEmpty(options.url) &&
-            !plz.isEmpty(options.method);
+        var isOK = !pz.isEmpty(options.url) &&
+            !pz.isEmpty(options.method);
 
         if (!isOK) {
             throw new Error(_const.minConfigNotProfided);
@@ -491,19 +491,19 @@ plz.defineStatic('http', function () {
                 return;
             };
 
-            if (this.readyState == _const.requestStates.done && !plz.isEmpty(callback)) {
+            if (this.readyState == _const.requestStates.done && !pz.isEmpty(callback)) {
                 var result = {
                     request: this,
-                    data: (dataType == _types.data.json ? plz.toJSON(this.responseText) : this.responseText),
+                    data: (dataType == _types.data.json ? pz.toJSON(this.responseText) : this.responseText),
                     dataType: dataType
                 };
                 callback.call(this, result);
-                delete plz.http.requests[request.id];
+                delete pz.http.requests[request.id];
             };
         };
 
         xhr.onerror = function (e) {
-            delete plz.http.requests[request.id];
+            delete pz.http.requests[request.id];
 
             if (eCallback) {
                 eCallback(e.target);
@@ -520,8 +520,8 @@ plz.defineStatic('http', function () {
 
         xhr.open(options.method, options.url, true);
 
-        if (plz.isString(options.data)) {
-            options.data = plz.toJSON(options.data);
+        if (pz.isString(options.data)) {
+            options.data = pz.toJSON(options.data);
         };
 
         xhr.send(options.data || null);
@@ -532,14 +532,14 @@ plz.defineStatic('http', function () {
         latestRequestId: null,
         request: function (options) {
 
-            if (plz.isEmpty(options)) {
+            if (pz.isEmpty(options)) {
                 throw new Error(_const.optionsRequred);
             };
 
             _checkMinimalConfiguration(options);
 
             var request = {
-                id: plz.guid(),
+                id: pz.guid(),
                 aborted: false,
                 options: options,
                 xhr: _createXHR(),
@@ -560,7 +560,7 @@ plz.defineStatic('http', function () {
             var requestToAbort = abortAll ? this.requests :
                 this.requests[this.latestRequestId];
 
-            if (plz.isEmpty(requestToAbort)) {
+            if (pz.isEmpty(requestToAbort)) {
                 return;
             };
 
@@ -571,8 +571,8 @@ plz.defineStatic('http', function () {
                 return;
             };
 
-            requestIds = plz.obj.getKeys(requestToAbort);
-            plz.forEach(requestIds, function (id) {
+            requestIds = pz.obj.getKeys(requestToAbort);
+            pz.forEach(requestIds, function (id) {
                 var request = this.requests[id];
                 request.abort();
                 delete this.requests[id];
@@ -591,9 +591,9 @@ plz.defineStatic('http', function () {
             return this.request(options);
         }
     }
-}, 'plz');
+}, 'pz');
 
-plz.defineStatic('binder', function () {
+pz.defineStatic('binder', function () {
     'use strict';
 
     var observable, observableArray,
@@ -612,8 +612,8 @@ plz.defineStatic('binder', function () {
     };
 
     getBindingRegex = function () {
-        if (plz.isEmpty(bindingRegex)) {
-            bindingRegex = RegExp('^' + plz.binder.prefix + '-', 'i');
+        if (pz.isEmpty(bindingRegex)) {
+            bindingRegex = RegExp('^' + pz.binder.prefix + '-', 'i');
         };
 
         return bindingRegex;
@@ -628,9 +628,9 @@ plz.defineStatic('binder', function () {
 
         parts.pop();
         return parts.reduce(function (previous, current) {
-            var isString = plz.isString(previous);
+            var isString = pz.isString(previous);
             return isString ? window[previous][current] :
-                (plz.isEmpty(previous) ? null : previous[current]);
+                (pz.isEmpty(previous) ? null : previous[current]);
         }, target);
     };
 
@@ -647,24 +647,24 @@ plz.defineStatic('binder', function () {
 
     observe = function (value) {
         // TODO: Multidimensional arrays 
-        if (!plz.isObject(value) || value.$observed) {
+        if (!pz.isObject(value) || value.$observed) {
             return false;
         };
 
         var properties = Object.keys(value);
 
-        plz.forEach(properties, function (prop) {
+        pz.forEach(properties, function (prop) {
 
             var propValue = value[prop];
 
             var obsArray = observeArray(value, propValue, prop);
 
-            if (obsArray && !plz.isInstanceOf(value, observableArray)) {
+            if (obsArray && !pz.isInstanceOf(value, observableArray)) {
                 value[prop] = obsArray;
             };
 
-            if (!obsArray && !plz.isInstanceOf(value, observable) && !observe(propValue) &&
-                !plz.isFunction(propValue)) {
+            if (!obsArray && !pz.isInstanceOf(value, observable) && !observe(propValue) &&
+                !pz.isFunction(propValue)) {
                 value[prop] = new observable(value, prop);
             };
         });
@@ -675,7 +675,7 @@ plz.defineStatic('binder', function () {
 
     observeArray = function (obj, collection, prop) {
 
-        var isArray = plz.isArray(collection);
+        var isArray = pz.isArray(collection);
         var obsArray;
 
         if (!isArray) {
@@ -683,7 +683,7 @@ plz.defineStatic('binder', function () {
         };
 
         obsArray = new observableArray(obj, collection, prop);
-        plz.forEach(obsArray, function (item) {
+        pz.forEach(obsArray, function (item) {
             observe(item);
         });
 
@@ -738,7 +738,7 @@ plz.defineStatic('binder', function () {
                 return;
             };
 
-            plz.forEach(this.subscriptions, function (subscription) {
+            pz.forEach(this.subscriptions, function (subscription) {
                 subscription.update.call(this, subscription);
             }, this);
         };
@@ -756,7 +756,7 @@ plz.defineStatic('binder', function () {
                 return sub.id == bindingId;
             });
 
-            plz.forEach(bindingSubs, function (sub) {
+            pz.forEach(bindingSubs, function (sub) {
                 var idx = this.subscriptions.indexOf(sub);
                 this.subscriptions.splice(idx, 1);
             }, this);
@@ -826,7 +826,7 @@ plz.defineStatic('binder', function () {
 
         observableArray.prototype = [];
 
-        plz.forEach(observableMethods, function (methodName) {
+        pz.forEach(observableMethods, function (methodName) {
 
             var method = arrPrototype[methodName];
 
@@ -848,14 +848,14 @@ plz.defineStatic('binder', function () {
             };
         });
 
-        plz.forEach(normalMethods, function (methodName) {
+        pz.forEach(normalMethods, function (methodName) {
             observableArray.prototype[methodName] = arrPrototype[methodName];
         });
 
         observableArray.prototype.subscribe = function (callback, bindingId) {
 
             this.subscriptions.splice(0, this.subscriptions.length);
-            plz.forEach(observableMethods, function (action) {
+            pz.forEach(observableMethods, function (action) {
                 handleSubscriptions(this, true, action, callback, bindingId);
             }, this);
             callback = null;
@@ -867,7 +867,7 @@ plz.defineStatic('binder', function () {
                 return sub.id == bindingId;
             });
 
-            plz.forEach(bindingSubs, function (sub) {
+            pz.forEach(bindingSubs, function (sub) {
                 var idx = this.subscriptions.indexOf(sub);
                 this.subscriptions.splice(idx, 1);
             }, this);
@@ -883,7 +883,7 @@ plz.defineStatic('binder', function () {
 
         observableArray.prototype.getAt = function (index) {
 
-            if (plz.isEmpty(index)) {
+            if (pz.isEmpty(index)) {
                 return null;
             };
 
@@ -907,8 +907,8 @@ plz.defineStatic('binder', function () {
                 return;
             };
 
-            hasInterpolations = (el.textContent.indexOf(plz.binder.delimiters[0]) != -1 &&
-                el.textContent.indexOf(plz.binder.delimiters[1]) != -1);
+            hasInterpolations = (el.textContent.indexOf(pz.binder.delimiters[0]) != -1 &&
+                el.textContent.indexOf(pz.binder.delimiters[1]) != -1);
 
             if (!hasInterpolations) {
                 return;
@@ -938,8 +938,8 @@ plz.defineStatic('binder', function () {
                             keypaths.push(value);
                         };
 
-                        var result = (!plz.isEmpty(vmValue) ?
-                            (plz.isFunction(vmValue) ? vmValue() : vmValue) : template);
+                        var result = (!pz.isEmpty(vmValue) ?
+                            (pz.isFunction(vmValue) ? vmValue() : vmValue) : template);
                         vmValue = null;
                         return result;
                     });
@@ -959,13 +959,13 @@ plz.defineStatic('binder', function () {
             updateContent(elData, false);
 
             (function (me, elsData) {
-                plz.forEach(keypaths, function (keypath) {
+                pz.forEach(keypaths, function (keypath) {
                     var ctx = buildContext(keypath, me.vm, me.ctx);
                     var prop = keypath.split('.').pop();
                     var observer = ctx[prop];
                     if (observer) {
                         observer.subscribe(function () {
-                            plz.forEach(elsData, function (data) {
+                            pz.forEach(elsData, function (data) {
                                 updateContent(data, true);
                             });
                         });
@@ -999,7 +999,7 @@ plz.defineStatic('binder', function () {
         function binding(el, type, keypath, bindingAttr, view) {
             var result = parseAlias(keypath);
 
-            this.id = plz.guid();
+            this.id = pz.guid();
             this.el = el;
             this.view = view;
             this.type = type;
@@ -1009,8 +1009,8 @@ plz.defineStatic('binder', function () {
             this.prop = result.keypath.split('.').pop();
             this.rootVm = view.vm;
             this.vm = buildContext(result.keypath, view.vm, view.ctx);
-            this.binder = plz.binder.binders[this.type];
-            this.handler = this.binder.handler ? plz.proxy(this.binder.handler, this) : undefined;
+            this.binder = pz.binder.binders[this.type];
+            this.handler = this.binder.handler ? pz.proxy(this.binder.handler, this) : undefined;
             view = null;
             return this;
         };
@@ -1041,7 +1041,7 @@ plz.defineStatic('binder', function () {
             if (observer && observer.unsubscribe) {
                 observer.unsubscribe(this.id);
             };
-            if (plz.isFunction(this.binder.unbind)) {
+            if (pz.isFunction(this.binder.unbind)) {
                 this.binder.unbind.call(this);
             };
         };
@@ -1059,7 +1059,7 @@ plz.defineStatic('binder', function () {
             };
 
             prop = this.vm[this.prop];
-            var isFn = plz.isFunction(prop);
+            var isFn = pz.isFunction(prop);
             return isFn ? this.vm[this.prop].call(this) : this.vm[this.prop];
         };
 
@@ -1089,23 +1089,23 @@ plz.defineStatic('binder', function () {
         };
 
         function view(el, vm, ctx, index) {
-            this.els = plz.isArray(el) || plz.isNodeList(el) ? el : [el];
+            this.els = pz.isArray(el) || pz.isNodeList(el) ? el : [el];
             this.vm = vm;
             this.ctx = ctx || null;
-            this.index = !plz.isEmpty(index) ? index : null;
+            this.index = !pz.isEmpty(index) ? index : null;
             this.buildBindings();
             vm = null;
             return this;
         };
 
         view.prototype.bind = function () {
-            plz.forEach(this.bindings, function (binding) {
+            pz.forEach(this.bindings, function (binding) {
                 binding.bind();
             });
         };
 
         view.prototype.unbind = function () {
-            plz.forEach(this.bindings, function (binding) {
+            pz.forEach(this.bindings, function (binding) {
                 binding.unbind();
             });
         };
@@ -1115,16 +1115,16 @@ plz.defineStatic('binder', function () {
 
             var build = (function (me) {
                 return function (els) {
-                    plz.forEach(els, function (el) {
-                        var isBlock = (el.hasAttribute && el.hasAttribute(plz.binder.prefix + '-each')),
-                            attrs = isBlock ? [el.getAttributeNode(plz.binder.prefix + '-each')] : (el.attributes || []);
+                    pz.forEach(els, function (el) {
+                        var isBlock = (el.hasAttribute && el.hasAttribute(pz.binder.prefix + '-each')),
+                            attrs = isBlock ? [el.getAttributeNode(pz.binder.prefix + '-each')] : (el.attributes || []);
 
-                        plz.forEach(attrs, function (attr) {
+                        pz.forEach(attrs, function (attr) {
                             if (getBindingRegex().test(attr.name)) {
                                 var parts = parseAttrName(attr.name);
                                 var bType = parts[1], attrToBind = parts[2];
 
-                                if (!plz.isEmpty(plz.binder.binders[bType])) {
+                                if (!pz.isEmpty(pz.binder.binders[bType])) {
                                     var b = new binding(el, bType.toLowerCase(), attr.value, attr.name, me);
                                     if (attrToBind) { b.attrToBind = attrToBind; };
 
@@ -1136,7 +1136,7 @@ plz.defineStatic('binder', function () {
                         });
 
                         if (!isBlock) {
-                            plz.forEach(el.childNodes, function (childNode) {
+                            pz.forEach(el.childNodes, function (childNode) {
                                 build([childNode]);
                                 textParser.parse.call(me, childNode);
                             });
@@ -1187,11 +1187,11 @@ plz.defineStatic('binder', function () {
 
                 var properties = getProperties(value);
 
-                plz.forEach(properties, function (prop) {
+                pz.forEach(properties, function (prop) {
 
-                    var isObject = plz.isObject(value[prop]),
-                        isFunction = plz.isFunction(value[prop]),
-                        isObsArray = plz.isInstanceOf(value[prop], observableArray);
+                    var isObject = pz.isObject(value[prop]),
+                        isFunction = pz.isFunction(value[prop]),
+                        isObsArray = pz.isInstanceOf(value[prop], observableArray);
 
                     if (isObject) {
                         toJSON(value[prop], res);
@@ -1203,10 +1203,10 @@ plz.defineStatic('binder', function () {
                             return !isNaN(parseInt(key));
                         });
 
-                        plz.forEach(dataKeys, function (key) {
+                        pz.forEach(dataKeys, function (key) {
                             var item = value[prop][key];
-                            var val = (plz.isObject(item) ? toJSON(item, {}) :
-                                (plz.isFunction(item) ? item() : item));
+                            var val = (pz.isObject(item) ? toJSON(item, {}) :
+                                (pz.isFunction(item) ? item() : item));
                             res[prop].push(val);
                         });
                     };
@@ -1239,7 +1239,7 @@ plz.defineStatic('binder', function () {
                     event = isInput || isTextArea ? (('oninput' in window) ? 'input' : 'keyup') : 'change';
                     isText = isInput && this.el.type == 'text' || isTextArea;
 
-                    if ((isSelect || isText) && plz.isFunction(this.handler)) {
+                    if ((isSelect || isText) && pz.isFunction(this.handler)) {
                         this.el.removeEventListener(event, this.handler, false);
                         this.el.addEventListener(event, this.handler, false);
                         this.event = event;
@@ -1287,9 +1287,9 @@ plz.defineStatic('binder', function () {
 
                     var value = this.getValue(), template;
 
-                    plz.forEach(this.views, function (view) {
+                    pz.forEach(this.views, function (view) {
                         view.unbind();
-                        plz.forEach(view.els, function (el) {
+                        pz.forEach(view.els, function (el) {
                             el.parentNode.removeChild(el);
                             el = null;
                         });
@@ -1298,7 +1298,7 @@ plz.defineStatic('binder', function () {
 
                     this.views.splice(0, this.views.length);
 
-                    plz.forEach(value, function (item, idx) {
+                    pz.forEach(value, function (item, idx) {
 
                         if (this.alias) {
                             this.rootVm[this.alias] = item;
@@ -1314,7 +1314,7 @@ plz.defineStatic('binder', function () {
                     delete this.rootVm[this.alias];
                 },
                 unbind: function () {
-                    plz.forEach(this.views, function (view) {
+                    pz.forEach(this.views, function (view) {
                         view.unbind();
                     });
                 }
@@ -1335,7 +1335,7 @@ plz.defineStatic('binder', function () {
                     var value = val != undefined ? val : this.getValue();
                     this.el.removeAttribute(this.bindingAttr);
 
-                    if (!value && !plz.isEmpty(this.el.parentNode)) {
+                    if (!value && !pz.isEmpty(this.el.parentNode)) {
                         this.el.parentNode.removeChild(this.el);
                     };
                 }
@@ -1344,7 +1344,7 @@ plz.defineStatic('binder', function () {
                 priority: 2,
                 bind: function () {
                     var value = this.getValue();
-                    plz.binder.binders.if.bind.call(this, !value);
+                    pz.binder.binders.if.bind.call(this, !value);
                 }
             },
             'visible': {
@@ -1365,11 +1365,11 @@ plz.defineStatic('binder', function () {
             },
             'hidden': {
                 bind: function () {
-                    plz.binder.binders.visible.bind.call(this);
+                    pz.binder.binders.visible.bind.call(this);
                 },
                 react: function () {
                     var value = this.getValue();
-                    plz.binder.binders.visible.react.call(this, !value);
+                    pz.binder.binders.visible.react.call(this, !value);
                 }
             },
             'html': {
@@ -1455,9 +1455,9 @@ plz.defineStatic('binder', function () {
                 react: function () {
                     var value = this.getValue();
 
-                    plz.forEach(this.views, function (view) {
+                    pz.forEach(this.views, function (view) {
                         view.unbind();
-                        plz.forEach(view.els, function (el) {
+                        pz.forEach(view.els, function (el) {
                             el.parentNode.removeChild(el);
                             el = null;
                         });
@@ -1466,7 +1466,7 @@ plz.defineStatic('binder', function () {
 
                     this.views.splice(0, this.views.length);
 
-                    plz.forEach(value, function (item, idx) {
+                    pz.forEach(value, function (item, idx) {
                         var template = document.createElement('option');
                         template.setAttribute('data-value', this.binder.tempAttrs.val);
                         template.setAttribute('data-text', this.binder.tempAttrs.text);
@@ -1480,21 +1480,21 @@ plz.defineStatic('binder', function () {
                 }
             },
             unbind: function () {
-                plz.forEach(this.views, function (view) {
+                pz.forEach(this.views, function (view) {
                     view.unbind();
                 });
             }
         }
     };
 
-}, 'plz');
+}, 'pz');
 
-plz.defineStatic('arr', function () {
+pz.defineStatic('arr', function () {
     'use strict';
 
     return {
         clear: function (array) {
-            if (plz.isEmpty(array)) {
+            if (pz.isEmpty(array)) {
                 return;
             };
 
@@ -1502,16 +1502,16 @@ plz.defineStatic('arr', function () {
         },
 
         find: function (callback, arr, scope) {
-            return plz.find(callback, arr, scope);
+            return pz.find(callback, arr, scope);
         },
 
         contains: function (array, item, fromIndex) {
-            var isFunction = plz.isFunction(item);
+            var isFunction = pz.isFunction(item);
 
             return isFunction ? (function () {
-                var el = plz.arr.find(item, array);
-                return !plz.isEmpty(el);
-            })() : plz.isEmpty(array) ? false : array.indexOf(item, fromIndex) != -1;
+                var el = pz.arr.find(item, array);
+                return !pz.isEmpty(el);
+            })() : pz.isEmpty(array) ? false : array.indexOf(item, fromIndex) != -1;
         },
 
         filter: function (callback, array) {
@@ -1524,7 +1524,7 @@ plz.defineStatic('arr', function () {
             var args = Array.prototype.slice.call(arguments),
                 resultArray = [];
 
-            plz.forEach(args, function (array) {
+            pz.forEach(args, function (array) {
                 resultArray = resultArray.concat(array);
             });
 
@@ -1538,7 +1538,7 @@ plz.defineStatic('arr', function () {
         },
 
         removeAt: function (array, index) {
-            if (plz.isEmpty(array) || plz.isEmpty(index)) {
+            if (pz.isEmpty(array) || pz.isEmpty(index)) {
                 return;
             };
 
@@ -1546,14 +1546,14 @@ plz.defineStatic('arr', function () {
         },
     };
 
-}, 'plz');
+}, 'pz');
 
-plz.defineStatic('str', function () {
+pz.defineStatic('str', function () {
     'use strict';
 
     return {
         camelize: function (str) {
-            if (plz.isEmpty(str)) {
+            if (pz.isEmpty(str)) {
                 return '';
             };
 
@@ -1564,7 +1564,7 @@ plz.defineStatic('str', function () {
         },
 
         capitalize: function (str) {
-            if (plz.isEmpty(str)) {
+            if (pz.isEmpty(str)) {
                 return '';
             };
 
@@ -1573,7 +1573,7 @@ plz.defineStatic('str', function () {
         },
 
         contains: function (str, value) {
-            return plz.isEmpty(str) || plz.isEmpty(value) ? false :
+            return pz.isEmpty(str) || pz.isEmpty(value) ? false :
                 str.indexOf(value) != -1;
         },
 
@@ -1582,12 +1582,12 @@ plz.defineStatic('str', function () {
             var baseString = args[0];
             var params = args.splice(1), result = '';
 
-            if (plz.isEmpty(baseString) || plz.isEmpty(params)) {
+            if (pz.isEmpty(baseString) || pz.isEmpty(params)) {
                 return result;
             };
 
-            plz.forEach(params, function (param, idx) {
-                result = plz.isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
+            pz.forEach(params, function (param, idx) {
+                result = pz.isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
                     result.replace('{' + idx + '}', param);
             });
 
@@ -1595,10 +1595,10 @@ plz.defineStatic('str', function () {
         }
     };
 
-}, 'plz');
+}, 'pz');
 
 
-plz.defineStatic('dom', function () {
+pz.defineStatic('dom', function () {
     'use strict';
 
     var _tagNameReg = /<([^\s>]+)(\s|>)+/;
@@ -1616,17 +1616,17 @@ plz.defineStatic('dom', function () {
 
     var _doInsert = function (element, newNode, where) {
 
-        if (plz.isEmpty(element) || plz.isEmpty(newNode)) {
+        if (pz.isEmpty(element) || pz.isEmpty(newNode)) {
             return;
         };
 
-        element.insertAdjacentHTML(where, (plz.isString(newNode) ?
+        element.insertAdjacentHTML(where, (pz.isString(newNode) ?
             newNode : newNode.outerHTML));
     };
 
     var _getListener = function (me, element, event) {
-        return plz.find(function (lst) {
-            return lst.el == element && (!plz.isEmpty(event) ? (lst.event == event) : true);
+        return pz.find(function (lst) {
+            return lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
         }, me.listeners);
     };
 
@@ -1641,8 +1641,8 @@ plz.defineStatic('dom', function () {
                     return item.type == e.type;
                 });
 
-            while (!plz.isEmpty(dataItem = data[i])
-                && !(match = plz.dom.elementMatches(e.target, dataItem.selector))) {
+            while (!pz.isEmpty(dataItem = data[i])
+                && !(match = pz.dom.elementMatches(e.target, dataItem.selector))) {
                 i++;
             };
 
@@ -1656,8 +1656,8 @@ plz.defineStatic('dom', function () {
             };
 
             if (!targetMatches) {
-                var parent = plz.dom.findParent(e.target, selector);
-                parentEmpty = plz.isEmpty(parent);
+                var parent = pz.dom.findParent(e.target, selector);
+                parentEmpty = pz.isEmpty(parent);
                 if (!parentEmpty) {
                     target = parent;
                 };
@@ -1665,7 +1665,7 @@ plz.defineStatic('dom', function () {
 
             triggerEvent = targetMatches || !parentEmpty;
 
-            if (triggerEvent && plz.isEmpty(target)) {
+            if (triggerEvent && pz.isEmpty(target)) {
                 target = this;
             };
 
@@ -1681,7 +1681,7 @@ plz.defineStatic('dom', function () {
         },
 
         replaceWith: function (node, newNode) {
-            if (plz.isEmpty(node) || plz.isEmpty(newNode)) {
+            if (pz.isEmpty(node) || pz.isEmpty(newNode)) {
                 return;
             };
 
@@ -1690,11 +1690,11 @@ plz.defineStatic('dom', function () {
         },
 
         append: function (parent, element) {
-            if (plz.isEmpty(parent) || plz.isEmpty(element)) {
+            if (pz.isEmpty(parent) || pz.isEmpty(element)) {
                 return;
             };
 
-            if (plz.isString(element)) {
+            if (pz.isString(element)) {
                 element = this.parseTemplate(element);
             };
 
@@ -1715,7 +1715,7 @@ plz.defineStatic('dom', function () {
 
         findElement: function (rootEl, selector, all) {
 
-            if (plz.isEmpty(selector)) {
+            if (pz.isEmpty(selector)) {
                 return null;
             };
 
@@ -1734,7 +1734,7 @@ plz.defineStatic('dom', function () {
 
         findParent: function (el, selector, stopSelector) {
             var retval = null, me = this;
-            while (!plz.isEmpty(el)) {
+            while (!pz.isEmpty(el)) {
                 if (this.elementMatches(el, selector)) {
                     retval = el;
                     break;
@@ -1750,11 +1750,11 @@ plz.defineStatic('dom', function () {
             // TODO: See if we can use only one collection (_delegate.data/this.listeners)
             var rootEl, lst;
 
-            if (plz.isEmpty(fn)) {
+            if (pz.isEmpty(fn)) {
                 return;
             };
 
-            rootEl = !plz.isEmpty(element) ? element : document;
+            rootEl = !pz.isEmpty(element) ? element : document;
             lst = _getListener(this, rootEl, event);
             _delegate.data.push({
                 selector: selector,
@@ -1762,7 +1762,7 @@ plz.defineStatic('dom', function () {
                 type: event
             });
 
-            if (!plz.isEmpty(lst)) {
+            if (!pz.isEmpty(lst)) {
                 return;
             };
 
@@ -1785,7 +1785,7 @@ plz.defineStatic('dom', function () {
             var root = options && options.rootEl || document;
             var method = getAll ? 'querySelectorAll' : 'querySelector';
             var element = root[method](selector);
-            return plz.isEmpty(element) ? null :
+            return pz.isEmpty(element) ? null :
                 ((element.length == 1 && element.nodeName != 'FORM') ? element[0] : element);
         },
 
@@ -1794,20 +1794,20 @@ plz.defineStatic('dom', function () {
                 regResult, wrapper, wrapperEmpty,
                 fragment, result;
 
-            if (!plz.isString(template)) {
+            if (!pz.isString(template)) {
                 return null;
             };
 
             trimmed = template.trim();
             regResult = _tagNameReg.exec(trimmed);
-            if (plz.isEmpty(regResult)) {
+            if (pz.isEmpty(regResult)) {
                 return null;
             };
 
             fragment = document.createDocumentFragment();
             tagName = regResult[1];
             wrapper = _wrapMap[tagName];
-            wrapperEmpty = plz.isEmpty(wrapper);
+            wrapperEmpty = pz.isEmpty(wrapper);
 
             temp = fragment.appendChild(this.createElement('div'));
             temp.innerHTML = wrapperEmpty ? trimmed : wrapper[1].concat(trimmed).concat(wrapper[2]);
@@ -1838,7 +1838,7 @@ plz.defineStatic('dom', function () {
         remove: function (element) {
             var parent;
 
-            if (plz.isEmpty(element)) {
+            if (pz.isEmpty(element)) {
                 return;
             };
 
@@ -1849,18 +1849,18 @@ plz.defineStatic('dom', function () {
 
         insertAt: function (parent, newNode, index) {
             var referenceNode;
-            if (plz.isEmpty(parent) || plz.isEmpty(index)) {
+            if (pz.isEmpty(parent) || pz.isEmpty(index)) {
                 return;
             };
 
-            if (plz.isEmpty(parent.childNodes)) {
+            if (pz.isEmpty(parent.childNodes)) {
                 this.prepend(parent, newNode);
                 return;
             };
 
             referenceNode = parent.childNodes[index];
 
-            if (plz.isEmpty(referenceNode)) {
+            if (pz.isEmpty(referenceNode)) {
                 throw new Error('Node at index: ' + index + ' was not found.');
             };
 
@@ -1869,15 +1869,15 @@ plz.defineStatic('dom', function () {
 
         off: function (element, event) {
 
-            var index, listener = plz.find(function (lst, idx) {
-                var found = lst.el == element && (!plz.isEmpty(event) ? (lst.event == event) : true);
+            var index, listener = pz.find(function (lst, idx) {
+                var found = lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
                 if (found) {
                     index = idx;
                 };
                 return found;
             }, this.listeners);
 
-            if (!plz.isEmpty(listener)) {
+            if (!pz.isEmpty(listener)) {
                 listener.el.removeEventListener(listener.event, _delegate.fn);
             };
 
@@ -1894,9 +1894,9 @@ plz.defineStatic('dom', function () {
         }
     }
 
-}, 'plz');
+}, 'pz');
 
-plz.defineStatic('obj', function () {
+pz.defineStatic('obj', function () {
     'use strict';
 
     var _const = {
@@ -1906,7 +1906,7 @@ plz.defineStatic('obj', function () {
     return {
 
         assignTo: function (target, source, clone) {
-            return plz.assignTo(target, source, clone);
+            return pz.assignTo(target, source, clone);
         },
 
         clone: function (obj) {
@@ -1934,7 +1934,7 @@ plz.defineStatic('obj', function () {
         }
     };
 
-}, 'plz');
+}, 'pz');
 
 (function () {
     var base = function () {
@@ -1945,18 +1945,18 @@ plz.defineStatic('obj', function () {
             init: function () { },
             destroy: function () {
                 // TODO: multiple instances destroy
-                var idx = plz.application.instances.indexOf(this);
+                var idx = pz.application.instances.indexOf(this);
                 if (idx != -1) {
-                    plz.application.instances.splice(idx, 1);
+                    pz.application.instances.splice(idx, 1);
                 };
             },
             applyMixins: function () {
                 var me = this;
-                plz.forEach(this.mixins, function (mixinName) {
-                    var mixin = plz.getDefinitionOf(mixinName);
-                    var cleanMixin = plz.obj.clone(mixin);
+                pz.forEach(this.mixins, function (mixinName) {
+                    var mixin = pz.getDefinitionOf(mixinName);
+                    var cleanMixin = pz.obj.clone(mixin);
                     delete cleanMixin.ownerType;
-                    plz.obj.assignTo(me, cleanMixin, false);
+                    pz.obj.assignTo(me, cleanMixin, false);
                 });
             }
         };
@@ -1965,28 +1965,28 @@ plz.defineStatic('obj', function () {
     base.extend = function extend(props) {
         // TODO: Inherit statics (maybe use TypeScript extend fn...but it has a possibility to run very slow!!)
 
-        var properties = plz.toObject(props);
+        var properties = pz.toObject(props);
         var parentClass = this;
 
         var returnVal = (function (_parentClass, _properties) {
             var _hasCustomConstructor = _properties && _properties.constructor
                 && _properties.constructor !== {}.constructor;
-            var propertyNames = plz.obj.getKeys(_properties);
+            var propertyNames = pz.obj.getKeys(_properties);
             var propertiesReduced = propertyNames.reduce(function (acc, key) {
-                var isFunction = plz.isFunction(_properties[key]);
+                var isFunction = pz.isFunction(_properties[key]);
                 acc[isFunction ? 'fnKeys' : 'attrKeys'].push(key);
                 return acc;
             }, { fnKeys: [], attrKeys: [] });
 
-            var plz_type = function () { // child class
+            var pz_type = function () { // child class
                 var me = this, result;
 
-                plz.forEach(propertiesReduced.attrKeys, function (key) { // apply properties (strings, ints, arrays, objects...etc) to the object instance
-                    if (!me.hasOwnProperty(key) && !plz.isEmpty(_properties[key], true)) {
-                        var isArray = plz.isArray(_properties[key]);
-                        var isObject = plz.isObject(_properties[key]);
+                pz.forEach(propertiesReduced.attrKeys, function (key) { // apply properties (strings, ints, arrays, objects...etc) to the object instance
+                    if (!me.hasOwnProperty(key) && !pz.isEmpty(_properties[key], true)) {
+                        var isArray = pz.isArray(_properties[key]);
+                        var isObject = pz.isObject(_properties[key]);
 
-                        me[key] = isArray ? _properties[key].slice() : (isObject ? plz.assignTo({}, plz.obj.clone(_properties[key])) : _properties[key]);
+                        me[key] = isArray ? _properties[key].slice() : (isObject ? pz.assignTo({}, pz.obj.clone(_properties[key])) : _properties[key]);
                     };
                 });
 
@@ -1997,14 +1997,14 @@ plz.defineStatic('obj', function () {
                 return result || me;
             };
 
-            plz_type.prototype = Object.create(_parentClass.prototype);
-            plz_type.prototype.constructor = plz_type;
+            pz_type.prototype = Object.create(_parentClass.prototype);
+            pz_type.prototype.constructor = pz_type;
 
-            plz.forEach(propertiesReduced.fnKeys, function (key) {
-                plz_type.prototype[key] = key == 'constructor' ? plz_type.prototype.constructor : (function (name, fn, base) { // share the functions between instances via prototype
+            pz.forEach(propertiesReduced.fnKeys, function (key) {
+                pz_type.prototype[key] = key == 'constructor' ? pz_type.prototype.constructor : (function (name, fn, base) { // share the functions between instances via prototype
                     return function () {
                         var tmp = this.base;
-                        var addSuperCallWrapper = !plz.isEmpty(base[name]) && plz.isFunction(base[name]);
+                        var addSuperCallWrapper = !pz.isEmpty(base[name]) && pz.isFunction(base[name]);
                         this.base = addSuperCallWrapper ? base[name] : function () {
                             throw new Error('Method named: [' + name + '] was not found on type: [' + this.ownerType + ']');
                         };
@@ -2015,8 +2015,8 @@ plz.defineStatic('obj', function () {
                 })(key, _properties[key], _parentClass.prototype);
             });
 
-            plz_type.extend = extend;
-            return plz_type;
+            pz_type.extend = extend;
+            return pz_type;
 
         })(parentClass, properties);
 
@@ -2026,12 +2026,12 @@ plz.defineStatic('obj', function () {
         return returnVal;
     };
 
-    plz.define('base', base);
+    pz.define('base', base);
 
     base = null;
 })();
 
-plz.define('class', function () {
+pz.define('class', function () {
     'use strict';
 
     return {
@@ -2039,7 +2039,7 @@ plz.define('class', function () {
     }
 });
 
-plz.define('component', function () {
+pz.define('component', function () {
     'use strict';
 
     var _const = {
@@ -2072,34 +2072,34 @@ plz.define('component', function () {
 
             var templateSelectorEmpty;
 
-            if (plz.isEmpty(this.viewModel) || !plz.isFunction(this.applyBindings)) {
+            if (pz.isEmpty(this.viewModel) || !pz.isFunction(this.applyBindings)) {
                 return;
             };
 
-            templateSelectorEmpty = plz.isEmpty(this.templateSelector);
+            templateSelectorEmpty = pz.isEmpty(this.templateSelector);
             this.applyBindings();
 
             if (!templateSelectorEmpty) {
-                var tpl = plz.dom.getByAttr(this.templateSelector);
-                plz.dom.replaceWith(tpl, this.html);
+                var tpl = pz.dom.getByAttr(this.templateSelector);
+                pz.dom.replaceWith(tpl, this.html);
                 tpl = null;
             };
 
             this.publish('bindings-complete', null, this);
         },
         applyBindings: function () {
-            plz.binder.bind(this.html, this.viewModel);
+            pz.binder.bind(this.html, this.viewModel);
         },
         unapplyBindings: function () {
-            plz.binder.unbind(this.viewModel);
+            pz.binder.unbind(this.viewModel);
         },
         traceUp: function () {
-            return plz.isEmpty(this.parentComponent) ? null :
-            (!plz.isEmpty(this.parentComponent.$ref) ? this.parentComponent.$ref 
-                : plz.getInstanceOf(this.parentComponent.id));
+            return pz.isEmpty(this.parentComponent) ? null :
+            (!pz.isEmpty(this.parentComponent.$ref) ? this.parentComponent.$ref 
+                : pz.getInstanceOf(this.parentComponent.id));
         },
         traceDown: function (value) { // can be type, id or alias if defined on a component
-            if (plz.isEmpty(this.components)) {
+            if (pz.isEmpty(this.components)) {
                 return null;
             };
 
@@ -2108,15 +2108,15 @@ plz.define('component', function () {
                     childComponent.id == value || childComponent.alias == value;
                 return conditionOk;
             }).map(function (childComponent) {
-                return plz.getInstanceOf(childComponent.id);
+                return pz.getInstanceOf(childComponent.id);
             });
 
             return children.length == 1 ? children[0] : children;
         },
         load: function () {
-            var templateSelectorEmpty = plz.isEmpty(this.templateSelector),
-                templateEmpty = plz.isEmpty(this.template),
-                urlEmpty = plz.isEmpty(this.ajaxSetup) || plz.isEmpty(this.ajaxSetup.url),
+            var templateSelectorEmpty = pz.isEmpty(this.templateSelector),
+                templateEmpty = pz.isEmpty(this.template),
+                urlEmpty = pz.isEmpty(this.ajaxSetup) || pz.isEmpty(this.ajaxSetup.url),
                 componentLoaded;
 
             if (templateEmpty && templateSelectorEmpty && urlEmpty) {
@@ -2129,20 +2129,20 @@ plz.define('component', function () {
             };
 
             this.showLoadingMask();
-            componentLoaded = plz.proxy(function (result) {
+            componentLoaded = pz.proxy(function (result) {
                 var res = this.ajaxSetup.dataType == 'text' ? {
                     template: result.data
                 } : result.data;
 
-                this.viewModel = !plz.isEmpty(res.viewModel) ? res.viewModel :
+                this.viewModel = !pz.isEmpty(res.viewModel) ? res.viewModel :
                     this.viewModel;
-                this.template = !plz.isEmpty(res.template) ? res.template :
-                    plz.dom.getByAttr(this.templateSelector).outerHTML;
+                this.template = !pz.isEmpty(res.template) ? res.template :
+                    pz.dom.getByAttr(this.templateSelector).outerHTML;
                 this.publish('load-complete', null, this);
                 this.render();
             }, this);
 
-            plz.http.get({
+            pz.http.get({
                 url: this.ajaxSetup.url,
                 dataType: this.ajaxSetup.dataType,
                 data: this.ajaxSetup.data,
@@ -2152,11 +2152,11 @@ plz.define('component', function () {
             componentLoaded = null;
         },
         render: function () {
-            var templateSelectorEmpty = plz.isEmpty(this.templateSelector), me = this,
+            var templateSelectorEmpty = pz.isEmpty(this.templateSelector), me = this,
                 renderToDefined, container, child, childDomIdx, renderBeforeDefined,
                 renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector, isChild, containerErr;
-            this.html = !templateSelectorEmpty ? plz.dom.getByAttr(this.templateSelector) :
-                plz.dom.clone(plz.dom.parseTemplate(this.template)), me = this;
+            this.html = !templateSelectorEmpty ? pz.dom.getByAttr(this.templateSelector) :
+                pz.dom.clone(pz.dom.parseTemplate(this.template)), me = this;
             this.addAttr({
                 name: 'data-componentId',
                 value: this.id
@@ -2170,31 +2170,31 @@ plz.define('component', function () {
                 return;
             };
 
-            renderToDefined = !plz.isEmpty(this.renderTo);
-            renderAfterDefined = !plz.isEmpty(this.renderAfter);
-            renderBeforeDefined = !plz.isEmpty(this.renderBefore);
+            renderToDefined = !pz.isEmpty(this.renderTo);
+            renderAfterDefined = !pz.isEmpty(this.renderAfter);
+            renderBeforeDefined = !pz.isEmpty(this.renderBefore);
 
             if (!renderToDefined && !renderAfterDefined && !renderBeforeDefined) {
                 throw new Error(_const.tplContainerNotDefined);
             };
 
-            isChild = !plz.isEmpty(this.parentComponent);
-            containerSelector = (isChild ? plz.str.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
+            isChild = !pz.isEmpty(this.parentComponent);
+            containerSelector = (isChild ? pz.str.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
                 (renderToDefined ? this.renderTo : (renderBeforeDefined ? this.renderBefore : this.renderAfter)));
-            container = plz.dom.getEl(containerSelector);
+            container = pz.dom.getEl(containerSelector);
 
-            if (plz.isEmpty(container)) {
-                containerErr = (isChild ? plz.str.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
+            if (pz.isEmpty(container)) {
+                containerErr = (isChild ? pz.str.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
                     _const.tplContainerNotFound);
                 throw new Error(containerErr);
             };
 
             insertBeforeOrAfter = function (selector, method) {
                 var parent = me.traceUp();
-                var rootEl = !plz.isEmpty(parent) ? parent.html : document;
-                siblingContainer = plz.dom.getEl(selector, { rootEl: rootEl, all: false });
-                plz.dom[method](siblingContainer, me.html);
-                me.html = plz.dom.getEl('*[data-componentid="' + me.id + '"]', { // get the dom reference since we will inject html string
+                var rootEl = !pz.isEmpty(parent) ? parent.html : document;
+                siblingContainer = pz.dom.getEl(selector, { rootEl: rootEl, all: false });
+                pz.dom[method](siblingContainer, me.html);
+                me.html = pz.dom.getEl('*[data-componentid="' + me.id + '"]', { // get the dom reference since we will inject html string
                     rootEl: rootEl, all: false
                 });
             };
@@ -2203,12 +2203,12 @@ plz.define('component', function () {
                 insertBeforeOrAfter(containerSelector, 'insertBefore');
             } else if (renderAfterDefined) {
                 insertBeforeOrAfter(containerSelector, 'insertAfter');
-            } else if (!plz.isEmpty(this.insertAt)) {
+            } else if (!pz.isEmpty(this.insertAt)) {
                 child = this.traceUp().childAt(this.insertAt);
-                childDomIdx = plz.isEmpty(child) ? 0 : plz.dom.indexOf(child.html);
-                plz.dom.insertAt(container, this.html, childDomIdx);
+                childDomIdx = pz.isEmpty(child) ? 0 : pz.dom.indexOf(child.html);
+                pz.dom.insertAt(container, this.html, childDomIdx);
             } else {
-                plz.dom[this.replace ? 'replaceWith' : 'append'](container, this.html);
+                pz.dom[this.replace ? 'replaceWith' : 'append'](container, this.html);
             };
 
             this.publish('render-complete', null, this);
@@ -2219,8 +2219,8 @@ plz.define('component', function () {
             var me = this, childrenToInitialize;
             this.bindViewModel();
 
-            if (!plz.isEmpty(this.handlers)) {
-                plz.forEach(this.handlers, function (handler) {
+            if (!pz.isEmpty(this.handlers)) {
+                pz.forEach(this.handlers, function (handler) {
                     me.handle(handler);
                 });
             };
@@ -2229,10 +2229,10 @@ plz.define('component', function () {
             this.initialized = true;
             this.publish('init-complete', null, this);
 
-            if (!plz.isEmpty(this.components)) {
+            if (!pz.isEmpty(this.components)) {
                 childrenToInitialize = this.components.reduce(function (acc, cmpRef, idx) {
-                    var cmp = plz.isEmpty(cmpRef.id) ? null : me.traceDown(cmpRef.id);
-                    var needInitialization = plz.isEmpty(cmp) || !cmp.initialized;
+                    var cmp = pz.isEmpty(cmpRef.id) ? null : me.traceDown(cmpRef.id);
+                    var needInitialization = pz.isEmpty(cmp) || !cmp.initialized;
                     if (needInitialization) {
                         acc.push({
                             index: idx,
@@ -2242,48 +2242,48 @@ plz.define('component', function () {
                     return acc;
                 }, []);
 
-                plz.forEach(childrenToInitialize, function (item) {
+                pz.forEach(childrenToInitialize, function (item) {
                     item.component.$replace = true;
                     me.addChild(item.component, item.index);
                 });
 
-                plz.arr.clear(childrenToInitialize);
+                pz.arr.clear(childrenToInitialize);
                 childrenToInitialize = null;
             };
 
-            if(!plz.isEmpty(this.parentComponent) && !plz.isEmpty(this.parentComponent.ref)) {
+            if(!pz.isEmpty(this.parentComponent) && !pz.isEmpty(this.parentComponent.ref)) {
                 this.parentComponent.$ref = null;
                 delete this.parentComponent.$ref;
             };
         },
         subscribe: function (triggers) {
-            if (plz.isEmpty(triggers) || !plz.isObject(triggers)) {
+            if (pz.isEmpty(triggers) || !pz.isObject(triggers)) {
                 return;
             };
 
-            this.triggers = plz.obj.assignTo(this.triggers, triggers);
+            this.triggers = pz.obj.assignTo(this.triggers, triggers);
         },
         publish: function (name, params, component) {
             var me = this;
 
             var fire = function (component, params) {
-                var trg = plz.isEmpty(component.triggers) ? null :
+                var trg = pz.isEmpty(component.triggers) ? null :
                     component.triggers[name];
-                if (!plz.isEmpty(trg)) {
+                if (!pz.isEmpty(trg)) {
                     trg.call(component, params);
                 };
             };
 
-            if (!plz.isEmpty(component)) {
-                var isString = plz.isString(component);
-                var c = isString ? plz.getInstanceOf(component)
+            if (!pz.isEmpty(component)) {
+                var isString = pz.isString(component);
+                var c = isString ? pz.getInstanceOf(component)
                     : component;
                 fire(c, params);
                 return;
             };
 
-            plz.application.instances.filter(function (instance) { // events are allowed only on components
-                return plz.isComponent(instance);
+            pz.application.instances.filter(function (instance) { // events are allowed only on components
+                return pz.isComponent(instance);
             }).forEach(function (component) {
                 fire(component, params);
             });
@@ -2292,7 +2292,7 @@ plz.define('component', function () {
 
             var hasChildren, parentSelector, instance, childReference, idx, renderTo,
                 replace = child.$replace;
-            if (plz.isEmpty(child) || plz.isEmpty(child.type)) {
+            if (pz.isEmpty(child) || pz.isEmpty(child.type)) {
                 throw new Error(_const.addChildParamErr);
             };
 
@@ -2300,11 +2300,11 @@ plz.define('component', function () {
             parentSelector = '*[data-componentid="' + this.id + '"]';
 
             child.autoLoad = false; // prevent auto load since we might be missing [renderTo] from config
-            instance = plz.create(child);
+            instance = pz.create(child);
             renderTo = child.renderTo || instance.renderTo;
 
-            instance.renderTo = plz.isEmpty(renderTo) ?
-                parentSelector.concat(!plz.isEmpty(this.containerElement) ? ' ' + this.containerElement : '') :
+            instance.renderTo = pz.isEmpty(renderTo) ?
+                parentSelector.concat(!pz.isEmpty(this.containerElement) ? ' ' + this.containerElement : '') :
                 (renderTo == 'root' ? parentSelector : parentSelector.concat(' ').concat(renderTo));
 
             instance.parentComponent = {
@@ -2312,11 +2312,11 @@ plz.define('component', function () {
                 id: this.id
             };
 
-            if(!plz.isEmpty(instance.renderAfter) || !plz.isEmpty(instance.renderBefore)) {
+            if(!pz.isEmpty(instance.renderAfter) || !pz.isEmpty(instance.renderBefore)) {
                 instance.parentComponent.$ref = this;
             };
 
-            if (!plz.isEmpty(index) && !replace) {
+            if (!pz.isEmpty(index) && !replace) {
                 instance.insertAt = index;
             };
 
@@ -2324,7 +2324,7 @@ plz.define('component', function () {
                 instance.load();
             };
 
-            hasChildren = !plz.isEmpty(this.components);
+            hasChildren = !pz.isEmpty(this.components);
             if (!hasChildren) {
                 this.components = [];
             };
@@ -2334,11 +2334,11 @@ plz.define('component', function () {
                 id: instance.id
             };
 
-            if (!plz.isEmpty(instance.alias)) {
+            if (!pz.isEmpty(instance.alias)) {
                 childReference.alias = instance.alias;
             };
 
-            if (!plz.isEmpty(index)) {
+            if (!pz.isEmpty(index)) {
                 this.components.splice(index, (replace ? 1 : 0), childReference);
             } else {
                 this.components.push(childReference);
@@ -2349,44 +2349,44 @@ plz.define('component', function () {
         },
         handle: function (handler) {
             var me = this;
-            var fn = plz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
-            if (plz.isEmpty(fn)) {
+            var fn = pz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
+            if (pz.isEmpty(fn)) {
                 throw new Error(_const.handlerFnNotProvided);
             };
-            var args = [handler.on, me.html, handler.selector, plz.proxy(fn, handler.scope || me)];
-            plz.dom.on.apply(plz.dom, args);
+            var args = [handler.on, me.html, handler.selector, pz.proxy(fn, handler.scope || me)];
+            pz.dom.on.apply(pz.dom, args);
         },
         showLoadingMask: function () {
-            var renderToDefined = !plz.isEmpty(this.renderTo), container;
+            var renderToDefined = !pz.isEmpty(this.renderTo), container;
             if (!this.showLoading) {
                 return;
             };
 
             var container = this.html;
-            if (plz.isEmpty(container)) {
-                container = renderToDefined ? plz.dom.getEl(this.renderTo) : plz.dom.getByAttr(this.templateSelector);
+            if (pz.isEmpty(container)) {
+                container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getByAttr(this.templateSelector);
             };
 
-            if (!plz.isEmpty(container)) {
-                plz.dom.append(container, _const.loadingMaskMarkup);
+            if (!pz.isEmpty(container)) {
+                pz.dom.append(container, _const.loadingMaskMarkup);
             };
             container = null;
         },
         hideLoadingMask: function () {
-            var renderToDefined = !plz.isEmpty(this.renderTo), container;
+            var renderToDefined = !pz.isEmpty(this.renderTo), container;
             if (!this.showLoading) {
                 return;
             };
 
             container = this.html;
-            if (plz.isEmpty(container)) {
-                container = renderToDefined ? plz.dom.getEl(this.renderTo) : plz.dom.getByAttr(this.templateSelector);
+            if (pz.isEmpty(container)) {
+                container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getByAttr(this.templateSelector);
             };
 
-            if (!plz.isEmpty(container)) {
-                var mask = plz.dom.findElement(container, 'div.loading-mask');
-                if (!plz.isEmpty(mask)) {
-                    plz.dom.remove(mask);
+            if (!pz.isEmpty(container)) {
+                var mask = pz.dom.findElement(container, 'div.loading-mask');
+                if (!pz.isEmpty(mask)) {
+                    pz.dom.remove(mask);
                     mask = null;
                 };
             };
@@ -2395,7 +2395,7 @@ plz.define('component', function () {
         },
         lastChild: function () {
 
-            if (plz.isEmpty(this.components)) {
+            if (pz.isEmpty(this.components)) {
                 return null;
             };
 
@@ -2406,27 +2406,27 @@ plz.define('component', function () {
         },
         childAt: function (index) {
 
-            if (plz.isEmpty(this.components) || plz.isEmpty(index)) {
+            if (pz.isEmpty(this.components) || pz.isEmpty(index)) {
                 return null;
             };
 
             var childRef = this.components[index];
 
-            if (plz.isEmpty(childRef)) {
+            if (pz.isEmpty(childRef)) {
                 return null;
             };
 
-            var childComponent = plz.getInstanceOf(childRef.id);
+            var childComponent = pz.getInstanceOf(childRef.id);
             return childComponent || null;
         },
         removeChild: function (component, destroy) {
 
             var doDestroy, compIndex;
-            if (plz.isEmpty(component)) {
+            if (pz.isEmpty(component)) {
                 return;
             };
 
-            doDestroy = plz.isEmpty(destroy) ? true : destroy;
+            doDestroy = pz.isEmpty(destroy) ? true : destroy;
             compIndex = this.childIndex(component);
 
             if (doDestroy) {
@@ -2440,15 +2440,15 @@ plz.define('component', function () {
             component = null;
         },
         childCount: function () {
-            return plz.isEmpty(this.components) ? 0 : this.components.length;
+            return pz.isEmpty(this.components) ? 0 : this.components.length;
         },
         childIndex: function (component) {
             var resultIdx = -1;
-            if (plz.isEmpty(component)) {
+            if (pz.isEmpty(component)) {
                 return resultIdx;
             };
 
-            plz.arr.find(function (child, idx) {
+            pz.arr.find(function (child, idx) {
                 if (child.id == component.id) {
                     resultIdx = idx;
                 };
@@ -2461,7 +2461,7 @@ plz.define('component', function () {
         destroy: function () {
             var me, parent;
 
-            if (!plz.isEmpty(this.templateSelector)) {
+            if (!pz.isEmpty(this.templateSelector)) {
                 throw new Error(_const.canNotDestroyComponent);
             };
 
@@ -2469,19 +2469,19 @@ plz.define('component', function () {
 
             this.publish('before-destroy', null, this);
             this.destroyChildren();
-            plz.dom.off(this.html);
-            if (!plz.isEmpty(this.viewModel)) {
+            pz.dom.off(this.html);
+            if (!pz.isEmpty(this.viewModel)) {
                 this.unapplyBindings();
             };
-            plz.dom.remove(this.html);
+            pz.dom.remove(this.html);
             this.html = null;
             this.triggers = null;
             this.viewModel = null;
-            plz.arr.clear(this.components);
-            plz.arr.clear(this.handlers);
-            plz.arr.clear(this.mixins);
+            pz.arr.clear(this.components);
+            pz.arr.clear(this.handlers);
+            pz.arr.clear(this.mixins);
             parent = this.traceUp();
-            if (!plz.isEmpty(parent)) {
+            if (!pz.isEmpty(parent)) {
                 parent.removeChild(this, false);
             };
             this.destroyed = true;
@@ -2490,10 +2490,10 @@ plz.define('component', function () {
         },
         destroyChildren: function () {
             var child, instance;
-            while (!plz.isEmpty(this.components) &&
-                ((child = this.components[0]) != null) && !plz.isEmpty(child.id)) {
+            while (!pz.isEmpty(this.components) &&
+                ((child = this.components[0]) != null) && !pz.isEmpty(child.id)) {
 
-                instance = plz.getInstanceOf(child.id);
+                instance = pz.getInstanceOf(child.id);
                 instance.destroy();
                 instance = null;
             };
@@ -2501,73 +2501,73 @@ plz.define('component', function () {
         addCss: function (value, el) {
 
             var isArray, hasClasses, html, cls;
-            if (plz.isEmpty(value)) {
+            if (pz.isEmpty(value)) {
                 return;
             };
 
-            html = plz.isEmpty(el) ? this.html : (plz.isString(el) ?
-                plz.dom.findElement(this.html, el) : el);
+            html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
+                pz.dom.findElement(this.html, el) : el);
 
-            if (plz.isEmpty(html)) {
+            if (pz.isEmpty(html)) {
                 return;
             };
 
-            isArray = plz.isArray(value);
-            hasClasses = !plz.isEmpty(html.className);
+            isArray = pz.isArray(value);
+            hasClasses = !pz.isEmpty(html.className);
 
             cls = isArray ? value.join(' ') : value;
             html.className += (hasClasses ? (' ' + cls) : cls);
         },
         addStyle: function (value, el) {
             var isArray, hasStyle, html, style;
-            if (plz.isEmpty(value)) {
+            if (pz.isEmpty(value)) {
                 return;
             };
 
-            html = plz.isEmpty(el) ? this.html : (plz.isString(el) ?
-                plz.dom.findElement(this.html, el) : el);
+            html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
+                pz.dom.findElement(this.html, el) : el);
 
-            if (plz.isEmpty(html)) {
+            if (pz.isEmpty(html)) {
                 return;
             };
 
-            isArray = plz.isArray(value);
-            hasStyle = !plz.isEmpty(html.style.cssText);
+            isArray = pz.isArray(value);
+            hasStyle = !pz.isEmpty(html.style.cssText);
 
             style = isArray ? value.join(' ') : value;
             html.style.cssText += (hasStyle ? (' ' + style) : style);
         },
         addAttr: function (value, el) {
             var html, isArray, val;
-            if (plz.isEmpty(value)) {
+            if (pz.isEmpty(value)) {
                 return;
             };
 
-            html = plz.isEmpty(el) ? this.html : (plz.isString(el) ?
-                plz.dom.findElement(this.html, el) : el);
+            html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
+                pz.dom.findElement(this.html, el) : el);
 
-            if (plz.isEmpty(html)) {
+            if (pz.isEmpty(html)) {
                 return;
             };
 
-            isArray = plz.isArray(value);
+            isArray = pz.isArray(value);
             val = isArray ? value : [value];
 
-            plz.forEach(val, function (attr) {
+            pz.forEach(val, function (attr) {
                 html.setAttribute(attr.name, attr.value);
             });
 
             val = null;
         },
         clearHtml: function () {
-            plz.forEach(this.html.childNodes, function (child) {
-                plz.dom.remove(child);
+            pz.forEach(this.html.childNodes, function (child) {
+                pz.dom.remove(child);
             }, this);
         }
     };
 });
 
-plz.define('mixin', function () {
+pz.define('mixin', function () {
     'use strict';
 
     return {
