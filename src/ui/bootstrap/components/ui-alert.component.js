@@ -35,6 +35,7 @@
         dismissible: false,
         linkPlaceHolder: '##',
         parseTemplate: _parseTemplate,
+        autoDestroy: true,
         handlers: [{
             on: 'close.bs.alert',
             fn: 'onClose'
@@ -54,6 +55,9 @@
         },
         onClosed: function (e) {
             this.publish('closed-bs-alert', e);
+            if(this.autoDestroy) {
+                this.destroy();
+            }
         }
     };
 });
