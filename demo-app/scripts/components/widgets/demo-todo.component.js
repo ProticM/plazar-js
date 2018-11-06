@@ -62,7 +62,7 @@ pz.define('todo-component', function() {
                 selector: 'button.btn-add',
                 fn: 'addTodo'
             });
-            pz.arr.clear(this.viewModel.todos); // TODO: See why viewModel still has todos after destroy
+            
             var todos = this.todoService.get();
             pz.forEach(todos, function(todo) {
                 this.viewModel.todos.push(pz.obj.clone(todo));
