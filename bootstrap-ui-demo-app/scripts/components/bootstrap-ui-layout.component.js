@@ -195,7 +195,7 @@ pz.define('bootstrap-ui-layout-component', {
                             text: 'List Item 2',
                             href: 'javascript:void(0)'
                         }]
-                    }, , {
+                    }, {
                         type: 'ui-bootstrap-dropdown',
                         renderTo: 'div.card-footer',
                         appearance: 'info',
