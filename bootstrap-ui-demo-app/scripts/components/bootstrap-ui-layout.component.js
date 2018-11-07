@@ -1,6 +1,6 @@
 pz.define('bootstrap-ui-layout-component', {
     ownerType: 'component',
-    templateSelector: 'app-layout',
+    templateSelector: 'main.app-layout',
     autoLoad: true,
     components: [{
         type: 'ui-bootstrap-container',

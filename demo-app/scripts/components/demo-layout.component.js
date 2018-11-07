@@ -1,6 +1,6 @@
 pz.define('layout-component', {
     ownerType: 'base-component',
-    templateSelector: 'layout-component',
+    templateSelector: 'main.layout-component',
     autoLoad: true,
     currentView: 'home-component',
     components: [{
