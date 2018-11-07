@@ -4,7 +4,7 @@
   </a>
   <h1 align="center">PlazarJS</h1>
   <p align="center">
-Is a versatile framework build to enrich the developer experience in terms of simplicity and speed of application development.
+A versatile framework built to enrich the developer experience in terms of simplicity and speed of application development.
 </p>
 </p>
 
@@ -21,7 +21,7 @@ Optionally, you can include Bootstrap UI:
 
 ## Introduction
 
-The framework itself has no dependencies and by leaning on Object-Oriented-Principles (OOP) it can easily be used to create a large Single-Page Application or it can be integrated to a portion of a web page where dynamic workflow is required. It is written in plain JavaScript and built to be flexible. For example, in ReactJS everything is JavaScript, and Angular has a forceful opinion about how your application should be constructed. PlazarJS is designed to help you build the application the way you want it without forcing you to follow a path you don't think is suitable for the application you are developing. The main focus is on good old trio, HTML, CSS and JavaScript.
+PlazarJS is an un-opinionated framework for JavaScript. It has no dependencies and by leaning on Object-Oriented-Principles (OOP) it can easily be used to create a large Single-Page Application or it can be integrated to a portion of a web page where dynamic workflow is required. It's built to be flexible and designed to help you build the application the way you want it without forcing you to follow a path you don't think is suitable for the application you are developing. The main focus is on good old trio, HTML, CSS and JavaScript.
 
 ##### TL;DR
 
