@@ -2084,7 +2084,7 @@ pz.define('component', function () {
             this.applyBindings();
 
             if (!templateSelectorEmpty) {
-                var tpl = pz.dom.getByAttr(this.templateSelector);
+                var tpl = pz.dom.getEl(this.templateSelector);
                 pz.dom.replaceWith(tpl, this.html);
                 tpl = null;
             };
@@ -2141,7 +2141,7 @@ pz.define('component', function () {
                 this.viewModel = !pz.isEmpty(res.viewModel) ? res.viewModel :
                     this.viewModel;
                 this.template = !pz.isEmpty(res.template) ? res.template :
-                    pz.dom.getByAttr(this.templateSelector).outerHTML;
+                    pz.dom.getEl(this.templateSelector).outerHTML;
                 this.publish('load-complete', null, this);
                 this.render();
             }, this);
@@ -2159,7 +2159,7 @@ pz.define('component', function () {
             var templateSelectorEmpty = pz.isEmpty(this.templateSelector), me = this,
                 renderToDefined, container, child, childDomIdx, renderBeforeDefined,
                 renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector, isChild, containerErr;
-            this.html = !templateSelectorEmpty ? pz.dom.getByAttr(this.templateSelector) :
+            this.html = !templateSelectorEmpty ? pz.dom.getEl(this.templateSelector) :
                 pz.dom.clone(pz.dom.parseTemplate(this.template)), me = this;
             this.addAttr({
                 name: 'data-componentId',
@@ -2368,7 +2368,7 @@ pz.define('component', function () {
 
             var container = this.html;
             if (pz.isEmpty(container)) {
-                container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getByAttr(this.templateSelector);
+                container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getEl(this.templateSelector);
             };
 
             if (!pz.isEmpty(container)) {
@@ -2384,7 +2384,7 @@ pz.define('component', function () {
 
             container = this.html;
             if (pz.isEmpty(container)) {
-                container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getByAttr(this.templateSelector);
+                container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getEl(this.templateSelector);
             };
 
             if (!pz.isEmpty(container)) {
