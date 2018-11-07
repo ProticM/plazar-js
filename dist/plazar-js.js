@@ -1845,7 +1845,7 @@ pz.defineStatic('dom', function () {
             };
 
             parent = element.parentNode;
-            if(parent) {
+            if(!pz.isEmpty(parent)) {
                 parent.removeChild(element);
             };
             element = null;
