@@ -711,6 +711,19 @@ pz.define('ui-bootstrap-dropdown', function () {
     return {
         ownerType: 'ui-bootstrap-component',
         template: '<div class="dropdown"><button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button></div>',
+        handlers:[{
+            on: 'show.bs.dropdown',
+            fn: 'onDropdownShow'
+        }, {
+            on: 'shown.bs.dropdown',
+            fn: 'onDropdownShown'
+        }, {
+            on: 'hide.bs.dropdown',
+            fn: 'onDropdownHide'
+        }, {
+            on: 'hidden.bs.dropdown',
+            fn: 'onDropdownHidden'
+        }],
         load: function () {
             var parent = this.traceUp();
             var isInNav = !pz.isEmpty(parent) && pz.arr.contains([parent.type, parent.ownerType], 'ui-bootstrap-navbar');
@@ -736,7 +749,11 @@ pz.define('ui-bootstrap-dropdown', function () {
         },
         update: function () {
             $(this.html).dropdown('update');
-        }
+        },
+        onDropdownShow: function() { },
+        onDropdownShown: function() { },
+        onDropdownHide: function() { },
+        onDropdownHidden: function() { }
     };
 });
 
