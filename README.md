@@ -2,7 +2,13 @@
   <a href="https://github.com/ProticM/plazar-js">
     <img src="http://www.plazarjs.com/content/images/logo-large.png" width="200" height="200" />
   </a>
-  <h1 align="center">PlazarJS</h1>
+  <h1 align="center">
+    PlazarJS
+  <a href="https://twitter.com/intent/tweet?text=PlazarJS,%20un%2Dopinionated%20framework%20for%20JavaScript%20built%20to%20enrich%20the%20developer%20experience%20in%20terms%20of%20simplicity%20and%20speed%20of%20application%20development&url=https://github.com/ProticM/plazar%2Djs&hashtags=javascript,webdev,webdevelopment">
+    <img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" />
+  </a>
+  </h1>
+
   <p align="center">
 A versatile framework built to enrich the developer experience in terms of simplicity and speed of application development.
 </p>
