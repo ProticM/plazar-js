@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ProticM/plazar-js.git"
+    "url": "https://github.com/ProticM/plazar-js"
   },
   "keywords": [],
   "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
