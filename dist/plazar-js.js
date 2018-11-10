@@ -1,4 +1,12 @@
 // PlazarJS
+// version: 1.0.0
+// author: Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)
+// license: MIT
+(function (global, factory) {
+typeof exports == 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+typeof define === 'function' && define.amd ? define(factory) :
+(global.pz = factory());
+}(this, (function () { 'use strict';
 var pz;
 (function (pz) {
     'use strict';
@@ -20,7 +28,8 @@ var pz;
         typeMustBeStringOrObject: 'First parameter can be string or object',
         canNotCreate: 'Can not create an instance based on provided arguments',
         canNotDefine: 'Can not define type based on provided arguments',
-        coreBaseTypes: ['base', 'mixin']
+        coreBaseTypes: ['base', 'mixin'],
+        defaultNamespace: 'pz'
     };
 
     var _find = function (array, fn, scope) {
@@ -349,13 +358,14 @@ var pz;
     pz.defineStatic = function (type, object, namespace) {
 
         var obj = _toObject(object);
-        var ns = _isEmpty(namespace) ? 'statics' : namespace;
+        var ns = (_isEmpty(namespace) ? 'statics' : namespace);
+        var isDefault = (ns == _const.defaultNamespace);
 
-        if (_isEmpty(window[ns])) {
+        if (_isEmpty(window[ns]) && !isDefault) {
             pz.ns(ns);
         };
 
-        var o = _getObjectByNamespaceString(ns);
+        var o = (isDefault ? this : _getObjectByNamespaceString(ns));
         if (_isEmpty(type)) {
             pz.assignTo(o, obj, false);
         } else {
@@ -2578,3 +2588,5 @@ pz.define('mixin', function () {
         // common mixins
     }
 });
+return pz;
+})));

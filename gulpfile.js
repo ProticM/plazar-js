@@ -1,7 +1,9 @@
+var pkg = require('./package.json')
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var header = require('gulp-header');
+var footer = require('gulp-footer');
 
 var source = [
     'src/core/plazar-js-core.js',
@@ -42,31 +44,61 @@ var bootstrapSource = [
     'src/ui/bootstrap/components/ui-select.component.js'
 ];
 
-var banner = function(bootstrap) {
-    return (bootstrap ? '// PlazarJS Bootstrap UI' : '// PlazarJS') + '\n';
+var headerBanner = function() {
+    return [
+        '// PlazarJS',
+        '// version: ' + pkg.version,
+        '// author: ' + pkg.author,
+        '// license: ' + pkg.licenses[0].type,
+        '(function (global, factory) {',
+        'typeof exports == \'object\' && typeof module !== \'undefined\' ? module.exports = factory() :',
+        'typeof define === \'function\' && define.amd ? define(factory) :',
+        '(global.pz = factory());',
+        '}(this, (function () { \'use strict\';'
+      ].join('\n') + '\n';
 };
 
-gulp.task('build', function(){
-    
-    pzBootstrap = gulp.src(bootstrapSource)
-        .pipe(concat('plazar-js-ui-bootstrap.js'))
-        .pipe(header(banner(true)))
-        .pipe(gulp.dest('dist'));
+var footerBanner = function() {
+    return [
+        'return pz;',
+        '})));'
+    ].join('\n');
+};
 
-    pzBootstrapMin = pzBootstrap.pipe(concat('plazar-js-ui-bootstrap.min.js'))
-        .pipe(uglify())
-        .pipe(header(banner(true)))
-        .pipe(gulp.dest('dist'));
-    
+var headerBannerBootstrap = function() {
+    return [
+        '// PlazarJS Bootstrap UI',
+        '// version: ' + pkg.version,
+        '// author: ' + pkg.author,
+        '// license: ' + pkg.licenses[0].type
+      ].join('\n') + '\n';
+};
+
+gulp.task('build', function() {
+
     pz = gulp.src(source)
         .pipe(concat('plazar-js.js'))
-        .pipe(header(banner()))
+        .pipe(header(headerBanner()))
+        .pipe(footer(footerBanner()))
         .pipe(gulp.dest('dist'));
 
     pzMin = pz.pipe(concat('plazar-js.min.js'))
         .pipe(uglify())
-        .pipe(header(banner()))
         .pipe(gulp.dest('dist'));
 
     return pzMin;
+});
+
+gulp.task('build-bootstrap', function() {
+    
+    pzBootstrap = gulp.src(bootstrapSource)
+        .pipe(concat('plazar-js-ui-bootstrap.js'))
+        .pipe(header(headerBannerBootstrap()))
+        .pipe(gulp.dest('dist'));
+
+    pzBootstrapMin = pzBootstrap.pipe(concat('plazar-js-ui-bootstrap.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'));
+
+    return pzBootstrapMin;
 });

@@ -1,4 +1,7 @@
 // PlazarJS Bootstrap UI
+// version: 1.0.0
+// author: Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)
+// license: MIT
 pz.define('ui-bootstrap-component', function () {
     'use strict';
 

@@ -19,7 +19,8 @@
         typeMustBeStringOrObject: 'First parameter can be string or object',
         canNotCreate: 'Can not create an instance based on provided arguments',
         canNotDefine: 'Can not define type based on provided arguments',
-        coreBaseTypes: ['base', 'mixin']
+        coreBaseTypes: ['base', 'mixin'],
+        defaultNamespace: 'pz'
     };
 
     var _find = function (array, fn, scope) {
@@ -348,13 +349,14 @@
     pz.defineStatic = function (type, object, namespace) {
 
         var obj = _toObject(object);
-        var ns = _isEmpty(namespace) ? 'statics' : namespace;
+        var ns = (_isEmpty(namespace) ? 'statics' : namespace);
+        var isDefault = (ns == _const.defaultNamespace);
 
-        if (_isEmpty(window[ns])) {
+        if (_isEmpty(window[ns]) && !isDefault) {
             pz.ns(ns);
         };
 
-        var o = _getObjectByNamespaceString(ns);
+        var o = (isDefault ? this : _getObjectByNamespaceString(ns));
         if (_isEmpty(type)) {
             pz.assignTo(o, obj, false);
         } else {
