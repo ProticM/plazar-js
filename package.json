@@ -2,7 +2,7 @@
   "name": "plazar-js",
   "version": "1.0.0",
   "description": "Un-opinionated framework for JavaScript built to enrich the developer experience in terms of simplicity and speed of application development.",
-  "main": "dist/plazar-js.js",
+  "main": "dist/plazar-js.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
