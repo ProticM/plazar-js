@@ -143,7 +143,7 @@ PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following ta
 ```
 $ gulp build
 ```
-If there was changes related to Bootstrap-UI
+If there was a change related to bootstrap-ui
 ```
 $ gulp build-bootstrap
 ```
