@@ -49,7 +49,7 @@ var headerBanner = function() {
         '// PlazarJS',
         '// version: ' + pkg.version,
         '// author: ' + pkg.author,
-        '// license: ' + pkg.licenses[0].type,
+        '// license: ' + pkg.license,
         '(function (global, factory) {',
         'typeof exports == \'object\' && typeof module !== \'undefined\' ? module.exports = factory() :',
         'typeof define === \'function\' && define.amd ? define(factory) :',
@@ -70,7 +70,7 @@ var headerBannerBootstrap = function() {
         '// PlazarJS Bootstrap UI',
         '// version: ' + pkg.version,
         '// author: ' + pkg.author,
-        '// license: ' + pkg.licenses[0].type
+        '// license: ' + pkg.license
       ].join('\n') + '\n';
 };
 
