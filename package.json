@@ -10,7 +10,14 @@
     "type": "git",
     "url": "https://github.com/ProticM/plazar-js"
   },
-  "keywords": [],
+  "keywords": [
+    "javascript",
+    "component",
+    "modular",
+    "framework",
+    "oop",
+    "template"
+  ],
   "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
   "licenses": [
     {
