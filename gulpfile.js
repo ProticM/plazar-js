@@ -51,9 +51,9 @@ var headerBanner = function() {
         '// author: ' + pkg.author,
         '// license: ' + pkg.license,
         '(function (global, factory) {',
-        'typeof exports == \'object\' && typeof module !== \'undefined\' ? module.exports = factory() :',
-        'typeof define === \'function\' && define.amd ? define(factory) :',
-        '(global.pz = factory());',
+        '   typeof exports == \'object\' && typeof module !== \'undefined\' ? module.exports = factory() :',
+        '   typeof define === \'function\' && define.amd ? define(factory) :',
+        '   (global.pz = factory());',
         '}(this, (function () { \'use strict\';'
       ].join('\n') + '\n';
 };
