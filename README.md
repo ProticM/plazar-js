@@ -138,12 +138,15 @@ Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
 ## Deploy
 
-PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following task to deploy the source into `dist`.
+PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following tasks to deploy the source into `dist`.
 
 ```
 $ gulp build
 ```
-
+If there was changes related to Bootstrap-UI
+```
+$ gulp build-bootstrap
+```
 ## Bugs and Issues
 
 1. A bug is taken into account only if it can be reproduced on the latest master.
