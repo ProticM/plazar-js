@@ -2,6 +2,14 @@
 // version: 1.0.0
 // author: Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)
 // license: MIT
+(function (global, factory) {
+   typeof exports == 'object' && typeof module !== 'undefined' ? module.exports = (function() {
+       if(global.pz === 'undefined') { global.pz = require('plazar') };
+       return factory(global.pz)
+   })() :
+   typeof define === 'function' && define.amd ? define(['plazar'], function(pz) { return factory(pz); }) :
+   (factory(global.pz));
+}(this, (function (pz) { 'use strict';
 pz.define('ui-bootstrap-component', function () {
     'use strict';
 
@@ -1704,3 +1712,4 @@ pz.define('ui-bootstrap-select', function () {
         }
     };
 });
+})));

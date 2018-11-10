@@ -70,8 +70,20 @@ var headerBannerBootstrap = function() {
         '// PlazarJS Bootstrap UI',
         '// version: ' + pkg.version,
         '// author: ' + pkg.author,
-        '// license: ' + pkg.license
+        '// license: ' + pkg.license,
+        '(function (global, factory) {',
+        '   typeof exports == \'object\' && typeof module !== \'undefined\' ? module.exports = (function() {',
+        '       if(global.pz === \'undefined\') { global.pz = require(\'plazar\') };',
+        '       return factory(global.pz)',
+        '   })() :',
+        '   typeof define === \'function\' && define.amd ? define([\'plazar\'], function(pz) { return factory(pz); }) :',
+        '   (factory(global.pz));',
+        '}(this, (function (pz) { \'use strict\';'
       ].join('\n') + '\n';
+};
+
+var footerBannerBootstrap = function() {
+    return '})));';
 };
 
 gulp.task('build', function() {
@@ -94,6 +106,7 @@ gulp.task('build-bootstrap', function() {
     pzBootstrap = gulp.src(bootstrapSource)
         .pipe(concat('plazar-js-ui-bootstrap.js'))
         .pipe(header(headerBannerBootstrap()))
+        .pipe(footer(footerBannerBootstrap()))
         .pipe(gulp.dest('dist'));
 
     pzBootstrapMin = pzBootstrap.pipe(concat('plazar-js-ui-bootstrap.min.js'))
