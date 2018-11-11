@@ -6,17 +6,17 @@ var header = require('gulp-header');
 var footer = require('gulp-footer');
 
 var source = [
-    'src/core/plazar-js-core.js',
-    'src/statics/plazar-js-http.js',
-    'src/statics/plazar-js-binder.js',
-    'src/statics/utils/plazar-js-array.js',
-    'src/statics/utils/plazar-js-string.js',
-    'src/statics/utils/plazar-js-dom.js',
-    'src/statics/utils/plazar-js-object.js',
-    'src/components/base/plazar-js-base.js',
-    'src/components/plazar-js-class.js',
-    'src/components/plazar-js-component.js',
-    'src/components/plazar-js-mixin.js'
+    'src/core/plazar-core.js',
+    'src/statics/plazar-http.js',
+    'src/statics/plazar-binder.js',
+    'src/statics/utils/plazar-array.js',
+    'src/statics/utils/plazar-string.js',
+    'src/statics/utils/plazar-dom.js',
+    'src/statics/utils/plazar-object.js',
+    'src/components/base/plazar-base.js',
+    'src/components/plazar-class.js',
+    'src/components/plazar-component.js',
+    'src/components/plazar-mixin.js'
 ];
 
 var bootstrapSource = [
@@ -89,12 +89,12 @@ var footerBannerBootstrap = function() {
 gulp.task('build', function() {
 
     pz = gulp.src(source)
-        .pipe(concat('plazar-js.js'))
+        .pipe(concat('plazar.js'))
         .pipe(header(headerBanner()))
         .pipe(footer(footerBanner()))
         .pipe(gulp.dest('dist'));
 
-    pzMin = pz.pipe(concat('plazar-js.min.js'))
+    pzMin = pz.pipe(concat('plazar.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist'));
 
@@ -104,12 +104,12 @@ gulp.task('build', function() {
 gulp.task('build-bootstrap', function() {
     
     pzBootstrap = gulp.src(bootstrapSource)
-        .pipe(concat('plazar-js-ui-bootstrap.js'))
+        .pipe(concat('plazar-ui-bootstrap.js'))
         .pipe(header(headerBannerBootstrap()))
         .pipe(footer(footerBannerBootstrap()))
         .pipe(gulp.dest('dist'));
 
-    pzBootstrapMin = pzBootstrap.pipe(concat('plazar-js-ui-bootstrap.min.js'))
+    pzBootstrapMin = pzBootstrap.pipe(concat('plazar-ui-bootstrap.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist'));
 
