@@ -1,29 +1,7 @@
 {
-  "name": "plazar-js",
-  "version": "1.0.0",
-  "description": "Un-opinionated framework for JavaScript built to enrich the developer experience in terms of simplicity and speed of application development.",
-  "main": "dist/plazar.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ProticM/plazar-js"
-  },
-  "keywords": [
-    "javascript",
-    "component",
-    "modular",
-    "framework",
-    "oop",
-    "template"
-  ],
-  "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
+  "name": "plazarjs",
+  "private": true,
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ProticM/plazar-js/issues"
-  },
-  "homepage": "http://www.plazarjs.com/",
   "dependencies": {
     "save-dev": "^2.0.0"
   },
@@ -32,6 +10,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-footer": "^2.0.1",
     "gulp-header": "^2.0.5",
-    "gulp-uglify": "^3.0.1"
+    "gulp-uglify": "^3.0.1",
+    "lerna": "^3.4.3"
   }
 }
