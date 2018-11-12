@@ -7,6 +7,10 @@
   <a href="https://twitter.com/intent/tweet?text=PlazarJS,%20un%2Dopinionated%20framework%20for%20JavaScript%20built%20to%20enrich%20the%20developer%20experience%20in%20terms%20of%20simplicity%20and%20speed%20of%20application%20development&url=https://github.com/ProticM/plazar%2Djs&hashtags=javascript,webdev,webdevelopment">
     <img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" />
   </a>
+    <br>
+    <a href="https://github.com/ProticM/plazar-js">
+    <img src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg" alt="lerna" />
+    </a>
   </h1>
 
   <p align="center">
