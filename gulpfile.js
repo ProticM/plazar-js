@@ -1,4 +1,5 @@
-var pkg = require('./package.json')
+var corePkg = require('./packages/core/package.json');
+var bootstrapUiPkg = require('./packages/bootstrap-ui/package.json');
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -47,9 +48,9 @@ var bootstrapSource = [
 var headerBanner = function() {
     return [
         '// PlazarJS',
-        '// version: ' + pkg.version,
-        '// author: ' + pkg.author,
-        '// license: ' + pkg.license,
+        '// version: ' + corePkg.version,
+        '// author: ' + corePkg.author,
+        '// license: ' + corePkg.license,
         '(function (global, factory) {',
         '   typeof exports === \'object\' && typeof module !== \'undefined\' ? module.exports = factory() :',
         '   typeof define === \'function\' && define.amd ? define(factory) :',
@@ -69,9 +70,9 @@ var footerBanner = function() {
 var headerBannerBootstrap = function() {
     return [
         '// PlazarJS Bootstrap UI',
-        '// version: ' + pkg.version,
-        '// author: ' + pkg.author,
-        '// license: ' + pkg.license,
+        '// version: ' + bootstrapUiPkg.version,
+        '// author: ' + bootstrapUiPkg.author,
+        '// license: ' + bootstrapUiPkg.license,
         '(function (global, factory) {',
         '   typeof exports === \'object\' && typeof module !== \'undefined\' ? module.exports = (function() {',
         '       if(global.pz === undefined) { global.pz = require(\'@plazarjs/core\') };',

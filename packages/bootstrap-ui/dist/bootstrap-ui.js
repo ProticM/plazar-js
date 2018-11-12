@@ -1,6 +1,6 @@
 // PlazarJS Bootstrap UI
-// version: undefined
-// author: undefined
+// version: 1.0.0
+// author: Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)
 // license: MIT
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = (function() {
