@@ -8,8 +8,6 @@
   "devDependencies": {
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-footer": "^2.0.1",
-    "gulp-header": "^2.0.5",
     "gulp-replace": "^1.0.0",
     "gulp-uglify": "^3.0.1",
     "lerna": "^3.4.3"
