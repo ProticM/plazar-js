@@ -1,0 +1,21 @@
+// plazarjs bootstrap UI
+// version: ###version###
+// author: ###author###
+// license: ###license###
+(function (global, factory) {
+   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = (function() {
+       if(global.###namespace### === undefined) { global.###namespace### = require('@plazarjs/core') };
+       return factory(global.###namespace###)
+   })() :
+   typeof define === 'function' && define.amd ? define(['@plazarjs/core'], function(###namespace###) { return factory(###namespace###); }) :
+   (global.###moduleName### = factory(global.###namespace###));
+}(this, (function (###namespace###) {
+'use strict';
+var ###moduleName### = {
+    init: function() {
+        ###content###
+    }
+};
+if(###namespace### !== undefined) { ###moduleName###.init(); };
+return ###moduleName###;
+})));

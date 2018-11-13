@@ -3,8 +3,6 @@ var bootstrapUiPkg = require('./packages/bootstrap-ui/package.json');
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var header = require('gulp-header');
-var footer = require('gulp-footer');
 var replace = require('gulp-replace');
 var fs = require('fs');
 
@@ -47,39 +45,9 @@ var bootstrapSource = [
     'packages/bootstrap-ui/src/components/ui-select.component.js'
 ];
 
-var headerBannerBootstrap = function() {
-    return [
-        '// PlazarJS Bootstrap UI',
-        '// version: ' + bootstrapUiPkg.version,
-        '// author: ' + bootstrapUiPkg.author,
-        '// license: ' + bootstrapUiPkg.license,
-        '(function (global, factory) {',
-        '   typeof exports === \'object\' && typeof module !== \'undefined\' ? module.exports = (function() {',
-        '       if(global.pz === undefined) { global.pz = require(\'@plazarjs/core\') };',
-        '       return factory(global.pz)',
-        '   })() :',
-        '   typeof define === \'function\' && define.amd ? define([\'@plazarjs/core\'], function(pz) { return factory(pz); }) :',
-        '   (global.pzBootstrap = factory(global.pz, true));',
-        '}(this, (function (pz, autoInit) {',
-        '\'use strict\';',
-        'var pzBootstrap = {',
-        '   init: function() {',
-      ].join('\n') + '\n';
-};
-
-var footerBannerBootstrap = function() {
-    return [
-        '   }',
-        '};',
-        'if(autoInit) { pzBootstrap.init(); };',
-        'return pzBootstrap;',
-        '})));'
-    ].join('\n') + '\n';
-};
-
 gulp.task('build', function() {
 
-    pz = gulp.src('./scripts/umd-wrapper.jst')
+    var pz = gulp.src('./scripts/umd-wrapper.jst')
         .pipe(concat('core.js'))
         .pipe(replace('###content###', function() {
             var result = [];
@@ -96,7 +64,7 @@ gulp.task('build', function() {
         .pipe(replace('###license###', corePkg.license))
         .pipe(gulp.dest('packages/core/dist'));
 
-    pzMin = pz.pipe(concat('core.min.js'))
+    var pzMin = pz.pipe(concat('core.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('packages/core/dist'));
 
@@ -104,14 +72,26 @@ gulp.task('build', function() {
 });
 
 gulp.task('build-bootstrap', function() {
-    
-    pzBootstrap = gulp.src(bootstrapSource)
-        .pipe(concat('bootstrap-ui.js'))
-        .pipe(header(headerBannerBootstrap()))
-        .pipe(footer(footerBannerBootstrap()))
-        .pipe(gulp.dest('packages/bootstrap-ui/dist'));
 
-    pzBootstrapMin = pzBootstrap.pipe(concat('bootstrap-ui.min.js'))
+    var pzBootstrap = gulp.src('./scripts/dependant-module-wrapper.jst')
+        .pipe(concat('bootstrap-ui.js'))
+        .pipe(replace('###content###', function() {
+            var result = [];
+            bootstrapSource.forEach(item => {
+                var text = fs.readFileSync(item, 'utf-8');
+                text = text.charCodeAt(0) === 0xFEFF ? text.slice(1) : text;
+                result.push(text);
+            });
+            return result.join('\n');
+        }))
+        .pipe(replace('###namespace###', 'pz'))
+        .pipe(replace('###author###', bootstrapUiPkg.author))
+        .pipe(replace('###version###', bootstrapUiPkg.version))
+        .pipe(replace('###license###', bootstrapUiPkg.license))
+        .pipe(replace('###moduleName###', 'pzBootstrap'))
+        .pipe(gulp.dest('packages/bootstrap-ui/dist'));  
+
+    var pzBootstrapMin = pzBootstrap.pipe(concat('bootstrap-ui.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('packages/bootstrap-ui/dist'));
 
