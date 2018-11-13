@@ -151,10 +151,9 @@ If there was a change related to bootstrap-ui
 ```
 $ gulp build-bootstrap
 ```
-## Bugs and Issues
+## Contributing
 
-1. A bug is taken into account only if it can be reproduced on the latest master.
-2. Open an issue on GitHub to request a fix.
+Please read the <a href="https://github.com/ProticM/plazar-js/blob/master/CONTRIBUTING.md">Contributing Guide</a> before making a pull request.
 
 ## Browser Support
 
