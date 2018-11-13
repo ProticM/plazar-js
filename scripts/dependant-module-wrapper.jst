@@ -1,4 +1,4 @@
-// plazarjs bootstrap UI
+// plazarjs ###moduleName###
 // version: ###version###
 // author: ###author###
 // license: ###license###
@@ -8,14 +8,14 @@
        return factory(global.###namespace###)
    })() :
    typeof define === 'function' && define.amd ? define(['@plazarjs/core'], function(###namespace###) { return factory(###namespace###); }) :
-   (global.###moduleName### = factory(global.###namespace###));
+   (global.###moduleNamespace### = factory(global.###namespace###));
 }(this, (function (###namespace###) {
 'use strict';
-var ###moduleName### = {
+var ###moduleNamespace### = {
     init: function() {
         ###content###
     }
 };
-if(###namespace### !== undefined) { ###moduleName###.init(); };
-return ###moduleName###;
+if(###namespace### !== undefined) { ###moduleNamespace###.init(); };
+return ###moduleNamespace###;
 })));

@@ -88,7 +88,8 @@ gulp.task('build-bootstrap', function() {
         .pipe(replace('###author###', bootstrapUiPkg.author))
         .pipe(replace('###version###', bootstrapUiPkg.version))
         .pipe(replace('###license###', bootstrapUiPkg.license))
-        .pipe(replace('###moduleName###', 'pzBootstrap'))
+        .pipe(replace('###moduleNamespace###', 'pzBootstrap'))
+        .pipe(replace('###moduleName###', 'bootstrap ui'))
         .pipe(gulp.dest('packages/bootstrap-ui/dist'));  
 
     var pzBootstrapMin = pzBootstrap.pipe(concat('bootstrap-ui.min.js'))
