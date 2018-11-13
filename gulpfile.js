@@ -5,6 +5,8 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var header = require('gulp-header');
 var footer = require('gulp-footer');
+var replace = require('gulp-replace');
+var fs = require('fs');
 
 var source = [
     'packages/core/src/core/plazar-core.js',
@@ -45,28 +47,6 @@ var bootstrapSource = [
     'packages/bootstrap-ui/src/components/ui-select.component.js'
 ];
 
-var headerBanner = function() {
-    return [
-        '// PlazarJS',
-        '// version: ' + corePkg.version,
-        '// author: ' + corePkg.author,
-        '// license: ' + corePkg.license,
-        '(function (global, factory) {',
-        '   typeof exports === \'object\' && typeof module !== \'undefined\' ? module.exports = factory() :',
-        '   typeof define === \'function\' && define.amd ? define(factory) :',
-        '   (global.pz = factory());',
-        '}(this, (function () {',
-        '\'use strict\';'
-      ].join('\n') + '\n';
-};
-
-var footerBanner = function() {
-    return [
-        'return pz;',
-        '})));'
-    ].join('\n');
-};
-
 var headerBannerBootstrap = function() {
     return [
         '// PlazarJS Bootstrap UI',
@@ -99,10 +79,21 @@ var footerBannerBootstrap = function() {
 
 gulp.task('build', function() {
 
-    pz = gulp.src(source)
+    pz = gulp.src('./scripts/umd-wrapper.jst')
         .pipe(concat('core.js'))
-        .pipe(header(headerBanner()))
-        .pipe(footer(footerBanner()))
+        .pipe(replace('###content###', function() {
+            var result = [];
+            source.forEach(item => {
+                var text = fs.readFileSync(item, 'utf-8');
+                text = text.charCodeAt(0) === 0xFEFF ? text.slice(1) : text;
+                result.push(text);
+            });
+            return result.join('\n');
+        }))
+        .pipe(replace('###namespace###', 'pz'))
+        .pipe(replace('###author###', corePkg.author))
+        .pipe(replace('###version###', corePkg.version))
+        .pipe(replace('###license###', corePkg.license))
         .pipe(gulp.dest('packages/core/dist'));
 
     pzMin = pz.pipe(concat('core.min.js'))
