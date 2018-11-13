@@ -79,14 +79,21 @@ var headerBannerBootstrap = function() {
         '       return factory(global.pz)',
         '   })() :',
         '   typeof define === \'function\' && define.amd ? define([\'@plazarjs/core\'], function(pz) { return factory(pz); }) :',
-        '   (factory(global.pz));',
+        '   (global.pzBootstrap = factory(global.pz));',
         '}(this, (function (pz) {',
-        '\'use strict\';'
+        '\'use strict\';',
+        'var pzBootstrap = {',
+        '   init: function() {',
       ].join('\n') + '\n';
 };
 
 var footerBannerBootstrap = function() {
-    return '})));';
+    return [
+        '   }',
+        '};',
+        'return pzBootstrap;',
+        '})));'
+    ].join('\n') + '\n';
 };
 
 gulp.task('build', function() {
