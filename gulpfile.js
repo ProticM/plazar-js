@@ -79,8 +79,8 @@ var headerBannerBootstrap = function() {
         '       return factory(global.pz)',
         '   })() :',
         '   typeof define === \'function\' && define.amd ? define([\'@plazarjs/core\'], function(pz) { return factory(pz); }) :',
-        '   (global.pzBootstrap = factory(global.pz));',
-        '}(this, (function (pz) {',
+        '   (global.pzBootstrap = factory(global.pz, true));',
+        '}(this, (function (pz, autoInit) {',
         '\'use strict\';',
         'var pzBootstrap = {',
         '   init: function() {',
@@ -91,6 +91,7 @@ var footerBannerBootstrap = function() {
     return [
         '   }',
         '};',
+        'if(autoInit) { pzBootstrap.init(); };',
         'return pzBootstrap;',
         '})));'
     ].join('\n') + '\n';
