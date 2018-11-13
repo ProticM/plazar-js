@@ -151,7 +151,7 @@ If there was a change related to bootstrap-ui
 ```
 $ gulp build-bootstrap
 ```
-## Contributing
+## Contribution
 
 Please read the <a href="https://github.com/ProticM/plazar-js/blob/master/CONTRIBUTING.md">Contributing Guide</a> before making a pull request.
 
