@@ -80,4 +80,4 @@ This folder contains `core` and `bootstrap-ui` and they are distributed as separ
 
 #### Scripts
 
-This folder contains two JavaScript templates, `umd-wrapper.jst` and `dependant-module-wrapper.jst` which are used during the build process
+This folder contains two JavaScript templates, `umd-wrapper.jst` and `dependant-module-wrapper.jst` which are used during the build process.
