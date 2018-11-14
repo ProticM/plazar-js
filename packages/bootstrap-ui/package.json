@@ -9,7 +9,7 @@
     "ui"
   ],
   "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
-  "homepage": "https://github.com/ProticM/plazar-js/packages/bootstrap-ui",
+  "homepage": "https://github.com/ProticM/plazar-js",
   "license": "MIT",
   "main": "dist/bootstrap-ui.js",
   "directories": {
