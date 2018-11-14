@@ -6,7 +6,9 @@
     "javascript",
     "plazarjs",
     "bootstrap",
-    "ui"
+    "ui",
+    "components",
+    "framework"
   ],
   "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
   "homepage": "https://github.com/ProticM/plazar-js",
