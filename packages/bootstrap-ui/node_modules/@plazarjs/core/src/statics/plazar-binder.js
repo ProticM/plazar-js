@@ -33,7 +33,7 @@
             return target;
         };
         
-        globalScope = _getGlobal();
+        globalScope = pz.getGlobal();
         parts.pop();
         return parts.reduce(function (previous, current) {
             var isString = pz.isString(previous);
