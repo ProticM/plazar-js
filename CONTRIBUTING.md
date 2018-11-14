@@ -76,4 +76,8 @@ This folder contains demo applications. Under the folder `bootstrap-ui` there is
 
 #### Packages
 
-This folder contains `core` and `bootstrap-ui` and they are distributed as separate NPM packages. Each time when you run gulp tasks defined above, the build scripts will be created within the dist folder for each package.
+This folder contains `core` and `bootstrap-ui` and they are distributed as separate NPM packages. Each time when you run gulp tasks defined above, the build scripts will be created within the dist folder for each package. The versioning is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
+
+#### Scripts
+
+This folder contains two JavaScript templates, `umd-wrapper.jst` and `dependant-module-wrapper.jst` which are used during the build process
