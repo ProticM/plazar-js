@@ -21,7 +21,7 @@ Hello my fellow developer. Welcome to the PlazarJS contribution guide. I'm very 
 - Work under the `src` folder. Please do not push the `dist` folders. They are used to store the build files which are published when a release happens.
 - Checkout a topic branch from the relevant branch and merge it back when finished.
 
-### Branch Naming
+#### Branch Naming
 
 - If you are working on a feature:
     - Ideally, every new feature should be branched off of the `master` branch. I say ideally because over the years of developing I've learned that the new feature might depend on another feature which has'nt been deployed to production yet, but this is not that common.
@@ -51,7 +51,7 @@ Since the project is maintained by [lerna](https://github.com/lerna/lerna), you 
 $ lerna bootstrap
 ```
 
-### Build and Deploy
+#### Build and Deploy
 
 PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following tasks to deploy the source into `dist`.
 
