@@ -8,7 +8,7 @@
     <img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" />
   </a>
     <br>
-    <a href="https://github.com/ProticM/plazar-js">
+    <a href="https://github.com/lerna/lerna">
     <img src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg" alt="lerna" />
     </a>
     <a href="https://www.npmjs.com/package/@plazarjs/core">
