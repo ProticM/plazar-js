@@ -35,3 +35,17 @@ Hello my fellow developer. Welcome to the PlazarJS contribution guide. I'm very 
 ## Environment Setup
 
 You need to install [Node.js](http://nodejs.org). Install the recommended version.
+
+The next step would be to clone the repo and run the following command:
+
+```bash
+$ npm install
+```
+
+This will install the required packages found in `package.json` file.
+
+Since the project is maintained by lerna, you will need to bootstrap it:
+
+```bash
+$ lerna bootstrap
+```
