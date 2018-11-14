@@ -7,6 +7,7 @@ Hello my fellow developer. Welcome to the PlazarJS contribution guide. I'm very 
 - [Branch Naming](#branch-naming)
 - [Environment Setup](#environment-setup)
 - [Build and Deploy](#build-and-deploy)
+- [Project Structure](#project-structure)
 
 ## Issue Reporting
 
@@ -62,3 +63,17 @@ If there was a change related to bootstrap-ui:
 ```
 $ gulp build-bootstrap
 ```
+
+## Project Structure
+
+- [Demo](#demo)
+- [Packages](#packages)
+- [Scripts](#scripts)
+
+#### Demo
+
+This folder contains demo applications. Under the folder `bootstrap-ui` there is a demo showing how to use bootstrap components. Under the folder `bulma` there is a demo showing how to use PlazarJS without any ui components pre-defined. The [Bulma CSS Framework](https://bulma.io/) was used only to speed up the styling of the demo application. It is not a requirement.
+
+#### Packages
+
+This folder contains `core` and `bootstrap-ui` and they are distributed as separate NPM packages. Each time when you run gulp tasks defined above, the build scripts will be created within the dist folder for each package.
