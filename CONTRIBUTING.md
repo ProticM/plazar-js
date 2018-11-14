@@ -8,6 +8,7 @@ Hello my fellow developer. Welcome to the PlazarJS contribution guide. I'm very 
 - [Environment Setup](#environment-setup)
 - [Build and Deploy](#build-and-deploy)
 - [Project Structure](#project-structure)
+- [Financial Contribution](#financial-contribution)
 
 ## Issue Reporting
 
@@ -76,8 +77,15 @@ This folder contains demo applications. Under the folder `bootstrap-ui` there is
 
 #### Packages
 
-This folder contains `core` and `bootstrap-ui` and they are distributed as separate NPM packages. Each time when you run gulp tasks defined above, the build scripts will be created within the dist folder for each package. The versioning is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
+This folder contains `core` and `bootstrap-ui` and they are distributed as separate NPM packages. Each time when you run any of the gulp tasks defined above, the build scripts will be created within the dist folder for each package. The versioning is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
+
+Each package has a `src` folder. This is your working area.
 
 #### Scripts
 
-This folder contains two JavaScript templates, `umd-wrapper.jst` and `dependant-module-wrapper.jst` which are used during the build process.
+This folder contains two JavaScript templates, `umd-wrapper.jst` and `dependant-module-wrapper.jst` which are used during building process to wrap the content of the output scripts.
+
+## Financial Contribution
+
+[Become a patron](https://www.patreon.com/mprotic)
+[Donate via PayPal](https://www.paypal.me/mprotic)
