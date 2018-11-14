@@ -26,13 +26,20 @@ A versatile framework built to enrich the developer experience in terms of simpl
 
 ## Installation
 
-Place the script tag on your page:
+Run the following command:
+```bash
+$ npm install @plazarjs/core
+```
+Or, place the script tag on your page:
 ```html
-<script src="..script-path/plazar.min.js"> 
+<script src="https://unpkg.com/@plazarjs/core@1.0.0-alpha.0/dist/core.min.js"> 
 ```
 Optionally, you can include Bootstrap UI:
+```bash
+$ npm install @plazarjs/bootstrap-ui
+```
 ```html
-<script src="..script-path/plazar-ui-bootstrap.min.js">
+<script src="https://unpkg.com/@plazarjs/bootstrap-ui@1.0.0-alpha.0/dist/bootstrap-ui.min.js">
 ```
 
 ## Introduction
