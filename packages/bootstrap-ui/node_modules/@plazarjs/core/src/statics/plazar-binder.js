@@ -27,14 +27,17 @@
     parseKeyPath = function (keypath, target) {
 
         var parts = keypath.split('.');
+        var globalScope;
+
         if (parts.length == 1) {
             return target;
         };
-
+        
+        globalScope = _getGlobal();
         parts.pop();
         return parts.reduce(function (previous, current) {
             var isString = pz.isString(previous);
-            return isString ? window[previous][current] :
+            return isString ? globalScope[previous][current] :
                 (pz.isEmpty(previous) ? null : previous[current]);
         }, target);
     };
@@ -635,13 +638,14 @@
                         isOption = this.el.nodeName == 'OPTION',
                         isSelect = this.el.nodeName == 'SELECT',
                         isTextArea = this.el.nodeName == 'TEXTAREA',
-                        event, isText;
+                        event, isText, globalScope;
 
                     if (!isInput && !isOption && !isSelect && !isTextArea) {
                         throw new Error('Value binding is supported only on INPUT, OPTION or SELECT element');
                     };
 
-                    event = isInput || isTextArea ? (('oninput' in window) ? 'input' : 'keyup') : 'change';
+                    globalScope = pz.getGlobal();
+                    event = isInput || isTextArea ? (('oninput' in globalScope) ? 'input' : 'keyup') : 'change';
                     isText = isInput && this.el.type == 'text' || isTextArea;
 
                     if ((isSelect || isText) && pz.isFunction(this.handler)) {

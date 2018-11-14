@@ -293,7 +293,7 @@
 
     var _defineNamespace = function (namespace, config) {
         var names = namespace.split('.');
-        var parent = window, current = '';
+        var parent = _getGlobal(), current = '';
         for (var i = 0, len = names.length; i < len; i++) {
             current = names[i];
             parent[current] = parent[current] || {};
@@ -329,17 +329,23 @@
 
     var _getObjectByNamespaceString = function (namespace) {
         var parts = namespace.split('.');
+        var globalScope = _getGlobal();
+
         if (parts.length == 1) {
-            return window[namespace];
+            return globalScope[namespace];
         };
 
         return parts.reduce(function (previous, current) {
             if (pz.isString(previous)) {
-                return window[previous][current];
+                return globalScope[previous][current];
             };
 
             return previous[current];
         });
+    };
+
+    var _getGlobal = function() {
+        return (typeof window !== 'undefined' ? window : global);
     };
 
     pz.ns = function (name, config) {
@@ -351,8 +357,9 @@
         var obj = _toObject(object);
         var ns = (_isEmpty(namespace) ? 'statics' : namespace);
         var isDefault = (ns == _const.defaultNamespace);
+        var globalScope = _getGlobal();
 
-        if (_isEmpty(window[ns]) && !isDefault) {
+        if (_isEmpty(globalScope[ns]) && !isDefault) {
             pz.ns(ns);
         };
 
@@ -381,16 +388,16 @@
 
     pz.defineApplication = function (config) {
         var rootComponents = !pz.isEmpty(config.components) && pz.isArray(config.components) ? 
-            config.components : [];
+            config.components : [], globalScope = _getGlobal();
         delete config.components;
         delete config.instances; // making sure that we do not override the instances array if passed accidentally via config
         _assignTo(pz.application, config);
 
-        if (_isEmpty(window[config.namespace])) {
+        if (_isEmpty(globalScope[config.namespace])) {
             this.ns(config.namespace, config);
-            pz.assignTo(window[config.namespace], config, false);
+            pz.assignTo(globalScope[config.namespace], config, false);
         } else {
-            pz.assignTo(window[config.namespace], config, false);
+            pz.assignTo(globalScope[config.namespace], config, false);
         };
 
         pz.forEach(rootComponents, function (item) {
@@ -436,5 +443,6 @@
     pz.toJSON = _toJSON;
     pz.assignTo = _assignTo;
     pz.isInstanceOf = _isInstanceOf;
+    pz.getGlobal = _getGlobal;
 
 })(pz || (pz = {}));
