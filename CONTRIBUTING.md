@@ -87,5 +87,4 @@ This folder contains two JavaScript templates, `umd-wrapper.jst` and `dependant-
 
 ## Financial Contribution
 
-[Become a patron](https://www.patreon.com/mprotic)<br />
-[Donate via PayPal](https://www.paypal.me/mprotic)
+[Become a patron](https://www.patreon.com/mprotic) or [Donate via PayPal](https://www.paypal.me/mprotic).
