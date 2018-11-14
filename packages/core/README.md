@@ -1,11 +1,7 @@
-# `core`
+# plazarjs/core
 
-> TODO: description
+> PlazarJS standalone package. This package holds the core implementation of the framework and it's all you need to build your app if no predefined UI components are required.
 
 ## Usage
 
-```
-const core = require('core');
-
-// TODO: DEMONSTRATE API
-```
+Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.

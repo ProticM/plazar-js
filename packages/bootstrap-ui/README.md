@@ -1,11 +1,7 @@
-# `bootstrap-ui`
+# plazarjs/bootstrap-ui
 
-> TODO: description
+> A set of predefined components styled with Bootstrap CSS framework (version v4.1.x).
 
 ## Usage
 
-```
-const bootstrapUi = require('bootstrap-ui');
-
-// TODO: DEMONSTRATE API
-```
+Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
