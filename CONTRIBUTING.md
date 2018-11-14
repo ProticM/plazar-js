@@ -53,12 +53,12 @@ $ lerna bootstrap
 
 #### Build and Deploy
 
-PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following tasks to deploy the source into `dist`.
+PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following tasks to deploy the source into `dist`:
 
 ```
 $ gulp build
 ```
-If there was a change related to bootstrap-ui
+If there was a change related to bootstrap-ui:
 ```
 $ gulp build-bootstrap
 ```
