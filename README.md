@@ -140,17 +140,6 @@ Output:
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
-## Deploy
-
-PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following tasks to deploy the source into `dist`.
-
-```
-$ gulp build
-```
-If there was a change related to bootstrap-ui
-```
-$ gulp build-bootstrap
-```
 ## Contribution
 
 Please read the <a href="https://github.com/ProticM/plazar-js/blob/master/CONTRIBUTING.md">Contributing Guide</a> before making a pull request.

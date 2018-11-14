@@ -6,6 +6,7 @@ Hello my fellow developer. Welcome to the PlazarJS contribution guide. I'm very 
 - [Pull Request](#pull-request)
 - [Branch Naming](#branch-naming)
 - [Environment Setup](#environment-setup)
+- [Build and Deploy](#build-and-deploy)
 
 ## Issue Reporting
 
@@ -44,8 +45,20 @@ $ npm install
 
 This will install the required packages found in `package.json` file.
 
-Since the project is maintained by lerna, you will need to bootstrap it:
+Since the project is maintained by [lerna](https://github.com/lerna/lerna), you will need to bootstrap it:
 
 ```bash
 $ lerna bootstrap
+```
+
+#### Build and Deploy
+
+PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following tasks to deploy the source into `dist`.
+
+```
+$ gulp build
+```
+If there was a change related to bootstrap-ui
+```
+$ gulp build-bootstrap
 ```
