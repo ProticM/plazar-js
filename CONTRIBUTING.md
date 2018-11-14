@@ -15,7 +15,7 @@ Hello my fellow developer. Welcome to the PlazarJS contribution guide. I'm very 
 
 ## Pull Request
 
-- The `master` branch represents the latest production release. **Please do not push anything directly into this branch**
+- The `master` branch represents the latest production release. **Please do not push anything directly into this branch**.
 - The `develop` branch represents the branch with the latest features.
 - All development should be done in dedicated branches.
 - Work under the `src` folder. Please do not push the `dist` folders. They are used to store the build files which are published when a release happens.
