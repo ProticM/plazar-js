@@ -11,6 +11,9 @@
     <a href="https://github.com/ProticM/plazar-js">
     <img src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg" alt="lerna" />
     </a>
+    <a href="https://www.npmjs.com/package/@plazarjs/core">
+    <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="license-mit" />
+    </a>
   </h1>
 
   <p align="center">
