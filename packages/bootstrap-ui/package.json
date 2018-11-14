@@ -1,12 +1,12 @@
 {
   "name": "@plazarjs/bootstrap-ui",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.0",
   "description": "PlazarJS bootstrap integration",
   "keywords": [
     "javascript",
     "plazarjs",
     "bootstrap",
-	"ui"
+    "ui"
   ],
   "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
   "homepage": "https://github.com/ProticM/plazar-js/packages/bootstrap-ui",
@@ -33,6 +33,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@plazarjs/core": "^1.0.0"
+    "@plazarjs/core": "^1.0.0-alpha.0"
   }
 }
