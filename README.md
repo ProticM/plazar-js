@@ -159,6 +159,6 @@ Some of the next major releases will contain:
 1. Core plazar-ui (set of controls out of the box). This will eliminate the need for any external CSS framework integration. Of course, you would still be able to integrate any of them if you choose so.
 2. Typescript support.
 
-## Licence
+## License
 
 <a href="https://github.com/ProticM/plazar-js/blob/master/LICENSE">MIT</a>
