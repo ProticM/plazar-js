@@ -32,14 +32,14 @@ $ npm install @plazarjs/core
 ```
 Or, place the script tag on your page:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@plazarjs/core/dist/core.min.js"> 
+<script src="https://cdn.jsdelivr.net/npm/@plazarjs/core/dist/core.min.js"></script>
 ```
 Optionally, you can include Bootstrap UI:
 ```bash
 $ npm install @plazarjs/bootstrap-ui
 ```
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@plazarjs/bootstrap-ui/dist/bootstrap-ui.min.js">
+<script src="https://cdn.jsdelivr.net/npm/@plazarjs/bootstrap-ui/dist/bootstrap-ui.min.js"></script>
 ```
 
 ## Introduction
