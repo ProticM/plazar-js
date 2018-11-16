@@ -15,7 +15,10 @@
     <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="license-mit" />
     </a>
     <a href="https://www.npmjs.com/package/@plazarjs/core">
-    <img src="https://img.shields.io/npm/v/@plazarjs/core.svg?style=flat" alt="license-mit" />
+    <img src="https://img.shields.io/npm/v/@plazarjs/core.svg?style=flat" alt="version" />
+    </a>
+    <a href="https://www.npmjs.com/package/@plazarjs/core">
+    <img src="https://img.shields.io/npm/dt/@plazarjs/core.svg" alt="downloads" />
     </a>
   </h1>
 
