@@ -26,7 +26,7 @@ Hello my fellow developer. Welcome to the PlazarJS contribution guide. I'm very 
 #### Branch Naming
 
 - If you are working on a feature:
-    - Ideally, every new feature should be branched off of the `master` branch. I say ideally because over the years of developing I've learned that the new feature might depend on another feature which has'nt been deployed to production yet, but this is not that common.
+    - Ideally, every new feature should be branched off of the `master` branch. I say ideally because over the years of developing I've learned that the new feature might depend on another feature which hasn't been deployed to production yet, but this is not that common.
     - Use prefix `feature` followed by a slash `/` followed by a description. Separate each word with a `-`, e.q. `feature/my-new-feature-description`
     - Merge the feature back against the `develop` branch when finished.
 
