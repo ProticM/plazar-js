@@ -2,6 +2,9 @@
   "name": "plazarjs",
   "private": true,
   "license": "MIT",
+  "scripts": {
+    "prepublishOnly": "gulp build && gulp build-bootstrap"
+  },
   "dependencies": {
     "save-dev": "^2.0.0"
   },
