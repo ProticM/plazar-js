@@ -1,6 +1,6 @@
 {
   "name": "@plazarjs/bootstrap-ui",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "PlazarJS bootstrap integration",
   "keywords": [
     "javascript",
@@ -35,6 +35,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@plazarjs/core": "^1.0.0-alpha.3"
+    "@plazarjs/core": "^1.0.0-alpha.4"
   }
 }
