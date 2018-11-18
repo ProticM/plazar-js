@@ -31,7 +31,7 @@
             };
         };
         return null;
-    }; // this is array helper and it's here due to possible circular reference in modular environment (pz.arr.find synonym)
+    }; // this is an array helper and it's here due to possible circular reference in modular environment (pz.arr.find synonym)
 
     var _assignTo = function (target, source, clone) { 
 
@@ -66,7 +66,18 @@
         result = assign(t, source);
         assign = null;
         return result;
-    }; // this is object helper and it's here due to possible circular reference in modular environment (pz.obj.assignTo synonym)
+    }; // this is an object helper and it's here due to possible circular reference in modular environment (pz.obj.assignTo synonym)
+
+    var _camelize = function (str) {
+        if (pz.isEmpty(str)) {
+            return '';
+        };
+
+        return str.replace(/^([A-Z])|[\s-_](\w)/g, function (match, p1, p2, offset) {
+            if (p2) return p2.toUpperCase();
+            return p1.toLowerCase();
+        });
+    }; // this is a string helper and it's here due to possible circular reference in modular environment (pz.str.camelize synonym)
 
     var _setRequiredInstances = function (obj) {
         var requireDefined = !pz.isEmpty(obj.require) &&
@@ -80,7 +91,7 @@
             var instance = pz.getInstanceOf(requiredItemType)
             var requiredItem = pz.isEmpty(instance) ?
                 pz.getDefinitionOf(requiredItemType) : instance;
-            var camelCaseName = pz.str.camelize(requiredItemType);
+            var camelCaseName = _camelize(requiredItemType);
 
             if (!pz.isEmpty(requiredItem) && pz.isEmpty(obj[camelCaseName])) {
                 obj[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
@@ -375,7 +386,7 @@
         var item = _get(this, type);
 
         if (_isEmpty(item)) {
-            var msg = pz.str.format(_const.typeNotFound, type);
+            var msg = _const.typeNotFound.replace('{0}', type);
             throw new Error(msg);
         };
 

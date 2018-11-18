@@ -16,9 +16,9 @@
                 var me = this;
                 pz.forEach(this.mixins, function (mixinName) {
                     var mixin = pz.getDefinitionOf(mixinName);
-                    var cleanMixin = pz.obj.clone(mixin);
+                    var cleanMixin = pz.assignTo({}, mixin);
                     delete cleanMixin.ownerType;
-                    pz.obj.assignTo(me, cleanMixin, false);
+                    pz.assignTo(me, cleanMixin, false);
                 });
             }
         };
@@ -33,7 +33,7 @@
         var returnVal = (function (_parentClass, _properties) {
             var _hasCustomConstructor = _properties && _properties.constructor
                 && _properties.constructor !== {}.constructor;
-            var propertyNames = pz.obj.getKeys(_properties);
+            var propertyNames = Object.keys(_properties);
             var propertiesReduced = propertyNames.reduce(function (acc, key) {
                 var isFunction = pz.isFunction(_properties[key]);
                 acc[isFunction ? 'fnKeys' : 'attrKeys'].push(key);
@@ -48,7 +48,7 @@
                         var isArray = pz.isArray(_properties[key]);
                         var isObject = pz.isObject(_properties[key]);
 
-                        me[key] = (isArray ? _properties[key].slice() : (isObject ? pz.obj.clone(_properties[key]) : _properties[key]));
+                        me[key] = (isArray ? _properties[key].slice() : (isObject ? pz.assignTo({}, _properties[key]) : _properties[key]));
                     };
                 });
 
