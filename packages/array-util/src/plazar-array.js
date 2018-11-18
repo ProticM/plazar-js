@@ -1,4 +1,4 @@
-﻿pz.defineStatic('arr', function () {
+﻿(function(pz) {
     'use strict';
 
     return {
@@ -52,7 +52,7 @@
             };
 
             array.splice(index, 1);
-        },
+        }
     };
 
-}, 'pz');
+})();

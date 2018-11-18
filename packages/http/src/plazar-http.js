@@ -1,7 +1,7 @@
 ﻿(function (pz) {
     'use strict';
 
-    var http, _requests, _const = {
+    var _requests, _const = {
         optionsRequred: 'Can not instantiate http request without options defined',
         minConfigNotProfided: 'Minimal configuration for ajax call was not provided. Please check you setup for following options [url], [method]',
         requestStates: {
