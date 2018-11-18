@@ -131,7 +131,7 @@
             (_const.coreBaseTypes.indexOf(type) != -1);
 
         cls = skipInheritance ? pz.toFunction(obj) : (function () {
-            tBase = pz.getDefinitionOf(obj.ownerType);
+            tBase = (pz[obj.ownerType] || pz.getDefinitionOf(obj.ownerType));
             isMixin = pz.isMixin(obj);
             return isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
                 tBase.extend(obj);
