@@ -9,12 +9,13 @@ const base = {
     '###moduleName###': ''
 };
 
-const bootstrap = Object.assign(Object.assign({}, base), {
-    '###moduleNamespace###': 'pzBootstrap',
-    '###moduleName###': 'bootstrap ui'
-});
-
 module.exports = {
     base: base,
-    bootstrap: bootstrap
+    forModule: function(name, namespace) {
+        var ns = (namespace || name.split('-').shift());
+        return Object.assign(Object.assign({}, base), {
+            '###moduleNamespace###': ns,
+            '###moduleName###': name
+        });
+    }
 };
