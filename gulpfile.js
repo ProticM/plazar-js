@@ -5,11 +5,16 @@ let gulpFn = require('gulp-fn');
 let wrap = require('./scripts/wrap');
 let configs = require('./scripts/configs');
 
-let buildPackage = function(packageName, tpl, config) {
+let coreSrc = [
+    './packages/core/src/core/plazar-core.js',
+    './packages/core/src/**/!(plazar-core)*.js', // all files that end in .js EXCEPT foobar*.js
+];
+
+let buildPackage = function(packageName, tpl, config, src) {
     tpl = tpl || './scripts/dependant-module-wrapper.jst';
     config = config || configs.forModule(packageName);
-    
-    let src = './packages/'.concat(packageName).concat('/src/**/*');
+    src = src || './packages/'.concat(packageName).concat('/src/**/*.js');
+
     let dest = './packages/'.concat(packageName).concat('/dist');
 
     return gulp.src(src)
@@ -25,7 +30,7 @@ let buildPackage = function(packageName, tpl, config) {
 };
 
 gulp.task('build', function() {
-    return buildPackage('core', './scripts/umd-wrapper.jst', configs.base);
+    return buildPackage('core', './scripts/umd-wrapper.jst', configs.base, coreSrc);
 });
 
 gulp.task('build-bootstrap', function() {
