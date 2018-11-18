@@ -21,20 +21,7 @@
         },
 
         format: function () {
-            var args = Array.prototype.slice.call(arguments);
-            var baseString = args[0];
-            var params = args.splice(1), result = '';
-
-            if (pz.isEmpty(baseString) || pz.isEmpty(params)) {
-                return result;
-            };
-
-            pz.forEach(params, function (param, idx) {
-                result = pz.isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
-                    result.replace('{' + idx + '}', param);
-            });
-
-            return result;
+            return pz.format(arguments);
         }
     };
 

@@ -31,11 +31,11 @@
             };
         };
         return null;
-    }; // this is an array helper and it's here due to possible circular reference in modular environment (pz.arr.find synonym)
+    };
 
     var _assignTo = function (target, source, clone) { 
 
-        var assign = function (target) { // polyfill
+        var assign = function (target) {
 
             if (pz.isEmpty(target)) {
                 throw new TypeError(_const.canNotConvertNullOrEmptyObj);
@@ -66,7 +66,7 @@
         result = assign(t, source);
         assign = null;
         return result;
-    }; // this is an object helper and it's here due to possible circular reference in modular environment (pz.obj.assignTo synonym)
+    };
 
     var _camelize = function (str) {
         if (pz.isEmpty(str)) {
@@ -77,7 +77,24 @@
             if (p2) return p2.toUpperCase();
             return p1.toLowerCase();
         });
-    }; // this is a string helper and it's here due to possible circular reference in modular environment (pz.str.camelize synonym)
+    };
+
+    var _format =function () {
+        var args = Array.prototype.slice.call(arguments);
+        var baseString = args[0];
+        var params = args.splice(1), result = '';
+
+        if (pz.isEmpty(baseString) || pz.isEmpty(params)) {
+            return result;
+        };
+
+        pz.forEach(params, function (param, idx) {
+            result = pz.isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
+                result.replace('{' + idx + '}', param);
+        });
+
+        return result;
+    }
 
     var _setRequiredInstances = function (obj) {
         var requireDefined = !pz.isEmpty(obj.require) &&
@@ -91,7 +108,7 @@
             var instance = pz.getInstanceOf(requiredItemType)
             var requiredItem = pz.isEmpty(instance) ?
                 pz.getDefinitionOf(requiredItemType) : instance;
-            var camelCaseName = _camelize(requiredItemType);
+            var camelCaseName = pz.camelize(requiredItemType);
 
             if (!pz.isEmpty(requiredItem) && pz.isEmpty(obj[camelCaseName])) {
                 obj[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
@@ -455,5 +472,7 @@
     pz.assignTo = _assignTo;
     pz.isInstanceOf = _isInstanceOf;
     pz.getGlobal = _getGlobal;
+    pz.camelize = _camelize;
+    pz.format = _format;
 
 })(pz || (pz = {}));

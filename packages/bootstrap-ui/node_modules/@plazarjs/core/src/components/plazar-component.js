@@ -138,12 +138,12 @@
             };
 
             isChild = !pz.isEmpty(this.parentComponent);
-            containerSelector = (isChild ? pz.str.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
+            containerSelector = (isChild ? pz.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
                 (renderToDefined ? this.renderTo : (renderBeforeDefined ? this.renderBefore : this.renderAfter)));
             container = pz.dom.getEl(containerSelector);
 
             if (pz.isEmpty(container)) {
-                containerErr = (isChild ? pz.str.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
+                containerErr = (isChild ? pz.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
                     _const.tplContainerNotFound);
                 throw new Error(containerErr);
             };
@@ -206,7 +206,6 @@
                     me.addChild(item.component, item.index);
                 });
 
-                pz.arr.clear(childrenToInitialize);
                 childrenToInitialize = null;
             };
 
@@ -220,7 +219,7 @@
                 return;
             };
 
-            this.triggers = pz.obj.assignTo(this.triggers, triggers);
+            this.triggers = pz.assignTo(this.triggers, triggers);
         },
         publish: function (name, params, component) {
             var me = this;
@@ -314,7 +313,7 @@
             };
             
             selector = !pz.isEmpty(handler.selector) ? handler.selector : 
-                (pz.str.format("{0}[{1}\"{2}\"]", this.html.tagName, 'data-componentid=', this.id));
+                (pz.format("{0}[{1}\"{2}\"]", this.html.tagName, 'data-componentid=', this.id));
             args = [handler.on, me.html, selector, pz.proxy(fn, handler.scope || me)];
             pz.dom.on.apply(pz.dom, args);
         },
@@ -410,7 +409,7 @@
                 return resultIdx;
             };
 
-            pz.arr.find(function (child, idx) {
+            pz.find(function (child, idx) {
                 if (child.id == component.id) {
                     resultIdx = idx;
                 };
@@ -437,9 +436,9 @@
             this.html = null;
             this.triggers = null;
             this.viewModel = null;
-            pz.arr.clear(this.components);
-            pz.arr.clear(this.handlers);
-            pz.arr.clear(this.mixins);
+            this.components = null;
+            this.handlers = null;
+            this.mixins = null;
             parent = this.traceUp();
             if (!pz.isEmpty(parent)) {
                 parent.removeChild(this, false);
