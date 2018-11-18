@@ -1,0 +1,39 @@
+{
+  "name": "@plazarjs/http",
+  "version": "1.0.0-alpha.4",
+  "description": "PlazarJS http package",
+  "keywords": [
+    "javascript",
+    "js",
+    "plazarjs",
+    "http",
+    "ajax"
+  ],
+  "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
+  "homepage": "https://github.com/ProticM/plazar-js",
+  "license": "MIT",
+  "main": "dist/http.js",
+  "directories": {
+    "lib": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProticM/plazar-js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ProticM/plazar-js/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@plazarjs/core": "^1.0.0-alpha.4"
+  }
+}

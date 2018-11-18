@@ -1,7 +1,7 @@
-﻿pz.defineStatic('http', function () {
+﻿(function (pz) {
     'use strict';
 
-    var _const = {
+    var http, _requests, _const = {
         optionsRequred: 'Can not instantiate http request without options defined',
         minConfigNotProfided: 'Minimal configuration for ajax call was not provided. Please check you setup for following options [url], [method]',
         requestStates: {
@@ -10,9 +10,7 @@
         requestStatus: {
             abort: 0
         }
-    };
-
-    var _types = {
+    }, _types = {
         post: 'POST',
         get: 'GET',
         put: 'PUT',
@@ -20,17 +18,13 @@
             json: 'json',
             html: 'html'
         }
-    };
-
-    var _createXHR = function () {
+    }, _createXHR = function () {
         // TODO: Add support for active x object?
         // ActiveXObject('MSXML2.XMLHTTP.3.0');
         // ActiveXObject('MSXML2.XMLHTTP');
         // ActiveXObject('Microsoft.XMLHTTP');
         return new XMLHttpRequest();
-    };
-
-    var _checkMinimalConfiguration = function (options) {
+    }, _checkMinimalConfiguration = function (options) {
         // add more if needed
 
         var isOK = !pz.isEmpty(options.url) &&
@@ -39,9 +33,7 @@
         if (!isOK) {
             throw new Error(_const.minConfigNotProfided);
         };
-    };
-
-    var _configureAndInvokeXHR = function (request, options) {
+    }, _configureAndInvokeXHR = function (request, options) {
         var xhr = request.xhr, callback = options.success,
             eCallback = options.fail, aCallback = options.abort,
             dataType = options.dataType || _types.data.json;
@@ -60,12 +52,12 @@
                     dataType: dataType
                 };
                 callback.call(this, result);
-                delete pz.http.requests[request.id];
+                delete _requests[request.id];
             };
         };
 
         xhr.onerror = function (e) {
-            delete pz.http.requests[request.id];
+            delete _requests[request.id];
 
             if (eCallback) {
                 eCallback(e.target);
@@ -114,13 +106,13 @@
 
             this.latestRequestId = request.id;
             _configureAndInvokeXHR(request, options);
-            this.requests[request.id] = request;
+            _requests[request.id] = request;
             return request;
         },
         abort: function (all) {
             var abortAll = all || false, requestIds;
-            var requestToAbort = abortAll ? this.requests :
-                this.requests[this.latestRequestId];
+            var requestToAbort = abortAll ? _requests :
+            _requests[this.latestRequestId];
 
             if (pz.isEmpty(requestToAbort)) {
                 return;
@@ -128,16 +120,16 @@
 
             if (!abortAll) {
                 requestToAbort.abort();
-                delete this.requests[this.latestRequestId];
+                delete _requests[this.latestRequestId];
                 this.latestRequestId = null;
                 return;
             };
 
-            requestIds = pz.obj.getKeys(requestToAbort);
+            requestIds = Object.keys(requestToAbort);
             pz.forEach(requestIds, function (id) {
-                var request = this.requests[id];
+                var request = _requests[id];
                 request.abort();
-                delete this.requests[id];
+                delete _requests[id];
                 request = null;
             }, this);
 
@@ -152,5 +144,6 @@
             options.method = _types.get;
             return this.request(options);
         }
-    }
-}, 'pz');
+    };
+})();
+
