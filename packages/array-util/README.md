@@ -1,11 +1,7 @@
-# `@plazarjs/array-util`
+# plazarjs/array-util
 
-> TODO: description
+> PlazarJS array helper methods.
 
 ## Usage
 
-```
-const arrayUtil = require('@plazarjs/array-util');
-
-// TODO: DEMONSTRATE API
-```
+Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.

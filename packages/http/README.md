@@ -1,11 +1,7 @@
-# `http`
+# plazarjs/http
 
-> TODO: description
+> PlazarJS http/ajax helper methods.
 
 ## Usage
 
-```
-const http = require('http');
-
-// TODO: DEMONSTRATE API
-```
+Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
