@@ -523,4 +523,3 @@ var component = {
 };
 
 pz.component = pz.base.extend(component);
-pz.component.extend = pz.base.extend;

@@ -1,8 +1,5 @@
-﻿var _class = function() {
-    return {
-        // common
-    };
+﻿var _class = {
+    // common
 };
 
 pz.class = pz.base.extend(_class);
-pz.class.extend = pz.base.extend;
