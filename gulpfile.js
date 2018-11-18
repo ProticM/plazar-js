@@ -11,9 +11,9 @@ let coreSrc = [
     './packages/core/src/**/!(plazar-core, plazar-base)*.js', // all files that end in .js EXCEPT foobar*.js
 ];
 
-let buildPackage = function(packageName, tpl, config, src) {
+let buildPackage = function(packageName, tpl, config, src, namespace) {
     tpl = tpl || './scripts/dependant-module-wrapper.jst';
-    config = config || configs.forModule(packageName);
+    config = config || configs.forModule(packageName, namespace);
     src = src || './packages/'.concat(packageName).concat('/src/**/*.js');
 
     let dest = './packages/'.concat(packageName).concat('/dist');
@@ -40,4 +40,8 @@ gulp.task('build-bootstrap', function() {
 
 gulp.task('build-http', function() {
     return buildPackage('http');
+});
+
+gulp.task('build-array-util', function() {
+    return buildPackage('array-util', null, null, null, 'arr');
 });
