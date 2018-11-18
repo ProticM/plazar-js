@@ -6,31 +6,27 @@ let wrap = require('./scripts/wrap');
 let configs = require('./scripts/configs');
 
 gulp.task('build', function() {
-
-    let pz = gulp.src('./packages/core/src/**/*')
+    return gulp.src('./packages/core/src/**/*')
         .pipe(concat('core.js'))
         .pipe(gulpFn(function(file, enc) {
-            file.contents = wrap(configs.core, './scripts/umd-wrapper.jst', file);
-        })).pipe(gulp.dest('packages/core/dist'));
-
-    let pzMin = pz.pipe(concat('core.min.js'))
+            file.contents = wrap(configs.base, './scripts/umd-wrapper.jst', file);
+        })).pipe(gulp.dest('packages/core/dist'))
+        .pipe(concat('core.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('packages/core/dist'));
-
-    return pzMin;
+        .pipe(gulpFn(function(file, enc) {
+            file.contents = wrap(configs.base, './scripts/version.jst', file);
+        })).pipe(gulp.dest('packages/core/dist'));
 });
 
 gulp.task('build-bootstrap', function() {
-
-    let pzBootstrap = gulp.src('./packages/bootstrap-ui/src/**/*')
+    return gulp.src('./packages/bootstrap-ui/src/**/*')
         .pipe(concat('bootstrap-ui.js'))
         .pipe(gulpFn(function(file, enc) {
             file.contents = wrap(configs.bootstrap, './scripts/dependant-module-wrapper.jst', file);
-        })).pipe(gulp.dest('packages/bootstrap-ui/dist'));  
-
-    let pzBootstrapMin = pzBootstrap.pipe(concat('bootstrap-ui.min.js'))
+        })).pipe(gulp.dest('packages/bootstrap-ui/dist'))
+        .pipe(concat('bootstrap-ui.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('packages/bootstrap-ui/dist'));
-
-    return pzBootstrapMin;
+        .pipe(gulpFn(function(file, enc) {
+            file.contents = wrap(configs.bootstrap, './scripts/version.jst', file);
+        })).pipe(gulp.dest('packages/bootstrap-ui/dist'));
 });

@@ -5,7 +5,7 @@ function wrap(config, template, file) {
     let keys = Object.keys(config).join('|');
     let regex = new RegExp(keys, "gi");
     let output = tpl.replace(regex, function(item) {
-        return config[item] || file.contents;
+        return (item == '###content###' ? file.contents : config[item]);
     });
     return Buffer.from(output);
 };

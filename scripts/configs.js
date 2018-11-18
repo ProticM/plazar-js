@@ -1,19 +1,20 @@
 let corePkg = require('../packages/core/package.json');
 
-const core = {
+const base = {
     '###namespace###': 'pz',
     '###version###': corePkg.version,
     '###author###': corePkg.author,
     '###license###': corePkg.license,
-    '###content###': null
+    '###content###': '',
+    '###moduleName###': ''
 };
 
-const bootstrap = Object.assign({
+const bootstrap = Object.assign(Object.assign({}, base), {
     '###moduleNamespace###': 'pzBootstrap',
     '###moduleName###': 'bootstrap ui'
-}, core);
+});
 
 module.exports = {
-    core: core,
+    base: base,
     bootstrap: bootstrap
 };
