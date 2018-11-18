@@ -18,10 +18,6 @@
         contains: function (str, value) {
             return pz.isEmpty(str) || pz.isEmpty(value) ? false :
                 str.indexOf(value) != -1;
-        },
-
-        format: function () {
-            return pz.format(arguments);
         }
     };
 

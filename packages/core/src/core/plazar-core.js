@@ -94,7 +94,7 @@
         });
 
         return result;
-    }
+    };
 
     var _setRequiredInstances = function (obj) {
         var requireDefined = !pz.isEmpty(obj.require) &&
