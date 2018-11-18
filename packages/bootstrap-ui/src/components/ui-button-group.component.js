@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-button-group', function () {
-    'use strict';
 
     var _parseTemplate = function () {
         var sizeCls = !pz.isEmpty(this.size) ? 'btn-group-' + this.size : '';

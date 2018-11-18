@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-input', function () {
-    'use strict';
 
     var _parseTemplate = function () {
 

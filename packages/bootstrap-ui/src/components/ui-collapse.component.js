@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-collapse', function () {
-    'use strict';
 
     var _setIfNotEmpty = function (me, propName) {
         if (!pz.isEmpty(me[propName])) {

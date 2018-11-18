@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-component', function () {
-    'use strict';
 
     var _const = {
         handlerFnNotProvided: 'Handler function was not provided.'

@@ -1,6 +1,4 @@
 ﻿pz.define('ui-bootstrap-select', function () {
-    'use strict';
-
     var _parseTemplate = function () {
         var hasSize = !pz.isEmpty(this.size);
         var css = (this.custom ? (hasSize ? ('custom-select custom-select-' + this.size) : 'custom-select') :

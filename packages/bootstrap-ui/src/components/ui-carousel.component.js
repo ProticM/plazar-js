@@ -1,6 +1,5 @@
 ﻿pz.define('ui-bootstrap-carousel', function () {
-    'use strict';
-
+    
     var _getNavButton = function (id, type) {
         return '<a class="carousel-control-' + type + '" href="#carousel_' + id + '" role="button" data-slide="' + type +
             '"><span class="carousel-control-' + type + '-icon" aria-hidden="true"></span><span class="sr-only">' + type + '</span></a>';

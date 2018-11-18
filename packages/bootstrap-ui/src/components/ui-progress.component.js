@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-progress', function () {
-	'use strict';
 
 	var _parseTemplate = function () {
 		var progressBar = pz.dom.findElement(this.html, 'div.progress-bar'),

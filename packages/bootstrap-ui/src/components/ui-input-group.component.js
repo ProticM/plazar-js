@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-input-group', function () {
-    'use strict';
 
     var _const = {
         addonEmpty: 'Component of type [ui-bootstrap-input-group] requires at least one addon. See addon config docs.',

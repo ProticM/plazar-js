@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-list-group', function () {
-    'use strict';
 
     var _const = {
         elementAtIdxNotFound: 'Element at index {0} was not found'

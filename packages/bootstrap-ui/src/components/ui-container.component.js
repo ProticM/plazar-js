@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-container', function () {
-    'use strict';
 
     var _defaultColSize = 12;
 

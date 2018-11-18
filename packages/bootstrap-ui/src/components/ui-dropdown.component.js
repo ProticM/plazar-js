@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-dropdown', function () {
-    'use strict';
 
     var _parseTemplate = function () {
         var hasSize = !pz.isEmpty(this.size), btn, hasPosition =
