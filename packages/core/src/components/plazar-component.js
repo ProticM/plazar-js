@@ -13,6 +13,28 @@
         canNotDestroyComponent: 'You can not destroy a component with attached pre-rendered template.'
     }, false);
     
+    var _get = function(options) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                options.success.call(this, {
+                    request: this,
+                    data: (dataType == options.data.json ? pz.toJSON(this.responseText) : this.responseText),
+                    dataType: dataType
+                });
+            };
+        };
+
+        xhr.onerror = options.error;
+        xhr.open('GET', options.url, true);
+
+        if (pz.isString(options.data)) {
+            options.data = pz.toJSON(options.data);
+        };
+
+        xhr.send(options.data || null);
+    };
+
     return {
         constructor: function () {
             this.isComponentInstance = true;
@@ -99,11 +121,14 @@
                 this.render();
             }, this);
         
-            pz.http.get({
+            _get({
                 url: this.ajaxSetup.url,
                 dataType: this.ajaxSetup.dataType,
                 data: this.ajaxSetup.data,
-                success: componentLoaded
+                success: componentLoaded,
+                error: function(e) {
+                    console.log(e);
+                }
             });
         
             componentLoaded = null;
