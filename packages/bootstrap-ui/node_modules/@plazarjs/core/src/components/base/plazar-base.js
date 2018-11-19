@@ -75,6 +75,26 @@ pz.base.extend = function extend(props) {
         });
 
         pz_type.extend = extend;
+        pz_type.create = (function(t) {
+			return function create() {
+				var instance = new t();
+
+				instance.id = pz.guid();
+                instance.autoLoad = !pz.isEmpty(t.autoLoad) ? t.autoLoad : instance.autoLoad;
+                delete t.autoLoad;
+                
+				if (pz.isComponent(instance) || pz.isClass(instance)) {
+					instance.applyMixins();
+
+					if (instance.autoLoad) {
+						instance.load();
+					};
+                };
+
+				return instance;
+			}
+        })(pz_type);
+        pz_type.$pz = true;
         return pz_type;
 
     })(parentClass, properties);

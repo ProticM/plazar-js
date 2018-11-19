@@ -271,9 +271,11 @@
         },
         addChild: function (child, index) {
     
-            var hasChildren, parentSelector, instance, childReference, idx, renderTo,
-                replace = child.$replace;
-            if (pz.isEmpty(child) || pz.isEmpty(child.type)) {
+            var hasChildren, parentSelector, instance, childReference, renderTo,
+                replace = child.$replace, isValidObj = pz.isObject(child) && !(pz.isEmpty(child) || pz.isEmpty(child.type)),
+                isValidFn = pz.isPzDefinition(child);
+
+            if (!isValidObj && !isValidFn) {
                 throw new Error(_const.addChildParamErr);
             };
         
@@ -281,7 +283,7 @@
             parentSelector = '*[data-componentid="' + this.id + '"]';
         
             child.autoLoad = false; // prevent auto load since we might be missing [renderTo] from config
-            instance = pz.create(child);
+            instance = isValidFn ? child.create() : pz.create(child);
             renderTo = child.renderTo || instance.renderTo;
         
             instance.renderTo = pz.isEmpty(renderTo) ?

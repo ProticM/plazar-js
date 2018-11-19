@@ -374,6 +374,10 @@ var _getGlobal = function() {
     return (typeof window !== 'undefined' ? window : global);
 };
 
+var _isPzDefinition = function(value) {
+    return _isFunction(value) && value.$pz;
+};
+
 pz.ns = function (name, config) {
     _defineNamespace(name, config || {});
 };
@@ -472,3 +476,4 @@ pz.isInstanceOf = _isInstanceOf;
 pz.getGlobal = _getGlobal;
 pz.camelize = _camelize;
 pz.format = _format;
+pz.isPzDefinition = _isPzDefinition;
