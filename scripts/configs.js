@@ -6,7 +6,7 @@ const base = {
     '###author###': corePkg.author,
     '###license###': corePkg.license,
     '###content###': '',
-    '###moduleName###': ''
+    '###moduleName###': 'core'
 };
 
 module.exports = {
