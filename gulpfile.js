@@ -45,3 +45,7 @@ gulp.task('build-http', function() {
 gulp.task('build-array-util', function() {
     return buildPackage('array-util', null, null, null, 'arr');
 });
+
+gulp.task('build-string-util', function() {
+    return buildPackage('string-util', null, null, null, 'str');
+});
