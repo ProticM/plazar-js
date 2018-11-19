@@ -2,6 +2,7 @@ let gulp = require('gulp');
 let concat = require('gulp-concat');
 let uglify = require('gulp-uglify');
 let gulpFn = require('gulp-fn');
+let merge = require('merge-stream');
 let wrap = require('./scripts/wrap');
 let configs = require('./scripts/configs');
 
@@ -31,6 +32,16 @@ let buildPackage = function(packageName, tpl, config, src, namespace) {
 };
 
 gulp.task('build', function() {
+    let core = buildPackage('core', './scripts/umd-wrapper.jst', configs.base, coreSrc);
+    let bootstrap = buildPackage('bootstrap-ui');
+    let http = buildPackage('http');
+    let array = buildPackage('array-util', null, null, null, 'arr');
+    let string = buildPackage('string-util', null, null, null, 'str');
+    let obj = buildPackage('object-util', null, null, null, 'obj');
+    return merge(core, bootstrap, http, array, string, obj);
+});
+
+gulp.task('build-core', function() {
     return buildPackage('core', './scripts/umd-wrapper.jst', configs.base, coreSrc);
 });
 
