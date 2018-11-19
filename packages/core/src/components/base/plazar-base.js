@@ -1,17 +1,17 @@
-﻿var base = function () {
+﻿pz.base = function () {
 
 };
 
-base.prototype.mixins = [],
-base.prototype.init = function () { },
-base.prototype.destroy = function () {
+pz.base.prototype.mixins = [],
+pz.base.prototype.init = function () { },
+pz.base.prototype.destroy = function () {
     // TODO: multiple instances destroy
     var idx = pz.application.instances.indexOf(this);
     if (idx != -1) {
         pz.application.instances.splice(idx, 1);
     };
 },
-base.prototype.applyMixins = function () {
+pz.base.prototype.applyMixins = function () {
     var me = this;
     pz.forEach(this.mixins, function (mixinName) {
         var mixin = pz.getDefinitionOf(mixinName);
@@ -21,7 +21,7 @@ base.prototype.applyMixins = function () {
     });
 };
 
-base.extend = function extend(props) {
+pz.base.extend = function extend(props) {
     // TODO: Inherit statics
 
     var properties = (pz.toObject(props) || {});
@@ -84,5 +84,3 @@ base.extend = function extend(props) {
 
     return returnVal;
 };
-
-pz.base = base;

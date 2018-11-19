@@ -1,5 +1,3 @@
-﻿var _class = {
+﻿pz.class = pz.base.extend({
     // common
-};
-
-pz.class = pz.base.extend(_class);
+});
