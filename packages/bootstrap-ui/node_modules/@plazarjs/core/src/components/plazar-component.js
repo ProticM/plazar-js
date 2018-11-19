@@ -1,6 +1,6 @@
 ﻿pz.component = pz.base.extend(function() {
 
-    pz.assignTo({
+    pz.assignTo(_const, {
         tplSourceNotDefined: 'Template source not defined. Please define one of these options in your component config: 1. [template]; 2. [templateSelector]; 3. [ajaxSetup.url]',
         tplContainerNotDefined: 'Template container selector not defined. Please define one of these options in your component config: 1. [renderTo]; 2. [templateSelector]; 3. [renderBefore]; 4. [renderAfter];',
         tplContainerNotFound: 'Template container not found. Please review one of these options in your component config: 1. [renderTo]; 2. [templateSelector]; 3. [renderBefore]; 4. [renderAfter];',
@@ -11,13 +11,12 @@
         renderBeforeAndAfterDefined: '[renderBefore] and [renderAfter] config can not be defined on the same component',
         handlerFnNotProvided: 'Handler function was not provided.',
         canNotDestroyComponent: 'You can not destroy a component with attached pre-rendered template.'
-    }, _const);
+    }, false);
     
     return {
         constructor: function () {
             this.isComponentInstance = true;
         },
-        ownerType: 'base',
         replace: false,
         initialized: false,
         animate: false,
