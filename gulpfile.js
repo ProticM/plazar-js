@@ -8,7 +8,7 @@ let configs = require('./scripts/configs');
 let coreSrc = [
     './packages/core/src/core/plazar-core.js',
     './packages/core/src/components/base/plazar-base.js',
-    './packages/core/src/**/!(plazar-core, plazar-base)*.js', // all files that end in .js EXCEPT foobar*.js
+    './packages/core/src/**/!(plazar-core, plazar-base)*.js'
 ];
 
 let buildPackage = function(packageName, tpl, config, src, namespace) {
