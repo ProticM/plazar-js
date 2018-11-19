@@ -49,3 +49,7 @@ gulp.task('build-array-util', function() {
 gulp.task('build-string-util', function() {
     return buildPackage('string-util', null, null, null, 'str');
 });
+
+gulp.task('build-object-util', function() {
+    return buildPackage('object-util', null, null, null, 'obj');
+});
