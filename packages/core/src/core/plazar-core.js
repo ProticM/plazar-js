@@ -116,7 +116,7 @@ var _define = function (type, object) {
     })();
 
     if (skipInheritance) {
-        cls.extend = object.extend;
+        cls.extend = pz.base.extend;
     };
 
     if (!isMixin) {
