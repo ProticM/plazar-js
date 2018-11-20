@@ -53,7 +53,7 @@
     };
 
     observe = function (value) {
-        // TODO: Multidimensional arrays 
+
         if (!pz.isObject(value) || value.$observed) {
             return false;
         };
@@ -184,7 +184,6 @@
                 throw new Error('Can not ' + (subscribe ? 'subscribe to' : 'unsubscribe from') + ' action named: [' + name + ']');
             };
 
-            // TODO: Unsubscribe
             var length = me.subscriptions.length;
             me.subscriptions.push({
                 id: bindingId || length++,
@@ -656,7 +655,7 @@
                     this.el.removeAttribute(this.bindingAttr);
                 },
                 react: function () {
-                    // ISSUE: triggered on change, but value is already correct;
+
                     var isInput = this.el.nodeName == 'INPUT',
                         isSelect = this.el.nodeName == 'SELECT',
                         isTextArea = this.el.nodeName == 'TEXTAREA',
@@ -812,8 +811,6 @@
                     this.el.removeAttribute(this.bindingAttr);
                 },
                 react: function () {
-                    // ISSUE: triggered on change, but value is already correct;
-
                     var isRadio = this.el.type == 'radio',
                         value = this.getValue();
 
