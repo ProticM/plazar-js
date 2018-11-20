@@ -131,6 +131,7 @@ var _define = function (type, object) {
     cls = skipInheritance ? pz.toFunction(obj) : (function () {
         tBase = (pz[obj.ownerType] || pz.getDefinitionOf(obj.ownerType));
         isMixin = pz.isMixin(obj);
+        obj.type = type;
         return isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
             tBase.extend(obj);
     })();
@@ -172,11 +173,11 @@ var _create = function (config) {
     if (isObject) {
         params = _assignTo({}, config, false);
         delete params.type;
+        delete config.type;
         instance = new item(params);
         pz.assignTo(instance, config, false);
     } else {
         instance = new item();
-        instance.type = type;
     };
 
     instance.id = pz.guid();

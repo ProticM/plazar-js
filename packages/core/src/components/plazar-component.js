@@ -36,6 +36,7 @@
     };
 
     return {
+        type: 'component',
         constructor: function () {
             this.isComponentInstance = true;
         },

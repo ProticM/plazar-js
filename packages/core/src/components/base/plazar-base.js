@@ -24,10 +24,13 @@ pz.base.prototype.applyMixins = function () {
 pz.base.extend = function extend(props) {
     // TODO: Inherit statics
 
-    var properties = (pz.toObject(props) || {});
-    var parentClass = this;
+    var properties = (pz.toObject(props) || {}), parentClass, returnVal;
+    if(pz.isEmpty(properties.type)) {
+        throw new Error("It seems that you are trying to extend an object without a type defined. Example: mydef.extend({ type: 'my-type' // other configs })");
+    };
+    parentClass = this;
 
-    var returnVal = (function (_parentClass, _properties) {
+    returnVal = (function (_parentClass, _properties) {
         var _hasCustomConstructor = _properties && _properties.constructor
             && _properties.constructor !== {}.constructor;
         var propertyNames = Object.keys(_properties);
@@ -48,7 +51,8 @@ pz.base.extend = function extend(props) {
                     me[key] = (isArray ? _properties[key].slice() : (isObject ? pz.assignTo({}, _properties[key]) : _properties[key]));
                 };
             });
-
+            
+            this.ownerType = this.ownerType || _parentClass.$type || 'base';
             this.base = _hasCustomConstructor ? _parentClass : null;
             result = _hasCustomConstructor ? _properties.constructor.apply(this, arguments)
                 : _parentClass.apply(this, arguments);
@@ -95,6 +99,7 @@ pz.base.extend = function extend(props) {
 			}
         })(pz_type);
         pz_type.$pz = true;
+        pz_type.$type = _properties.type;
         return pz_type;
 
     })(parentClass, properties);
