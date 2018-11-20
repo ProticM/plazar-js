@@ -1,5 +1,4 @@
 ﻿pz.defineStatic('binder', function () {
-    'use strict';
 
     var observable, observableArray,
         binding, view, observe, observeArray, textParser,

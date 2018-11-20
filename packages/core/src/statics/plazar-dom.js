@@ -1,5 +1,4 @@
 ﻿pz.defineStatic('dom', function () {
-    'use strict';
 
     var _tagNameReg = /<([^\s>]+)(\s|>)+/;
 
