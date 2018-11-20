@@ -65,7 +65,7 @@
                 tpl = null;
             };
         
-            this.publish('bindings-complete', null, this);
+            this.publish('bindings-complete');
         },
         applyBindings: function () {
             pz.binder.bind(this.html, this.viewModel);
@@ -118,7 +118,7 @@
                     this.viewModel;
                 this.template = !pz.isEmpty(res.template) ? res.template :
                     pz.dom.getEl(this.templateSelector).outerHTML;
-                this.publish('load-complete', null, this);
+                this.publish('load-complete');
                 this.render();
             }, this);
         
@@ -194,7 +194,7 @@
                 pz.dom[this.replace ? 'replaceWith' : 'append'](container, this.html);
             };
         
-            this.publish('render-complete', null, this);
+            this.publish('render-complete');
             this.init();
         },
         init: function () {
@@ -210,7 +210,7 @@
         
             this.hideLoadingMask();
             this.initialized = true;
-            this.publish('init-complete', null, this);
+            this.publish('init-complete');
         
             if (!pz.isEmpty(this.components)) {
                 childrenToInitialize = this.components.reduce(function (acc, cmpRef, idx) {
@@ -239,36 +239,18 @@
             };
         },
         subscribe: function (triggers) {
+            var trg;
             if (pz.isEmpty(triggers) || !pz.isObject(triggers)) {
                 return;
             };
         
-            this.triggers = pz.assignTo(this.triggers, triggers);
-        },
-        publish: function (name, params, component) {
-            var me = this;
-        
-            var fire = function (component, params) {
-                var trg = pz.isEmpty(component.triggers) ? null :
-                    component.triggers[name];
-                if (!pz.isEmpty(trg)) {
-                    trg.call(component, params);
-                };
-            };
-        
-            if (!pz.isEmpty(component)) {
-                var isString = pz.isString(component);
-                var c = isString ? pz.getInstanceOf(component)
-                    : component;
-                fire(c, params);
-                return;
-            };
-        
-            pz.application.instances.filter(function (instance) { // events are allowed only on components
-                return pz.isComponent(instance);
-            }).forEach(function (component) {
-                fire(component, params);
+            trg = pz.assignTo(this.triggers, triggers);
+            Object.keys(trg).forEach(function(key) {
+                pz.events.subscribe(key, trg[key]);
             });
+        },
+        publish: function (name, params) {
+            pz.events.publish(name, params);
         },
         addChild: function (child, index) {
     
@@ -452,7 +434,7 @@
                 throw new Error(_const.canNotDestroyComponent);
             };
             
-            this.publish('before-destroy', null, this);
+            this.publish('before-destroy');
             this.destroyChildren();
             pz.dom.off(this.html);
             if (!pz.isEmpty(this.viewModel)) {
@@ -471,7 +453,7 @@
             };
             this.destroyed = true;
             this.base(arguments);
-            this.publish('destroy-complete', null, this);
+            this.publish('destroy-complete');
         },
         destroyChildren: function () {
             var child, instance;
