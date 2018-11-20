@@ -97,27 +97,19 @@ var _format =function () {
 var _define = function (type, object) {
 
     var me = this, cls, obj, tBase,
-        isMixin, method, args, skipInheritance;
+        isMixin;
 
     if (pz.isEmpty(type) || pz.isEmpty(object)) {
         throw new Error(_const.canNotDefine);
     };
 
     obj = pz.toObject(object);
-    skipInheritance = pz.isEmpty(obj.ownerType) ||
-        (_const.coreBaseTypes.indexOf(type) != -1);
-
-    cls = skipInheritance ? pz.toFunction(obj) : (function () {
-        tBase = (pz[obj.ownerType] || pz.getDefinitionOf(obj.ownerType));
-        isMixin = pz.isMixin(obj);
-        obj.type = type;
-        return isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
-            tBase.extend(obj);
-    })();
-
-    if (skipInheritance) {
-        cls.extend = pz.base.extend;
-    };
+    obj.ownerType = pz.isEmpty(obj.ownerType) ? 'base' : obj.ownerType;
+    tBase = (pz[obj.ownerType] || pz.getDefinitionOf(obj.ownerType));
+    isMixin = pz.isMixin(obj);
+    obj.type = type;
+    cls = isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
+        tBase.extend(obj);
 
     if (!isMixin) {
         cls.create = (function (type) {
