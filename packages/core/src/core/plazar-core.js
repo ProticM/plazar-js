@@ -350,6 +350,17 @@ var _isPzDefinition = function(value) {
     return _isFunction(value) && value.$isPz;
 };
 
+var _deepClone = function(value) {
+    var result = _isInstanceOf(value, Array) ? [] : {}, i;
+
+    for (i in value) {
+        result[i] = (_isObject(value[i]) ? 
+            _deepClone(value[i]) : value[i]);
+    };
+
+    return result;
+};
+
 pz.ns = function (name, config) {
     _defineNamespace(name, config || {});
 };
@@ -449,3 +460,4 @@ pz.getGlobal = _getGlobal;
 pz.camelize = _camelize;
 pz.format = _format;
 pz.isPzDefinition = _isPzDefinition;
+pz.deepClone = _deepClone;

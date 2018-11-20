@@ -17,6 +17,7 @@ pz.base.prototype.applyMixins = function () {
         var mixin = pz.getDefinitionOf(mixinName);
         var cleanMixin = pz.assignTo({}, mixin);
         delete cleanMixin.ownerType;
+        delete cleanMixin.type;
         pz.assignTo(me, cleanMixin, false);
     });
 };
@@ -67,7 +68,7 @@ pz.base.extend = function extend(props) {
                     var isArray = pz.isArray(_properties[key]);
                     var isObject = pz.isObject(_properties[key]);
 
-                    me[key] = (isArray ? _properties[key].slice() : (isObject ? pz.assignTo({}, _properties[key]) : _properties[key]));
+                    me[key] = (isArray ? pz.deepClone(_properties[key]) : (isObject ? pz.assignTo({}, _properties[key]) : _properties[key]));
                 };
             });
             
