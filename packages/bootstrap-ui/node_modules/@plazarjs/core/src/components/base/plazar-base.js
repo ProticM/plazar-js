@@ -47,7 +47,7 @@ pz.base.extend = function extend(props) {
 
     var properties = (pz.toObject(props) || {}), parentClass, returnVal;
     if(pz.isEmpty(properties.type)) {
-        throw new Error("It seems that you are trying to extend an object without a type defined. Example: mydef.extend({ type: 'my-type' // other configs })");
+        throw new Error("It seems that you are trying to extend an object without a type definition. Example: myDefinition.extend({ type: 'my-type' // other configs })");
     };
     parentClass = this;
 
