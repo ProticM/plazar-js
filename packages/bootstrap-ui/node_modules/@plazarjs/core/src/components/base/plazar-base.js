@@ -22,10 +22,11 @@ pz.base.prototype.applyMixins = function () {
     });
 };
 pz.base.prototype.setRequiredInstances = function () {
+    var isModularEnv = pz.isModularEnv();
     var requireDefined = !pz.isEmpty(this.require) &&
         pz.isArray(this.require);
 
-    if (!requireDefined) {
+    if (isModularEnv || !requireDefined) {
         return;
     };
 

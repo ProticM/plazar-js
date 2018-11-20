@@ -361,6 +361,11 @@ var _deepClone = function(value) {
     return result;
 };
 
+var _isModularEnv = function() {
+    return (typeof exports === 'object' && typeof module !== 'undefined') || 
+        (typeof define === 'function' && define.amd);
+};
+
 pz.ns = function (name, config) {
     _defineNamespace(name, config || {});
 };
@@ -461,3 +466,4 @@ pz.camelize = _camelize;
 pz.format = _format;
 pz.isPzDefinition = _isPzDefinition;
 pz.deepClone = _deepClone;
+pz.isModularEnv = _isModularEnv;
