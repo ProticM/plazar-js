@@ -49,7 +49,7 @@ var _assignTo = function (target, source, clone) {
                     if(pz.isObject(nextSource[nextKey])) {
                         to[nextKey] = assign({}, nextSource[nextKey]);
                     } else if(pz.isArray(nextSource[nextKey])) {
-                        to[nextKey] = nextSource[nextKey].slice();
+                        to[nextKey] = _deepClone(nextSource[nextKey]);
                     } else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
                         to[nextKey] = nextSource[nextKey];
                     };
