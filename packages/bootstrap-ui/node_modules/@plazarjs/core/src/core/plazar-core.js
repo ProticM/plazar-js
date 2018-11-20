@@ -355,7 +355,7 @@ var _getGlobal = function() {
 };
 
 var _isPzDefinition = function(value) {
-    return _isFunction(value) && value.$pz;
+    return _isFunction(value) && value.$isPz;
 };
 
 pz.ns = function (name, config) {

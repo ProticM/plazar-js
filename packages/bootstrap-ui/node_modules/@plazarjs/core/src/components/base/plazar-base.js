@@ -117,7 +117,7 @@ pz.base.extend = function extend(props) {
 				return instance;
 			}
         })(pz_type);
-        pz_type.$pz = true;
+        pz_type.$isPz = true;
         pz_type.$type = _properties.type;
         return pz_type;
 
