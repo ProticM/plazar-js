@@ -20,7 +20,26 @@ pz.base.prototype.applyMixins = function () {
         pz.assignTo(me, cleanMixin, false);
     });
 };
+pz.base.prototype.setRequiredInstances = function () {
+    var requireDefined = !pz.isEmpty(this.require) &&
+        pz.isArray(this.require);
 
+    if (!requireDefined) {
+        return;
+    };
+
+    pz.forEach(this.require, function (requiredItemType) {
+        var instance = pz.getInstanceOf(requiredItemType)
+        var requiredItem = pz.isEmpty(instance) ?
+            pz.getDefinitionOf(requiredItemType) : instance;
+        var camelCaseName = pz.camelize(requiredItemType);
+
+        if (!pz.isEmpty(requiredItem) && pz.isEmpty(this[camelCaseName])) {
+            this[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
+                pz.create(requiredItemType);
+        };
+    }, this);
+};
 pz.base.extend = function extend(props) {
     // TODO: Inherit statics
 

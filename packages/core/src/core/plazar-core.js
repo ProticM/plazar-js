@@ -94,27 +94,6 @@ var _format =function () {
     return result;
 };
 
-var _setRequiredInstances = function (obj) {
-    var requireDefined = !pz.isEmpty(obj.require) &&
-        pz.isArray(obj.require);
-
-    if (!requireDefined) {
-        return;
-    };
-
-    pz.forEach(obj.require, function (requiredItemType) {
-        var instance = pz.getInstanceOf(requiredItemType)
-        var requiredItem = pz.isEmpty(instance) ?
-            pz.getDefinitionOf(requiredItemType) : instance;
-        var camelCaseName = pz.camelize(requiredItemType);
-
-        if (!pz.isEmpty(requiredItem) && pz.isEmpty(obj[camelCaseName])) {
-            obj[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
-                pz.create(requiredItemType);
-        };
-    });
-};
-
 var _define = function (type, object) {
 
     var me = this, cls, obj, tBase,
@@ -181,7 +160,7 @@ var _create = function (config) {
     };
 
     instance.id = pz.guid();
-    _setRequiredInstances(instance);
+    instance.setRequiredInstances(instance);
 
     if (pz.isComponent(instance) || pz.isClass(instance)) {
         instance.applyMixins();
