@@ -403,7 +403,7 @@ pz.defineApplication = function (config) {
     var rootComponents = !pz.isEmpty(config.components) && pz.isArray(config.components) ? 
         config.components : [], globalScope = _getGlobal();
     delete config.components;
-    delete config.instances; // making sure that we do not override the instances array if passed accidentally via config
+    delete config.instances;
     _assignTo(pz.application, config);
 
     if (_isEmpty(globalScope[config.namespace])) {
