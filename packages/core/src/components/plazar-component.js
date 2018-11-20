@@ -238,16 +238,13 @@
                 delete this.parentComponent.$ref;
             };
         },
-        subscribe: function (triggers) {
-            var trg;
-            if (pz.isEmpty(triggers) || !pz.isObject(triggers)) {
+        subscribe: function (name, listener) {
+            
+            if (pz.isEmpty(name) || pz.isObject(listener)) {
                 return;
             };
         
-            trg = pz.assignTo(this.triggers, triggers);
-            Object.keys(trg).forEach(function(key) {
-                pz.events.subscribe(key, trg[key]);
-            });
+            return pz.events.subscribe(name, listener);
         },
         publish: function (name, params) {
             pz.events.publish(name, params);

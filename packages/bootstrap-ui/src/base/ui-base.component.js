@@ -17,17 +17,17 @@
         ownerType: 'component',
         constructor: function () {
 
-            this.subscribe({
-                'render-complete': function () {
+            var me = this;
+            var sub = this.subscribe('render-complete', function () {
 
-                    if (pz.isFunction(this.parseTemplate) && !pz.isEmpty(this.template)) {
-                        this.parseTemplate();
-                    };
+                if (pz.isFunction(me.parseTemplate) && !pz.isEmpty(me.template)) {
+                    me.parseTemplate();
+                };
 
-                    this.prependLabel();
-                    this.initToolTip();
-                    this.initPopOver();
-                }
+                me.prependLabel();
+                me.initToolTip();
+                me.initPopOver();
+                sub.remove();
             });
 
             this.base(arguments);
