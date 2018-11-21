@@ -13,7 +13,7 @@
         canNotDestroyComponent: 'You cannot destroy a component with attached pre-rendered template.',
         evArgsMissing: 'Please provide event name and listener.'
     }, false);
-    
+
     var _get = function(options) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -34,6 +34,12 @@
         };
 
         xhr.send(options.data || null);
+    };
+
+    var _cleanArray = function(array) {
+        if(!pz.isEmpty(array)) {
+            array.splice(0, array.length);
+        };
     };
 
     return {
@@ -246,12 +252,18 @@
             };
         },
         subscribe: function (name, listener) {
-            
+            var subscription;
             if (pz.isEmpty(name) || pz.isObject(listener)) {
                 throw new Error(_const.evArgsMissing);
             };
-        
-            return pz.events.subscribe(name, listener);
+
+            if(pz.isEmpty(this.subscriptions)) {
+                this.subscriptions = [];
+            };
+            
+            subscription = pz.events.subscribe(name, listener);
+            this.subscriptions.push(subscription);
+            return subscription;
         },
         publish: function (name, params) {
             pz.events.publish(name, params);
@@ -449,9 +461,16 @@
             this.html = null;
             this.triggers = null;
             this.viewModel = null;
+            _cleanArray(this.components);
             this.components = null;
+            _cleanArray(this.handlers);
             this.handlers = null;
             this.mixins = null;
+            pz.forEach(this.subscriptions, function(subscription) {
+                subscription.remove();
+            });
+            _cleanArray(this.subscriptions);
+            this.subscriptions = null;
             parent = this.traceUp();
             if (!pz.isEmpty(parent)) {
                 parent.removeChild(this, false);
