@@ -77,7 +77,7 @@
         traceUp: function () {
             return pz.isEmpty(this.parentComponent) ? null :
             (!pz.isEmpty(this.parentComponent.$ref) ? this.parentComponent.$ref 
-                : pz.getInstanceOf(this.parentComponent.id));
+                : (pz.isComponent(this.parentComponent) ? this.parentComponent : pz.getInstanceOf(this.parentComponent.id)));
         },
         traceDown: function (value) { // can be type, id or alias if defined on a component
             if (pz.isEmpty(this.components)) {
@@ -254,13 +254,14 @@
     
             var hasChildren, parentSelector, instance, childReference, renderTo,
                 replace = child.$replace, isValidObj = pz.isObject(child) && !(pz.isEmpty(child) || pz.isEmpty(child.type)),
-                isValidFn = pz.isPzDefinition(child);
+                isValidFn = pz.isPzDefinition(child), isModuleEnv;
 
             if (!isValidObj && !isValidFn) {
                 throw new Error(_const.addChildParamErr);
             };
-        
+            
             delete child.$replace;
+            isModuleEnv = pz.isModularEnv();
             parentSelector = '*[data-componentid="' + this.id + '"]';
         
             child.autoLoad = false; // prevent auto load since we might be missing [renderTo] from config
@@ -271,12 +272,12 @@
                 parentSelector.concat(!pz.isEmpty(this.containerElement) ? ' ' + this.containerElement : '') :
                 (renderTo == 'root' ? parentSelector : parentSelector.concat(' ').concat(renderTo));
         
-            instance.parentComponent = {
+            instance.parentComponent = isModuleEnv ? this : {
                 type: this.type,
                 id: this.id
             };
         
-            if(!pz.isEmpty(instance.renderAfter) || !pz.isEmpty(instance.renderBefore)) {
+            if(!isModuleEnv && (!pz.isEmpty(instance.renderAfter) || !pz.isEmpty(instance.renderBefore))) {
                 instance.parentComponent.$ref = this;
             };
         
@@ -293,12 +294,12 @@
                 this.components = [];
             };
         
-            childReference = {
+            childReference = isModuleEnv ? instance : {
                 type: instance.type,
                 id: instance.id
             };
         
-            if (!pz.isEmpty(instance.alias)) {
+            if (!isModuleEnv && !pz.isEmpty(instance.alias)) {
                 childReference.alias = instance.alias;
             };
         
@@ -458,7 +459,7 @@
             while (!pz.isEmpty(this.components) &&
                 ((child = this.components[0]) != null) && !pz.isEmpty(child.id)) {
         
-                instance = pz.getInstanceOf(child.id);
+                instance = (pz.isFunction(child.destroy) ? child : pz.getInstanceOf(child.id));
                 instance.destroy();
                 instance = null;
             };

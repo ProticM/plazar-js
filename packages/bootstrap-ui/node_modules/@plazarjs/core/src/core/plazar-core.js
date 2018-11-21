@@ -355,7 +355,7 @@ var _deepClone = function(value) {
 
 var _isModularEnv = function() {
     return (typeof exports === 'object' && typeof module !== 'undefined') || 
-        (typeof define === 'function' && define.amd);
+        (typeof define === 'function' && !_isEmpty(define.amd));
 };
 
 pz.ns = function (name, config) {
