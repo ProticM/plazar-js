@@ -13,11 +13,10 @@ var _const = {
         string: '[object String]',
         nodeList: '[object NodeList]'
     },
-    typeNotFound: 'Type [{0}] was not found within definitions',
-    typeMustBeStringOrObject: 'First parameter can be string or object',
-    canNotCreate: 'Can not create an instance based on provided arguments',
-    canNotDefine: 'Can not define type based on provided arguments',
-    coreBaseTypes: ['base', 'mixin'],
+    typeNotFound: 'Type [{0}] was not found within definitions. INFO: In modular environment definitions and instances are not stored globally.',
+    typeMustBeStringOrObject: 'First parameter can be string or object.',
+    canNotCreate: 'Cannot create an instance based on provided arguments. Example invocation: pz.create({ // config }) or pz.create(\'my-type\')',
+    canNotDefine: 'Cannot define type based on provided arguments. Example invocation: pz.define(\'my-type\', { // config })',
     defaultNamespace: 'pz'
 };
 
