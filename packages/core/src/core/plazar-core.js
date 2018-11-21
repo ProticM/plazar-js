@@ -96,7 +96,7 @@ var _format =function () {
 
 var _define = function (type, object) {
 
-    var me = this, cls, obj, tBase,
+    var cls, obj, tBase,
         isMixin;
 
     if (pz.isEmpty(type) || pz.isEmpty(object)) {
@@ -110,17 +110,6 @@ var _define = function (type, object) {
     obj.type = type;
     cls = isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
         tBase.extend(obj);
-
-    if (!isMixin) {
-        cls.create = (function (type) {
-            var _type = type;
-
-            return function () {
-                return me.create(_type);
-            };
-
-        })(type);
-    };
 
     this.definitions.push({
         type: type,
