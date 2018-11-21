@@ -34,7 +34,7 @@ var _assignTo = function (target, source, clone) {
 
     var assign = function (target) {
 
-        if (pz.isEmpty(target)) {
+        if (_isEmpty(target)) {
             throw new TypeError(_const.canNotConvertNullOrEmptyObj);
         };
 
@@ -43,11 +43,11 @@ var _assignTo = function (target, source, clone) {
         for (var index = 1; index < arguments.length; index++) {
             var nextSource = arguments[index];
 
-            if (!pz.isEmpty(nextSource)) {
+            if (!_isEmpty(nextSource)) {
                 for (var nextKey in nextSource) {
-                    if(pz.isObject(nextSource[nextKey])) {
+                    if(_isObject(nextSource[nextKey])) {
                         to[nextKey] = assign({}, nextSource[nextKey]);
-                    } else if(pz.isArray(nextSource[nextKey])) {
+                    } else if(_isArray(nextSource[nextKey])) {
                         to[nextKey] = _deepClone(nextSource[nextKey]);
                     } else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
                         to[nextKey] = nextSource[nextKey];
@@ -58,7 +58,7 @@ var _assignTo = function (target, source, clone) {
         return to;
     };
 
-    var c = pz.isEmpty(clone) ? true : clone;
+    var c = _isEmpty(clone) ? true : clone;
     var t = c ? assign({}, target) : target, result;
     result = assign(t, source);
     assign = null;
@@ -66,7 +66,7 @@ var _assignTo = function (target, source, clone) {
 };
 
 var _camelize = function (str) {
-    if (pz.isEmpty(str)) {
+    if (_isEmpty(str)) {
         return '';
     };
 
@@ -81,12 +81,12 @@ var _format =function () {
     var baseString = args[0];
     var params = args.splice(1), result = '';
 
-    if (pz.isEmpty(baseString) || pz.isEmpty(params)) {
+    if (_isEmpty(baseString) || _isEmpty(params)) {
         return result;
     };
 
-    pz.forEach(params, function (param, idx) {
-        result = pz.isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
+    _forEach(params, function (param, idx) {
+        result = _isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
             result.replace('{' + idx + '}', param);
     });
 
@@ -98,23 +98,20 @@ var _define = function (type, object) {
     var cls, obj, tBase,
         isMixin;
 
-    if (pz.isEmpty(type) || pz.isEmpty(object)) {
+    if (_isEmpty(type) || _isEmpty(object)) {
         throw new Error(_const.canNotDefine);
     };
 
-    obj = pz.toObject(object);
-    obj.ownerType = pz.isEmpty(obj.ownerType) ? 'base' : obj.ownerType;
-    tBase = (pz[obj.ownerType] || pz.getDefinitionOf(obj.ownerType));
-    isMixin = pz.isMixin(obj);
+    obj = _toObject(object);
+    obj.ownerType = _isEmpty(obj.ownerType) ? 'base' : obj.ownerType;
+    tBase = (this[obj.ownerType] || this.getDefinitionOf(obj.ownerType));
+    isMixin = _isMixin(obj);
     obj.type = type;
-    cls = isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
+    cls = isMixin ? _assignTo(obj, _assignTo({}, tBase.prototype), false) :
         tBase.extend(obj);
         
-    if(!pz.isModularEnv()) {
-        this.definitions.push({
-            type: type,
-            definition: cls
-        });
+    if(!_isModularEnv()) {
+        this.storeDefinition(type, cls);
     };
 
     return cls;
@@ -123,28 +120,28 @@ var _define = function (type, object) {
 var _create = function (config) {
     var isObject, type, item, instance, params;
 
-    if (pz.isEmpty(config)) {
+    if (_isEmpty(config)) {
         throw new Error(_const.canNotCreate);
     };
 
-    isObject = pz.isObject(config);
+    isObject = _isObject(config);
     type = isObject ? config.type : config;
-    item = pz.getDefinitionOf(type);
+    item = this.getDefinitionOf(type);
     
     if (isObject) {
         params = _assignTo({}, config, false);
         delete params.type;
         delete config.type;
         instance = new item(params);
-        pz.assignTo(instance, config, false);
+        _assignTo(instance, config, false);
     } else {
         instance = new item();
     };
 
-    instance.id = pz.guid();
+    instance.id = _guid();
     instance.setRequiredInstances(instance);
 
-    if (pz.isComponent(instance) || pz.isClass(instance)) {
+    if (_isComponent(instance) || _isClass(instance)) {
         instance.applyMixins();
 
         if (instance.autoLoad) {
@@ -152,8 +149,8 @@ var _create = function (config) {
         };
     };
 
-    if(!pz.isModularEnv()) {
-        pz.application.instances.push(instance);
+    if(!_isModularEnv()) {
+        this.application.instances.push(instance);
     };
 
     return instance;
@@ -307,7 +304,7 @@ var _get = function (me, typeOrIdOrAlias, instance, all) {
         sourceArray,
         fnCallback = function (item) {
             return i && (item.id == typeOrIdOrAlias || item.type == typeOrIdOrAlias) ||
-                item.type == typeOrIdOrAlias || (!pz.isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
+                item.type == typeOrIdOrAlias || (!_isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
         }, result;
 
     sourceArray = (i ? me.application.instances : me.definitions);
@@ -326,7 +323,7 @@ var _getObjectByNamespaceString = function (namespace) {
     };
 
     return parts.reduce(function (previous, current) {
-        if (pz.isString(previous)) {
+        if (_isString(previous)) {
             return globalScope[previous][current];
         };
 
@@ -358,6 +355,13 @@ var _isModularEnv = function() {
         (typeof define === 'function' && !_isEmpty(define.amd));
 };
 
+var _storeDefinition = function(type, definition) {
+    this.definitions.push({
+        type: type,
+        definition: definition
+    });
+};
+
 pz.ns = function (name, config) {
     _defineNamespace(name, config || {});
 };
@@ -370,12 +374,12 @@ pz.defineStatic = function (type, object, namespace) {
     var globalScope = _getGlobal();
 
     if (_isEmpty(globalScope[ns]) && !isDefault) {
-        pz.ns(ns);
+        this.ns(ns);
     };
 
     var o = (isDefault ? this : _getObjectByNamespaceString(ns));
     if (_isEmpty(type)) {
-        pz.assignTo(o, obj, false);
+        _assignTo(o, obj, false);
     } else {
         o[type] = obj;
     };
@@ -397,21 +401,21 @@ pz.getInstanceOf = function (typeOrIdOrAlias, all) {
 };
 
 pz.defineApplication = function (config) {
-    var rootComponents = !pz.isEmpty(config.components) && pz.isArray(config.components) ? 
+    var rootComponents = !_isEmpty(config.components) && _isArray(config.components) ? 
         config.components : [], globalScope = _getGlobal();
     delete config.components;
     delete config.instances;
-    _assignTo(pz.application, config);
+    _assignTo(this.application, config);
 
     if (_isEmpty(globalScope[config.namespace])) {
         this.ns(config.namespace, config);
-        pz.assignTo(globalScope[config.namespace], config, false);
+        _assignTo(globalScope[config.namespace], config, false);
     } else {
-        pz.assignTo(globalScope[config.namespace], config, false);
+        _assignTo(globalScope[config.namespace], config, false);
     };
 
-    pz.forEach(rootComponents, function (item) {
-        var def = pz.getDefinitionOf(item);
+    _forEach(rootComponents, function (item) {
+        var def = (pz.isPzDefinition(item) ? item : pz.getDefinitionOf(item));
         if (_isFunction(def.create)) {
             def.create();
         };
@@ -459,3 +463,4 @@ pz.format = _format;
 pz.isPzDefinition = _isPzDefinition;
 pz.deepClone = _deepClone;
 pz.isModularEnv = _isModularEnv;
+pz.storeDefinition = _storeDefinition;
