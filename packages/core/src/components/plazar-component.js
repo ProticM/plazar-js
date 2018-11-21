@@ -80,18 +80,24 @@
                 : (pz.isComponent(this.parentComponent) ? this.parentComponent : pz.getInstanceOf(this.parentComponent.id)));
         },
         traceDown: function (value) { // can be type, id or alias if defined on a component
+            var children;
+
             if (pz.isEmpty(this.components)) {
                 return null;
             };
         
-            var children = this.components.filter(function (childComponent) {
+            children = this.components.filter(function (childComponent) {
                 var conditionOk = childComponent.type == value ||
                     childComponent.id == value || childComponent.alias == value;
                 return conditionOk;
-            }).map(function (childComponent) {
-                return pz.getInstanceOf(childComponent.id);
             });
-        
+            
+            if(!pz.isModularEnv()) {
+                children = children.map(function (childComponent) {
+                    return pz.getInstanceOf(childComponent.id);
+                });
+            };
+
             return children.length == 1 ? children[0] : children;
         },
         load: function () {
