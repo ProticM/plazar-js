@@ -12,8 +12,8 @@ pz.base.prototype.destroy = function () {
 },
 pz.base.prototype.applyMixins = function () {
     var me = this;
-    pz.forEach(this.mixins, function (mixinName) {
-        var mixin = pz.getDefinitionOf(mixinName);
+    pz.forEach(this.mixins, function (m) {
+        var mixin = pz.isMixin(m) ? m : pz.getDefinitionOf(m);
         var cleanMixin = pz.assignTo({}, mixin);
         delete cleanMixin.ownerType;
         delete cleanMixin.type;
