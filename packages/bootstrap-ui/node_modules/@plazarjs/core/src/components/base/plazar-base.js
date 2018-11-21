@@ -5,7 +5,6 @@
 pz.base.prototype.mixins = [],
 pz.base.prototype.init = function () { },
 pz.base.prototype.destroy = function () {
-    // TODO: multiple instances destroy
     var idx = pz.application.instances.indexOf(this);
     if (idx != -1) {
         pz.application.instances.splice(idx, 1);
@@ -47,7 +46,7 @@ pz.base.extend = function extend(props) {
 
     var properties = (pz.toObject(props) || {}), parentClass, returnVal;
     if(pz.isEmpty(properties.type)) {
-        throw new Error("It seems that you are trying to extend an object without a type definition. Example: myDefinition.extend({ type: 'my-type' // other configs })");
+        throw new Error("It seems that you are trying to create an object without a type definition. Example invocation: myDefinition.extend({ type: 'my-type' // other configs });");
     };
     parentClass = this;
 
