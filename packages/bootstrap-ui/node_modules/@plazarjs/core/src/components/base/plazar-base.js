@@ -114,6 +114,10 @@ pz.base.extend = function extend(props) {
 						instance.load();
 					};
                 };
+                
+                if(!pz.isModularEnv()) {
+                    pz.application.instances.push(instance);
+                };
 
 				return instance;
 			}

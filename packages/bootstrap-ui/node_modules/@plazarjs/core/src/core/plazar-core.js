@@ -110,11 +110,13 @@ var _define = function (type, object) {
     obj.type = type;
     cls = isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
         tBase.extend(obj);
-
-    this.definitions.push({
-        type: type,
-        definition: cls
-    });
+        
+    if(!pz.isModularEnv()) {
+        this.definitions.push({
+            type: type,
+            definition: cls
+        });
+    };
 
     return cls;
 };
@@ -151,7 +153,9 @@ var _create = function (config) {
         };
     };
 
-    pz.application.instances.push(instance);
+    if(!pz.isModularEnv()) {
+        pz.application.instances.push(instance);
+    };
 
     return instance;
 };
