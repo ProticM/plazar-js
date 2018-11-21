@@ -20,20 +20,15 @@
             if (this.readyState == 4) {
                 options.success.call(this, {
                     request: this,
-                    data: (dataType == options.data.json ? pz.toJSON(this.responseText) : this.responseText),
-                    dataType: dataType
+                    data: (options.dataType == 'json' && !pz.isObject(this.responseText) ? pz.toJSON(this.responseText) : this.responseText),
+                    dataType: options.dataType
                 });
             };
         };
 
         xhr.onerror = options.error;
         xhr.open('GET', options.url, true);
-
-        if (pz.isString(options.data)) {
-            options.data = pz.toJSON(options.data);
-        };
-
-        xhr.send(options.data || null);
+        xhr.send();
     };
 
     var _cleanArray = function(array) {
@@ -137,8 +132,7 @@
         
             _get({
                 url: this.ajaxSetup.url,
-                dataType: this.ajaxSetup.dataType,
-                data: this.ajaxSetup.data,
+                dataType: (this.ajaxSetup.dataType || 'json'),
                 success: componentLoaded,
                 error: function(e) {
                     console.log(e);
