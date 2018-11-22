@@ -60,7 +60,7 @@ PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following ta
 ```
 $ gulp build
 ```
-If there was a change related to a specific package:
+If there was a change related to a specific package, you should run a specific task:
 ```
 $ gulp build-core
 $ gulp build-bootstrap
@@ -88,7 +88,7 @@ Each package has a `src` folder. This is your working area.
 
 #### Scripts
 
-This folder contains two JavaScript templates, `umd-wrapper.jst` and `dependant-module-wrapper.jst` which are used during building process to wrap the content of the output scripts.
+This folder contains three JavaScript template, `umd-wrapper.jst`, `dependant-module-wrapper.jst` and `version.jst` which are used during building process to wrap the content of the output scripts. `config.js` and `wrap.js` are helper modules.
 
 ## Financial Contribution
 
