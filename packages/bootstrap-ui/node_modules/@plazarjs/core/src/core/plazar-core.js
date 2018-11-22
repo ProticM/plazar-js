@@ -233,26 +233,16 @@ var _forEach = function (subject, fn, scope) {
 };
 
 var _proxy = function (fn, context) {
-    var tmp, args, proxy;
-
-    if (_isString(context)) {
-        tmp = fn[context];
-        context = fn;
-        fn = tmp;
-    };
+    var args;
 
     if (!_isFunction(fn)) {
         return;
     };
 
     args = Array.prototype.slice.call(arguments, 2);
-    proxy = function () {
-        var c = pz.isComponent(context) && context.destroyed ? 
-            pz.getInstanceOf(context.type) : context;
-        return fn.apply(c || this, args.concat(Array.prototype.slice.call(arguments)));
+    return function () {
+        return fn.apply(context || this, args.concat(Array.prototype.slice.call(arguments)));
     };
-
-    return proxy;
 };
 
 var _toJSON = function (value, safe, asString) {

@@ -33,7 +33,7 @@
         data: [],
         listeners: [],
         remove: function(element, event) {
-            var index, listener = pz.find(function (lst, idx) {
+            var index, i, listener = pz.find(function (lst, idx) {
                 var found = lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
                 if (found) { index = idx; };
                 return found;
@@ -47,10 +47,11 @@
                     if(dataItem.id == listener.id) { acc.push(idx) };
                     return acc;
                 }, []);
-
-                pz.forEach(indexes, function(idx) {
+                i = indexes.length - 1;
+                for(; i >= 0; i--) {
+                    var idx = indexes[i];
                     this.data.splice(idx, 1);
-                }, this);
+                };
             };
         },
         fn: function (e) {

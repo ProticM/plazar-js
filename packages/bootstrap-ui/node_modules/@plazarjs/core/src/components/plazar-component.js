@@ -335,6 +335,7 @@
                 (pz.format("{0}[{1}\"{2}\"]", this.html.tagName, 'data-componentid=', this.id));
             args = [handler.on, me.html, selector, pz.proxy(fn, handler.scope || me)];
             pz.dom.on.apply(pz.dom, args);
+            handler = null;
         },
         showLoadingMask: function () {
             var renderToDefined = !pz.isEmpty(this.renderTo), container;
