@@ -24,8 +24,8 @@ pz.defineStatic('events', function () {
                 return;
             };
 
-            _subscriptions[name].forEach(function(item) {
-                item((args != undefined ? args : null));
+            _subscriptions[name].forEach(function(subscription) {
+                subscription((args != undefined ? args : null));
             });
         }
     };
