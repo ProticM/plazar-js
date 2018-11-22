@@ -71,7 +71,7 @@
             selector = (match ? dataItem.selector : undefined);
             fn = (match ? dataItem.fn : undefined);
             dataItem = null;
-            targetMatches = match; //|| e.target == this;
+            targetMatches = match;
 
             if (targetMatches) {
                 target = e.target;
