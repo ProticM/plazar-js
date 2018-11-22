@@ -100,13 +100,24 @@ pz.base.extend = function extend(props) {
 
         pz_type.extend = extend;
         pz_type.create = (function(t) {
-			return function create() {
-				var instance = new t();
+			return function create(config) {
+                var params, instance;
+
+                if(!pz.isEmpty(config)) {
+                    params = pz.assignTo({}, config, false);
+                    delete params.type;
+                    delete config.type;
+				    instance = new t(params);
+                    pz.assignTo(instance, config, false);
+                } else {
+                    instance = new t();
+                };
 
 				instance.id = pz.guid();
                 instance.autoLoad = !pz.isEmpty(t.autoLoad) ? t.autoLoad : instance.autoLoad;
                 delete t.autoLoad;
-                
+                instance.setRequiredInstances();
+
 				if (pz.isComponent(instance) || pz.isClass(instance)) {
 					instance.applyMixins();
 

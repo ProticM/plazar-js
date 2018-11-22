@@ -118,7 +118,7 @@ var _define = function (type, object) {
 };
 
 var _create = function (config) {
-    var isObject, type, item, instance, params;
+    var isObject, type, item, instance;
 
     if (_isEmpty(config)) {
         throw new Error(_const.canNotCreate);
@@ -127,33 +127,7 @@ var _create = function (config) {
     isObject = _isObject(config);
     type = isObject ? config.type : config;
     item = this.getDefinitionOf(type);
-    
-    if (isObject) {
-        params = _assignTo({}, config, false);
-        delete params.type;
-        delete config.type;
-        instance = new item(params);
-        _assignTo(instance, config, false);
-    } else {
-        instance = new item();
-    };
-
-    instance.id = _guid();
-    instance.setRequiredInstances(instance);
-
-    if (_isComponent(instance) || _isClass(instance)) {
-        instance.applyMixins();
-
-        if (instance.autoLoad) {
-            instance.load();
-        };
-    };
-
-    if(!_isModularEnv()) {
-        this.application.instances.push(instance);
-    };
-
-    return instance;
+    return item.create((isObject ? config : undefined));
 };
 
 var _toObject = function (obj, instantiate) {
