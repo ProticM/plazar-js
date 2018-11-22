@@ -20,7 +20,7 @@ Hello, and Welcome to the PlazarJS contribution guide. I'm very proud of the fac
 - The `master` branch represents the latest production release. **Please do not push anything directly into this branch**.
 - The `develop` branch represents the branch with the latest features.
 - All development should be done in dedicated branches.
-- Work under the `src` folder. Please do not push the `dist` folders. They are used to store the build files which are published when a release happens.
+- Work under the `src` folder. **Please do not push the `dist` folders**. They are used to store the build files which are published when a release happens.
 - Checkout a topic branch from the relevant branch and merge it back when finished.
 
 #### Branch Naming
@@ -60,9 +60,14 @@ PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following ta
 ```
 $ gulp build
 ```
-If there was a change related to bootstrap-ui:
+If there was a change related to a specific package:
 ```
+$ gulp build-core
 $ gulp build-bootstrap
+$ gulp build-http
+$ gulp build-array-util
+$ gulp build-string-util
+$ gulp build-object-util
 ```
 
 ## Project Structure
@@ -77,7 +82,7 @@ This folder contains demo applications. Under the folder `bootstrap-ui` there is
 
 #### Packages
 
-This folder contains `core` and `bootstrap-ui` and they are distributed as separate NPM packages. Each time when you run any of the gulp tasks defined above, the build scripts will be created within the dist folder for each package. The version is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
+This folder contains `core`, `bootstrap-ui`, `http`, `array-util`, `string-util` and `object-util` which are distributed as separate NPM packages. Each time when you run any of the gulp tasks defined above, the build scripts will be created within the dist folder for each package. The version is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
 
 Each package has a `src` folder. This is your working area.
 
