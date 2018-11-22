@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-form', function () {
-    'use strict';
 
     var _parseTemplate = function () {
         var hasAction = !pz.isEmpty(this.action), hasMethod = !pz.isEmpty(this.method);

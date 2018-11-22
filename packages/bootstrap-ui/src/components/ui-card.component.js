@@ -1,6 +1,5 @@
 ﻿pz.define('ui-bootstrap-card', function () {
-    'use strict';
-
+    
     var _parseTemplate = function () {
 
         var hasImage = !pz.isEmpty(this.image), image, pos, method;

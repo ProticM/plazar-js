@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-list-group', function () {
-    'use strict';
 
     var _const = {
         elementAtIdxNotFound: 'Element at index {0} was not found'
@@ -60,7 +59,7 @@
 
         var el = me.html.childNodes[idx];
         if (pz.isEmpty(el)) {
-            var msg = pz.str.format(_const.elementAtIdxNotFound, idx);//_const.elementAtIdxNotFound.replace('{0}', idx);
+            var msg = pz.format(_const.elementAtIdxNotFound, idx);
             throw new Error(msg);
         };
 

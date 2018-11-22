@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-button-toolbar', function () {
-    'use strict';
 
     var _parseTemplate = function () {
         this.html.setAttribute('aria-label', 'label_' + this.id);

@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-modal', function () {
-    'use strict';
 
     var _primaryButtons = ['Yes', 'Ok'];
 

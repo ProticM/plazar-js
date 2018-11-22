@@ -36,23 +36,17 @@ pz.define('grid-component', function() {
             this.viewModel.columns = this.columns;
             this.loadData();
 
-            this.subscribe({
-                'todo-added': function(todo) {
-                    var jTodo = pz.binder.toJSON(todo);
-                    me.addTodos([jTodo]);
-                }
+            this.subscribe('todo-added', function(todo) {
+                var jTodo = pz.binder.toJSON(todo);
+                me.addTodos([jTodo]);
             });
 
-            this.subscribe({
-                'todo-updated': function(todo) {
-                    me.loadData();
-                }
+            this.subscribe('todo-updated', function(todo) {
+                me.loadData();
             });
 
-            this.subscribe({
-                'todo-deleted': function() {
-                    me.loadData();
-                }
+            this.subscribe('todo-deleted', function() {
+                me.loadData();
             });
 
             this.base(arguments);

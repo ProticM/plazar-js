@@ -11,8 +11,9 @@
   "devDependencies": {
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-replace": "^1.0.0",
+    "gulp-fn": "0.0.3",
     "gulp-uglify": "^3.0.1",
-    "lerna": "^3.4.3"
+    "lerna": "^3.4.3",
+    "merge-stream": "^1.0.1"
   }
 }

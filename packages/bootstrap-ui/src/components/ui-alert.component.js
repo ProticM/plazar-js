@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-alert', function () {
-    'use strict';
 
     var _parseTemplate = function () {
 

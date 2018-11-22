@@ -8,14 +8,8 @@
        return factory(global.###namespace###)
    })() :
    typeof define === 'function' && define.amd ? define(['@plazarjs/core'], function(###namespace###) { return factory(###namespace###); }) :
-   (global.###moduleNamespace### = factory(global.###namespace###));
+   (global.###namespace###.###moduleNamespace### = factory(global.###namespace###));
 }(this, (function (###namespace###) {
 'use strict';
-var ###moduleNamespace### = {
-    init: function() {
-        ###content###
-    }
-};
-if(###namespace### !== undefined) { ###moduleNamespace###.init(); };
-return ###moduleNamespace###;
+###content###
 })));

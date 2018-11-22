@@ -1,5 +1,4 @@
 ﻿pz.defineStatic('dom', function () {
-    'use strict';
 
     var _tagNameReg = /<([^\s>]+)(\s|>)+/;
 
@@ -24,14 +23,37 @@
             newNode : newNode.outerHTML));
     };
 
-    var _getListener = function (me, element, event) {
+    var _getListener = function (element, event) {
         return pz.find(function (lst) {
             return lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
-        }, me.listeners);
+        }, _delegate.listeners);
     };
 
     var _delegate = {
         data: [],
+        listeners: [],
+        remove: function(element, event) {
+            var index, i, listener = pz.find(function (lst, idx) {
+                var found = lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
+                if (found) { index = idx; };
+                return found;
+            }, this.listeners), indexes;
+
+            if (!pz.isEmpty(listener)) {
+                listener.el.removeEventListener(listener.event, _delegate.fn);
+                this.listeners.splice(index, 1);
+
+                indexes = this.data.reduce(function(acc, dataItem, idx) {
+                    if(dataItem.id == listener.id) { acc.push(idx) };
+                    return acc;
+                }, []);
+                i = indexes.length - 1;
+                for(; i >= 0; i--) {
+                    var idx = indexes[i];
+                    this.data.splice(idx, 1);
+                };
+            };
+        },
         fn: function (e) {
 
             var target = null;
@@ -133,7 +155,7 @@
         },
 
         findParent: function (el, selector, stopSelector) {
-            var retval = null, me = this;
+            var retval = null;
             while (!pz.isEmpty(el)) {
                 if (this.elementMatches(el, selector)) {
                     retval = el;
@@ -147,19 +169,22 @@
         },
 
         on: function (event, element, selector, fn) {
-            // TODO: See if we can use only one collection (_delegate.data/this.listeners)
-            var rootEl, lst;
+            var rootEl, lst, lstEmpty, id;
 
             if (pz.isEmpty(fn)) {
                 return;
             };
 
             rootEl = !pz.isEmpty(element) ? element : document;
-            lst = _getListener(this, rootEl, event);
+            lst = _getListener(rootEl, event);
+            lstEmpty = pz.isEmpty(lst);
+            id = (lstEmpty ? (Date.now() + Math.random()).toString() : lst.id);
+
             _delegate.data.push({
                 selector: selector,
                 fn: fn,
-                type: event
+                type: event,
+                id: id
             });
 
             if (!pz.isEmpty(lst)) {
@@ -167,11 +192,11 @@
             };
 
             rootEl.addEventListener(event, _delegate.fn);
-            this.listeners.push({
+            _delegate.listeners.push({
                 el: rootEl,
-                event: event
+                event: event,
+                id: id
             });
-
         },
 
         getByAttr: function (attrValue, attrName) {
@@ -270,23 +295,8 @@
         },
 
         off: function (element, event) {
-
-            var index, listener = pz.find(function (lst, idx) {
-                var found = lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
-                if (found) {
-                    index = idx;
-                };
-                return found;
-            }, this.listeners);
-
-            if (!pz.isEmpty(listener)) {
-                listener.el.removeEventListener(listener.event, _delegate.fn);
-            };
-
-            this.listeners.splice(index, 1);
+            _delegate.remove(element, event);
         },
-
-        listeners: [],
 
         indexOf: function (child) {
             var i = 0;

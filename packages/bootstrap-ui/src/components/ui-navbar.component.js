@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-navbar', function () {
-    'use strict';
 
     var _allowedComponents = [
         'ui-bootstrap-dropdown'

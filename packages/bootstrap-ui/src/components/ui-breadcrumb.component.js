@@ -1,6 +1,5 @@
 ﻿pz.define('ui-bootstrap-breadcrumb', function () {
-    'use strict';
-
+    
     var _createCrumbs = function (me, crumbs) {
         var ul = pz.dom.findElement(me.html, 'ol.breadcrumb');
         pz.forEach(crumbs, function (crumb) {

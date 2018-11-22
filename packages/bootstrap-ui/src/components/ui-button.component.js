@@ -1,6 +1,5 @@
 ﻿pz.define('ui-bootstrap-button', function () {
-    'use strict';
-
+    
     var _parseTemplate = function () {
         var hasSize = !pz.isEmpty(this.size), hasHref = !pz.isEmpty(this.href);
         this.html.innerHTML = this.text;

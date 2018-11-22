@@ -30,6 +30,16 @@ A versatile framework built to enrich the developer experience in terms of simpl
 </p>
 </p>
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Introduction](#introduction)
+- [Getting Started and Documentation](#getting-started-and-documentation)
+- [Bootstrap Integration](#bootstrap-integration)
+- [Contribution](#contribution)
+- [Browser Support](#browser-support)
+- [Plans](#plans)
+
 ## Installation
 
 Run the following command:
@@ -40,13 +50,7 @@ Or, place the script tag on your page:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@plazarjs/core/dist/core.min.js"></script>
 ```
-Optionally, you can include Bootstrap UI:
-```bash
-$ npm install @plazarjs/bootstrap-ui
-```
-```html
-<script src="https://cdn.jsdelivr.net/npm/@plazarjs/bootstrap-ui/dist/bootstrap-ui.min.js"></script>
-```
+Check out the list of available dependant <a href="https://github.com/ProticM/plazar-js/blob/master/PACKAGES.md">packages</a>.
 
 ## Introduction
 
@@ -113,7 +117,7 @@ component.setUserData(user);
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
-## Bootstrap Integration (bootstrap-ui)
+## Bootstrap Integration
 
 PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
 

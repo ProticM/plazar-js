@@ -1,7 +1,4 @@
-﻿pz.define('class', function () {
-    'use strict';
-
-    return {
-        ownerType: 'base'
-    }
+﻿pz.class = pz.base.extend({
+    type: 'class'
+    // common
 });

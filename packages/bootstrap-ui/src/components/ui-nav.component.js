@@ -1,5 +1,4 @@
 ﻿pz.define('ui-bootstrap-nav', function () {
-    'use strict';
 
     var _const = {
         componentsNotAllowedInTabMode: 'Components in menu are not allowed while using tab mode',
