@@ -83,14 +83,6 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 A quick example:
 
 ```javascript
-pz.define('header-component', {
-  ownerType: 'component',
-  template: '<header>Welcome to PlazarJS - {year}</header>',
-  viewModel: {
-    year: '2018'
-  }
-});
-
 pz.define('button-component', {
   ownerType: 'component',
   template: '<button type="button"></button>',
@@ -99,7 +91,28 @@ pz.define('button-component', {
   init: function() {
     this.base();
     this.html.innerText = this.text;
-  }
+  },
+  handlers: [{
+    on: 'click',
+    fn: 'onClick'
+  }],
+  onClick: function() { }
+});
+
+pz.define('header-component', {
+  ownerType: 'component',
+  template: '<header>Welcome to PlazarJS - {year}</header>',
+  viewModel: {
+    year: '2018'
+  },
+  components: [{
+    type: 'button-component',
+     text: 'Header button',
+    renderTo: 'root', // render to root instead of the default div.buttons (we don't have that element within our header)
+    onClick: function() { 
+      alert('Hello from Header!');
+    }
+  }]
 });
 
 pz.define('body-component', {
@@ -109,7 +122,10 @@ pz.define('body-component', {
     text: 'This is the body component! I can have child component as well. Like the button bellow:'
   },
   components: [{
-    type: 'button-component'
+    type: 'button-component',
+    onClick: function() { 
+      alert('Hello from Body!');
+    }
   }]
 });
 
