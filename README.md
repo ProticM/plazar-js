@@ -42,7 +42,7 @@ A versatile framework built to enrich the developer experience in terms of simpl
 
 ## Installation
 
-Run the following command:
+Run the following npm command:
 ```bash
 $ npm install @plazarjs/core
 ```
@@ -58,9 +58,9 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 
 ##### TL;DR
 
-1. Can define components, mixins or classes by invoking `pz.define`.
+1. Can define components, mixins or classes by invoking `pz.define`, `pz.component.extend` or `pz.class.extend`. Mixins are not extendable.
 2. Reuse each type later in the app as much as needed. One type, multiple instances.
-3. Extend each type with another by setting the `ownerType`.
+3. Extend each type with another by setting the `ownerType`. Note that this config is not required when using the `extend` approach. The `ownerType` is automatically recognized.
 4. Override parent method implementation.
 5. Each method overridden in a child type can call its parent by invoking `this.base(arguments)`.
 
@@ -83,36 +83,62 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 A quick example:
 
 ```javascript
-var userDefinition = pz.define('user', {
-  ownerType: 'class',
-  name: 'John',
-  surname: 'Doe'
-});
-
-pz.define('my-component', {
+pz.define('button-component', {
   ownerType: 'component',
-  template: '<div>My name is: {name}, and my surname is: {surname}</div>',
-  renderTo: 'body',
-  autoLoad: true,
-  viewModel: {
-    name: '',
-    surname: ''
+  template: '<button type="button"></button>',
+  text: 'Button',
+  renderTo: 'div.buttons',
+  init: function() {
+    this.base();
+    this.html.innerText = this.text;
   },
-  setUserData: function(user) {
-    this.viewModel.surname = user.surname;
-  }
+  handlers: [{
+    on: 'click',
+    fn: 'onClick'
+  }],
+  onClick: function() { }
 });
 
-var component = pz.define('my-child-component', {
-  ownerType: 'my-component',
-  setUserData: function(user) {
-    this.viewModel.name = user.name;
-    this.base(user);
-  }
-}).create(); // automatically creates the component upon definition
+pz.define('header-component', {
+  ownerType: 'component',
+  template: '<header>Welcome to PlazarJS - {year}</header>',
+  viewModel: {
+    year: '2018'
+  },
+  components: [{
+    type: 'button-component',
+     text: 'Header button',
+    renderTo: 'root', // render to root instead of the default div.buttons (we don't have that element within our header)
+    onClick: function() { 
+      alert('Hello from Header!');
+    }
+  }]
+});
 
-var user = userDefinition.create();
-component.setUserData(user);
+pz.define('body-component', {
+  ownerType: 'component',
+  template: '<main>{text}<div class="buttons"></div></main>',
+  viewModel: {
+    text: 'This is the body component! I can have child component as well. Like the button bellow:'
+  },
+  components: [{
+    type: 'button-component',
+    onClick: function() { 
+      alert('Hello from Body!');
+    }
+  }]
+});
+
+pz.define('layout-component', {
+  ownerType: 'component',
+  templateSelector: 'body',
+  autoLoad: true,
+  components: [{
+    type: 'header-component'
+  },{
+    type: 'body-component'
+  }]
+}).create(); // automatically creates the component upon definition
 ```
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
