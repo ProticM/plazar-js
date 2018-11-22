@@ -83,11 +83,11 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 A quick example:
 
 ```javascript
-pz.define('user', {
+var userDefinition = pz.define('user', {
   ownerType: 'class',
   name: 'John',
   surname: 'Doe'
-}).create(); // automatically creates the class upon definition
+});
 
 pz.define('my-component', {
   ownerType: 'component',
@@ -111,7 +111,7 @@ var component = pz.define('my-child-component', {
   }
 }).create(); // automatically creates the component upon definition
 
-var user = pz.getInstanceOf('user');
+var user = userDefinition.create();
 component.setUserData(user);
 ```
 
@@ -119,49 +119,7 @@ Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
 ## Bootstrap Integration
 
-PlazarJS has a set of components styled with [Bootstrap](http://getbootstrap.com/) v4.1.x which are ready to use in your app out of the box.
-
-A quick example:
-
-```javascript 
-pz.create({ 
-  autoLoad: true, 
-  renderTo: 'body', 
-  type: 'ui-bootstrap-card',
-  header: {
-    text: 'Login', 
-    css: ['bg-info', 'text-white'] 
-  },
-  components: [{
-    type: 'ui-bootstrap-input',
-    labelText: 'Email:',
-    placeholder: 'Enter email...'
-  }, {
-    type: 'ui-bootstrap-input',
-    labelText: 'Password:',
-    placeholder: 'Enter password...',
-    css: ['mb-2']
-  }, {
-    type: 'ui-bootstrap-input',
-    inputType: 'checkbox',
-    labelText: 'Remember me'
-  }],
-  buttons: [{
-    text: 'Login',
-    appearance: 'outline-info',
-    align: 'right'
-  }]
-  // other configs 
-});
-```
-Output:
-<p align="center">
-  <a href="https://github.com/ProticM/plazar-js">
-    <img src="http://www.plazarjs.com/content/images/bootstrap-example-2.png" width="600" />
-  </a>
-</p>
-
-Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
+Checkout the module integration <a href="https://github.com/ProticM/plazar-js/tree/master/packages/bootstrap-ui">here</a>.
 
 ## Contribution
 
