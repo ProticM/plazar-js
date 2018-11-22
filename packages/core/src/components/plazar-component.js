@@ -397,7 +397,7 @@
                 return null;
             };
         
-            childComponent = pz.getInstanceOf(childRef.id);
+            childComponent = (pz.isModularEnv() ? childRef : pz.getInstanceOf(childRef.id));
             return childComponent || null;
         },
         removeChild: function (component, destroy) {
