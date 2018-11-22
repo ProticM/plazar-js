@@ -58,7 +58,7 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 
 ##### TL;DR
 
-1. Can define components, mixins or classes by invoking `pz.define` or `pz.component.extend`, `pz.class.extend`. Mixins are not extendable.
+1. Can define components, mixins or classes by invoking `pz.define`, `pz.component.extend` or `pz.class.extend`. Mixins are not extendable.
 2. Reuse each type later in the app as much as needed. One type, multiple instances.
 3. Extend each type with another by setting the `ownerType`. Note that this config is not required when using the `extend` approach. The `ownerType` is automatically recognized.
 4. Override parent method implementation.
