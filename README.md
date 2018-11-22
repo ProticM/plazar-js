@@ -20,6 +20,9 @@
     <a href="https://www.npmjs.com/package/@plazarjs/core">
     <img src="https://img.shields.io/npm/dt/@plazarjs/core.svg" alt="downloads" />
     </a>
+    <a href="https://www.jsdelivr.com/package/npm/@plazarjs/core">
+    <img src="https://data.jsdelivr.com/v1/package/npm/@plazarjs/core/badge?style=rounded" alt="jsdelivr" />
+    </a>
   </h1>
 
   <p align="center">
