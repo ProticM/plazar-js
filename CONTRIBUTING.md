@@ -57,6 +57,7 @@ $ lerna bootstrap
 
 PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following tasks to deploy the source into `dist`:
 
+The following task will build each package:
 ```
 $ gulp build
 ```
@@ -82,7 +83,7 @@ This folder contains demo applications. Under the folder `bootstrap-ui` there is
 
 #### Packages
 
-This folder contains `core`, `bootstrap-ui`, `http`, `array-util`, `string-util` and `object-util` which are distributed as separate NPM packages. Each time when you run any of the gulp tasks defined above, the build scripts will be created within the dist folder for each package. The version is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
+This folder contains `core`, `bootstrap-ui`, `http`, `array-util`, `string-util` and `object-util` which are distributed as separate NPM packages. Each time when you run any of the gulp tasks defined above, the build scripts will be created within the dist folder for each (or specific) package. The version is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
 
 Each package has a `src` folder. This is your working area.
 
