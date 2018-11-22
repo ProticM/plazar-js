@@ -83,36 +83,46 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 A quick example:
 
 ```javascript
-var userDefinition = pz.define('user', {
-  ownerType: 'class',
-  name: 'John',
-  surname: 'Doe'
-});
-
-pz.define('my-component', {
+pz.define('header-component', {
   ownerType: 'component',
-  template: '<div>My name is: {name}, and my surname is: {surname}</div>',
-  renderTo: 'body',
-  autoLoad: true,
+  template: '<header>Welcome to PlazarJS - {year}</header>',
   viewModel: {
-    name: '',
-    surname: ''
-  },
-  setUserData: function(user) {
-    this.viewModel.surname = user.surname;
+    year: '2018'
   }
 });
 
-var component = pz.define('my-child-component', {
-  ownerType: 'my-component',
-  setUserData: function(user) {
-    this.viewModel.name = user.name;
-    this.base(user);
+pz.define('button-component', {
+  ownerType: 'component',
+  template: '<button type="button"></button>',
+  text: 'Button',
+  renderTo: 'div.buttons',
+  init: function() {
+    this.base(arguments);
+    this.html.innerText = this.text;
   }
-}).create(); // automatically creates the component upon definition
+});
 
-var user = userDefinition.create();
-component.setUserData(user);
+pz.define('body-component', {
+  ownerType: 'component',
+  template: '<main>{text}<div class="buttons"></div></main>',
+  viewModel: {
+    text: 'This is the body component! I can have child component as well. Like the button bellow:'
+  },
+  components: [{
+    type: 'button-component'
+  }]
+});
+
+pz.define('layout-component', {
+  ownerType: 'component',
+  templateSelector: 'body',
+  autoLoad: true,
+  components: [{
+    type: 'header-component'
+  },{
+    type: 'body-component'
+  }]
+}).create(); // automatically creates the component upon definition
 ```
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
