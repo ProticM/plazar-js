@@ -42,7 +42,7 @@ A versatile framework built to enrich the developer experience in terms of simpl
 
 ## Installation
 
-Run the following command:
+Run the following npm command:
 ```bash
 $ npm install @plazarjs/core
 ```
