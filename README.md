@@ -97,7 +97,7 @@ pz.define('button-component', {
   text: 'Button',
   renderTo: 'div.buttons',
   init: function() {
-    this.base(arguments);
+    this.base();
     this.html.innerText = this.text;
   }
 });
