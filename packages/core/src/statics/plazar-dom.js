@@ -33,26 +33,30 @@
         data: [],
         listeners: [],
         remove: function(element, event) {
-            var index, i, listener = pz.find(function (lst, idx) {
-                var found = lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
-                if (found) { index = idx; };
-                return found;
-            }, this.listeners), indexes;
+            var i, j, listenerIndexes = this.listeners.reduce(function (acc, lst, idx) {
+                var isOk = (lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true));
+                if(isOk) { acc.push(idx); };
+                return acc;
+            }, []), dataIndexes, listenerIdx, listener;
 
-            if (!pz.isEmpty(listener)) {
-                listener.el.removeEventListener(listener.event, _delegate.fn);
-                this.listeners.splice(index, 1);
+            i = listenerIndexes.length - 1;
+            for(; i >= 0; i--) {
+                listenerIdx = listenerIndexes[i];
+                listener = this.listeners[listenerIdx];
+                listener.el.removeEventListener(listener.event, _delegate.fn, listener.capture);
+                this.listeners.splice(listenerIdx, 1);
 
-                indexes = this.data.reduce(function(acc, dataItem, idx) {
+                dataIndexes = this.data.reduce(function(acc, dataItem, idx) {
                     if(dataItem.id == listener.id) { acc.push(idx) };
                     return acc;
                 }, []);
-                i = indexes.length - 1;
-                for(; i >= 0; i--) {
-                    var idx = indexes[i];
+                j = dataIndexes.length - 1;
+                for(; j >= 0; j--) {
+                    var idx = dataIndexes[j];
                     this.data.splice(idx, 1);
                 };
             };
+            listener = null;
         },
         fn: function (e) {
 
@@ -169,7 +173,7 @@
         },
 
         on: function (event, element, selector, fn) {
-            var rootEl, lst, lstEmpty, id;
+            var rootEl, lst, lstEmpty, id, capture;
 
             if (pz.isEmpty(fn)) {
                 return;
@@ -191,11 +195,13 @@
                 return;
             };
 
-            rootEl.addEventListener(event, _delegate.fn);
+            capture = ['blur', 'focus', 'focusout', 'focusin'].indexOf(event) != -1;
+            rootEl.addEventListener(event, _delegate.fn, capture);
             _delegate.listeners.push({
                 el: rootEl,
                 event: event,
-                id: id
+                id: id,
+                capture: capture
             });
         },
 
