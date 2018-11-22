@@ -454,7 +454,6 @@
             };
             pz.dom.remove(this.html);
             this.html = null;
-            this.triggers = null;
             this.viewModel = null;
             _cleanArray(this.components);
             this.components = null;
