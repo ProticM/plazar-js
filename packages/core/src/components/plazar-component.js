@@ -266,18 +266,19 @@
     
             var hasChildren, parentSelector, instance, childReference, renderTo,
                 replace = child.$replace, isValidObj = pz.isObject(child) && !(pz.isEmpty(child) || pz.isEmpty(child.type)),
-                isValidFn = pz.isPzDefinition(child), isModuleEnv;
+                isValidFn = pz.isPzDefinition(child), isModuleEnv,
+                isComponent = pz.isComponent(child);
 
-            if (!isValidObj && !isValidFn) {
+            if (!isValidObj && !isValidFn && !isComponent) {
                 throw new Error(_const.addChildParamErr);
             };
             
             delete child.$replace;
             isModuleEnv = pz.isModularEnv();
             parentSelector = '*[data-componentid="' + this.id + '"]';
-        
+            
             child.autoLoad = false; // prevent auto load since we might be missing [renderTo] from config
-            instance = isValidFn ? child.create() : pz.create(child);
+            instance = isValidFn ? child.create() : (isComponent ? child : pz.create(child));
             renderTo = child.renderTo || instance.renderTo;
         
             instance.renderTo = pz.isEmpty(renderTo) ?
