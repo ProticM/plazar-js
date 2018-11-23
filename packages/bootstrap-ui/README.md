@@ -1,6 +1,6 @@
 # plazarjs/bootstrap-ui
 
-> A set of predefined components styled with the Bootstrap CSS framework (version v4.1.x). Currently, this package should be used only in non module environments.
+> A set of predefined components styled with the Bootstrap CSS framework (version v4.1.x). Currently, this package should be used only in non modular environments (via script tag).
 
 ## Usage
 
