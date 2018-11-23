@@ -107,8 +107,8 @@ pz.define('header-component', {
   },
   components: [{
     type: 'button-component',
-     text: 'Header button',
-    renderTo: 'root', // render to root instead of the default div.buttons (we don't have that element within our header)
+    text: 'Header button',
+    renderTo: 'root', // we don't have div.buttons element within our header
     onClick: function() { 
       alert('Hello from Header!');
     }
