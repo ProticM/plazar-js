@@ -83,6 +83,7 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 A quick example:
 
 ```javascript
+// button definition with default options
 pz.define('button-component', {
   ownerType: 'component',
   template: '<button type="button"></button>',
@@ -105,7 +106,7 @@ pz.define('header-component', {
   viewModel: {
     year: '2018'
   },
-  components: [{
+  components: [{ // reuse the button with another config
     type: 'button-component',
     text: 'Header button',
     renderTo: 'root', // we don't have div.buttons element within our header
@@ -121,7 +122,7 @@ pz.define('body-component', {
   viewModel: {
     text: 'This is the body component! I can have child component as well. Like the button bellow:'
   },
-  components: [{
+  components: [{ // reuse the button with another config
     type: 'button-component',
     onClick: function() { 
       alert('Hello from Body!');
@@ -144,7 +145,7 @@ pz.define('layout-component', {
 The equivalent of the code above written with the extend API, which is recommended when in modular environments, looks like this:
 
 ```javascript
-// button definition
+// button definition with default options
 var button = pz.component.extend({ // we would export the definition as a module
   type: 'button-component',
   template: '<button type="button"></button>',
