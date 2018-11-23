@@ -70,13 +70,8 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 2. Components
 3. Mixins
 4. Classes
-5. Scalability
-6. Inheritance
-7. Bindings and Templating
-8. Inline Templates
-9. Pre-Rendered Templates (attach the component to already rendered html)
-10. Async Templates and/or ViewModel loading
-11. Utils (Array, Object, String...)
+5. Inheritance
+6. Bindings and Templating (inline, pre-rendered, async templates)
 
 ## Getting Started and Documentation
 
