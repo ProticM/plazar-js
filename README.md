@@ -141,6 +141,68 @@ pz.define('layout-component', {
 }).create(); // automatically creates the component upon definition
 ```
 
+The equivalent of the code above written with the extend API, which is recommended when in modular environments, looks like this:
+
+```javascript
+// button definition
+var button = pz.component.extend({ // we would export the definition as a module
+  type: 'button-component',
+  template: '<button type="button"></button>',
+  text: 'Button',
+  renderTo: 'div.buttons',
+  init: function() {
+    this.base();
+    this.html.innerText = this.text;
+  },
+  handlers: [{
+    on: 'click',
+    fn: 'onClick'
+  }],
+  onClick: function() { }
+});
+
+// here we could also use button.extend({ // configs })
+var headerButton = button.create({
+    text: 'Header button',
+    renderTo: 'root', // we don't have div.buttons element within our header
+    onClick: function() { 
+      alert('Hello from Header!');
+    }
+});
+
+var headerComponent = pz.component.extend({
+  type: 'header-component',
+  template: '<header>Welcome to PlazarJS - {year}</header>',
+  viewModel: {
+    year: '2018'
+  },
+  components: [headerButton]
+});
+
+var bodyButton = button.extend({
+    type: 'body-button-component',
+    onClick: function() { 
+      alert('Hello from Body!');
+    }
+});
+
+var bodyComponent = pz.component.extend({ // we would export the definition as a module
+  type: 'body-component',
+  template: '<main>{text}<div class="buttons"></div></main>',
+  viewModel: {
+    text: 'This is the body component! I can have child component as well. Like the button bellow:'
+  },
+  components: [bodyButton]
+});
+
+pz.component.extend({ // we would export the definition as a module
+  type: 'layout-component',
+  templateSelector: 'body',
+  autoLoad: true,
+  components: [headerComponent, bodyComponent]
+}).create(); // automatically creates the component upon definition
+```
+
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
 ## Bootstrap Integration
