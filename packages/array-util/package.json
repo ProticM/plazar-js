@@ -1,6 +1,6 @@
 {
   "name": "@plazarjs/array-util",
-  "version": "1.0.0-alpha.4",
+  "version": "2.0.0-alpha.0",
   "description": "PlazarJS array utility",
   "keywords": [
     "javascript",
@@ -34,6 +34,6 @@
     "url": "https://github.com/ProticM/plazar-js/issues"
   },
   "dependencies": {
-    "@plazarjs/core": "^1.0.0-alpha.4"
+    "@plazarjs/core": "^2.0.0-alpha.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@plazarjs/object-util",
-  "version": "1.0.0-alpha.4",
+  "version": "2.0.0-alpha.0",
   "description": "PlazarJS object package. It contains object utilities",
   "keywords": [
     "js",
@@ -35,6 +35,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@plazarjs/core": "^1.0.0-alpha.4"
+    "@plazarjs/core": "^2.0.0-alpha.0"
   }
 }

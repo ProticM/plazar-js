@@ -1,6 +1,6 @@
 {
   "name": "@plazarjs/string-util",
-  "version": "1.0.0-alpha.4",
+  "version": "2.0.0-alpha.0",
   "description": "PlazarJS string package. It contains string utilities",
   "keywords": [
     "javascript",
@@ -34,6 +34,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@plazarjs/core": "^1.0.0-alpha.4"
+    "@plazarjs/core": "^2.0.0-alpha.0"
   }
 }
