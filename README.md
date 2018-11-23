@@ -226,8 +226,8 @@ Every implementation/change is done in a way to ignore IE version 9 and lower.
 
 Some of the next major releases will contain:
 
-1. Core plazar-ui (set of controls out of the box). This will eliminate the need for any external CSS framework integration. Of course, you would still be able to integrate any of them if you choose so.
-2. Typescript support.
+1. Typescript support.
+2. Core plazar-ui (set of controls out of the box). This will eliminate the need for any external CSS framework integration. Of course, you would still be able to integrate any of them if you choose so.
 
 ## License
 
