@@ -1,19 +1,19 @@
-﻿pz.define('ui-bootstrap-navbar', function () {
+﻿const navBar = () => {
 
-    var _allowedComponents = [
+    let _allowedComponents = [
         'ui-bootstrap-dropdown'
         //'ui-bootstrap-input-group'
     ];
 
-	var _parseTemplate = function () {
-		var prefix = this.sticky ? 'sticky' : 'fixed';
-        var hasMenuItems = !pz.isEmpty(this.menu) && !pz.isEmpty(this.menu.items);
+	let _parseTemplate = () => {
+		let prefix = this.sticky ? 'sticky' : 'fixed';
+        let hasMenuItems = !pz.isEmpty(this.menu) && !pz.isEmpty(this.menu.items);
 
         this.toggler = this.toggler || hasMenuItems;
 
         if (!pz.isEmpty(this.brand)) {
-            var isTextType = this.brand.type == 'text';
-            var brand = pz.dom.createElement('a');
+            let isTextType = this.brand.type == 'text';
+            let brand = pz.dom.createElement('a');
 
             brand.setAttribute('href', (this.brand.href || '#'));
             this.addCss('navbar-brand', brand);
@@ -21,7 +21,7 @@
             if (isTextType) {
 				brand.innerHTML = this.brand.value;
             } else {
-                var brandImg = pz.dom.createElement('img');
+                let brandImg = pz.dom.createElement('img');
                 brandImg.setAttribute('src', this.brand.imageSrc);
                 pz.dom.append(brand, brandImg);
             };
@@ -36,14 +36,14 @@
         if (hasMenuItems) {
             pz.dom.append(this.html, '<div class="collapse navbar-collapse" id="collapse_' + this.id + '"></div>');
 
-            var collapse = pz.dom.findElement(this.html, 'div#collapse_' + this.id);
-            var menuPos = this.menu.position || 'left'; // left by default
-            var hPositionClass = 'm'.concat(menuPos == 'left' ? 'r-' : 'l-').concat('auto');
+            let collapse = pz.dom.findElement(this.html, 'div#collapse_' + this.id);
+            let menuPos = this.menu.position || 'left'; // left by default
+            let hPositionClass = 'm'.concat(menuPos == 'left' ? 'r-' : 'l-').concat('auto');
 
             pz.dom.append(collapse, '<ul class="navbar-nav ' + hPositionClass + '"></ul>'); 
 
-            var ul = pz.dom.findElement(collapse, 'ul.navbar-nav');
-            pz.forEach(this.menu.items, function (menuItem) {
+            let ul = pz.dom.findElement(collapse, 'ul.navbar-nav');
+            pz.forEach(this.menu.items, (menuItem) => {
                 if (pz.arr.contains(_allowedComponents, menuItem.type)) {
                     menuItem.renderTo = 'ul.navbar-nav';
                     this.components.push(menuItem);
@@ -59,6 +59,7 @@
 	};
 
     return {
+        type: 'ui-bootstrap-navbar',
         ownerType: 'ui-bootstrap-component',
         position: 'top',
         template: '<nav></nav>',
@@ -73,4 +74,6 @@
 		toggler: false,
 		parseTemplate: _parseTemplate
 	};
-});
+};
+
+export default navBar;

@@ -1,7 +1,7 @@
-﻿pz.define('ui-bootstrap-progress', function () {
+﻿const progress = () => {
 
-	var _parseTemplate = function () {
-		var progressBar = pz.dom.findElement(this.html, 'div.progress-bar'),
+	let _parseTemplate = () => {
+		let progressBar = pz.dom.findElement(this.html, 'div.progress-bar'),
             hasAppearance = !pz.isEmpty(this.appearance),
             hasNowValue = !pz.isEmpty(this.values.now) && this.values.now > 0,
             max = this.values.max || 100,
@@ -24,6 +24,7 @@
 	};
 
 	return {
+		type: 'ui-bootstrap-progress',
 		ownerType: 'ui-bootstrap-component',
 		template: '<div class="progress"><div class="progress-bar" role="progressbar"></div></div>',
 		showValue: true,
@@ -34,7 +35,7 @@
 			max: 100
 		},
 		parseTemplate: _parseTemplate,
-		setValues: function (values) {
+		setValues: (values) => {
 			if (pz.isEmpty(values)) {
 				return;
 			};
@@ -43,4 +44,6 @@
 			this.parseTemplate();
 		}
 	};
-});
+};
+
+export default process;

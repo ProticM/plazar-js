@@ -1,33 +1,36 @@
-﻿pz.define('ui-bootstrap-form-field-mix', function () {
+﻿const formFieldMixin = () => {
 
-    var _getHtml = function (me) {
+    let _getHtml = (me) =>  {
         return me.inputType == 'text' ? (pz.dom.findElement(me.html, 'input') || me.html)
             : me.html;
     };
 
-    var _setAttr = function (me, name, value) {
-        var html = _getHtml(me);
+    let _setAttr = (me, name, value) => {
+        let html = _getHtml(me);
         html.setAttribute(name, value);
     };
 
     return {
+        type: 'ui-bootstrap-form-field-mix',
         ownerType: 'mixin',
-        getValue: function () {
-            var html = _getHtml(this);
+        getValue: () =>  {
+            let html = _getHtml(this);
             return html.value;
         },
-        setValue: function (value) {
-            var html = _getHtml(this);
+        setValue: (value) =>  {
+            let html = _getHtml(this);
             html.value = value;
         },
-        setRequired: function (value) {
+        setRequired: (value) =>  {
             _setAttr(this, 'required', (value || true));
         },
-        setDisabled: function (value) {
+        setDisabled: (value) =>  {
             _setAttr(this, 'disabled', (value || true));
         },
-        setReadonly: function (value) {
+        setReadonly: (value) =>  {
             _setAttr(this, 'readonly', (value || true));
         }
     };
-});
+};
+
+export default formFieldMixin;
