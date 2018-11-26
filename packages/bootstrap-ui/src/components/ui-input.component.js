@@ -1,6 +1,6 @@
-﻿pz.define('ui-bootstrap-input', function () {
+﻿const input = () => {
 
-    var _parseTemplate = function () {
+    var _parseTemplate = () => {
 
         var clone, tpl, label, input, hasSize = !pz.isEmpty(this.size),
             input = pz.dom.findElement(this.html, 'input') || this.html,
@@ -79,6 +79,7 @@
     };
 
     return {
+        type: 'ui-bootstrap-input',
         ownerType: 'ui-bootstrap-component',
         mixins: ['ui-bootstrap-form-field-mix'],
         inputType: 'text',
@@ -87,7 +88,7 @@
         placeholder: 'Enter text...',
         plaintext: false,
         inline: false,
-        load: function () {
+        load: () => {
             var css = this.inputType == 'file' ? 'form-control-file' : 'form-control';
             var input = '<input class="' + css + '" type="' + this.inputType + '"/>';
             this.template = ((this.inForm && !pz.arr.contains(['checkbox', 'radio'], this.inputType)) ? '<div class="form-group">' + input + '</div>' : input);
@@ -101,8 +102,8 @@
 			on: 'change',
             fn: 'onChange'
 		}],
-        onChange: function (e) { },
-        prependLabel: function (template) {
+        onChange: (e) => { },
+        prependLabel: () => {
 
             if (pz.isEmpty(this.labelText) || pz.arr.contains(['checkbox', 'radio'], this.inputType)) {
                 return;
@@ -124,4 +125,6 @@
             label = null;
         }
 	};
-});
+};
+
+export default input;
