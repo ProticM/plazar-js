@@ -33,4 +33,4 @@
     };
 };
 
-export default formFieldMixin;
+export default formFieldMixin();
