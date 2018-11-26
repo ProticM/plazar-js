@@ -1,16 +1,16 @@
-﻿pz.define('ui-bootstrap-nav', function () {
+﻿const nav = () => {
 
-    var _const = {
+    let _const = {
         componentsNotAllowedInTabMode: 'Components in menu are not allowed while using tab mode',
         hrefIsRequired: 'Each menu item must have [href] property configured'
     };
 
-    var _allowedComponents = [
+    let _allowedComponents = [
         'ui-bootstrap-dropdown'
     ];
 
-    var _parseTemplate = function () {
-        var hasPosition = !pz.isEmpty(this.position),
+    let _parseTemplate = () => {
+        let hasPosition = !pz.isEmpty(this.position),
             html = this.mode == 'tab' ? pz.dom.findElement(this.html, 'div.nav.nav-tabs') : this.html,
             tabContent;
 
@@ -28,8 +28,8 @@
             tabContent = html.nextSibling;
         };
 
-        pz.forEach(this.menuItems, function (menuItem, idx) {
-            var cls, link, href, contentCls,
+        pz.forEach(this.menuItems, (menuItem, idx) => {
+            let cls, link, href, contentCls,
                 isComponent = pz.arr.contains(_allowedComponents, menuItem.type);
 
             if (isComponent && this.mode == 'tab') {
@@ -69,17 +69,18 @@
     };
 
     return {
+        type:'ui-bootstrap-nav',
         ownerType: 'ui-bootstrap-component',
         position: 'start',
         template: '<nav class="nav"></nav>',
         components: [],
         mode: 'nav',
-        load: function () {
+        load: () => {
             this.template = (this.mode == 'tab') ? '<nav><div class="nav nav-tabs" role="tablist"></div></nav>' :
                 '<nav class="nav"></nav>';
             this.base(arguments);
         },
-        init: function () {
+        init: () => {
             if (this.mode == 'tab') {
                 this.handlers = pz.arr.merge((this.handlers || []), [{
                     on: 'show.bs.tab',
@@ -103,23 +104,25 @@
         fill: false,
         pills: false,
         parseTemplate: _parseTemplate,
-        onTabShown: function (e) {
+        onTabShown: (e) => {
             this.publish('shown-bs-tab', e);
         },
-        onTabShow: function (e) {
+        onTabShow: (e) => {
             this.publish('show-bs-tab', e);
         },
-        onTabHide: function (e) {
+        onTabHide: (e) => {
             this.publish('hide-bs-tab', e);
         },
-        onTabHidden: function (e) {
+        onTabHidden: (e) => {
             this.publish('hidden-bs-tab', e);
         },
-        destroy: function () {
+        destroy: () => {
             if (this.mode == 'tab') {
                 $(this.html).tab('dispose');
             };
             this.base(arguments);
         }
     };
-});
+};
+
+export default nav;

@@ -1,9 +1,9 @@
-﻿pz.define('ui-bootstrap-modal', function () {
+﻿const modal = () => {
 
-    var _primaryButtons = ['Yes', 'Ok'];
+    let _primaryButtons = ['Yes', 'Ok'];
 
-    var _parseTemplate = function () {
-        var headerMarkup = '<div class="modal-header"><h5 class="modal-title">' + (this.header ? (pz.isEmpty(this.header.text) ? '' : this.header.text) : '') +
+    let _parseTemplate = () => {
+        let headerMarkup = '<div class="modal-header"><h5 class="modal-title">' + (this.header ? (pz.isEmpty(this.header.text) ? '' : this.header.text) : '') +
             '</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>',
             bodyMarkup = '<div class="modal-body">' + (this.body ? (pz.isEmpty(this.body.text) ? '' : this.body.text) : '') + '</div>',
             footerMarkup = '<div class="modal-footer">' + (this.footer ? (pz.isEmpty(this.footer.text) ? '' : this.footer.text) : '') + '</div>',
@@ -13,7 +13,7 @@
             footer = pz.dom.findElement(this.html, 'div.modal-footer'),
             modal, hasSize = !pz.isEmpty(this.size);
 
-        var addOrUpdate = function (el, markup, value) {
+        let addOrUpdate = (el, markup, value) => {
             if (pz.isEmpty(el)) {
                 pz.dom.append(modalContent, markup);
             } else if (pz.isObject(value)) {
@@ -41,13 +41,14 @@
         this.addCss((this.fade ? 'fade' : ''));
     };
 
-    var _hasComponentsForSpecificRender = function (me, cssClass) {
-        return pz.arr.contains(me.components, function (item) {
+    let _hasComponentsForSpecificRender = (me, cssClass) => {
+        return pz.arr.contains(me.components, (item) => {
             return (pz.isEmpty(item.renderTo) && me.containerElement == ('div.' + cssClass)) || item.renderTo.indexOf(cssClass);
         });
     };
 
     return {
+        type: 'ui-bootstrap-modal',
         ownerType: 'ui-bootstrap-component',
         containerElement: 'div.modal-body',
         renderTo: 'body',
@@ -70,19 +71,19 @@
             text: ''
         },
         fade: false,
-        init: function () {
-            var buttons = this.buttons.split('_'), me = this,
+        init: () => {
+            let buttons = this.buttons.split('_'), me = this,
                 hasBodyComponents;
             this.components = this.components || [];
             this.footer = !pz.isEmpty(this.buttons) || this.footer;
 
-            pz.forEach(buttons, function (button) {
+            pz.forEach(buttons, (button) => {
                 this.components.push({
                     type: 'ui-bootstrap-button',
                     appearance: (pz.arr.contains(_primaryButtons, button) || buttons.length == 1) ? 'primary' : 'secondary',
                     renderTo: 'div.modal-footer',
                     text: button,
-                    onClick: function (e) {
+                    onClick: (e) => {
                         me.onButtonClick.call(this, e, button);
                         if (me.autoHide) {
                             me.hide();
@@ -91,7 +92,7 @@
                 });
             }, this);
 
-            var hasBodyComponents = !pz.isEmpty(this.components) && _hasComponentsForSpecificRender(this, 'modal-body');
+            let hasBodyComponents = !pz.isEmpty(this.components) && _hasComponentsForSpecificRender(this, 'modal-body');
 
             if (hasBodyComponents) {
                 this.body = true;
@@ -114,29 +115,29 @@
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
-        show: function (config) {
+        show: (config) => {
             $(this.html).modal('show');
         },
-        hide: function () {
+        hide: () => {
             $(this.html).modal('hide');
         },
-        update: function () {
+        update: () => {
             $(this.html).modal('handleUpdate');
         },
-        toggle: function () {
+        toggle: () => {
             $(this.html).modal('toggle');
         },
-        onButtonClick: function () { },
-        onModalShown: function (e) {
+        onButtonClick: () => { },
+        onModalShown: (e) => {
             this.publish('shown-bs-modal', e);
         },
-        onModalShow: function (e) {
+        onModalShow: (e) => {
             this.publish('show-bs-modal', e);
         },
-        onModalHide: function (e) {
+        onModalHide: (e) => {
             this.publish('hide-bs-modal', e);
         },
-        onModalHidden: function (e) {
+        onModalHidden: (e) => {
             this.publish('hidden-bs-modal', e);
             if (this.autoDestroy) {
                 $(this.html).modal('dispose');
@@ -144,4 +145,6 @@
             };
         }
     };
-});
+};
+
+export default modal;
