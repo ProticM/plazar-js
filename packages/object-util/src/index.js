@@ -1,6 +1,5 @@
-﻿return {
-
-    assignTo: function (target, source, clone) {
+﻿const objectUtil = {
+    assignTo: (target, source, clone) => {
         return pz.assignTo(target, source, clone);
     },
 
@@ -10,7 +9,7 @@
 
     getKeys: Object.keys, // create polyfill?
 
-    getValues: function (obj) {
+    getValues: (obj) => {
 
         var vals = [], prop,
             valuesSupported = ('values' in Object);
@@ -28,3 +27,5 @@
         return vals;
     }
 };
+
+export default objectUtil;
