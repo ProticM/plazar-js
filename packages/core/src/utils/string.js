@@ -1,4 +1,4 @@
-﻿const stringUtil = {
+const stringUtil = {
     camelize: (str) => {
         return pz.camelize(str);
     },

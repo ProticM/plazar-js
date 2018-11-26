@@ -6,7 +6,13 @@ import mixin from './components/plazar-mixin';
 import binder from './statics/plazar-binder';
 import dom from './statics/plazar-dom';
 import events from './statics/plazar-events';
+import objectUtils from './utils/object';
+import arrayUtils from './utils/array';
+import stringUtils from './utils/string';
 
+pz.obj = objectUtils;
+pz.arr = arrayUtils;
+pz.str = stringUtils;
 pz.binder = binder();
 pz.dom = dom();
 pz.events = events();

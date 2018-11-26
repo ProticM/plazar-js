@@ -1,4 +1,4 @@
-﻿const arr = {
+const arr = {
     clear: (array) => {
         if (pz.isEmpty(array)) {
             return;

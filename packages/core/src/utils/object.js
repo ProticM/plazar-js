@@ -1,4 +1,4 @@
-﻿const objectUtil = {
+const objectUtil = {
     assignTo: (target, source, clone) => {
         return pz.assignTo(target, source, clone);
     },
