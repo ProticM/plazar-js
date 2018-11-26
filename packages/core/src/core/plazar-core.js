@@ -1,4 +1,4 @@
-﻿var pz = {};
+﻿const pz = {};
 
 var _const = {
     moduleTypes: {
@@ -428,3 +428,5 @@ pz.isPzDefinition = _isPzDefinition;
 pz.deepClone = _deepClone;
 pz.isModularEnv = _isModularEnv;
 pz.storeDefinition = _storeDefinition;
+
+export default pz;

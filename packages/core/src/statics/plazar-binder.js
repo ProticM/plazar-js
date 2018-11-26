@@ -1,6 +1,6 @@
-﻿pz.defineStatic('binder', function () {
+﻿const binder = () => {
 
-    var observable, observableArray,
+    let observable, observableArray,
         binding, view, observe, observeArray, textParser,
         parseKeyPath, buildContext, reservedKeys, bindingRegex,
         getBindingRegex;
@@ -25,8 +25,8 @@
 
     parseKeyPath = function (keypath, target) {
 
-        var parts = keypath.split('.');
-        var globalScope;
+        let parts = keypath.split('.');
+        let globalScope;
 
         if (parts.length == 1) {
             return target;
@@ -35,14 +35,14 @@
         globalScope = pz.getGlobal();
         parts.pop();
         return parts.reduce(function (previous, current) {
-            var isString = pz.isString(previous);
+            let isString = pz.isString(previous);
             return isString ? globalScope[previous][current] :
                 (pz.isEmpty(previous) ? null : previous[current]);
         }, target);
     };
 
     buildContext = function (keypath, vm, ctx) {
-        var hasCtx = ctx != null,
+        let hasCtx = ctx != null,
             isPath = /^[a-z$][a-z0-9]*(?:\.[a-z0-9]+)+$/i.test(keypath),
             fromRoot = isPath && keypath.indexOf(reservedKeys.root) != -1;
 
@@ -58,13 +58,13 @@
             return false;
         };
 
-        var properties = Object.keys(value);
+        let properties = Object.keys(value);
 
         pz.forEach(properties, function (prop) {
 
-            var propValue = value[prop];
+            let propValue = value[prop];
 
-            var obsArray = observeArray(value, propValue, prop);
+            let obsArray = observeArray(value, propValue, prop);
 
             if (obsArray && !pz.isInstanceOf(value, observableArray)) {
                 value[prop] = obsArray;
@@ -82,8 +82,8 @@
 
     observeArray = function (obj, collection, prop) {
 
-        var isArray = pz.isArray(collection);
-        var obsArray;
+        let isArray = pz.isArray(collection);
+        let obsArray;
 
         if (!isArray) {
             return obsArray;
@@ -99,23 +99,23 @@
     //
     observable = (function () {
 
-        var defineReactive = function (me, obj, key) {
-            var value = obj[key];
+        let defineReactive = function (me, obj, key) {
+            let value = obj[key];
 
             delete obj[key];
             Object.defineProperty(obj, key, {
                 configurable: true,
                 enumerable: true,
                 set: function (newValue) {
-                    var val = newValue.value != null || newValue.value != undefined ? newValue.value : newValue;
-                    var shouldNotify = val != value && me.notify != undefined;
+                    let val = newValue.value != null || newValue.value != undefined ? newValue.value : newValue;
+                    let shouldNotify = val != value && me.notify != undefined;
                     value = val;
                     if (shouldNotify) {
                         me.notify();
                     };
                 },
                 get: function () {
-                    var get = function () {
+                    let get = function () {
                         return value;
                     };
 
@@ -151,7 +151,7 @@
         };
 
         observable.prototype.subscribe = function (callback, bindingId) {
-            var length = this.subscriptions.length;
+            let length = this.subscriptions.length;
             this.subscriptions.push({
                 id: bindingId || length++,
                 update: callback
@@ -159,12 +159,12 @@
         };
 
         observable.prototype.unsubscribe = function (bindingId) {
-            var bindingSubs = this.subscriptions.filter(function (sub) {
+            let bindingSubs = this.subscriptions.filter(function (sub) {
                 return sub.id == bindingId;
             });
 
             pz.forEach(bindingSubs, function (sub) {
-                var idx = this.subscriptions.indexOf(sub);
+                let idx = this.subscriptions.indexOf(sub);
                 this.subscriptions.splice(idx, 1);
             }, this);
         };
@@ -174,17 +174,17 @@
     })();
 
     observableArray = (function () {
-        var observableMethods = 'pop push shift unshift splice reverse sort'.split(' '),
+        let observableMethods = 'pop push shift unshift splice reverse sort'.split(' '),
             normalMethods = 'slice concat join some every forEach map filter reduce reduceRight indexOf lastIndexOf toString toLocaleString'.split(' '),
             arrPrototype = Array.prototype;
 
-        var handleSubscriptions = function (me, subscribe, name, callback, bindingId) {
+        let handleSubscriptions = function (me, subscribe, name, callback, bindingId) {
 
             if (!observableMethods[name]) {
                 throw new Error('Can not ' + (subscribe ? 'subscribe to' : 'unsubscribe from') + ' action named: [' + name + ']');
             };
 
-            var length = me.subscriptions.length;
+            let length = me.subscriptions.length;
             me.subscriptions.push({
                 id: bindingId || length++,
                 name: name,
@@ -198,18 +198,18 @@
             this.subscriptions = [];
             this.prop = prop;
 
-            for (var i = 0; i < collection.length; i++) {
+            for (let i = 0; i < collection.length; i++) {
                 this.push(collection[i]);
             };
 
-            var length = this.length;
+            let length = this.length;
             this.hasData = length > 0;
 
             Object.defineProperty(this, 'length', {
                 configurable: false,
                 enumerable: true,
                 set: function (newValue) {
-                    var newItem;
+                    let newItem;
 
                     if (newValue > length) { // push or unshift
                         newItem = this.__action == 'push' ? this[length] : this[0];
@@ -234,18 +234,18 @@
 
         pz.forEach(observableMethods, function (methodName) {
 
-            var method = arrPrototype[methodName];
+            let method = arrPrototype[methodName];
 
             observableArray.prototype[methodName] = function () {
                 this.__action = methodName;
-                var returnValue = method.apply(this, arguments);
+                let returnValue = method.apply(this, arguments);
 
-                var subscription = this.subscriptions.filter(function (subscription) { // find not supported in IE
+                let subscription = this.subscriptions.filter(function (subscription) { // find not supported in IE
                     return subscription.name == methodName;
                 })[0];
 
                 if (subscription) {
-                    var args = arrPrototype.slice.call(arguments);
+                    let args = arrPrototype.slice.call(arguments);
                     subscription.callback.apply(this, args);
                 };
 
@@ -269,12 +269,12 @@
 
         observableArray.prototype.unsubscribe = function (bindingId) {
 
-            var bindingSubs = this.subscriptions.filter(function (sub) {
+            let bindingSubs = this.subscriptions.filter(function (sub) {
                 return sub.id == bindingId;
             });
 
             pz.forEach(bindingSubs, function (sub) {
-                var idx = this.subscriptions.indexOf(sub);
+                let idx = this.subscriptions.indexOf(sub);
                 this.subscriptions.splice(idx, 1);
             }, this);
         };
@@ -306,7 +306,7 @@
     textParser = {
         parse: function (el) {
 
-            var hasInterpolations,
+            let hasInterpolations,
                 keypaths, updateContent, elData;
 
             if (el.nodeType != 3 || el.textContent.length == 0) {
@@ -325,7 +325,7 @@
             updateContent = (function (me, _vm) {
                 return function (data, parsed) {
                     data.el.textContent = data.tpl.replace(/{([^}]*)}/g, function (template, value) {
-                        var isPath, val, vmValue, curr, idx;
+                        let isPath, val, vmValue, curr, idx;
 
                         value = value.replace(/ +?/g, '');
                         curr = value.indexOf(reservedKeys.current) != -1;
@@ -344,7 +344,7 @@
                             keypaths.push(value);
                         };
 
-                        var result = (!pz.isEmpty(vmValue) ?
+                        let result = (!pz.isEmpty(vmValue) ?
                             (pz.isFunction(vmValue) ? vmValue() : vmValue) : template);
                         vmValue = null;
                         return result;
@@ -366,9 +366,9 @@
 
             (function (me, elsData) {
                 pz.forEach(keypaths, function (keypath) {
-                    var ctx = buildContext(keypath, me.vm, me.ctx);
-                    var prop = keypath.split('.').pop();
-                    var observer = ctx[prop];
+                    let ctx = buildContext(keypath, me.vm, me.ctx);
+                    let prop = keypath.split('.').pop();
+                    let observer = ctx[prop];
                     if (observer) {
                         observer.subscribe(function () {
                             pz.forEach(elsData, function (data) {
@@ -387,8 +387,8 @@
 
     binding = (function () {
 
-        var parseAlias = function (keypath) {
-            var as = keypath.indexOf(reservedKeys.as) != -1,
+        let parseAlias = function (keypath) {
+            let as = keypath.indexOf(reservedKeys.as) != -1,
                 parts, result = { keypath: keypath, alias: null };
 
             if (!as) {
@@ -403,7 +403,7 @@
         };
 
         function binding(el, type, keypath, bindingAttr, view) {
-            var result = parseAlias(keypath);
+            let result = parseAlias(keypath);
 
             this.id = pz.guid();
             this.el = el;
@@ -423,7 +423,7 @@
 
         binding.prototype.bind = function () {
 
-            var observer = this.vm[this.prop];
+            let observer = this.vm[this.prop];
 
             if (this.binder.bind) {
                 this.binder.bind.call(this);
@@ -443,7 +443,7 @@
         };
 
         binding.prototype.unbind = function () {
-            var observer = this.vm[this.prop];
+            let observer = this.vm[this.prop];
             if (observer && observer.unsubscribe) {
                 observer.unsubscribe(this.id);
             };
@@ -454,7 +454,7 @@
 
         binding.prototype.getValue = function () {
 
-            var prop, isFn;
+            let prop, isFn;
 
             if (this.prop == reservedKeys.current) {
                 return this.vm;
@@ -465,7 +465,7 @@
             };
 
             prop = this.vm[this.prop];
-            var isFn = pz.isFunction(prop);
+            isFn = pz.isFunction(prop);
             return isFn ? this.vm[this.prop].call(this) : this.vm[this.prop];
         };
 
@@ -478,9 +478,9 @@
 
     view = (function () {
 
-        var parseAttrName = function (name) {
-            var startIdx, endIdx;
-            var inBrackets = ((startIdx = name.indexOf('[')) != -1) &&
+        let parseAttrName = function (name) {
+            let startIdx, endIdx;
+            let inBrackets = ((startIdx = name.indexOf('[')) != -1) &&
                 ((endIdx = name.indexOf(']')) != -1), attrToBind, parts;
 
             if (!inBrackets) {
@@ -519,19 +519,19 @@
         view.prototype.buildBindings = function () {
             this.bindings = [];
 
-            var build = (function (me) {
+            let build = (function (me) {
                 return function (els) {
                     pz.forEach(els, function (el) {
-                        var isBlock = (el.hasAttribute && el.hasAttribute(pz.binder.prefix + '-each')),
+                        let isBlock = (el.hasAttribute && el.hasAttribute(pz.binder.prefix + '-each')),
                             attrs = isBlock ? [el.getAttributeNode(pz.binder.prefix + '-each')] : (el.attributes || []);
 
                         pz.forEach(attrs, function (attr) {
                             if (getBindingRegex().test(attr.name)) {
-                                var parts = parseAttrName(attr.name);
-                                var bType = parts[1], attrToBind = parts[2];
+                                let parts = parseAttrName(attr.name);
+                                let bType = parts[1], attrToBind = parts[2];
 
                                 if (!pz.isEmpty(pz.binder.binders[bType])) {
-                                    var b = new binding(el, bType.toLowerCase(), attr.value, attr.name, me);
+                                    let b = new binding(el, bType.toLowerCase(), attr.value, attr.name, me);
                                     if (attrToBind) { b.attrToBind = attrToBind; };
 
                                     me.bindings.push(b);
@@ -572,7 +572,7 @@
             };
 
             observe(viewModel);
-            var v = new view(els, viewModel);
+            let v = new view(els, viewModel);
             v.bind();
             viewModel.$view = v;
             v = null;
@@ -585,17 +585,17 @@
         toJSON: function (viewModel) {
             // TODO: Multidimensional arrays
 
-            var getProperties = function (value) {
+            let getProperties = function (value) {
                 return Object.keys(value).filter(function (key) {
                     return key != reservedKeys.observed && key != reservedKeys.view;
                 })
             }, toJSON = function (value, res) {
 
-                var properties = getProperties(value);
+                let properties = getProperties(value);
 
                 pz.forEach(properties, function (prop) {
 
-                    var isObject = pz.isObject(value[prop]),
+                    let isObject = pz.isObject(value[prop]),
                         isFunction = pz.isFunction(value[prop]),
                         isObsArray = pz.isInstanceOf(value[prop], observableArray);
 
@@ -605,13 +605,13 @@
 
                     if (isObsArray) {
                         res[prop] = [];
-                        var dataKeys = Object.keys(value[prop]).filter(function (key) {
+                        let dataKeys = Object.keys(value[prop]).filter(function (key) {
                             return !isNaN(parseInt(key));
                         });
 
                         pz.forEach(dataKeys, function (key) {
-                            var item = value[prop][key];
-                            var val = (pz.isObject(item) ? toJSON(item, {}) :
+                            let item = value[prop][key];
+                            let val = (pz.isObject(item) ? toJSON(item, {}) :
                                 (pz.isFunction(item) ? item() : item));
                             res[prop].push(val);
                         });
@@ -632,7 +632,7 @@
                 priority: 3,
                 bind: function () {
 
-                    var isInput = this.el.nodeName == 'INPUT',
+                    let isInput = this.el.nodeName == 'INPUT',
                         isOption = this.el.nodeName == 'OPTION',
                         isSelect = this.el.nodeName == 'SELECT',
                         isTextArea = this.el.nodeName == 'TEXTAREA',
@@ -656,7 +656,7 @@
                 },
                 react: function () {
 
-                    var isInput = this.el.nodeName == 'INPUT',
+                    let isInput = this.el.nodeName == 'INPUT',
                         isSelect = this.el.nodeName == 'SELECT',
                         isTextArea = this.el.nodeName == 'TEXTAREA',
                         isText = isInput && this.el.type == 'text';
@@ -692,7 +692,7 @@
                 },
                 react: function () {
 
-                    var value = this.getValue(), template;
+                    let value = this.getValue(), template;
 
                     pz.forEach(this.views, function (view) {
                         view.unbind();
@@ -712,7 +712,7 @@
                         };
 
                         template = this.el.cloneNode(true);
-                        var v = new view(template, this.rootVm, item, idx);
+                        let v = new view(template, this.rootVm, item, idx);
                         v.bind();
                         this.mark.parentNode.insertBefore(template, this.mark);
                         this.views.push(v);
@@ -732,14 +732,14 @@
                     this.el.removeAttribute(this.bindingAttr);
                 },
                 react: function () {
-                    var hasInnerText = this.el.hasOwnProperty('innerText');
+                    let hasInnerText = this.el.hasOwnProperty('innerText');
                     this.el[hasInnerText ? 'innerText' : 'innerHTML'] = this.getValue();
                 }
             },
             'if': {
                 priority: 2,
                 bind: function (val) {
-                    var value = val != undefined ? val : this.getValue();
+                    let value = val != undefined ? val : this.getValue();
                     this.el.removeAttribute(this.bindingAttr);
 
                     if (!value && !pz.isEmpty(this.el.parentNode)) {
@@ -750,7 +750,7 @@
             'ifnot': {
                 priority: 2,
                 bind: function () {
-                    var value = this.getValue();
+                    let value = this.getValue();
                     pz.binder.binders.if.bind.call(this, !value);
                 }
             },
@@ -760,7 +760,7 @@
                     this.el.removeAttribute(this.bindingAttr);
                 },
                 react: function (val) {
-                    var value = val != undefined ? val : this.getValue();
+                    let value = val != undefined ? val : this.getValue();
 
                     if (this.initialValue == undefined) {
                         this.initialValue = this.el.style.display;
@@ -775,7 +775,7 @@
                     pz.binder.binders.visible.bind.call(this);
                 },
                 react: function () {
-                    var value = this.getValue();
+                    let value = this.getValue();
                     pz.binder.binders.visible.react.call(this, !value);
                 }
             },
@@ -793,8 +793,8 @@
                     this.el.removeAttribute(this.bindingAttr);
                 },
                 react: function () {
-                    var isClassAttr = (this.attrToBind == 'class');
-                    var value = this.getValue();
+                    let isClassAttr = (this.attrToBind == 'class');
+                    let value = this.getValue();
 
                     if (isClassAttr && this.el.hasAttribute(this.attrToBind)) {
                         value = (this.el.getAttribute(this.attrToBind) + ' ' + value).trim();
@@ -811,7 +811,7 @@
                     this.el.removeAttribute(this.bindingAttr);
                 },
                 react: function () {
-                    var isRadio = this.el.type == 'radio',
+                    let isRadio = this.el.type == 'radio',
                         value = this.getValue();
 
                     if (isRadio) {
@@ -821,7 +821,7 @@
                     };
                 },
                 handler: function () {
-                    var isRadio = this.el.type == 'radio';
+                    let isRadio = this.el.type == 'radio';
                     this.setValue((isRadio ? this.el.value : this.el.checked));
                 },
                 unbind: function () {
@@ -833,7 +833,7 @@
                     this.el.removeAttribute(this.bindingAttr);
                 },
                 react: function () {
-                    var value = this.getValue();
+                    let value = this.getValue();
                     this.el.disabled = !value;
                 }
             },
@@ -858,7 +858,7 @@
                     this.el.removeAttribute('data-optionstext');
                 },
                 react: function () {
-                    var value = this.getValue();
+                    let value = this.getValue();
 
                     pz.forEach(this.views, function (view) {
                         view.unbind();
@@ -872,11 +872,11 @@
                     this.views.splice(0, this.views.length);
 
                     pz.forEach(value, function (item, idx) {
-                        var template = document.createElement('option');
+                        let template = document.createElement('option');
                         template.setAttribute('data-value', this.binder.tempAttrs.val);
                         template.setAttribute('data-text', this.binder.tempAttrs.text);
 
-                        var v = new view(template, this.rootVm, item, idx);
+                        let v = new view(template, this.rootVm, item, idx);
                         v.bind();
                         this.el.appendChild(template);
                         this.views.push(v);
@@ -892,4 +892,6 @@
         }
     };
 
-}, 'pz');
+};
+
+export default binder;

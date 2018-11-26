@@ -1,4 +1,6 @@
-﻿pz.class = pz.base.extend({
+﻿const cls = {
     type: 'class'
     // common
-});
+};
+
+export default cls;

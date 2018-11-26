@@ -1,4 +1,4 @@
-﻿pz.component = pz.base.extend(function() {
+﻿const component = () => {
 
     pz.assignTo(_const, {
         tplSourceNotDefined: 'Template source not defined. Please define one of these options in your component config: 1. [template]; 2. [templateSelector]; 3. [ajaxSetup.url];',
@@ -14,8 +14,8 @@
         evArgsMissing: 'Please provide event name and listener.'
     }, false);
 
-    var _get = function(options) {
-        var xhr = new XMLHttpRequest();
+    let _get = function(options) {
+        let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (this.readyState == 4) {
                 options.success.call(this, {
@@ -31,7 +31,7 @@
         xhr.send();
     };
 
-    var _cleanArray = function(array) {
+    let _cleanArray = function(array) {
         if(!pz.isEmpty(array)) {
             array.splice(0, array.length);
         };
@@ -52,7 +52,7 @@
         style: '',
         bindViewModel: function () {
     
-            var templateSelectorEmpty;
+            let templateSelectorEmpty;
         
             if (pz.isEmpty(this.viewModel) || !pz.isFunction(this.applyBindings)) {
                 return;
@@ -62,7 +62,7 @@
             this.applyBindings();
         
             if (!templateSelectorEmpty) {
-                var tpl = pz.dom.getEl(this.templateSelector);
+                let tpl = pz.dom.getEl(this.templateSelector);
                 pz.dom.replaceWith(tpl, this.html);
                 tpl = null;
             };
@@ -81,14 +81,14 @@
                 : (pz.isComponent(this.parentComponent) ? this.parentComponent : pz.getInstanceOf(this.parentComponent.id)));
         },
         traceDown: function (value) { // can be type, id or alias if defined on a component
-            var children;
+            let children;
 
             if (pz.isEmpty(this.components)) {
                 return null;
             };
         
             children = this.components.filter(function (childComponent) {
-                var conditionOk = childComponent.type == value ||
+                let conditionOk = childComponent.type == value ||
                     childComponent.id == value || childComponent.alias == value;
                 return conditionOk;
             });
@@ -102,7 +102,7 @@
             return children.length == 1 ? children[0] : children;
         },
         load: function () {
-            var templateSelectorEmpty = pz.isEmpty(this.templateSelector),
+            let templateSelectorEmpty = pz.isEmpty(this.templateSelector),
                 templateEmpty = pz.isEmpty(this.template),
                 urlEmpty = pz.isEmpty(this.ajaxSetup) || pz.isEmpty(this.ajaxSetup.url),
                 componentLoaded;
@@ -118,7 +118,7 @@
         
             this.showLoadingMask();
             componentLoaded = pz.proxy(function (result) {
-                var res = this.ajaxSetup.dataType == 'text' ? {
+                let res = this.ajaxSetup.dataType == 'text' ? {
                     template: result.data
                 } : result.data;
         
@@ -142,7 +142,7 @@
             componentLoaded = null;
         },
         render: function () {
-            var templateSelectorEmpty = pz.isEmpty(this.templateSelector), me = this,
+            let templateSelectorEmpty = pz.isEmpty(this.templateSelector), me = this,
                 renderToDefined, container, child, childDomIdx, renderBeforeDefined,
                 renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector, isChild, containerErr;
             this.html = !templateSelectorEmpty ? pz.dom.getEl(this.templateSelector) :
@@ -180,8 +180,8 @@
             };
         
             insertBeforeOrAfter = function (selector, method) {
-                var parent = me.traceUp();
-                var rootEl = !pz.isEmpty(parent) ? parent.html : document;
+                let parent = me.traceUp();
+                let rootEl = !pz.isEmpty(parent) ? parent.html : document;
                 siblingContainer = pz.dom.getEl(selector, { rootEl: rootEl, all: false });
                 pz.dom[method](siblingContainer, me.html);
                 me.html = pz.dom.getEl('*[data-componentid="' + me.id + '"]', { // get the dom reference since we will inject html string
@@ -206,7 +206,7 @@
         },
         init: function () {
     
-            var me = this, childrenToInitialize;
+            let me = this, childrenToInitialize;
             this.bindViewModel();
         
             if (!pz.isEmpty(this.handlers)) {
@@ -221,8 +221,8 @@
         
             if (!pz.isEmpty(this.components)) {
                 childrenToInitialize = this.components.reduce(function (acc, cmpRef, idx) {
-                    var cmp = pz.isEmpty(cmpRef.id) ? null : me.traceDown(cmpRef.id);
-                    var needInitialization = pz.isEmpty(cmp) || !cmp.initialized;
+                    let cmp = pz.isEmpty(cmpRef.id) ? null : me.traceDown(cmpRef.id);
+                    let needInitialization = pz.isEmpty(cmp) || !cmp.initialized;
                     if (needInitialization) {
                         acc.push({
                             index: idx,
@@ -246,7 +246,7 @@
             };
         },
         subscribe: function (name, listener) {
-            var subscription;
+            let subscription;
             if (pz.isEmpty(name) || pz.isObject(listener)) {
                 throw new Error(_const.evArgsMissing);
             };
@@ -264,7 +264,7 @@
         },
         addChild: function (child, index) {
     
-            var hasChildren, parentSelector, instance, childReference, renderTo,
+            let hasChildren, parentSelector, instance, childReference, renderTo,
                 replace = child.$replace, isValidObj = pz.isObject(child) && !(pz.isEmpty(child) || pz.isEmpty(child.type)),
                 isValidFn = pz.isPzDefinition(child), isModuleEnv,
                 isComponent = pz.isComponent(child);
@@ -326,7 +326,7 @@
             return instance;
         },
         handle: function (handler) {
-            var me = this, fn = pz.isFunction(handler.fn) ? handler.fn : me[handler.fn], 
+            let me = this, fn = pz.isFunction(handler.fn) ? handler.fn : me[handler.fn], 
                 selector, args;
             if (pz.isEmpty(fn)) {
                 throw new Error(_const.handlerFnNotProvided);
@@ -339,7 +339,7 @@
             handler = null;
         },
         showLoadingMask: function () {
-            var renderToDefined = !pz.isEmpty(this.renderTo), container;
+            let renderToDefined = !pz.isEmpty(this.renderTo), container;
             if (!this.showLoading) {
                 return;
             };
@@ -355,7 +355,7 @@
             container = null;
         },
         hideLoadingMask: function () {
-            var renderToDefined = !pz.isEmpty(this.renderTo), container, mask;
+            let renderToDefined = !pz.isEmpty(this.renderTo), container, mask;
             if (!this.showLoading) {
                 return;
             };
@@ -387,7 +387,7 @@
             return this.childAt(0);
         },
         childAt: function (index) {
-            var childRef, childComponent;
+            let childRef, childComponent;
             if (pz.isEmpty(this.components) || pz.isEmpty(index)) {
                 return null;
             };
@@ -403,7 +403,7 @@
         },
         removeChild: function (component, destroy) {
     
-            var doDestroy, compIndex;
+            let doDestroy, compIndex;
             if (pz.isEmpty(component)) {
                 return;
             };
@@ -425,7 +425,7 @@
             return pz.isEmpty(this.components) ? 0 : this.components.length;
         },
         childIndex: function (component) {
-            var resultIdx = -1;
+            let resultIdx = -1;
             if (pz.isEmpty(component)) {
                 return resultIdx;
             };
@@ -441,7 +441,7 @@
             return resultIdx;
         },
         destroy: function () {
-            var parent;
+            let parent;
         
             if (!pz.isEmpty(this.templateSelector)) {
                 throw new Error(_const.canNotDestroyComponent);
@@ -475,7 +475,7 @@
             this.publish('destroy-complete');
         },
         destroyChildren: function () {
-            var child, instance;
+            let child, instance;
             while (!pz.isEmpty(this.components) &&
                 ((child = this.components[0]) != null) && !pz.isEmpty(child.id)) {
         
@@ -486,7 +486,7 @@
         },
         addCss: function (value, el) {
     
-            var isArray, hasClasses, html, cls;
+            let isArray, hasClasses, html, cls;
             if (pz.isEmpty(value)) {
                 return;
             };
@@ -505,7 +505,7 @@
             html.className += (hasClasses ? (' ' + cls) : cls);
         },
         addStyle: function (value, el) {
-            var isArray, hasStyle, html, style;
+            let isArray, hasStyle, html, style;
             if (pz.isEmpty(value)) {
                 return;
             };
@@ -524,7 +524,7 @@
             html.style.cssText += (hasStyle ? (' ' + style) : style);
         },
         addAttr: function (value, el) {
-            var html, isArray, val;
+            let html, isArray, val;
             if (pz.isEmpty(value)) {
                 return;
             };
@@ -551,4 +551,6 @@
             }, this);
         }
     };
-});
+};
+
+export default component;

@@ -1,9 +1,9 @@
-pz.defineStatic('events', function () {
+const events = () => {
     var _subscriptions = {};
     var _hasOwn = _subscriptions.hasOwnProperty;
 
     return {
-        subscribe: function(name, listener) {
+        subscribe: (name, listener) => {
             var index;
 
             if(!_hasOwn.call(_subscriptions, name)) {
@@ -18,7 +18,7 @@ pz.defineStatic('events', function () {
                 }
             };
         },
-        publish: function(name, args) {
+        publish: (name, args) => {
 
             if(!_hasOwn.call(_subscriptions, name)) {
                 return;
@@ -30,4 +30,6 @@ pz.defineStatic('events', function () {
         }
     };
 
-}, 'pz');
+};
+
+export default events;

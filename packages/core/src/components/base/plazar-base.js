@@ -1,72 +1,69 @@
-﻿pz.base = function () {
-
-};
-
-pz.base.prototype.mixins = [],
-pz.base.prototype.init = function () { },
-pz.base.prototype.destroy = function () {
-    var idx = pz.application.instances.indexOf(this);
-    if (idx != -1) {
-        pz.application.instances.splice(idx, 1);
-    };
-},
-pz.base.prototype.applyMixins = function () {
-    var me = this;
-    pz.forEach(this.mixins, function (m) {
-        var mixin = pz.isMixin(m) ? m : pz.getDefinitionOf(m);
-        var cleanMixin = pz.assignTo({}, mixin);
-        delete cleanMixin.ownerType;
-        delete cleanMixin.type;
-        pz.assignTo(me, cleanMixin, false);
-    });
-};
-pz.base.prototype.setRequiredInstances = function () {
-    var isModularEnv = pz.isModularEnv();
-    var requireDefined = !pz.isEmpty(this.require) &&
-        pz.isArray(this.require);
-
-    if (isModularEnv || !requireDefined) {
-        return;
-    };
-
-    pz.forEach(this.require, function (requiredItemType) {
-        var instance = pz.getInstanceOf(requiredItemType)
-        var requiredItem = pz.isEmpty(instance) ?
-            pz.getDefinitionOf(requiredItemType) : instance;
-        var camelCaseName = pz.camelize(requiredItemType);
-
-        if (!pz.isEmpty(requiredItem) && pz.isEmpty(this[camelCaseName])) {
-            this[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
-                pz.create(requiredItemType);
+﻿class base {
+    init() { };
+    destroy() {
+        let idx = pz.application.instances.indexOf(this);
+        if (idx != -1) {
+            pz.application.instances.splice(idx, 1);
         };
-    }, this);
+    };
+    applyMixins() {
+        let me = this;
+        pz.forEach(this.mixins, function (m) {
+            let mixin = pz.isMixin(m) ? m : pz.getDefinitionOf(m);
+            let cleanMixin = pz.assignTo({}, mixin);
+            delete cleanMixin.ownerType;
+            delete cleanMixin.type;
+            pz.assignTo(me, cleanMixin, false);
+        });
+    };
+    setRequiredInstances() {
+        let isModularEnv = pz.isModularEnv();
+        let requireDefined = !pz.isEmpty(this.require) &&
+            pz.isArray(this.require);
+    
+        if (isModularEnv || !requireDefined) {
+            return;
+        };
+    
+        pz.forEach(this.require, function (requiredItemType) {
+            let instance = pz.getInstanceOf(requiredItemType)
+            let requiredItem = pz.isEmpty(instance) ?
+                pz.getDefinitionOf(requiredItemType) : instance;
+            let camelCaseName = pz.camelize(requiredItemType);
+    
+            if (!pz.isEmpty(requiredItem) && pz.isEmpty(this[camelCaseName])) {
+                this[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
+                    pz.create(requiredItemType);
+            };
+        }, this);
+    };
 };
-pz.base.extend = function extend(props) {
+
+base.extend = function extend(props) {
     // TODO: Inherit statics
 
-    var properties = (pz.toObject(props) || {}), parentClass, returnVal;
+    let properties = (pz.toObject(props) || {}), parentClass, returnVal;
     if(pz.isEmpty(properties.type)) {
         throw new Error("It seems that you are trying to create an object without a type definition. Example invocation: myDefinition.extend({ type: 'my-type' // other configs });");
     };
     parentClass = this;
 
     returnVal = (function (_parentClass, _properties) {
-        var _hasCustomConstructor = _properties && _properties.constructor
+        let _hasCustomConstructor = _properties && _properties.constructor
             && _properties.constructor !== {}.constructor;
-        var propertyNames = Object.keys(_properties);
-        var propertiesReduced = propertyNames.reduce(function (acc, key) {
-            var isFunction = pz.isFunction(_properties[key]);
+        let propertyNames = Object.keys(_properties);
+        let propertiesReduced = propertyNames.reduce(function (acc, key) {
+            let isFunction = pz.isFunction(_properties[key]);
             acc[isFunction ? 'fnKeys' : 'attrKeys'].push(key);
             return acc;
         }, { fnKeys: [], attrKeys: [] });
 
-        var pz_type = function () { // child class
-            var me = this, result;
-
+        let pz_type = function () { // child class
+            let me = this, result;
             pz.forEach(propertiesReduced.attrKeys, function (key) { // apply properties (strings, ints, arrays, objects...etc) to the object instance
                 if (!me.hasOwnProperty(key) && !pz.isEmpty(_properties[key], true)) {
-                    var isArray = pz.isArray(_properties[key]);
-                    var isObject = pz.isObject(_properties[key]);
+                    let isArray = pz.isArray(_properties[key]);
+                    let isObject = pz.isObject(_properties[key]);
 
                     me[key] = (isArray ? pz.deepClone(_properties[key]) : (isObject ? pz.assignTo({}, _properties[key]) : _properties[key]));
                 };
@@ -86,12 +83,12 @@ pz.base.extend = function extend(props) {
         pz.forEach(propertiesReduced.fnKeys, function (key) {
             pz_type.prototype[key] = key == 'constructor' ? pz_type.prototype.constructor : (function (name, fn, base) { // share the functions between instances via prototype
                 return function () {
-                    var tmp = this.base;
-                    var addSuperCallWrapper = !pz.isEmpty(base[name]) && pz.isFunction(base[name]);
+                    let tmp = this.base;
+                    let addSuperCallWrapper = !pz.isEmpty(base[name]) && pz.isFunction(base[name]);
                     this.base = addSuperCallWrapper ? base[name] : function () {
                         throw new Error('Method named: [' + name + '] was not found on type: [' + this.ownerType + ']');
                     };
-                    var result = fn.apply(this, arguments);
+                    let result = fn.apply(this, arguments);
                     this.base = tmp;
                     return result;
                 };
@@ -101,7 +98,7 @@ pz.base.extend = function extend(props) {
         pz_type.extend = extend;
         pz_type.create = (function(t) {
 			return function create(config) {
-                var params, instance;
+                let params, instance;
 
                 if(!pz.isEmpty(config)) {
                     params = pz.assignTo({}, config, false);
@@ -144,3 +141,5 @@ pz.base.extend = function extend(props) {
 
     return returnVal;
 };
+
+export default base;

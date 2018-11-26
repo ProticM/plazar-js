@@ -1,8 +1,8 @@
-﻿pz.defineStatic('dom', function () {
+﻿const dom = () => {
 
-    var _tagNameReg = /<([^\s>]+)(\s|>)+/;
+    let _tagNameReg = /<([^\s>]+)(\s|>)+/;
 
-    var _wrapMap = {
+    let _wrapMap = {
         option: [1, "<select multiple='multiple'>", "</select>"],
         thead: [1, "<table>", "</table>"],
         col: [2, "<table><colgroup>", "</colgroup></table>"],
@@ -13,7 +13,7 @@
     _wrapMap.tbody = _wrapMap.tfoot = _wrapMap.colgroup = _wrapMap.caption = _wrapMap.thead;
     _wrapMap.th = _wrapMap.td;
 
-    var _doInsert = function (element, newNode, where) {
+    let _doInsert = function (element, newNode, where) {
 
         if (pz.isEmpty(element) || pz.isEmpty(newNode)) {
             return;
@@ -23,18 +23,18 @@
             newNode : newNode.outerHTML));
     };
 
-    var _getListener = function (element, event) {
+    let _getListener = function (element, event) {
         return pz.find(function (lst) {
             return lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true);
         }, _delegate.listeners);
     };
 
-    var _delegate = {
+    let _delegate = {
         data: [],
         listeners: [],
         remove: function(element, event) {
-            var i, j, listenerIndexes = this.listeners.reduce(function (acc, lst, idx) {
-                var isOk = (lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true));
+            let i, j, listenerIndexes = this.listeners.reduce(function (acc, lst, idx) {
+                let isOk = (lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true));
                 if(isOk) { acc.push(idx); };
                 return acc;
             }, []), dataIndexes, listenerIdx, listener;
@@ -52,7 +52,7 @@
                 }, []);
                 j = dataIndexes.length - 1;
                 for(; j >= 0; j--) {
-                    var idx = dataIndexes[j];
+                    let idx = dataIndexes[j];
                     this.data.splice(idx, 1);
                 };
             };
@@ -60,8 +60,8 @@
         },
         fn: function (e) {
 
-            var target = null;
-            var match = false, i = 0, parentEmpty = true,
+            let target = null;
+            let match = false, i = 0, parentEmpty = true,
                 triggerEvent, targetMatches, dataItem, selector, fn,
                 data = _delegate.data.filter(function (item) {
                     return item.type == e.type;
@@ -82,7 +82,7 @@
             };
 
             if (!targetMatches) {
-                var parent = pz.dom.findParent(e.target, selector);
+                let parent = pz.dom.findParent(e.target, selector);
                 parentEmpty = pz.isEmpty(parent);
                 if (!parentEmpty) {
                     target = parent;
@@ -149,8 +149,8 @@
         },
 
         elementMatches: function (element, selector) {
-            var fn = Element.prototype.matches || Element.prototype.msMatchesSelector || function (s) {
-                var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+            let fn = Element.prototype.matches || Element.prototype.msMatchesSelector || function (s) {
+                let matches = (this.document || this.ownerDocument).querySelectorAll(s),
                     i = matches.length;
                 while (--i >= 0 && matches.item(i) !== this) { };
                 return i > -1;
@@ -159,7 +159,7 @@
         },
 
         findParent: function (el, selector, stopSelector) {
-            var retval = null;
+            let retval = null;
             while (!pz.isEmpty(el)) {
                 if (this.elementMatches(el, selector)) {
                     retval = el;
@@ -173,7 +173,7 @@
         },
 
         on: function (event, element, selector, fn) {
-            var rootEl, lst, lstEmpty, id, capture;
+            let rootEl, lst, lstEmpty, id, capture;
 
             if (pz.isEmpty(fn)) {
                 return;
@@ -206,22 +206,22 @@
         },
 
         getByAttr: function (attrValue, attrName) {
-            var name = attrName || 'data-template';
-            var selector = '*['.concat(name).concat('="').concat(attrValue).concat('"]');
+            let name = attrName || 'data-template';
+            let selector = '*['.concat(name).concat('="').concat(attrValue).concat('"]');
             return document.querySelector(selector);
         },
 
         getEl: function (selector, options) {
-            var getAll = options && options.all || false;
-            var root = options && options.rootEl || document;
-            var method = getAll ? 'querySelectorAll' : 'querySelector';
-            var element = root[method](selector);
+            let getAll = options && options.all || false;
+            let root = options && options.rootEl || document;
+            let method = getAll ? 'querySelectorAll' : 'querySelector';
+            let element = root[method](selector);
             return pz.isEmpty(element) ? null :
                 ((element.length == 1 && element.nodeName != 'FORM') ? element[0] : element);
         },
 
         parseTemplate: function (template) {
-            var tagName, temp, trimmed, i,
+            let tagName, temp, trimmed, i,
                 regResult, wrapper, wrapperEmpty,
                 fragment, result;
 
@@ -257,7 +257,7 @@
         },
 
         createElement: function (tagName) {
-            var el;
+            let el;
             try {
                 el = document.createElement(tagName);
             } catch (e) {
@@ -267,7 +267,7 @@
         },
 
         remove: function (element) {
-            var parent;
+            let parent;
 
             if (pz.isEmpty(element)) {
                 return;
@@ -281,7 +281,7 @@
         },
 
         insertAt: function (parent, newNode, index) {
-            var referenceNode;
+            let referenceNode;
             if (pz.isEmpty(parent) || pz.isEmpty(index)) {
                 return;
             };
@@ -305,11 +305,13 @@
         },
 
         indexOf: function (child) {
-            var i = 0;
+            let i = 0;
             while ((child = child.previousSibling) != null)
                 i++;
             return i;
         }
     }
 
-}, 'pz');
+};
+
+export default dom;
