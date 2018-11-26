@@ -3,8 +3,9 @@ import * as components from './components/index';
 
 const bootstrapUi = {
     init: (pz) => {
+        let b = pz.base.extend(base);
         pz.forEach(components, component => {
-            let def = base.extend(component);
+            let def = b.extend(component);
             if(!pz.isModuleEnv()) { pz.storeDefinition(def) };
         });
     }
