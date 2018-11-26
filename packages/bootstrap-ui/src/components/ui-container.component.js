@@ -1,9 +1,9 @@
-﻿pz.define('ui-bootstrap-container', function () {
+﻿const container = () => {
 
-    var _defaultColSize = 12;
+    let _defaultColSize = 12;
 
-    var _getColumnSizeClass = function (size) {
-        var _default = 'col-' + _defaultColSize,
+    let _getColumnSizeClass = (size) => {
+        let _default = 'col-' + _defaultColSize,
             lg, md, sm, css;
 
         if (pz.isEmpty(size)) {
@@ -19,9 +19,9 @@
             css : _default;
     };
 
-    var _parseJumbotron = function (me, jumbotron) {
+    let _parseJumbotron = (me, jumbotron) => {
 
-        var hasBtn, hasLeadText, hasTitle, hasDivider, mainContainer;
+        let hasBtn, hasLeadText, hasTitle, hasDivider, mainContainer;
         if (pz.isEmpty(jumbotron)) {
             return;
         };
@@ -38,8 +38,8 @@
         };
 
         if (hasTitle) {
-            var size = jumbotron.title.size || 4;
-            var text = jumbotron.title.text || 'Welcome';
+            let size = jumbotron.title.size || 4;
+            let text = jumbotron.title.text || 'Welcome';
             pz.dom.append(mainContainer, '<h1 class="display-' + size + '">' + text + '</h1>');
         };
 
@@ -54,8 +54,8 @@
             };
 
             pz.dom.append(mainContainer, '<p class="lead jumbotron-button"></p>');
-            pz.forEach(jumbotron.buttons, function (button) {
-                var btn = {};
+            pz.forEach(jumbotron.buttons, (button) => {
+                let btn = {};
                 pz.obj.assignTo(btn, button, false);
                 btn.renderTo = 'p.lead.jumbotron-button';
 
@@ -69,20 +69,21 @@
     };
 
     return {
+        type: 'ui-bootstrap-container',
         ownerType: 'ui-bootstrap-component',
         template: '<div></div>',
         renderAs: 'container', // can be row, form-row, container, column, jumbotron
         fluid: false,
         body: '', // can be html
         components: [],
-        parseTemplate: function () {
+        parseTemplate: () => {
 
-            var cls = this.renderAs == 'row' ? 'row' :
+            let cls = this.renderAs == 'row' ? 'row' :
                 (this.renderAs == 'form-row' ? 'form-row' : (this.renderAs == 'column' ? _getColumnSizeClass(this.column) :
                     (this.renderAs == 'jumbotron' ? (this.fluid ? 'jumbotron jumbotron-fluid' : 'jumbotron') :
                         (this.fluid ? 'container-fluid' : 'container'))));
 
-            var hasChildren = !pz.isEmpty(this.components);
+            let hasChildren = !pz.isEmpty(this.components);
             this.addCss(cls);
             this.html.innerHTML = (hasChildren ? '' : (pz.isEmpty(this.body) ? '' : this.body));
 
@@ -91,4 +92,6 @@
             };
         }
     };
-});
+};
+
+export default container;

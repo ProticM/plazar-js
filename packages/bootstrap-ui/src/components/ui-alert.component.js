@@ -1,11 +1,11 @@
-﻿pz.define('ui-bootstrap-alert', function () {
+﻿const alert = () => {
 
-    var _parseTemplate = function () {
+    let _parseTemplate = () => {
 
         this.addCss('alert-'.concat(this.appearance));
 
-        var renderLink = !pz.isEmpty(this.link), animation;
-        var renderHeading = !pz.isEmpty(this.heading);
+        let renderLink = !pz.isEmpty(this.link), animation;
+        let renderHeading = !pz.isEmpty(this.heading);
 
         if (renderHeading) {
             pz.dom.append(this.html, '<h' + (this.heading.size || 4) + ' class="alert-heading">' +
@@ -27,6 +27,7 @@
     };
 
     return {
+        type: 'ui-bootstrap-alert',
         ownerType: 'ui-bootstrap-component',
         template: '<div class="alert" role="alert"><div>',
         appearance: 'primary',
@@ -42,21 +43,23 @@
             on: 'closed.bs.alert',
             fn: 'onClosed'
         }],
-        close: function () {
+        close: () => {
             $(this.html).alert('close');
         },
-        destroy: function () {
+        destroy: () => {
             $(this.html).alert('dispose');
             this.base(arguments);
         },
-        onClose: function (e) {
+        onClose: (e) => {
             this.publish('close-bs-alert', e);
         },
-        onClosed: function (e) {
+        onClosed: (e) => {
             this.publish('closed-bs-alert', e);
             if(this.autoDestroy) {
                 this.destroy();
             }
         }
     };
-});
+};
+
+export default alert;

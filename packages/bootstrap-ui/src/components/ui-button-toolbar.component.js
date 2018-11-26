@@ -1,15 +1,16 @@
-﻿pz.define('ui-bootstrap-button-toolbar', function () {
+﻿const buttonToolbar = () => {
 
-    var _parseTemplate = function () {
+    let _parseTemplate = () => {
         this.html.setAttribute('aria-label', 'label_' + this.id);
     };
 
     return {
+        type: 'ui-bootstrap-button-toolbar',
         ownerType: 'ui-bootstrap-component',
         groups: [],
-        init: function () {
+        init: () => {
 
-            var groups = pz.arr.map(function (group) {
+            let groups = pz.arr.map((group) => {
                 return pz.isEmpty(group.type) ?
                     pz.obj.assignTo(group, { type: 'ui-bootstrap-button-group' }, false) : group;
             }, this.groups);
@@ -24,4 +25,6 @@
         template: '<div class="btn-toolbar" role="toolbar"></div>',
         parseTemplate: _parseTemplate
     };
-});
+};
+
+export default buttonToolbar;

@@ -1,11 +1,11 @@
-﻿pz.define('ui-bootstrap-component', function () {
+﻿const bootstrapUiBase = () => {
 
-    var _const = {
+    let _const = {
         handlerFnNotProvided: 'Handler function was not provided.'
     };
 
-    var _initPlugin = function (me, type) {
-        var plugin = me[type];
+    let _initPlugin = (me, type) => {
+        let plugin = me[type];
         if (pz.isEmpty(plugin) || !pz.isObject(plugin)) {
             return;
         };
@@ -14,11 +14,12 @@
     };
 
     return {
+        type: 'ui-bootstrap-component',
         ownerType: 'component',
-        constructor: function () {
+        constructor: () => {
 
-            var me = this;
-            var sub = this.subscribe('render-complete', function () {
+            let me = this;
+            let sub = this.subscribe('render-complete', () => {
 
                 if (pz.isFunction(me.parseTemplate) && !pz.isEmpty(me.template)) {
                     me.parseTemplate();
@@ -33,45 +34,47 @@
             this.base(arguments);
         },
 
-        prependLabel: function (template) {
+        prependLabel: (template) => {
             if (pz.isEmpty(this.labelText)) {
                 return;
             };
 
-            var label = pz.dom.createElement('label');
+            let label = pz.dom.createElement('label');
             label.innerText = this.labelText;
             this.addCss('col-form-label', label);
             pz.dom.insertBefore(this.html, label);
             label = null;
         },
 
-        initToolTip: function () {
+        initToolTip: () => {
             _initPlugin(this, 'tooltip');
         },
 
-        initPopOver: function () {
+        initPopOver: () => {
             _initPlugin(this, 'popover');
         },
 
-        handle: function (handler) { // override handlers binding since we need bootstrap/jquery custom events
-            var me = this, $html = $(this.html);
-            var fn = pz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
+        handle: (handler) => { // override handlers binding since we need bootstrap/jquery custom events
+            let me = this, $html = $(this.html);
+            let fn = pz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
 
             if (pz.isEmpty(fn)) {
                 throw new Error(_const.handlerFnNotProvided);
             };
 
-            var hasSelector = !pz.isEmpty(handler.selector);
-            var args = hasSelector ? [handler.on, handler.selector, pz.proxy(fn, handler.scope || me)] :
+            let hasSelector = !pz.isEmpty(handler.selector);
+            let args = hasSelector ? [handler.on, handler.selector, pz.proxy(fn, handler.scope || me)] :
                 [handler.on, pz.proxy(fn, handler.scope || me)];
             $html.on.apply($html, args);
         },
 
-        destroy: function () {
+        destroy: () => {
             $(this.html).tooltip('dispose')
                 .popover('dispose');
             $(this.html).off();
             this.base(arguments);
         }
     };
-});
+};
+
+export default bootstrapUiBase;

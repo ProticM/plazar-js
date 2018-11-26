@@ -1,18 +1,18 @@
-﻿pz.define('ui-bootstrap-carousel', function () {
+﻿const carousel = () => {
     
-    var _getNavButton = function (id, type) {
+    let _getNavButton = (id, type) => {
         return '<a class="carousel-control-' + type + '" href="#carousel_' + id + '" role="button" data-slide="' + type +
             '"><span class="carousel-control-' + type + '-icon" aria-hidden="true"></span><span class="sr-only">' + type + '</span></a>';
     };
 
-    var _parseTemplate = function () {
+    let _parseTemplate = () => {
 
         this.html.setAttribute('id', 'carousel_' + this.id);
         this.html.setAttribute('data-interval', this.interval);
         this.html.setAttribute('data-keyboard', this.keyboard);
         this.html.setAttribute('data-pause', (this.pauseOnHover ? false : 'hover'));
 
-        var indicators, me = this, prevBtn, nextBtn, item, inner, css, mainCss;
+        let indicators, me = this, prevBtn, nextBtn, item, inner, css, mainCss;
 
         if (this.indicators) {
             pz.dom.append(this.html, '<ol class="carousel-indicators"></ol');
@@ -22,7 +22,7 @@
         pz.dom.append(this.html, '<div class="carousel-inner"></div>');
         inner = pz.dom.findElement(this.html, 'div.carousel-inner');
 
-        pz.forEach(this.slides, function (slide, index) {
+        pz.forEach(this.slides, (slide, index) => {
 
             if (me.indicators) {
                 pz.dom.append(indicators, '<li data-target="#carousel_' + me.id + '" data-slide-to="' + index + '"></li>');
@@ -47,11 +47,12 @@
 
     };
 
-    var _slide = function (me, to) {
+    let _slide = (me, to) => {
         $(me.html).carousel(to);
     };
 
     return {
+        type: 'ui-bootstrap-carousel',
         ownerType: 'ui-bootstrap-component',
         template: '<div class="carousel slide" data-ride="carousel"></div>',
         indicators: true,
@@ -67,27 +68,29 @@
         }],
         slides: [],
         parseTemplate: _parseTemplate,
-        destroy: function () {
+        destroy: () => {
             $(this.html).carousel('dispose');
             this.base(arguments);
         },
-        onSlide: function (e) {
+        onSlide: (e) => {
             this.publish('slide-bs-carousel', e);
         },
-        onSlid: function (e) {
+        onSlid: (e) => {
             this.publish('slid-bs-carousel', e);
         },
-        slideNext: function () {
+        slideNext: () => {
             _slide(this, 'next');
         },
-        slidePrev: function () {
+        slidePrev: () => {
             _slide(this, 'prev');
         },
-        slideTo: function (number) {
+        slideTo: (number) => {
             _slide(this, number);
         },
-        cycle: function (pause) {
+        cycle: (pause) => {
             _slide(this, (pause ? 'pause' : 'cycle'));
         }
     };
-});
+};
+
+export default carousel;

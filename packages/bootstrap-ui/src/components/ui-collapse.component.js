@@ -1,18 +1,19 @@
-﻿pz.define('ui-bootstrap-collapse', function () {
+﻿const collapse = () => {
 
-    var _setIfNotEmpty = function (me, propName) {
+    let _setIfNotEmpty = (me, propName) => {
         if (!pz.isEmpty(me[propName])) {
             me.html.setAttribute(('data-' + propName), me[propName]);
         };
     };
 
-    var _setVisibility = function (me, value) {
+    let _setVisibility = (me, value) => {
         $(me.html).collapse(value);
     };
 
     return {
+        type: 'ui-bootstrap-collapse',
         ownerType: 'ui-bootstrap-button',
-        parseTemplate: function () {
+        parseTemplate: () => {
             this.base(arguments);
             this.html.setAttribute('data-toggle', 'collapse');
 
@@ -21,22 +22,24 @@
         },
         target: '',
         parent: '',
-        init: function () {
+        init: () => {
             pz.arr.clear(this.handlers);
             this.base(arguments);
         },
-        toggle: function () {
+        toggle: () => {
             $(this.html).collapse('toggle');
         },
-        destroy: function () {
+        destroy: () => {
             $(this.html).collapse('dispose');
             this.base(arguments);
         },
-        show: function () {
+        show: () => {
             _setVisibility(this, 'show');
         },
-        hide: function () {
+        hide: () => {
             _setVisibility(this, 'hide');
         }
     };
-});
+};
+
+export default collapse;

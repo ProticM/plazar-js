@@ -1,11 +1,11 @@
-﻿pz.define('ui-bootstrap-card', function () {
+﻿const card = () => {
     
-    var _parseTemplate = function () {
+    let _parseTemplate = () => {
 
-        var hasImage = !pz.isEmpty(this.image), image, pos, method;
-        var bodyClasses = 'card-body '.concat(this.body ? (!pz.isEmpty(this.body.css) ? this.body.css : []).join(' ') : '').trim();
-        var headerClasses = 'card-header '.concat(this.header ? (!pz.isEmpty(this.header.css) ? this.header.css : []).join(' ') : '').trim();
-        var footerClasses = 'card-footer '.concat(this.footer ? (!pz.isEmpty(this.footer.css) ? this.footer.css : []).join(' ') : '').trim();
+        let hasImage = !pz.isEmpty(this.image), pos, method;
+        let bodyClasses = 'card-body '.concat(this.body ? (!pz.isEmpty(this.body.css) ? this.body.css : []).join(' ') : '').trim();
+        let headerClasses = 'card-header '.concat(this.header ? (!pz.isEmpty(this.header.css) ? this.header.css : []).join(' ') : '').trim();
+        let footerClasses = 'card-footer '.concat(this.footer ? (!pz.isEmpty(this.footer.css) ? this.footer.css : []).join(' ') : '').trim();
 
         pz.dom.append(this.html, (this.header ? ('<div class="' + headerClasses + '">' + (pz.isEmpty(this.header.text) ? '' : this.header.text) + '</div>') : ''));
         pz.dom.append(this.html, (this.body ? '<div class="' + bodyClasses + '"></div>' : ''));
@@ -14,7 +14,7 @@
             this.html.className = this.html.className.replace('card', 'card-block');
         };
 
-        var bodyEl = pz.dom.findElement(this.html, 'div.card-body');
+        let bodyEl = pz.dom.findElement(this.html, 'div.card-body');
 
         if (hasImage) {
             pos = this.image.position || 'top';
@@ -32,7 +32,7 @@
         pz.dom.append(this.html, (this.footer ? ('<div class="' + footerClasses + '">' + (pz.isEmpty(this.footer.text) ? '' : this.footer.text) + '</div>') : ''));
     };
 
-    var _createButtons = function (me) {
+    let _createButtons = (me) => {
 
         if (pz.isEmpty(me.buttons)) {
             return;
@@ -41,7 +41,7 @@
         me.footer = true;
         me.footerCss = pz.arr.merge(me.footerCss || [], ['text-right']);
 
-        var buttons = pz.arr.map(function (button) {
+        let buttons = pz.arr.map((button) => {
             return pz.obj.assignTo(button, {
                 type: button.type || 'ui-bootstrap-button',
                 renderTo: button.renderTo || ' > div.card-footer'
@@ -54,6 +54,7 @@
     };
 
     return {
+        type: 'ui-bootstrap-card',
         ownerType: 'ui-bootstrap-component',
         template: '<div class="card"></div>',
         block: false,
@@ -68,15 +69,15 @@
         footer: {
             text: ''
         },
-        load: function () {
+        load: () => {
             _createButtons(this);
             this.base(arguments);
         },
         buttons:[],
         parseTemplate: _parseTemplate,
-        setHeaderText: function (value) {
+        setHeaderText: (value) => {
 
-            var header;
+            let header;
             if (pz.isEmpty(value)) {
                 return;
             };
@@ -89,4 +90,6 @@
             header.innerHTML = value;
         }
     };
-});
+};
+
+export default card;

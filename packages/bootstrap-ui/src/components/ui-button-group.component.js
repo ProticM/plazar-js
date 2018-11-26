@@ -1,19 +1,20 @@
-﻿pz.define('ui-bootstrap-button-group', function () {
+﻿const buttonGroup = () => {
 
-    var _parseTemplate = function () {
-        var sizeCls = !pz.isEmpty(this.size) ? 'btn-group-' + this.size : '';
+    let _parseTemplate = () => {
+        let sizeCls = !pz.isEmpty(this.size) ? 'btn-group-' + this.size : '';
         this.addCss((this.vertical ? 'btn-group-vertical ' + sizeCls : 'btn-group ' + sizeCls));
         this.html.setAttribute('aria-label', 'label_' + this.id);
         this.html.setAttribute('role', this.renderAs);
     };
 
     return {
+        type: 'ui-bootstrap-button-group',
         ownerType: 'ui-bootstrap-component',
         buttons: [],
         renderAs: 'group',
-        init: function () {
+        init: () => {
 
-            var buttons = pz.arr.map(function (button) {
+            let buttons = pz.arr.map((button) => {
                 return pz.isEmpty(button.type) ?
                     pz.obj.assignTo(button, { type: 'ui-bootstrap-button' }, false) : button;
             }, this.buttons);
@@ -28,4 +29,6 @@
         template: '<div></div>',
         parseTemplate: _parseTemplate
     };
-});
+};
+
+export default buttonGroup;

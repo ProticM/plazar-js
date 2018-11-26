@@ -1,7 +1,7 @@
-﻿pz.define('ui-bootstrap-button', function () {
+﻿const button = () => {
     
-    var _parseTemplate = function () {
-        var hasSize = !pz.isEmpty(this.size), hasHref = !pz.isEmpty(this.href);
+    let _parseTemplate = () => {
+        let hasSize = !pz.isEmpty(this.size), hasHref = !pz.isEmpty(this.href);
         this.html.innerHTML = this.text;
         this.addCss(('btn-' + this.appearance + (hasSize ? ' btn-' + this.size : '')));
         this.addCss((!pz.isEmpty(this.align) ? 'float-' + this.align : ''));
@@ -9,18 +9,19 @@
 	};
 
 	return {
+        type: 'ui-bootstrap-button',
 		ownerType: 'ui-bootstrap-component',
         appearance: 'primary',
         text: 'Button',
         buttonType: 'button',
         template: '<button class="btn"></button>',
-        load: function () {
+        load: () => {
             if (!pz.isEmpty(this.href)) {
                 this.template = this.template.replace('<button', '<a').replace('button>', 'a>');
             };
             this.base(arguments)
         },
-        init: function () {
+        init: () => {
             if (pz.isEmpty(this.href)) {
                 this.handle({
                     on: 'click',
@@ -30,15 +31,15 @@
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
-		onClick: function () { },
-        toggle: function () {
+		onClick: () => { },
+        toggle: () => {
             $(this.html).button('toggle');
         },
-        destroy: function () {
+        destroy: () => {
             $(this.html).button('dispose');
             this.base(arguments);
         },
-        setDisabled: function (value) {
+        setDisabled: (value) => {
             // TODO: link disable
             if (pz.isEmpty(value) || value == true) {
                 this.html.setAttribute('disabled', '');
@@ -46,7 +47,7 @@
                 this.html.removeAttribute('disabled');
             };
         },
-        setText: function (value) {
+        setText: (value) => {
 
             if (pz.isEmpty(value)) {
                 return;
@@ -55,4 +56,6 @@
             this.html.innerHTML = value;
         }
 	};
-});
+};
+
+export default button;
