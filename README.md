@@ -42,7 +42,7 @@ A versatile framework built to enrich the developer experience in terms of simpl
 
 ## Installation
 
-<strong>Note that we are still in alpha therefore some utility packages might not exist after the official release..</strong>
+<strong>Note that we are still in alpha therefore some utility packages might not exist after the official release.</strong>
 
 Run the following npm command:
 ```bash
