@@ -42,6 +42,8 @@ A versatile framework built to enrich the developer experience in terms of simpl
 
 ## Installation
 
+Note that we are still in alpha therefore some packages might not exists after the official release.
+
 Run the following npm command:
 ```bash
 $ npm install @plazarjs/core
