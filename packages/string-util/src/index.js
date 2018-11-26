@@ -1,9 +1,9 @@
-﻿return {
-    camelize: function (str) {
+﻿const stringUtil = {
+    camelize: (str) => {
         return pz.camelize(str);
     },
 
-    capitalize: function (str) {
+    capitalize: (str) => {
         if (pz.isEmpty(str)) {
             return '';
         };
@@ -12,12 +12,14 @@
         return result || '';
     },
 
-    contains: function (str, value) {
+    contains: (str, value) => {
         return pz.isEmpty(str) || pz.isEmpty(value) ? false :
             str.indexOf(value) != -1;
     },
 
-    format: function() {
+    format: () =>  {
         return pz.format.apply(pz, arguments);
     }
 };
+
+export default stringUtil;
