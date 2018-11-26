@@ -1,9 +1,9 @@
-﻿pz.define('ui-bootstrap-grid', function () {
+﻿const grid = () => {
 
-    var _defaultColSize = 12;
+    let _defaultColSize = 12;
 
-    var _getColumnSizeClass = function (size) {
-        var _default = 'col-' + _defaultColSize,
+    let _getColumnSizeClass = (size) => {
+        let _default = 'col-' + _defaultColSize,
             lg, md, sm;
 
         if (pz.isEmpty(size)) {
@@ -14,17 +14,17 @@
         md = !pz.isEmpty(size.md) ? ' col-md-' + size.md : '';
         sm = !pz.isEmpty(size.sm) ? ' col-sm-' + size.sm : '';
 
-        var css = lg + md + sm;
+        let css = lg + md + sm;
         return !pz.isEmpty(css) ?
             css : _default;
     };
 
-    var _parseTemplate = function () {
-        var me = this;
+    let _parseTemplate = () => {
+        let me = this;
         this.addCss((this.fluid ? 'container-fluid' : 'container'));
 
-        pz.forEach(this.rows, function (row, idx) {
-            var rowEl = pz.dom.createElement('div'), 
+        pz.forEach(this.rows, (row, idx) => {
+            let rowEl = pz.dom.createElement('div'), 
                 generateRowId = !pz.isEmpty(row.id) || row.generateId;
 
             if(generateRowId) {
@@ -40,8 +40,8 @@
             };
             pz.dom.append(me.html, rowEl);
 
-            pz.forEach(row.columns, function (column, idx) {
-                var sizeClass = _getColumnSizeClass(column.size),
+            pz.forEach(row.columns, (column, idx) => {
+                let sizeClass = _getColumnSizeClass(column.size),
                     columnEl = pz.dom.createElement('div'),
                     generateColumnId = !pz.isEmpty(column.id) || column.generateId;
 
@@ -66,6 +66,7 @@
     };
 
     return {
+        type: 'ui-bootstrap-grid',
         ownerType: 'ui-bootstrap-component',
         fluid: false,
         rows: [{
@@ -81,4 +82,6 @@
         template: '<div></div>',
         parseTemplate: _parseTemplate
     };
-});
+};
+
+export default grid;

@@ -1,7 +1,7 @@
 ﻿const form = () => {
 
-    var _parseTemplate = () => {
-        var hasAction = !pz.isEmpty(this.action), hasMethod = !pz.isEmpty(this.method);
+    let _parseTemplate = () => {
+        let hasAction = !pz.isEmpty(this.action), hasMethod = !pz.isEmpty(this.method);
 
         if (hasAction) {
             this.setAttribute('action', this.action);
@@ -34,7 +34,7 @@
             }, this);
 
             if (!pz.isEmpty(this.button)) {
-                var button = {
+                let button = {
                     type: 'ui-bootstrap-button',
                     text: this.button.text || 'Submit',
                     appearance: this.button.appearance || 'primary',
