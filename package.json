@@ -16,6 +16,10 @@
     "gulp-fn": "0.0.3",
     "gulp-uglify": "^3.0.1",
     "lerna": "^3.4.3",
-    "merge-stream": "^1.0.1"
+    "merge-stream": "^1.0.1",
+    "rollup": "^0.67.3",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0"
   }
 }
