@@ -3,7 +3,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "gulp build"
+    "build": "lerna exec --parallel -- rollup -c",
+    "prepublishOnly": "lerna exec --parallel -- rollup -c"
   },
   "dependencies": {
     "save-dev": "^2.0.0"
