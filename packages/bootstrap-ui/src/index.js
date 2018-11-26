@@ -3,11 +3,11 @@ import * as components from './components/index';
 
 const bootstrapUi = {
     init: (pz) => {
-        let b = pz.base.extend(base);
-        if(!pz.isModularEnv()) { pz.storeDefinition(b) };
+        let b = pz.component.extend(base);
+        if(!pz.isModularEnv()) { pz.storeDefinition(b.$type, b) };
         pz.forEach(components.all, component => {
             let def = b.extend(component);
-            if(!pz.isModularEnv()) { pz.storeDefinition(def) };
+            if(!pz.isModularEnv()) { pz.storeDefinition(def.$type, def) };
         });
     }
 };
