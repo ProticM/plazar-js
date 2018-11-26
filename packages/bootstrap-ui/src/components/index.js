@@ -19,7 +19,7 @@ import navbar from './ui-navbar.component';
 import progress from './ui-progress.component';
 import select from './ui-select.component';
 
-export default {
+export const all = [
     alert,
     breadcrumb,
     buttonGroup,
@@ -40,4 +40,4 @@ export default {
     navbar,
     progress,
     select
-}
+];
