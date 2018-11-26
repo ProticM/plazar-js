@@ -1,4 +1,6 @@
-﻿const dom = () => {
+﻿import pz from '../core/plazar-core';
+
+const dom = () => {
 
     let _tagNameReg = /<([^\s>]+)(\s|>)+/;
 

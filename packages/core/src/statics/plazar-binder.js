@@ -1,4 +1,6 @@
-﻿const binder = () => {
+﻿import pz from '../core/plazar-core';
+
+const binder = () => {
 
     let observable, observableArray,
         binding, view, observe, observeArray, textParser,

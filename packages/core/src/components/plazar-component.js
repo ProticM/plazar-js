@@ -1,6 +1,8 @@
-﻿const component = () => {
+﻿import pz from '../core/plazar-core'
 
-    pz.assignTo(_const, {
+const component = () => {
+
+    const _const = {
         tplSourceNotDefined: 'Template source not defined. Please define one of these options in your component config: 1. [template]; 2. [templateSelector]; 3. [ajaxSetup.url];',
         tplContainerNotDefined: 'Template container selector not defined. Please define one of these options in your component config: 1. [renderTo]; 2. [templateSelector]; 3. [renderBefore]; 4. [renderAfter];',
         tplContainerNotFound: 'Template container not found. Please review one of these options in your component config: 1. [renderTo]; 2. [templateSelector]; 3. [renderBefore]; 4. [renderAfter];',
@@ -12,7 +14,7 @@
         handlerFnNotProvided: 'Handler function was not provided.',
         canNotDestroyComponent: 'You cannot destroy a component with attached pre-rendered template.',
         evArgsMissing: 'Please provide event name and listener.'
-    }, false);
+    };
 
     let _get = function(options) {
         let xhr = new XMLHttpRequest();

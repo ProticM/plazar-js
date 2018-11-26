@@ -46,4 +46,4 @@
 	};
 };
 
-export default process;
+export default progress;

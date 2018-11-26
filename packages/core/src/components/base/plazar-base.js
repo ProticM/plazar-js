@@ -1,4 +1,6 @@
-﻿class base {
+﻿import pz from '../../core/plazar-core';
+
+class base {
     init() { };
     destroy() {
         let idx = pz.application.instances.indexOf(this);
