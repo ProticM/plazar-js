@@ -1,11 +1,11 @@
-﻿pz.define('ui-bootstrap-list-group', function () {
+﻿const listGroup = () => {
 
-    var _const = {
+    let _const = {
         elementAtIdxNotFound: 'Element at index {0} was not found'
     };
 
-    var _parseTemplate = function () {
-        var tabContent;
+    let _parseTemplate = () => {
+        let tabContent;
         this.addCss((this.flushed ? 'list-group-flush' : ''));
 
         if (this.mode == 'tab') {
@@ -13,8 +13,8 @@
             tabContent = this.html.nextSibling;
         };
 
-        pz.forEach(this.menuItems, function (menuItem, idx) {
-            var actionable, link, contentCls, href, jsVoid = 'javascript:void(0)';
+        pz.forEach(this.menuItems, (menuItem, idx) => {
+            let actionable, link, contentCls, href, jsVoid = 'javascript:void(0)';
 
             if (this.noHash && this.mode != 'tab' && pz.isEmpty(menuItem.href)) {
                 menuItem.href = !pz.isEmpty(this.href) ? this.href.replace('#', jsVoid) : jsVoid;
@@ -52,14 +52,14 @@
         }, this);
     };
 
-    var _setEnabled = function (me, idx, value) {
+    let _setEnabled = (me, idx, value) => {
         if (pz.isEmpty(idx)) {
             return;
         };
 
-        var el = me.html.childNodes[idx];
+        let el = me.html.childNodes[idx];
         if (pz.isEmpty(el)) {
-            var msg = pz.format(_const.elementAtIdxNotFound, idx);
+            let msg = pz.format(_const.elementAtIdxNotFound, idx);
             throw new Error(msg);
         };
 
@@ -71,12 +71,13 @@
     };
 
     return {
+        type: 'ui-bootstrap-list-group',
         ownerType: 'ui-bootstrap-component',
         menuItems: [],
         actionable: false,
         flushed: false,
         mode: 'list',
-        init: function () {
+        init: () => {
 
             if (this.mode == 'tab') {
                 this.handlers = pz.arr.merge((this.handlers || []), [{
@@ -96,30 +97,32 @@
 
             this.base(arguments);
         },
-        load: function () {
+        load: () => {
             this.template = (this.actionable || this.mode == 'tab') ? '<div class="list-group"></div>' :
                 '<ul class="list-group"></ul>';
             this.base(arguments);
         },
         template: '<ul class="list-group"></ul>',
         parseTemplate: _parseTemplate,
-        disable: function (idx) {
+        disable: (idx) => {
             _setEnabled(this, idx, false);
         },
-        enable: function (idx) {
+        enable: (idx) => {
             _setEnabled(this, idx, true);
         },
-        onTabShown: function (e) {
+        onTabShown: (e) => {
             this.publish('shown-bs-tab', e);
         },
-        onTabShow: function (e) {
+        onTabShow: (e) => {
             this.publish('show-bs-tab', e);
         },
-        onTabHide: function (e) {
+        onTabHide: (e) => {
             this.publish('hide-bs-tab', e);
         },
-        onTabHidden: function (e) {
+        onTabHidden: (e) => {
             this.publish('hidden-bs-tab', e);
         }
     };
-});
+};
+
+export default listGroup;
