@@ -1,8 +1,8 @@
 ﻿const input = () => {
 
-    var _parseTemplate = () => {
+    let _parseTemplate = () => {
 
-        var clone, tpl, label, input, hasSize = !pz.isEmpty(this.size),
+        let clone, tpl, label, input, hasSize = !pz.isEmpty(this.size),
             input = pz.dom.findElement(this.html, 'input') || this.html,
             hasGroup = !pz.isEmpty(this.group);
 
@@ -32,7 +32,7 @@
 
         if (pz.arr.contains(['checkbox', 'radio'], this.inputType)) {
 
-            var isRadio = this.inputType == 'radio';
+            let isRadio = this.inputType == 'radio';
 
             if (isRadio && hasGroup) {
                 input.setAttribute('name', this.group);
@@ -89,8 +89,8 @@
         plaintext: false,
         inline: false,
         load: () => {
-            var css = this.inputType == 'file' ? 'form-control-file' : 'form-control';
-            var input = '<input class="' + css + '" type="' + this.inputType + '"/>';
+            let css = this.inputType == 'file' ? 'form-control-file' : 'form-control';
+            let input = '<input class="' + css + '" type="' + this.inputType + '"/>';
             this.template = ((this.inForm && !pz.arr.contains(['checkbox', 'radio'], this.inputType)) ? '<div class="form-group">' + input + '</div>' : input);
             this.base(arguments);
         },
@@ -109,7 +109,7 @@
                 return;
             };
 
-            var label = pz.dom.createElement('label'), hasSize = !pz.isEmpty(this.size);
+            let label = pz.dom.createElement('label'), hasSize = !pz.isEmpty(this.size);
             label.innerText = this.labelText;
 
             this.addCss('col-form-label', label);
