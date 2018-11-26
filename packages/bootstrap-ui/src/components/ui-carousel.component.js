@@ -5,7 +5,7 @@
             '"><span class="carousel-control-' + type + '-icon" aria-hidden="true"></span><span class="sr-only">' + type + '</span></a>';
     };
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
 
         this.html.setAttribute('id', 'carousel_' + this.id);
         this.html.setAttribute('data-interval', this.interval);
@@ -68,26 +68,26 @@
         }],
         slides: [],
         parseTemplate: _parseTemplate,
-        destroy: () => {
+        destroy: function() {
             $(this.html).carousel('dispose');
             this.base(arguments);
         },
-        onSlide: (e) => {
+        onSlide: function(e) {
             this.publish('slide-bs-carousel', e);
         },
-        onSlid: (e) => {
+        onSlid: function(e) {
             this.publish('slid-bs-carousel', e);
         },
-        slideNext: () => {
+        slideNext: function(e) {
             _slide(this, 'next');
         },
-        slidePrev: () => {
+        slidePrev: function(e) {
             _slide(this, 'prev');
         },
-        slideTo: (number) => {
+        slideTo: function(number) {
             _slide(this, number);
         },
-        cycle: (pause) => {
+        cycle: function(pause) {
             _slide(this, (pause ? 'pause' : 'cycle'));
         }
     };

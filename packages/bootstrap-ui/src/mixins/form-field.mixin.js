@@ -13,21 +13,21 @@
     return {
         type: 'ui-bootstrap-form-field-mix',
         ownerType: 'mixin',
-        getValue: () =>  {
+        getValue: function()  {
             let html = _getHtml(this);
             return html.value;
         },
-        setValue: (value) =>  {
+        setValue: function(value) {
             let html = _getHtml(this);
             html.value = value;
         },
-        setRequired: (value) =>  {
+        setRequired: function(value) {
             _setAttr(this, 'required', (value || true));
         },
-        setDisabled: (value) =>  {
+        setDisabled: function(value) {
             _setAttr(this, 'disabled', (value || true));
         },
-        setReadonly: (value) =>  {
+        setReadonly: function(value) {
             _setAttr(this, 'readonly', (value || true));
         }
     };

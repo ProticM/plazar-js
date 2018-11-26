@@ -1,5 +1,7 @@
-﻿const select = () => {
-    let _parseTemplate = () => {
+﻿import formFieldMixin from '../mixins/form-field.mixin';
+
+const select = () => {
+    let _parseTemplate = function() {
         let hasSize = !pz.isEmpty(this.size);
         let css = (this.custom ? (hasSize ? ('custom-select custom-select-' + this.size) : 'custom-select') :
             (hasSize ? ('form-control form-control-' + this.size) : 'form-control'));
@@ -25,7 +27,7 @@
         ownerType: 'ui-bootstrap-component',
         labelText:'',
         template: '<select></select>',
-        mixins: ['ui-bootstrap-form-field-mix'],
+        mixins: [formFieldMixin],
         dataSource: [],
         custom: false,
         multiple: false,
@@ -37,7 +39,7 @@
             fn: 'onChange'
         }],
         onChange: () => { },
-        setDataSource: (data) => {
+        setDataSource: function(data) {
             if (pz.isEmpty(data) || pz.isEmpty(this.html)) {
                 return;
             };

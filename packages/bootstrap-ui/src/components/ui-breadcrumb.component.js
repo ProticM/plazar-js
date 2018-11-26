@@ -1,6 +1,6 @@
 ﻿const breadcrumb = () => {
     
-    let _createCrumbs = (me, crumbs)=> {
+    let _createCrumbs = (me, crumbs) => {
         let ul = pz.dom.findElement(me.html, 'ol.breadcrumb');
         pz.forEach(crumbs, (crumb) => {
             let cls = crumb.isActive ? 'breadcrumb-item active' : 'breadcrumb-item';
@@ -11,7 +11,7 @@
         });
     };
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         _createCrumbs(this, this.crumbs);
     };
 
@@ -21,7 +21,7 @@
         template: '<nav aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>',
         parseTemplate: _parseTemplate,
         crumbs: [],
-        addCrumbs: (crumb) => {
+        addCrumbs: function(crumb) {
             let isArray, method;
 
             if (pz.isEmpty(crumb)) {

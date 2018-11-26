@@ -5,7 +5,7 @@
         //'ui-bootstrap-input-group'
     ];
 
-	let _parseTemplate = () => {
+	let _parseTemplate = function() {
 		let prefix = this.sticky ? 'sticky' : 'fixed';
         let hasMenuItems = !pz.isEmpty(this.menu) && !pz.isEmpty(this.menu.items);
 

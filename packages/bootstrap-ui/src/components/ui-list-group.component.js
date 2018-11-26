@@ -4,7 +4,7 @@
         elementAtIdxNotFound: 'Element at index {0} was not found'
     };
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         let tabContent;
         this.addCss((this.flushed ? 'list-group-flush' : ''));
 
@@ -77,7 +77,7 @@
         actionable: false,
         flushed: false,
         mode: 'list',
-        init: () => {
+        init: function() {
 
             if (this.mode == 'tab') {
                 this.handlers = pz.arr.merge((this.handlers || []), [{
@@ -97,29 +97,29 @@
 
             this.base(arguments);
         },
-        load: () => {
+        load: function() {
             this.template = (this.actionable || this.mode == 'tab') ? '<div class="list-group"></div>' :
                 '<ul class="list-group"></ul>';
             this.base(arguments);
         },
         template: '<ul class="list-group"></ul>',
         parseTemplate: _parseTemplate,
-        disable: (idx) => {
+        disable: function(idx) {
             _setEnabled(this, idx, false);
         },
-        enable: (idx) => {
+        enable: function(idx) {
             _setEnabled(this, idx, true);
         },
-        onTabShown: (e) => {
+        onTabShown: function (e) {
             this.publish('shown-bs-tab', e);
         },
-        onTabShow: (e) => {
+        onTabShow: function(e) {
             this.publish('show-bs-tab', e);
         },
-        onTabHide: (e) => {
+        onTabHide: function(e) {
             this.publish('hide-bs-tab', e);
         },
-        onTabHidden: (e) => {
+        onTabHidden: function(e) {
             this.publish('hidden-bs-tab', e);
         }
     };

@@ -1,6 +1,6 @@
 ﻿const dropdown = () => {
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         let hasSize = !pz.isEmpty(this.size), btn, hasPosition =
             !pz.isEmpty(this.dropPosition), hasHeader = !pz.isEmpty(this.menuHeaderText),
             hasAppearance = !pz.isEmpty(this.appearance);
@@ -15,7 +15,7 @@
             this.addCss(('drop' + this.dropPosition));
         };
 
-        let btn = pz.dom.findElement(this.html, (this.inNav ? 'a' : 'button') + '.dropdown-toggle');
+        btn = pz.dom.findElement(this.html, (this.inNav ? 'a' : 'button') + '.dropdown-toggle');
         this.addCss(((hasAppearance ? ('btn-' + this.appearance) : '') + (hasSize ? (' btn-' + this.size) : '') + (this.split ? ' dropdown-toggle-split' : '')), btn);
         btn[this.split ? 'innerHTML' : 'innerText'] = (this.split ? '<span class="sr-only">Toggle Dropdown</span>' : this.text);
 
@@ -56,7 +56,7 @@
             on: 'hidden.bs.dropdown',
             fn: 'onDropdownHidden'
         }],
-        load: () => {
+        load: function() {
             let parent = this.traceUp();
             let isInNav = !pz.isEmpty(parent) && pz.arr.contains([parent.type, parent.ownerType], 'ui-bootstrap-navbar');
             this.inNav = this.inNav || isInNav;
@@ -72,20 +72,20 @@
         split: false,
         menuItems: [],
         parseTemplate: _parseTemplate,
-        destroy: () => {
+        destroy: function() {
             $(this.html).dropdown('dispose');
             this.base(arguments);
         },
-        toggle: () => {
+        toggle: function() {
             $(this.html).dropdown('toggle');
         },
-        update: () => {
+        update: function() {
             $(this.html).dropdown('update');
         },
-        onDropdownShow: () => { },
-        onDropdownShown: () => { },
-        onDropdownHide: () => { },
-        onDropdownHidden: () => { }
+        onDropdownShow: function() { },
+        onDropdownShown: function() { },
+        onDropdownHide: function() { },
+        onDropdownHidden: function() { }
     };
 };
 

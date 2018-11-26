@@ -1,8 +1,10 @@
-﻿const input = () => {
+﻿import formFieldMixin from '../mixins/form-field.mixin';
 
-    let _parseTemplate = () => {
+const input = () => {
 
-        let clone, tpl, label, input, hasSize = !pz.isEmpty(this.size),
+    let _parseTemplate = function() {
+
+        let clone, tpl, label, hasSize = !pz.isEmpty(this.size),
             input = pz.dom.findElement(this.html, 'input') || this.html,
             hasGroup = !pz.isEmpty(this.group);
 
@@ -81,14 +83,14 @@
     return {
         type: 'ui-bootstrap-input',
         ownerType: 'ui-bootstrap-component',
-        mixins: ['ui-bootstrap-form-field-mix'],
+        mixins: [formFieldMixin],
         inputType: 'text',
         inForm: false,
         readonly: false,
         placeholder: 'Enter text...',
         plaintext: false,
         inline: false,
-        load: () => {
+        load: function() {
             let css = this.inputType == 'file' ? 'form-control-file' : 'form-control';
             let input = '<input class="' + css + '" type="' + this.inputType + '"/>';
             this.template = ((this.inForm && !pz.arr.contains(['checkbox', 'radio'], this.inputType)) ? '<div class="form-group">' + input + '</div>' : input);
@@ -102,8 +104,8 @@
 			on: 'change',
             fn: 'onChange'
 		}],
-        onChange: (e) => { },
-        prependLabel: () => {
+        onChange: function(e) { },
+        prependLabel: function() {
 
             if (pz.isEmpty(this.labelText) || pz.arr.contains(['checkbox', 'radio'], this.inputType)) {
                 return;

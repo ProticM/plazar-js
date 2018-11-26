@@ -19,7 +19,7 @@
             css : _default;
     };
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         let me = this;
         this.addCss((this.fluid ? 'container-fluid' : 'container'));
 

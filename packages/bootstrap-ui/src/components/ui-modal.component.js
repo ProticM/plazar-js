@@ -2,7 +2,7 @@
 
     let _primaryButtons = ['Yes', 'Ok'];
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         let headerMarkup = '<div class="modal-header"><h5 class="modal-title">' + (this.header ? (pz.isEmpty(this.header.text) ? '' : this.header.text) : '') +
             '</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>',
             bodyMarkup = '<div class="modal-body">' + (this.body ? (pz.isEmpty(this.body.text) ? '' : this.body.text) : '') + '</div>',
@@ -71,7 +71,7 @@
             text: ''
         },
         fade: false,
-        init: () => {
+        init: function() {
             let buttons = this.buttons.split('_'), me = this,
                 hasBodyComponents;
             this.components = this.components || [];
@@ -92,7 +92,7 @@
                 });
             }, this);
 
-            let hasBodyComponents = !pz.isEmpty(this.components) && _hasComponentsForSpecificRender(this, 'modal-body');
+            hasBodyComponents = !pz.isEmpty(this.components) && _hasComponentsForSpecificRender(this, 'modal-body');
 
             if (hasBodyComponents) {
                 this.body = true;
@@ -115,29 +115,29 @@
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
-        show: (config) => {
+        show: function(config) {
             $(this.html).modal('show');
         },
-        hide: () => {
+        hide: function() {
             $(this.html).modal('hide');
         },
-        update: () => {
+        update: function() {
             $(this.html).modal('handleUpdate');
         },
-        toggle: () => {
+        toggle: function() {
             $(this.html).modal('toggle');
         },
-        onButtonClick: () => { },
-        onModalShown: (e) => {
+        onButtonClick: function() { },
+        onModalShown: function(e) {
             this.publish('shown-bs-modal', e);
         },
-        onModalShow: (e) => {
+        onModalShow: function(e) {
             this.publish('show-bs-modal', e);
         },
-        onModalHide: (e) => {
+        onModalHide: function(e) {
             this.publish('hide-bs-modal', e);
         },
-        onModalHidden: (e) => {
+        onModalHidden: function(e) {
             this.publish('hidden-bs-modal', e);
             if (this.autoDestroy) {
                 $(this.html).modal('dispose');

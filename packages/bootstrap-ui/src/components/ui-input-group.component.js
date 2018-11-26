@@ -27,15 +27,15 @@
         type: 'ui-bootstrap-input-group',
         ownerType: 'ui-bootstrap-component',
         template: '<div class="input-group"></div>',
-        parseTemplate: () => {
+        parseTemplate: function() {
             let hasSize = !pz.isEmpty(this.size);
             this.addCss((hasSize ? ('input-group-' + this.size) : ''));
         },
         input: {
             type: 'ui-bootstrap-input' // or ui-bootstrap-select
         },
-        init: () => {
-            let addons, addons, wrapper, component;
+        init: function() {
+            let addons, wrapper, component;
 
             if (pz.isEmpty(this.addon)) {
                 throw new Error(_const.addonEmpty);

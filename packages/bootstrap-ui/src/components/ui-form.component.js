@@ -1,6 +1,6 @@
 ﻿const form = () => {
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         let hasAction = !pz.isEmpty(this.action), hasMethod = !pz.isEmpty(this.method);
 
         if (hasAction) {
@@ -27,7 +27,7 @@
             align: 'right',
             css: []
         },
-        init: () => {
+        init: function() {
 
             pz.forEach(this.components, (component) => {
                 component.inForm = component.type == 'ui-bootstrap-input';
@@ -53,7 +53,7 @@
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
-        validate: () => {
+        validate: function() {
 
         }
     };

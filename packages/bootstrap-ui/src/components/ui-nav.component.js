@@ -9,7 +9,7 @@
         'ui-bootstrap-dropdown'
     ];
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         let hasPosition = !pz.isEmpty(this.position),
             html = this.mode == 'tab' ? pz.dom.findElement(this.html, 'div.nav.nav-tabs') : this.html,
             tabContent;
@@ -75,12 +75,12 @@
         template: '<nav class="nav"></nav>',
         components: [],
         mode: 'nav',
-        load: () => {
+        load: function() {
             this.template = (this.mode == 'tab') ? '<nav><div class="nav nav-tabs" role="tablist"></div></nav>' :
                 '<nav class="nav"></nav>';
             this.base(arguments);
         },
-        init: () => {
+        init: function() {
             if (this.mode == 'tab') {
                 this.handlers = pz.arr.merge((this.handlers || []), [{
                     on: 'show.bs.tab',
@@ -104,19 +104,19 @@
         fill: false,
         pills: false,
         parseTemplate: _parseTemplate,
-        onTabShown: (e) => {
+        onTabShown: function(e) {
             this.publish('shown-bs-tab', e);
         },
-        onTabShow: (e) => {
+        onTabShow: function(e) {
             this.publish('show-bs-tab', e);
         },
-        onTabHide: (e) => {
+        onTabHide: function(e) {
             this.publish('hide-bs-tab', e);
         },
-        onTabHidden: (e) => {
+        onTabHidden: function(e) {
             this.publish('hidden-bs-tab', e);
         },
-        destroy: () => {
+        destroy: function() {
             if (this.mode == 'tab') {
                 $(this.html).tab('dispose');
             };

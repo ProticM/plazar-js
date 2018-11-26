@@ -1,6 +1,6 @@
 ﻿const card = () => {
     
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
 
         let hasImage = !pz.isEmpty(this.image), pos, method;
         let bodyClasses = 'card-body '.concat(this.body ? (!pz.isEmpty(this.body.css) ? this.body.css : []).join(' ') : '').trim();
@@ -69,13 +69,13 @@
         footer: {
             text: ''
         },
-        load: () => {
+        load: function() {
             _createButtons(this);
             this.base(arguments);
         },
         buttons:[],
         parseTemplate: _parseTemplate,
-        setHeaderText: (value) => {
+        setHeaderText: function(value) {
 
             let header;
             if (pz.isEmpty(value)) {

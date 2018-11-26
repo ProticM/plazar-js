@@ -1,6 +1,6 @@
 ﻿const buttonToolbar = () => {
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         this.html.setAttribute('aria-label', 'label_' + this.id);
     };
 
@@ -8,7 +8,7 @@
         type: 'ui-bootstrap-button-toolbar',
         ownerType: 'ui-bootstrap-component',
         groups: [],
-        init: () => {
+        init: function() {
 
             let groups = pz.arr.map((group) => {
                 return pz.isEmpty(group.type) ?

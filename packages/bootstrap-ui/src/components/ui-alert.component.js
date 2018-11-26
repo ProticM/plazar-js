@@ -1,6 +1,6 @@
 ﻿const alert = () => {
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
 
         this.addCss('alert-'.concat(this.appearance));
 
@@ -43,17 +43,17 @@
             on: 'closed.bs.alert',
             fn: 'onClosed'
         }],
-        close: () => {
+        close: function() {
             $(this.html).alert('close');
         },
-        destroy: () => {
+        destroy: function() {
             $(this.html).alert('dispose');
             this.base(arguments);
         },
-        onClose: (e) => {
+        onClose: function(e) {
             this.publish('close-bs-alert', e);
         },
-        onClosed: (e) => {
+        onClosed: function(e) {
             this.publish('closed-bs-alert', e);
             if(this.autoDestroy) {
                 this.destroy();

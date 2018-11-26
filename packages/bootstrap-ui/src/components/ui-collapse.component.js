@@ -13,7 +13,7 @@
     return {
         type: 'ui-bootstrap-collapse',
         ownerType: 'ui-bootstrap-button',
-        parseTemplate: () => {
+        parseTemplate: function() {
             this.base(arguments);
             this.html.setAttribute('data-toggle', 'collapse');
 
@@ -22,21 +22,21 @@
         },
         target: '',
         parent: '',
-        init: () => {
+        init: function() {
             pz.arr.clear(this.handlers);
             this.base(arguments);
         },
-        toggle: () => {
+        toggle: function()  {
             $(this.html).collapse('toggle');
         },
-        destroy: () => {
+        destroy: function() {
             $(this.html).collapse('dispose');
             this.base(arguments);
         },
-        show: () => {
+        show: function()  {
             _setVisibility(this, 'show');
         },
-        hide: () => {
+        hide: function()  {
             _setVisibility(this, 'hide');
         }
     };

@@ -1,4 +1,4 @@
-﻿const bootstrapUiBase = () => {
+﻿let bootstrapUiBase = () => {
 
     let _const = {
         handlerFnNotProvided: 'Handler function was not provided.'
@@ -16,7 +16,7 @@
     return {
         type: 'ui-bootstrap-component',
         ownerType: 'component',
-        constructor: () => {
+        constructor: function() {
 
             let me = this;
             let sub = this.subscribe('render-complete', () => {
@@ -34,7 +34,7 @@
             this.base(arguments);
         },
 
-        prependLabel: (template) => {
+        prependLabel: function(template) {
             if (pz.isEmpty(this.labelText)) {
                 return;
             };
@@ -46,15 +46,15 @@
             label = null;
         },
 
-        initToolTip: () => {
+        initToolTip: function() {
             _initPlugin(this, 'tooltip');
         },
 
-        initPopOver: () => {
+        initPopOver: function() {
             _initPlugin(this, 'popover');
         },
 
-        handle: (handler) => { // override handlers binding since we need bootstrap/jquery custom events
+        handle: function(handler) { // override handlers binding since we need bootstrap/jquery custom events
             let me = this, $html = $(this.html);
             let fn = pz.isFunction(handler.fn) ? handler.fn : me[handler.fn];
 
@@ -68,7 +68,7 @@
             $html.on.apply($html, args);
         },
 
-        destroy: () => {
+        destroy: function() {
             $(this.html).tooltip('dispose')
                 .popover('dispose');
             $(this.html).off();

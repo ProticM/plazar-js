@@ -76,7 +76,7 @@
         fluid: false,
         body: '', // can be html
         components: [],
-        parseTemplate: () => {
+        parseTemplate: function() {
 
             let cls = this.renderAs == 'row' ? 'row' :
                 (this.renderAs == 'form-row' ? 'form-row' : (this.renderAs == 'column' ? _getColumnSizeClass(this.column) :

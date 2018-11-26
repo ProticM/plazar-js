@@ -1,6 +1,6 @@
 ﻿const buttonGroup = () => {
 
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         let sizeCls = !pz.isEmpty(this.size) ? 'btn-group-' + this.size : '';
         this.addCss((this.vertical ? 'btn-group-vertical ' + sizeCls : 'btn-group ' + sizeCls));
         this.html.setAttribute('aria-label', 'label_' + this.id);
@@ -12,7 +12,7 @@
         ownerType: 'ui-bootstrap-component',
         buttons: [],
         renderAs: 'group',
-        init: () => {
+        init: function() {
 
             let buttons = pz.arr.map((button) => {
                 return pz.isEmpty(button.type) ?

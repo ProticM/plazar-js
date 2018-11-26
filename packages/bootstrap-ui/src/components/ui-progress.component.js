@@ -1,6 +1,6 @@
 ﻿const progress = () => {
 
-	let _parseTemplate = () => {
+	let _parseTemplate = function() {
 		let progressBar = pz.dom.findElement(this.html, 'div.progress-bar'),
             hasAppearance = !pz.isEmpty(this.appearance),
             hasNowValue = !pz.isEmpty(this.values.now) && this.values.now > 0,
@@ -35,7 +35,7 @@
 			max: 100
 		},
 		parseTemplate: _parseTemplate,
-		setValues: (values) => {
+		setValues: function(values) {
 			if (pz.isEmpty(values)) {
 				return;
 			};

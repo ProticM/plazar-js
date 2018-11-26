@@ -1,6 +1,6 @@
 ﻿const button = () => {
     
-    let _parseTemplate = () => {
+    let _parseTemplate = function() {
         let hasSize = !pz.isEmpty(this.size), hasHref = !pz.isEmpty(this.href);
         this.html.innerHTML = this.text;
         this.addCss(('btn-' + this.appearance + (hasSize ? ' btn-' + this.size : '')));
@@ -15,13 +15,13 @@
         text: 'Button',
         buttonType: 'button',
         template: '<button class="btn"></button>',
-        load: () => {
+        load: function() {
             if (!pz.isEmpty(this.href)) {
                 this.template = this.template.replace('<button', '<a').replace('button>', 'a>');
             };
             this.base(arguments)
         },
-        init: () => {
+        init: function() {
             if (pz.isEmpty(this.href)) {
                 this.handle({
                     on: 'click',
@@ -31,15 +31,15 @@
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
-		onClick: () => { },
-        toggle: () => {
+		onClick: function() { },
+        toggle: function() {
             $(this.html).button('toggle');
         },
-        destroy: () => {
+        destroy: function() {
             $(this.html).button('dispose');
             this.base(arguments);
         },
-        setDisabled: (value) => {
+        setDisabled: function(value) {
             // TODO: link disable
             if (pz.isEmpty(value) || value == true) {
                 this.html.setAttribute('disabled', '');
@@ -47,7 +47,7 @@
                 this.html.removeAttribute('disabled');
             };
         },
-        setText: (value) => {
+        setText: function(value) {
 
             if (pz.isEmpty(value)) {
                 return;
