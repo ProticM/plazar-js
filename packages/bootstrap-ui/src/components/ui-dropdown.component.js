@@ -1,7 +1,7 @@
-﻿pz.define('ui-bootstrap-dropdown', function () {
+﻿const dropdown = () => {
 
-    var _parseTemplate = function () {
-        var hasSize = !pz.isEmpty(this.size), btn, hasPosition =
+    let _parseTemplate = () => {
+        let hasSize = !pz.isEmpty(this.size), btn, hasPosition =
             !pz.isEmpty(this.dropPosition), hasHeader = !pz.isEmpty(this.menuHeaderText),
             hasAppearance = !pz.isEmpty(this.appearance);
 
@@ -15,13 +15,13 @@
             this.addCss(('drop' + this.dropPosition));
         };
 
-        var btn = pz.dom.findElement(this.html, (this.inNav ? 'a' : 'button') + '.dropdown-toggle');
+        let btn = pz.dom.findElement(this.html, (this.inNav ? 'a' : 'button') + '.dropdown-toggle');
         this.addCss(((hasAppearance ? ('btn-' + this.appearance) : '') + (hasSize ? (' btn-' + this.size) : '') + (this.split ? ' dropdown-toggle-split' : '')), btn);
         btn[this.split ? 'innerHTML' : 'innerText'] = (this.split ? '<span class="sr-only">Toggle Dropdown</span>' : this.text);
 
-        var cls = 'dropdown-menu';
+        let cls = 'dropdown-menu';
         pz.dom.append(this.html, '<div class="' + cls + '"></div>');
-        var menuWrapper = pz.dom.findElement(this.html, 'div.dropdown-menu');
+        let menuWrapper = pz.dom.findElement(this.html, 'div.dropdown-menu');
 
         if (hasHeader) {
             pz.dom.append(menuWrapper, '<h6 class="dropdown-header">' + this.menuHeaderText + '</h6>');
@@ -31,7 +31,7 @@
             return;
         };
 
-        pz.forEach(this.menuItems, function (item) {
+        pz.forEach(this.menuItems, (item) => {
             pz.dom.append(menuWrapper, '<a class="dropdown-item" href="' + (item.href || '#') + '">' + item.text + '</a>');
             if (item.divide) {
                 pz.dom.append(menuWrapper, '<div class="dropdown-divider"></div>');
@@ -40,6 +40,7 @@
     };
 
     return {
+        type: 'ui-bootstrap-dropdown',
         ownerType: 'ui-bootstrap-component',
         template: '<div class="dropdown"><button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button></div>',
         handlers:[{
@@ -55,9 +56,9 @@
             on: 'hidden.bs.dropdown',
             fn: 'onDropdownHidden'
         }],
-        load: function () {
-            var parent = this.traceUp();
-            var isInNav = !pz.isEmpty(parent) && pz.arr.contains([parent.type, parent.ownerType], 'ui-bootstrap-navbar');
+        load: () => {
+            let parent = this.traceUp();
+            let isInNav = !pz.isEmpty(parent) && pz.arr.contains([parent.type, parent.ownerType], 'ui-bootstrap-navbar');
             this.inNav = this.inNav || isInNav;
             if (this.inNav) {
                 this.template = '<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a></div>';
@@ -71,19 +72,21 @@
         split: false,
         menuItems: [],
         parseTemplate: _parseTemplate,
-        destroy: function () {
+        destroy: () => {
             $(this.html).dropdown('dispose');
             this.base(arguments);
         },
-        toggle: function () {
+        toggle: () => {
             $(this.html).dropdown('toggle');
         },
-        update: function () {
+        update: () => {
             $(this.html).dropdown('update');
         },
-        onDropdownShow: function() { },
-        onDropdownShown: function() { },
-        onDropdownHide: function() { },
-        onDropdownHidden: function() { }
+        onDropdownShow: () => { },
+        onDropdownShown: () => { },
+        onDropdownHide: () => { },
+        onDropdownHidden: () => { }
     };
-});
+};
+
+export default dropdown;

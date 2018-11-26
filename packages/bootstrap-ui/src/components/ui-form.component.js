@@ -1,6 +1,6 @@
-﻿pz.define('ui-bootstrap-form', function () {
+﻿const form = () => {
 
-    var _parseTemplate = function () {
+    var _parseTemplate = () => {
         var hasAction = !pz.isEmpty(this.action), hasMethod = !pz.isEmpty(this.method);
 
         if (hasAction) {
@@ -15,6 +15,7 @@
     };
 
     return {
+        type: 'ui-bootstrap-form',
         ownerType: 'ui-bootstrap-component',
         template: '<form></form>',
         inline: false,
@@ -26,9 +27,9 @@
             align: 'right',
             css: []
         },
-        init: function () {
+        init: () => {
 
-            pz.forEach(this.components, function (component) {
+            pz.forEach(this.components, (component) => {
                 component.inForm = component.type == 'ui-bootstrap-input';
             }, this);
 
@@ -52,8 +53,10 @@
             this.base(arguments);
         },
         parseTemplate: _parseTemplate,
-        validate: function () {
+        validate: () => {
 
         }
     };
-});
+};
+
+export default form;
