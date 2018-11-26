@@ -56,7 +56,7 @@
             pz.dom.append(mainContainer, '<p class="lead jumbotron-button"></p>');
             pz.forEach(jumbotron.buttons, (button) => {
                 let btn = {};
-                pz.obj.assignTo(btn, button, false);
+                pz.assignTo(btn, button, false);
                 btn.renderTo = 'p.lead.jumbotron-button';
 
                 if (pz.isEmpty(btn.type)) {

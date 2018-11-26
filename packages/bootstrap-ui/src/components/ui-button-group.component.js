@@ -16,7 +16,7 @@
 
             let buttons = pz.arr.map((button) => {
                 return pz.isEmpty(button.type) ?
-                    pz.obj.assignTo(button, { type: 'ui-bootstrap-button' }, false) : button;
+                    pz.assignTo(button, { type: 'ui-bootstrap-button' }, false) : button;
             }, this.buttons);
 
             this.components = pz.arr.merge(this.components || [], buttons);

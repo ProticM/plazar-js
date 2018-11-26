@@ -73,7 +73,7 @@
                         component.custom = true;
                     };
 
-                    pz.obj.assignTo(component, addon.renderAs, false);
+                    pz.assignTo(component, addon.renderAs, false);
                     component.renderTo = renderTo;
                     this.components.push(component);
                 } else {

@@ -12,7 +12,7 @@
 
             let groups = pz.arr.map((group) => {
                 return pz.isEmpty(group.type) ?
-                    pz.obj.assignTo(group, { type: 'ui-bootstrap-button-group' }, false) : group;
+                    pz.assignTo(group, { type: 'ui-bootstrap-button-group' }, false) : group;
             }, this.groups);
 
             this.components = pz.arr.merge(this.components || [], groups);

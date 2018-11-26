@@ -42,7 +42,7 @@
         me.footerCss = pz.arr.merge(me.footerCss || [], ['text-right']);
 
         let buttons = pz.arr.map((button) => {
-            return pz.obj.assignTo(button, {
+            return pz.assignTo(button, {
                 type: button.type || 'ui-bootstrap-button',
                 renderTo: button.renderTo || ' > div.card-footer'
             }, false);
