@@ -1,5 +1,7 @@
 {
   "name": "@plazarjs/string-util",
+  "rollupName": "str",
+  "rollupFileName": "string-util",
   "version": "2.0.0-alpha.0",
   "description": "PlazarJS string package. It contains string utilities",
   "keywords": [

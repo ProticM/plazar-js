@@ -1,5 +1,7 @@
 {
   "name": "@plazarjs/http",
+  "rollupName": "http",
+  "rollupFileName": "http",
   "version": "2.0.0-alpha.0",
   "description": "PlazarJS http package",
   "keywords": [

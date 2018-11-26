@@ -13,7 +13,7 @@ export default [
 		input: path.resolve(src, 'index.js'),
 		output: {
 			name: pck.rollupName,
-			file: path.resolve(dist, (pck.rollupName + '.js')),
+			file: path.resolve(dist, (pck.rollupFileName + '.js')),
 			format: 'umd'
 		},
 		plugins: [
