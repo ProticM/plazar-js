@@ -76,7 +76,7 @@ var _camelize = function (str) {
     });
 };
 
-var _format =function () {
+var _format = function () {
     var args = Array.prototype.slice.call(arguments);
     var baseString = args[0];
     var params = args.splice(1), result = '';
@@ -118,7 +118,7 @@ var _define = function (type, object) {
 };
 
 var _create = function (config) {
-    var isObject, type, item, instance;
+    var isObject, type, item;
 
     if (_isEmpty(config)) {
         throw new Error(_const.canNotCreate);
