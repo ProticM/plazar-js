@@ -15,7 +15,9 @@
     typeMustBeStringOrObject: 'First parameter can be string or object.',
     canNotCreate: 'Cannot create an instance based on provided arguments. Example invocation: pz.create({ // config }) or pz.create(\'my-type\')',
     canNotDefine: 'Cannot define type based on provided arguments. Example invocation: pz.define(\'my-type\', { // config })',
-    defaultNamespace: 'pz'
+    defaultNamespace: 'pz',
+    pluginInvalid: 'Please provide a valid plugin. The value you have provided is an empty string, undefined or null.',
+    pluginInitFnMissing: 'The plugin you have provided is missing [init] function. Each plugin must have this since it is going to be called from the framework core.'
 };
 
 function _find(array, fn, scope) {
@@ -334,6 +336,18 @@ const pz = {
     },
     getInstanceOf: function (typeOrIdOrAlias, all) {
         return _get(this, typeOrIdOrAlias, true, all);
+    },
+    plugin: function(value) {
+        
+        if(pz.isEmpty(value)) {
+            throw new Error(_const.pluginInvalid);
+        };
+
+        if(!pz.isFunction(value.init)) {
+            throw new Error(_const.pluginInitFnMissing);
+        };
+
+        return value.init(pz);
     }
 };
 
