@@ -17,7 +17,7 @@
     canNotDefine: 'Cannot define type based on provided arguments. Example invocation: pz.define(\'my-type\', { // config })',
     defaultNamespace: 'pz',
     pluginInvalid: 'Please provide a valid plugin. The value you have provided is an empty string, undefined or null.',
-    pluginInitFnMissing: 'The plugin you have provided is missing [init] function. Each plugin must have this since it is going to be called from the framework core.'
+    pluginInitFnMissing: 'The plugin you have provided is missing its [init] function. Each plugin must have this since it is going to be called from the framework core.'
 };
 
 function _find(array, fn, scope) {
