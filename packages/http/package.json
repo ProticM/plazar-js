@@ -27,7 +27,8 @@
     "url": "https://github.com/ProticM/plazar-js"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "uglify": "uglifyjs --mangle --comments --output dist/http.min.js dist/http.js"
   },
   "bugs": {
     "url": "https://github.com/ProticM/plazar-js/issues"

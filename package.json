@@ -5,7 +5,8 @@
   "scripts": {
     "clean": "lerna exec --parallel -- rimraf dist",
     "build": "lerna exec --parallel -- rollup -c",
-    "prepublishOnly": "npm run clean & npm run build"
+    "uglifyAll": "lerna run uglify",
+    "prepublishOnly": "npm run clean & npm run build & npm run uglifyAll"
   },
   "dependencies": {
     "save-dev": "^2.0.0"
