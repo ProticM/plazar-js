@@ -5,7 +5,7 @@ const bootstrapUi = {
     init: (pz) => {
         let b = pz.component.extend(base);
         pz.storeDefinition(b.$type, b);
-        pz.forEach(components.all, component => {
+        pz.forEach(components.components, component => {
             let def = b.extend(component);
             pz.storeDefinition(def.$type, def);
         });
