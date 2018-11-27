@@ -38,8 +38,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@plazarjs/array-util": "^2.0.0-alpha.0",
-    "@plazarjs/core": "^2.0.0-alpha.0",
-    "@plazarjs/object-util": "^2.0.0-alpha.0"
+    "@plazarjs/core": "^2.0.0-alpha.0"
   }
 }
