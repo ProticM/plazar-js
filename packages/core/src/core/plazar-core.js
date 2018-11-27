@@ -65,34 +65,6 @@ var _assignTo = function (target, source, clone) {
     return result;
 };
 
-var _camelize = function (str) {
-    if (_isEmpty(str)) {
-        return '';
-    };
-
-    return str.replace(/^([A-Z])|[\s-_](\w)/g, function (match, p1, p2, offset) {
-        if (p2) return p2.toUpperCase();
-        return p1.toLowerCase();
-    });
-};
-
-var _format = function () {
-    var args = Array.prototype.slice.call(arguments);
-    var baseString = args[0];
-    var params = args.splice(1), result = '';
-
-    if (_isEmpty(baseString) || _isEmpty(params)) {
-        return result;
-    };
-
-    _forEach(params, function (param, idx) {
-        result = _isEmpty(result) ? baseString.replace('{' + idx + '}', param) :
-            result.replace('{' + idx + '}', param);
-    });
-
-    return result;
-};
-
 var _define = function (type, object) {
 
     var cls, obj, tBase,
@@ -422,8 +394,6 @@ pz.toJSON = _toJSON;
 pz.assignTo = _assignTo;
 pz.isInstanceOf = _isInstanceOf;
 pz.getGlobal = _getGlobal;
-pz.camelize = _camelize;
-pz.format = _format;
 pz.isPzDefinition = _isPzDefinition;
 pz.deepClone = _deepClone;
 pz.isModularEnv = _isModularEnv;
