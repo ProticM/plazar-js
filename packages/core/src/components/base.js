@@ -1,4 +1,4 @@
-﻿import pz from '../../core';
+﻿import pz from '../core';
 
 class base {
     init() { };
