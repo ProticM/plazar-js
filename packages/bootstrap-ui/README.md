@@ -1,8 +1,49 @@
 # plazarjs/bootstrap-ui
 
-> A set of predefined components styled with the Bootstrap CSS framework (version v4.1.x). Currently, this package should be used only in non modular environments (via script tag).
+> A set of predefined components styled with the Bootstrap CSS framework (version v4.1.x).
 
-## Usage
+## Usage - es
+
+```javascript
+$ npm install @plazarjs/bootstrap-ui
+```
+## Register all Components
+
+Create a folder called `plugins`. Inside of it create a file called `bootstrap.js` and copy the following snippet:
+
+```javascript
+import pz from '@plazarjs/core';
+import pzBootstrap from '@plazarjs/bootstrap-ui';
+pz.plugin(pzBootstrap);
+```
+The snippet above will register each bootstrap component and the UI will be ready for use. Then, import the jquery library and register the bootstrap plugin in your app entry point:
+
+```javascript
+import $ from 'jquery';
+import '..my-app-relative-path/plugins/bootstrap';
+```
+
+## Import a Specific Component
+
+```javascript
+import { navbar } from '@plazarjs/bootstrap-ui/dist/esmodules/components';
+```
+
+Inheritance is enabled on each component. We could have our custom component created like so:
+
+```javascript
+navbar.extend(/* configs */);
+```
+
+## Usage - cdn
+
+```html
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@plazarjs/core/dist/core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@plazarjs/bootstrap-ui/dist/bootstrap-ui.min.js"></script>
+```
+
+Next, we could define our custom derived components via `pz.define` and the `extend` API, or simply create them via `pz.create`.
 
 ```javascript 
 pz.create({ 
