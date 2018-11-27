@@ -31,7 +31,7 @@ class base {
             let instance = pz.getInstanceOf(requiredItemType)
             let requiredItem = pz.isEmpty(instance) ?
                 pz.getDefinitionOf(requiredItemType) : instance;
-            let camelCaseName = pz.camelize(requiredItemType);
+            let camelCaseName = pz.str.camelize(requiredItemType);
     
             if (!pz.isEmpty(requiredItem) && pz.isEmpty(this[camelCaseName])) {
                 this[camelCaseName] = !pz.isFunction(requiredItem) ? requiredItem :
