@@ -4,9 +4,10 @@
   "license": "MIT",
   "scripts": {
     "clean": "lerna exec --parallel -- rimraf dist",
-    "build": "lerna exec --parallel -- rollup -c",
+    "rollup": "lerna exec --parallel -- rollup -c",
     "uglifyAll": "lerna run uglify",
-    "prepublishOnly": "npm run clean & npm run build & npm run uglifyAll"
+    "build": "npm run clean & npm run rollup & npm run uglifyAll",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "save-dev": "^2.0.0"
