@@ -5,14 +5,16 @@
   "scripts": {
     "clean": "lerna exec --parallel -- rimraf dist",
     "rollup": "lerna exec --parallel -- rollup -c",
+    "es": "lerna run modularize",
     "uglifyAll": "lerna run uglify",
-    "build": "npm run clean & npm run rollup & npm run uglifyAll",
+    "build": "npm run clean & npm run rollup & npm run es & npm run uglifyAll",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "save-dev": "^2.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
     "lerna": "^3.4.3",
