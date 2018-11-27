@@ -1,6 +1,4 @@
-﻿const pz = {};
-
-var _const = {
+﻿const _const = {
     moduleTypes: {
         class: 'class',
         component: 'component',
@@ -20,8 +18,8 @@ var _const = {
     defaultNamespace: 'pz'
 };
 
-var _find = function (array, fn, scope) {
-    var i = 0, len = array.length;
+function _find(array, fn, scope) {
+    let i = 0, len = array.length;
     for (; i < len; i++) {
         if (fn.call(scope || array, array[i], i)) {
             return array[i];
@@ -30,217 +28,23 @@ var _find = function (array, fn, scope) {
     return null;
 };
 
-var _assignTo = function (target, source, clone) { 
-
-    var assign = function (target) {
-
-        if (_isEmpty(target)) {
-            throw new TypeError(_const.canNotConvertNullOrEmptyObj);
-        };
-
-        var to = Object(target);
-
-        for (var index = 1; index < arguments.length; index++) {
-            var nextSource = arguments[index];
-
-            if (!_isEmpty(nextSource)) {
-                for (var nextKey in nextSource) {
-                    if(_isObject(nextSource[nextKey])) {
-                        to[nextKey] = assign({}, nextSource[nextKey]);
-                    } else if(_isArray(nextSource[nextKey])) {
-                        to[nextKey] = _deepClone(nextSource[nextKey]);
-                    } else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-                        to[nextKey] = nextSource[nextKey];
-                    };
-                };
-            };
-        };
-        return to;
-    };
-
-    var c = _isEmpty(clone) ? true : clone;
-    var t = c ? assign({}, target) : target, result;
-    result = assign(t, source);
-    assign = null;
-    return result;
-};
-
-var _define = function (type, object) {
-
-    var cls, obj, tBase,
-        isMixin;
-
-    if (_isEmpty(type) || _isEmpty(object)) {
-        throw new Error(_const.canNotDefine);
-    };
-
-    obj = _toObject(object);
-    obj.ownerType = _isEmpty(obj.ownerType) ? 'base' : obj.ownerType;
-    tBase = (this[obj.ownerType] || this.getDefinitionOf(obj.ownerType));
-    isMixin = _isMixin(obj);
-    obj.type = type;
-    cls = isMixin ? _assignTo(obj, _assignTo({}, tBase.prototype), false) :
-        tBase.extend(obj);
-        
-    if(!_isModularEnv()) {
-        this.storeDefinition(type, cls);
-    };
-
-    return cls;
-};
-
-var _create = function (config) {
-    var isObject, type, item;
-
-    if (_isEmpty(config)) {
-        throw new Error(_const.canNotCreate);
-    };
-
-    isObject = _isObject(config);
-    type = isObject ? config.type : config;
-    item = this.getDefinitionOf(type);
-    return item.create((isObject ? config : undefined));
-};
-
-var _toObject = function (obj, instantiate) {
-    var i = _isEmpty(instantiate) ? false : instantiate;
-    return _isFunction(obj) ? (i ? new obj() : obj()) : obj;
-};
-
-var _toFunction = function (obj) {
-    var fn = function () { this.constructor = obj.constructor };
-    fn.prototype = obj;
-    return _isFunction(obj) ? obj : fn;
-};
-
-var _isTypeOf = function (variable, type) {
-    return Object.prototype.toString.call(variable) === type;
-};
-
-var _isArray = ('isArray' in Array) ? Array.isArray : function (variable) {
-    return _isTypeOf(variable, _const.types.array);
-};
-
-var _isObject = function (variable) {
-    return _isTypeOf(variable, _const.types.object);
-};
-
-var _isFunction = function (variable) {
-    return _isTypeOf(variable, _const.types.fn);
-};
-
-var _isString = function (variable) {
-    return _isTypeOf(variable, _const.types.string);
-};
-
-var _isNodeList = function (variable) {
-    return _isTypeOf(variable, _const.types.nodeList);
-};
-
-var _isEmpty = function (value, allowEmptyStringOrEmptyArrayOrEmptyObject) {
-    return ((!allowEmptyStringOrEmptyArrayOrEmptyObject ? (value == null || value == {}) : false)) ||
-        (!allowEmptyStringOrEmptyArrayOrEmptyObject ? value === '' : false)
-            || ((_isArray(value) || _isNodeList(value)) &&
-                (!allowEmptyStringOrEmptyArrayOrEmptyObject ? value.length === 0 : false));
-};
-
-var _is = function (obj, ownerType) {
-    return !_isEmpty(obj) &&
-        !_isEmpty(obj.ownerType) &&
-        obj.ownerType == ownerType;
-};
-
-var _isComponent = function (obj) {
-    return _is(obj, _const.moduleTypes.component) ||
-        obj.isComponentInstance == true;
-};
-
-var _isMixin = function (obj) {
-    return _is(obj, _const.moduleTypes.mixin);
-};
-
-var _isClass = function (obj) {
-    return _is(obj, _const.moduleTypes.class);
-};
-
-var _isInstanceOf = function (variable, type) {
-    return variable instanceof type;
-};
-
-var _forEach = function (subject, fn, scope) {
-    var length = (_isEmpty(subject) ? 0 : subject.length), i = 0;
-    for (; i < length; i++) {
-        var result = fn.call(scope || subject[i], subject[i], i, subject);
-        if (result == false) {
-            return result;
-        };
-    };
-    fn = null;
-};
-
-var _proxy = function (fn, context) {
-    var args;
-
-    if (!_isFunction(fn)) {
+function _invokeIfExists(functionName, namespace) {
+    if (pz.isEmpty(namespace)) {
         return;
     };
 
-    args = Array.prototype.slice.call(arguments, 2);
-    return function () {
-        return fn.apply(context || this, args.concat(Array.prototype.slice.call(arguments)));
-    };
-};
-
-var _toJSON = function (value, safe, asString) {
-    var json, asStr = asString || false;
-    try {
-        json = asStr ? JSON.stringify(value) :
-            JSON.parse(value);
-    } catch (e) {
-        if (!safe) {
-            throw new Error(e);
-        };
-    };
-    return json;
-};
-
-var _guid = function () {
-    //GUID reference: https://gist.github.com/evansdiy/4256630
-
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0,
-            v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-};
-
-var _defineNamespace = function (namespace, config) {
-    var names = namespace.split('.');
-    var parent = _getGlobal(), current = '';
-    for (var i = 0, len = names.length; i < len; i++) {
-        current = names[i];
-        parent[current] = parent[current] || {};
-        parent = parent[current];
-    };
-};
-
-var _invokeIfExists = function (functionName, namespace) {
-    if (_isEmpty(namespace)) {
-        return;
-    };
-
-    if (_isFunction(namespace[functionName])) {
-        var fn = namespace[functionName];
+    if (pz.isFunction(namespace[functionName])) {
+        let fn = namespace[functionName];
         return fn.call(namespace);
     };
 };
 
-var _get = function (me, typeOrIdOrAlias, instance, all) {
-    var i = _isEmpty(instance) ? false : instance,
+function _get(me, typeOrIdOrAlias, instance, all) {
+    let i = pz.isEmpty(instance) ? false : instance,
         sourceArray,
         fnCallback = function (item) {
             return i && (item.id == typeOrIdOrAlias || item.type == typeOrIdOrAlias) ||
-                item.type == typeOrIdOrAlias || (!_isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
+                item.type == typeOrIdOrAlias || (!pz.isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
         }, result;
 
     sourceArray = (i ? me.application.instances : me.definitions);
@@ -250,16 +54,16 @@ var _get = function (me, typeOrIdOrAlias, instance, all) {
     return result;
 };
 
-var _getObjectByNamespaceString = function (namespace) {
-    var parts = namespace.split('.');
-    var globalScope = _getGlobal();
+function _getObjectByNamespaceString(namespace) {
+    let parts = namespace.split('.');
+    let globalScope = pz.getGlobal();
 
     if (parts.length == 1) {
         return globalScope[namespace];
     };
 
     return parts.reduce(function (previous, current) {
-        if (_isString(previous)) {
+        if (pz.isString(previous)) {
             return globalScope[previous][current];
         };
 
@@ -267,136 +71,270 @@ var _getObjectByNamespaceString = function (namespace) {
     });
 };
 
-var _getGlobal = function() {
-    return (typeof window !== 'undefined' ? window : global);
-};
+const pz = {
+    definitions: [],
+    application: {
+        instances: []
+    },
+    define: function (type, object) {
 
-var _isPzDefinition = function(value) {
-    return _isFunction(value) && value.$isPz;
-};
-
-var _deepClone = function(value) {
-    var result = _isInstanceOf(value, Array) ? [] : {}, i;
-
-    for (i in value) {
-        result[i] = (_isObject(value[i]) ? 
-            _deepClone(value[i]) : value[i]);
-    };
-
-    return result;
-};
-
-var _isModularEnv = function() {
-    return (typeof exports === 'object' && typeof module !== 'undefined') || 
-        (typeof define === 'function' && !_isEmpty(define.amd));
-};
-
-var _storeDefinition = function(type, definition) {
-    this.definitions.push({
-        type: type,
-        definition: definition
-    });
-};
-
-pz.ns = function (name, config) {
-    _defineNamespace(name, config || {});
-};
-
-pz.defineStatic = function (type, object, namespace) {
-
-    var obj = _toObject(object);
-    var ns = (_isEmpty(namespace) ? 'statics' : namespace);
-    var isDefault = (ns == _const.defaultNamespace);
-    var globalScope = _getGlobal();
-
-    if (_isEmpty(globalScope[ns]) && !isDefault) {
-        this.ns(ns);
-    };
-
-    var o = (isDefault ? this : _getObjectByNamespaceString(ns));
-    if (_isEmpty(type)) {
-        _assignTo(o, obj, false);
-    } else {
-        o[type] = obj;
-    };
-};
-
-pz.getDefinitionOf = function (type) {
-    var item = _get(this, type);
-
-    if (_isEmpty(item)) {
-        var msg = _const.typeNotFound.replace('{0}', type);
-        throw new Error(msg);
-    };
-
-    return item.definition;
-};
-
-pz.getInstanceOf = function (typeOrIdOrAlias, all) {
-    return _get(this, typeOrIdOrAlias, true, all);
-};
-
-pz.defineApplication = function (config) {
-    var rootComponents = !_isEmpty(config.components) && _isArray(config.components) ? 
-        config.components : [], globalScope = _getGlobal();
-    delete config.components;
-    delete config.instances;
-    _assignTo(this.application, config);
-
-    if (_isEmpty(globalScope[config.namespace])) {
-        this.ns(config.namespace, config);
-        _assignTo(globalScope[config.namespace], config, false);
-    } else {
-        _assignTo(globalScope[config.namespace], config, false);
-    };
-
-    _forEach(rootComponents, function (item) {
-        var def = (pz.isPzDefinition(item) ? item : pz.getDefinitionOf(item));
-        if (_isFunction(def.create)) {
-            def.create();
+        let cls, obj, tBase,
+            isMixin;
+    
+        if (pz.isEmpty(type) || pz.isEmpty(object)) {
+            throw new Error(_const.canNotDefine);
         };
-    });
+    
+        obj = pz.toObject(object);
+        obj.ownerType = pz.isEmpty(obj.ownerType) ? 'base' : obj.ownerType;
+        tBase = (this[obj.ownerType] || this.getDefinitionOf(obj.ownerType));
+        isMixin = pz.isMixin(obj);
+        obj.type = type;
+        cls = isMixin ? pz.assignTo(obj, pz.assignTo({}, tBase.prototype), false) :
+            tBase.extend(obj);
+            
+        if(!pz.isModularEnv()) {
+            this.storeDefinition(type, cls);
+        };
+    
+        return cls;
+    },
+    create: function (config) {
+        let isObject, type, item;
+    
+        if (pz.isEmpty(config)) {
+            throw new Error(_const.canNotCreate);
+        };
+    
+        isObject = pz.isObject(config);
+        type = isObject ? config.type : config;
+        item = this.getDefinitionOf(type);
+        return item.create((isObject ? config : undefined));
+    },
+    assignTo: function(target, source, clone) { 
 
-    _invokeIfExists('init', config);
-};
+        let assign = function(target) {
+    
+            if (pz.isEmpty(target)) {
+                throw new TypeError(_const.canNotConvertNullOrEmptyObj);
+            };
+    
+            let to = Object(target);
+    
+            for (let index = 1; index < arguments.length; index++) {
+                let nextSource = arguments[index];
+    
+                if (!pz.isEmpty(nextSource)) {
+                    for (let nextKey in nextSource) {
+                        if(pz.isObject(nextSource[nextKey])) {
+                            to[nextKey] = assign({}, nextSource[nextKey]);
+                        } else if(pz.isArray(nextSource[nextKey])) {
+                            to[nextKey] = pz.deepClone(nextSource[nextKey]);
+                        } else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                            to[nextKey] = nextSource[nextKey];
+                        };
+                    };
+                };
+            };
+            return to;
+        };
+    
+        let c = pz.isEmpty(clone) ? true : clone;
+        let t = c ? assign({}, target) : target, result;
+        result = assign(t, source);
+        assign = null;
+        return result;
+    },
+    toObject: (obj, instantiate) => {
+        let i = pz.isEmpty(instantiate) ? false : instantiate;
+        return pz.isFunction(obj) ? (i ? new obj() : obj()) : obj;
+    },
+    toFunction: (obj) => {
+        let fn = function () { this.constructor = obj.constructor };
+        fn.prototype = obj;
+        return pz.isFunction(obj) ? obj : fn;
+    },
+    isTypeOf: (variable, type) => {
+        return Object.prototype.toString.call(variable) === type;
+    },
+    isArray: ('isArray' in Array) ? Array.isArray : (variable) => {
+        return pz.isTypeOf(variable, _const.types.array);
+    },
+    isObject: (variable) => {
+        return pz.isTypeOf(variable, _const.types.object);
+    },
+    isFunction: (variable) => {
+        return pz.isTypeOf(variable, _const.types.fn);
+    },
+    isString: (variable) => {
+        return pz.isTypeOf(variable, _const.types.string);
+    },
+    isNodeList: (variable) => {
+        return pz.isTypeOf(variable, _const.types.nodeList);
+    },
+    isEmpty: (value, allowEmptyStringOrEmptyArrayOrEmptyObject) => {
+        return ((!allowEmptyStringOrEmptyArrayOrEmptyObject ? (value == null || value == {}) : false)) ||
+            (!allowEmptyStringOrEmptyArrayOrEmptyObject ? value === '' : false)
+                || ((pz.isArray(value) || pz.isNodeList(value)) &&
+                    (!allowEmptyStringOrEmptyArrayOrEmptyObject ? value.length === 0 : false));
+    },
+    is: (obj, ownerType) => {
+        return !pz.isEmpty(obj) &&
+            !pz.isEmpty(obj.ownerType) &&
+            obj.ownerType == ownerType;
+    },
+    isComponent: (obj) => {
+        return pz.is(obj, _const.moduleTypes.component) ||
+            obj.isComponentInstance == true;
+    },
+    isMixin: (obj) => {
+        return pz.is(obj, _const.moduleTypes.mixin);
+    },
+    isClass: (obj) => {
+        return pz.is(obj, _const.moduleTypes.class);
+    },
+    isInstanceOf: (variable, type) => {
+        return variable instanceof type;
+    },
+    forEach: (subject, fn, scope) => {
+        let length = (pz.isEmpty(subject) ? 0 : subject.length), i = 0;
+        for (; i < length; i++) {
+            let result = fn.call(scope || subject[i], subject[i], i, subject);
+            if (result == false) {
+                return result;
+            };
+        };
+        fn = null;
+    },
+    proxy: function(fn, context) {
+        let args;
+    
+        if (!pz.isFunction(fn)) {
+            return;
+        };
+    
+        args = Array.prototype.slice.call(arguments, 2);
+        return function() {
+            return fn.apply(context || this, args.concat(Array.prototype.slice.call(arguments)));
+        };
+    },
+    guid: () => {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            let r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    },
+    toJSON: (value, safe, asString) => {
+        let json, asStr = asString || false;
+        try {
+            json = asStr ? JSON.stringify(value) :
+                JSON.parse(value);
+        } catch (e) {
+            if (!safe) {
+                throw new Error(e);
+            };
+        };
+        return json;
+    },
+    getGlobal: () => {
+        return (typeof window !== 'undefined' ? window : global);
+    },
+    isPzDefinition: (value) => {
+        return pz.isFunction(value) && value.$isPz;
+    },
+    deepClone: (value) => {
+        let result = pz.isInstanceOf(value, Array) ? [] : {}, i;
+    
+        for (i in value) {
+            result[i] = (pz.isObject(value[i]) ? 
+                pz.deepClone(value[i]) : value[i]);
+        };
+    
+        return result;
+    },
+    isModularEnv: () => {
+        return (typeof exports === 'object' && typeof module !== 'undefined') || 
+            (typeof define === 'function' && !pz.isEmpty(define.amd));
+    },
+    storeDefinition: function(type, definition) {
+        this.definitions.push({
+            type: type,
+            definition: definition
+        });
+    },
+    ns: (namespace, config) => {
+        let names = namespace.split('.');
+        let parent = pz.getGlobal(), current = '';
+        for (let i = 0, len = names.length; i < len; i++) {
+            current = names[i];
+            parent[current] = parent[current] || {};
+            parent = parent[current];
+        };
+    },
+    defineStatic: function (type, object, namespace) {
 
-pz.find = function (callback, arr, scope) {
-    var findFnSupported = ('find' in Array.prototype); // find is not supported in IE
-    var res = findFnSupported ? arr.find(callback, scope) :
-        _find(arr, callback, scope);
-    callback = null;
-    return res;
-};
+        let obj = pz.toObject(object);
+        let ns = (pz.isEmpty(namespace) ? 'statics' : namespace);
+        let isDefault = (ns == _const.defaultNamespace);
+        let globalScope = pz.getGlobal();
+    
+        if (pz.isEmpty(globalScope[ns]) && !isDefault) {
+            this.ns(ns);
+        };
+    
+        let o = (isDefault ? this : _getObjectByNamespaceString(ns));
+        if (pz.isEmpty(type)) {
+            pz.assignTo(o, obj, false);
+        } else {
+            o[type] = obj;
+        };
+    },
+    defineApplication: function (config) {
+        let rootComponents = !pz.isEmpty(config.components) && pz.isArray(config.components) ? 
+            config.components : [], globalScope = pz.getGlobal();
+        delete config.components;
+        delete config.instances;
+        _invokeIfExists('preInit', config);
 
-pz.definitions = [];
-pz.application = {
-    instances: []
+        pz.assignTo(this.application, config);
+    
+        if (pz.isEmpty(globalScope[config.namespace])) {
+            this.ns(config.namespace, config);
+            pz.assignTo(globalScope[config.namespace], config, false);
+        } else {
+            pz.assignTo(globalScope[config.namespace], config, false);
+        };
+        
+        pz.forEach(rootComponents, function (item) {
+            let def = (pz.isPzDefinition(item) ? item : pz.getDefinitionOf(item));
+            if (pz.isFunction(def.create)) {
+                def.create();
+            };
+        });
+    
+        _invokeIfExists('init', config);
+    },
+    find: (callback, arr, scope) => {
+        let findFnSupported = ('find' in Array.prototype); // find is not supported in IE
+        let res = findFnSupported ? arr.find(callback, scope) :
+            _find(arr, callback, scope);
+        callback = null;
+        return res;
+    },
+    getDefinitionOf: function (type) {
+        let item = _get(this, type);
+    
+        if (pz.isEmpty(item)) {
+            let msg = _const.typeNotFound.replace('{0}', type);
+            throw new Error(msg);
+        };
+    
+        return item.definition;
+    },
+    getInstanceOf: function (typeOrIdOrAlias, all) {
+        return _get(this, typeOrIdOrAlias, true, all);
+    }
 };
-pz.define = _define;
-pz.create = _create;
-pz.toObject = _toObject;
-pz.toFunction = _toFunction;
-pz.isTypeOf = _isTypeOf;
-pz.isArray = _isArray;
-pz.isObject = _isObject;
-pz.isFunction = _isFunction;
-pz.isString = _isString;
-pz.isNodeList = _isNodeList;
-pz.isEmpty = _isEmpty;
-pz.is = _is;
-pz.isComponent = _isComponent;
-pz.isMixin = _isMixin;
-pz.isClass = _isClass;
-pz.forEach = _forEach;
-pz.proxy = _proxy;
-pz.guid = _guid;
-pz.toJSON = _toJSON;
-pz.assignTo = _assignTo;
-pz.isInstanceOf = _isInstanceOf;
-pz.getGlobal = _getGlobal;
-pz.isPzDefinition = _isPzDefinition;
-pz.deepClone = _deepClone;
-pz.isModularEnv = _isModularEnv;
-pz.storeDefinition = _storeDefinition;
 
 export default pz;
