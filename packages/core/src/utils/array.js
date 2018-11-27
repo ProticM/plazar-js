@@ -1,3 +1,5 @@
+import pz from '../core';
+
 const arr = {
     clear: (array) => {
         if (pz.isEmpty(array)) {

@@ -1,3 +1,5 @@
+import pz from '../core';
+
 const objectUtil = {
     assignTo: (target, source, clone) => {
         return pz.assignTo(target, source, clone);

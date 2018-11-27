@@ -1,3 +1,5 @@
+import pz from '../core';
+
 const stringUtil = {
     camelize: (str) => {
         if (pz.isEmpty(str)) {
