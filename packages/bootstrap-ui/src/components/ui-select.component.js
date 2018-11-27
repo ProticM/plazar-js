@@ -1,5 +1,6 @@
 ﻿import formFieldMixin from '../mixins/form-field.mixin';
 import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const select = () => {
     let _parseTemplate = function() {
@@ -51,4 +52,4 @@ const select = () => {
     };
 };
 
-export default select;
+export default uiBase.extend(select);

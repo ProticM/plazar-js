@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const form = () => {
 
@@ -61,4 +62,4 @@ const form = () => {
     };
 };
 
-export default form;
+export default uiBase.extend(form);

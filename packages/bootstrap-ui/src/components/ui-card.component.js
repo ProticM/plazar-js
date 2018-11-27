@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const card = () => {
     
@@ -94,4 +95,4 @@ const card = () => {
     };
 };
 
-export default card;
+export default uiBase.extend(card);

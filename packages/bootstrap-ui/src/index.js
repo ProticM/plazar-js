@@ -4,10 +4,9 @@ import pz from '@plazarjs/core';
 
 const bootstrapUi = {
     init: () => {
-        let b = pz.component.extend(base);
-        pz.storeDefinition(b.$type, b);
+        pz.storeDefinition(base.$type, base);
         for(let component in components) {
-            let def = b.extend(components[component]);
+            let def = components[component];
             pz.storeDefinition(def.$type, def);
         };
     }

@@ -1,5 +1,6 @@
 ﻿import pz from '@plazarjs/core';
 import $ from 'jquery';
+import uiBase from '../base/ui-base.component';
 
 const dropdown = () => {
 
@@ -92,4 +93,4 @@ const dropdown = () => {
     };
 };
 
-export default dropdown;
+export default uiBase.extend(dropdown);

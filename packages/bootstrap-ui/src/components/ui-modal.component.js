@@ -1,5 +1,6 @@
 ﻿import pz from '@plazarjs/core';
 import $ from 'jquery';
+import uiBase from '../base/ui-base.component';
 
 const modal = () => {
 
@@ -150,4 +151,4 @@ const modal = () => {
     };
 };
 
-export default modal;
+export default uiBase.extend(modal);

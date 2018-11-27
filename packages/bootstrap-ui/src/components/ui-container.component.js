@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const container = () => {
 
@@ -96,4 +97,4 @@ const container = () => {
     };
 };
 
-export default container;
+export default uiBase.extend(container);

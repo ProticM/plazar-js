@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const buttonToolbar = () => {
 
@@ -29,4 +30,4 @@ const buttonToolbar = () => {
     };
 };
 
-export default buttonToolbar;
+export default uiBase.extend(buttonToolbar);

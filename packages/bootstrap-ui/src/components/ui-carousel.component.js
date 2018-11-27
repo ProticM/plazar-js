@@ -1,5 +1,6 @@
 ﻿import pz from '@plazarjs/core';
 import $ from 'jquery';
+import uiBase from '../base/ui-base.component';
 
 const carousel = () => {
     
@@ -96,4 +97,4 @@ const carousel = () => {
     };
 };
 
-export default carousel;
+export default uiBase.extend(carousel);

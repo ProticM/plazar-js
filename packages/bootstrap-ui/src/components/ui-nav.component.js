@@ -1,5 +1,6 @@
 ﻿import pz from '@plazarjs/core';
 import $ from 'jquery';
+import uiBase from '../base/ui-base.component';
 
 const nav = () => {
 
@@ -128,4 +129,4 @@ const nav = () => {
     };
 };
 
-export default nav;
+export default uiBase.extend(nav);

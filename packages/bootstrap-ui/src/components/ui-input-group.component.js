@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const inputGroup = () => {
 
@@ -89,4 +90,4 @@ const inputGroup = () => {
     };
 };
 
-export default inputGroup;
+export default uiBase.extend(inputGroup);

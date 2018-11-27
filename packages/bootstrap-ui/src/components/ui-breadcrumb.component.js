@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const breadcrumb = () => {
     
@@ -38,4 +39,4 @@ const breadcrumb = () => {
     };
 };
 
-export default breadcrumb;
+export default uiBase.extend(breadcrumb);

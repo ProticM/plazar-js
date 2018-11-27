@@ -1,5 +1,6 @@
 ﻿import pz from '@plazarjs/core';
 import $ from 'jquery';
+import uiBase from '../base/ui-base.component';
 
 const alert = () => {
 
@@ -65,4 +66,4 @@ const alert = () => {
     };
 };
 
-export default alert;
+export default uiBase.extend(alert);

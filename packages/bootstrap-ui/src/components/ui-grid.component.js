@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const grid = () => {
 
@@ -86,4 +87,4 @@ const grid = () => {
     };
 };
 
-export default grid;
+export default uiBase.extend(grid);

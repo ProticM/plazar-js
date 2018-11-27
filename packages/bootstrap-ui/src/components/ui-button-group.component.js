@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const buttonGroup = () => {
 
@@ -33,4 +34,4 @@ const buttonGroup = () => {
     };
 };
 
-export default buttonGroup;
+export default uiBase.extend(buttonGroup);

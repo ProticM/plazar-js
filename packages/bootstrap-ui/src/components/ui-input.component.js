@@ -1,5 +1,6 @@
 ﻿import formFieldMixin from '../mixins/form-field.mixin';
 import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const input = () => {
 
@@ -130,4 +131,4 @@ const input = () => {
 	};
 };
 
-export default input;
+export default uiBase.extend(input);

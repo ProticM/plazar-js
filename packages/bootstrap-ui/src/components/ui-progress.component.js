@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const progress = () => {
 
@@ -48,4 +49,4 @@ const progress = () => {
 	};
 };
 
-export default progress;
+export default uiBase.extend(progress);

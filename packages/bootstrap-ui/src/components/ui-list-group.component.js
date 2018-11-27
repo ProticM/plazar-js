@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const listGroup = () => {
 
@@ -127,4 +128,4 @@ const listGroup = () => {
     };
 };
 
-export default listGroup;
+export default uiBase.extend(listGroup);

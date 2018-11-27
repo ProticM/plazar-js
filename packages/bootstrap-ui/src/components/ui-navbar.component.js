@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import uiBase from '../base/ui-base.component';
 
 const navBar = () => {
 
@@ -78,4 +79,4 @@ const navBar = () => {
 	};
 };
 
-export default navBar;
+export default uiBase.extend(navBar);

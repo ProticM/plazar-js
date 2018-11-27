@@ -1,5 +1,6 @@
 ﻿import pz from '@plazarjs/core';
 import $ from 'jquery';
+import uiBase from '../base/ui-base.component';
 
 const button = () => {
     
@@ -61,4 +62,4 @@ const button = () => {
 	};
 };
 
-export default button;
+export default uiBase.extend(button);

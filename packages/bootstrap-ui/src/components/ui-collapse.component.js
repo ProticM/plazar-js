@@ -1,5 +1,6 @@
 ﻿import pz from '@plazarjs/core';
 import $ from 'jquery';
+import uiBase from '../base/ui-base.component';
 
 const collapse = () => {
 
@@ -45,4 +46,4 @@ const collapse = () => {
     };
 };
 
-export default collapse;
+export default uiBase.extend(collapse);

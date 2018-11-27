@@ -80,4 +80,4 @@ let bootstrapUiBase = () => {
     };
 };
 
-export default bootstrapUiBase;
+export default pz.component.extend(bootstrapUiBase);
