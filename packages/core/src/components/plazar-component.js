@@ -1,4 +1,4 @@
-﻿import pz from '../core/plazar-core'
+﻿import pz from '../core/plazar-core';
 
 const component = () => {
 
@@ -171,12 +171,12 @@ const component = () => {
             };
         
             isChild = !pz.isEmpty(this.parentComponent);
-            containerSelector = (isChild ? pz.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
+            containerSelector = (isChild ? pz.str.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() : 
                 (renderToDefined ? this.renderTo : (renderBeforeDefined ? this.renderBefore : this.renderAfter)));
             container = pz.dom.getEl(containerSelector);
         
             if (pz.isEmpty(container)) {
-                containerErr = (isChild ? pz.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
+                containerErr = (isChild ? pz.str.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) : 
                     _const.tplContainerNotFound);
                 throw new Error(containerErr);
             };
@@ -335,7 +335,7 @@ const component = () => {
             };
             
             selector = !pz.isEmpty(handler.selector) ? handler.selector : 
-                (pz.format("{0}[{1}\"{2}\"]", this.html.tagName, 'data-componentid=', this.id));
+                (pz.str.format("{0}[{1}\"{2}\"]", this.html.tagName, 'data-componentid=', this.id));
             args = [handler.on, me.html, selector, pz.proxy(fn, handler.scope || me)];
             pz.dom.on.apply(pz.dom, args);
             handler = null;

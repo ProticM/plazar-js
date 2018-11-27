@@ -59,7 +59,7 @@
 
         let el = me.html.childNodes[idx];
         if (pz.isEmpty(el)) {
-            let msg = pz.format(_const.elementAtIdxNotFound, idx);
+            let msg = pz.str.format(_const.elementAtIdxNotFound, idx);
             throw new Error(msg);
         };
 
