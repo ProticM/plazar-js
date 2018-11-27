@@ -55,22 +55,12 @@ $ lerna bootstrap
 
 #### Build and Deploy
 
-PlazarJS uses [gulp](http://gulpjs.com/) as its build tool. Run the following tasks to deploy the source into `dist`:
+PlazarJS uses [babel](https://babeljs.io/), [rollup](https://rollupjs.org/guide/en) and [uglifyjs](https://github.com/mishoo/UglifyJS2) as its build tools. Run the following command to deploy the source into `dist` folders:
 
-The following task will build each package:
+The following command will build each package:
 ```
-$ gulp build
+$ npm run build
 ```
-If there was a change related to a specific package, you should run a specific task:
-```
-$ gulp build-core
-$ gulp build-bootstrap
-$ gulp build-http
-$ gulp build-array-util
-$ gulp build-string-util
-$ gulp build-object-util
-```
-
 ## Project Structure
 
 - [Demo](#demo)
@@ -83,13 +73,13 @@ This folder contains demo applications. Under the folder `bootstrap-ui` there is
 
 #### Packages
 
-This folder contains `core`, `bootstrap-ui`, `http`, `array-util`, `string-util` and `object-util` which are distributed as separate NPM packages. Each time when you run any of the gulp tasks defined above, the build scripts will be created within the dist folder for each (or specific) package. The version is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
+This folder contains `core`, `bootstrap-ui` and `http` which are distributed as separate NPM packages. Each time when you run any of the npm commands defined above, the build scripts will be created within the dist folder for each package. The version is managed by [lerna](https://github.com/lerna/lerna) by using the default `fixed` mode.
 
 Each package has a `src` folder. This is your working area.
 
 #### Scripts
 
-This folder contains three JavaScript template, `umd-wrapper.jst`, `dependant-module-wrapper.jst` and `version.jst` which are used during building process to wrap the content of the output scripts. `config.js` and `wrap.js` are helper modules.
+This folder contains the `rollup.js` common config, `rollup-common.config.js` which is used during building process to wrap the content of the output scripts. Each package has a specific `rollup.config.js` extending the common one.
 
 ## Financial Contribution
 
