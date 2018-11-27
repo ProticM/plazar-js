@@ -1,4 +1,4 @@
-﻿import pz from '../core/plazar-core';
+﻿import pz from '../core';
 
 const component = () => {
 

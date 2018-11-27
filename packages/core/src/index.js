@@ -1,4 +1,4 @@
-import pz from './core/plazar-core';
+import pz from './core';
 import base from './components/base/plazar-base';
 import cls from './components/plazar-class';
 import component from './components/plazar-component';
