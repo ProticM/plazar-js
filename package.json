@@ -10,6 +10,7 @@
     "build": "npm run clean & npm run rollup & npm run es & npm run uglifyAll",
     "prepublishOnly": "npm run build"
   },
+  "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
   "dependencies": {
     "save-dev": "^2.0.0"
   },

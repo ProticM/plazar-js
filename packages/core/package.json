@@ -13,7 +13,7 @@
     "oop"
   ],
   "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
-  "homepage": "https://github.com/ProticM/plazar-js",
+  "homepage": "http://www.plazarjs.com/",
   "license": "MIT",
   "main": "dist/core.js",
   "directories": {
