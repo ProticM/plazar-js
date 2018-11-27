@@ -21,9 +21,11 @@ export default {
     },
     buildBanner: (pck) => {
         return [
-            '// PlazarJS ' + pck.rollupFileName + ' v' + pck.version,
-            '// Copyright ' + pck.author + ' and other contributors',
-            '// Licensed under ' + pck.license + ' (https://github.com/ProticM/plazar-js/blob/master/LICENSE)'
+            '/*!',
+            '* PlazarJS ' + pck.rollupFileName + ' v' + pck.version,
+            '* Copyright ' + pck.author + ' and other contributors',
+            '* Licensed under ' + pck.license + ' (https://github.com/ProticM/plazar-js/blob/master/LICENSE)',
+            '*/'
         ].join('\n');
     }
 };

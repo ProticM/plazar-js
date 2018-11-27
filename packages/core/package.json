@@ -29,7 +29,7 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "uglify": "uglifyjs --mangle --comments --output dist/core.min.js dist/core.js"
+    "uglify": "uglifyjs --mangle --comments /^!/ --output dist/core.min.js dist/core.js"
   },
   "bugs": {
     "url": "https://github.com/ProticM/plazar-js/issues"
