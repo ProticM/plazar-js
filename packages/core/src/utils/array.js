@@ -26,7 +26,7 @@ const arr = {
         return res;
     },
 
-    merge: () => {
+    merge: function() {
         let args = Array.prototype.slice.call(arguments),
             resultArray = [];
 
