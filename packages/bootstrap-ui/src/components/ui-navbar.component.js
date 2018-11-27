@@ -1,4 +1,6 @@
-﻿const navBar = () => {
+﻿import pz from '@plazarjs/core';
+
+const navBar = () => {
 
     let _allowedComponents = [
         'ui-bootstrap-dropdown'

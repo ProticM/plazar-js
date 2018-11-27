@@ -1,4 +1,7 @@
-﻿const button = () => {
+﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
+
+const button = () => {
     
     let _parseTemplate = function() {
         let hasSize = !pz.isEmpty(this.size), hasHref = !pz.isEmpty(this.href);

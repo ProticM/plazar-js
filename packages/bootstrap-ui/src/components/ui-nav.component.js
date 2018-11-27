@@ -1,4 +1,7 @@
-﻿const nav = () => {
+﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
+
+const nav = () => {
 
     let _const = {
         componentsNotAllowedInTabMode: 'Components in menu are not allowed while using tab mode',

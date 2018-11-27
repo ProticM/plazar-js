@@ -1,4 +1,7 @@
-﻿const dropdown = () => {
+﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
+
+const dropdown = () => {
 
     let _parseTemplate = function() {
         let hasSize = !pz.isEmpty(this.size), btn, hasPosition =

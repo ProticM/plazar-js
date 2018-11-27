@@ -1,4 +1,7 @@
-﻿const carousel = () => {
+﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
+
+const carousel = () => {
     
     let _getNavButton = (id, type) => {
         return '<a class="carousel-control-' + type + '" href="#carousel_' + id + '" role="button" data-slide="' + type +

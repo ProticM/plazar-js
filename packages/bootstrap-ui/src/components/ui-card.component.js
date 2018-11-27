@@ -1,4 +1,6 @@
-﻿const card = () => {
+﻿import pz from '@plazarjs/core';
+
+const card = () => {
     
     let _parseTemplate = function() {
 

@@ -1,4 +1,6 @@
-﻿const progress = () => {
+﻿import pz from '@plazarjs/core';
+
+const progress = () => {
 
 	let _parseTemplate = function() {
 		let progressBar = pz.dom.findElement(this.html, 'div.progress-bar'),

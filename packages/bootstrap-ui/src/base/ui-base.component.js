@@ -1,4 +1,7 @@
-﻿let bootstrapUiBase = () => {
+﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
+
+let bootstrapUiBase = () => {
 
     let _const = {
         handlerFnNotProvided: 'Handler function was not provided.'

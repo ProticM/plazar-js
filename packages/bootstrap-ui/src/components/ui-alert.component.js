@@ -1,4 +1,7 @@
-﻿const alert = () => {
+﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
+
+const alert = () => {
 
     let _parseTemplate = function() {
 

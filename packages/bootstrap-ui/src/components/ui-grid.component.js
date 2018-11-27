@@ -1,4 +1,6 @@
-﻿const grid = () => {
+﻿import pz from '@plazarjs/core';
+
+const grid = () => {
 
     let _defaultColSize = 12;
 

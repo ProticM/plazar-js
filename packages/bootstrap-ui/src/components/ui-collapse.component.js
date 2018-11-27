@@ -1,4 +1,7 @@
-﻿const collapse = () => {
+﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
+
+const collapse = () => {
 
     let _setIfNotEmpty = (me, propName) => {
         if (!pz.isEmpty(me[propName])) {

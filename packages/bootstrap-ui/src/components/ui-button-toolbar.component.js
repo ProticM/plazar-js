@@ -1,4 +1,6 @@
-﻿const buttonToolbar = () => {
+﻿import pz from '@plazarjs/core';
+
+const buttonToolbar = () => {
 
     let _parseTemplate = function() {
         this.html.setAttribute('aria-label', 'label_' + this.id);

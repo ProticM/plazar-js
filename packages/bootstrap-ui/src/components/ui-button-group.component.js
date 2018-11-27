@@ -1,4 +1,6 @@
-﻿const buttonGroup = () => {
+﻿import pz from '@plazarjs/core';
+
+const buttonGroup = () => {
 
     let _parseTemplate = function() {
         let sizeCls = !pz.isEmpty(this.size) ? 'btn-group-' + this.size : '';

@@ -1,4 +1,6 @@
-﻿const inputGroup = () => {
+﻿import pz from '@plazarjs/core';
+
+const inputGroup = () => {
 
     let _const = {
         addonEmpty: 'Component of type [ui-bootstrap-input-group] requires at least one addon. See addon config docs.',

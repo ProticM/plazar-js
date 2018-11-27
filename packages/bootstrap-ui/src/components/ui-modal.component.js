@@ -1,4 +1,7 @@
-﻿const modal = () => {
+﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
+
+const modal = () => {
 
     let _primaryButtons = ['Yes', 'Ok'];
 

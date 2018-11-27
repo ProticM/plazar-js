@@ -1,4 +1,6 @@
-﻿const breadcrumb = () => {
+﻿import pz from '@plazarjs/core';
+
+const breadcrumb = () => {
     
     let _createCrumbs = (me, crumbs) => {
         let ul = pz.dom.findElement(me.html, 'ol.breadcrumb');

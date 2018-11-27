@@ -1,4 +1,6 @@
-﻿const container = () => {
+﻿import pz from '@plazarjs/core';
+
+const container = () => {
 
     let _defaultColSize = 12;
 

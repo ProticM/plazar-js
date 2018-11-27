@@ -1,4 +1,6 @@
-﻿const form = () => {
+﻿import pz from '@plazarjs/core';
+
+const form = () => {
 
     let _parseTemplate = function() {
         let hasAction = !pz.isEmpty(this.action), hasMethod = !pz.isEmpty(this.method);
