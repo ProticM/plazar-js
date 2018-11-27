@@ -16,7 +16,7 @@
       </td>
     </tr>
     <tr>
-      <td>Script tag</td>
+      <td>CDN</td>
       <td>
       <code><script src="https://cdn.jsdelivr.net/npm/@plazarjs/bootstrap-ui/dist/bootstrap-ui.min.js"></script></code>
       </td>
@@ -41,7 +41,7 @@
       </td>
     </tr>
     <tr>
-      <td>Script tag</td>
+      <td>CDN</td>
       <td>
       <code><script src="https://cdn.jsdelivr.net/npm/@plazarjs/http/dist/http.min.js"></script></code>
       </td>
