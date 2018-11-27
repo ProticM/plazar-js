@@ -1,4 +1,6 @@
-﻿const _http = () => {
+﻿import pz from '@plazarjs/core';
+
+const _http = () => {
     let _requests = {}, _const = {
         optionsRequred: 'Can not instantiate http request without options defined',
         minConfigNotProfided: 'Minimal configuration for ajax call was not provided. Please check you setup for following options [url], [method]',
@@ -145,8 +147,8 @@
     };
 };
 
-export const http = {
-    init: (pz) => {
+export default {
+    init: () => {
         pz.http = _http();
     }
 };

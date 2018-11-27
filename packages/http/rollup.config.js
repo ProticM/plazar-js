@@ -9,5 +9,8 @@ const config = Object.assign({}, commonRollup);
 config.input = path.resolve(src, 'index.js');
 config.output.name = pck.rollupName;
 config.output.file = path.resolve(dist, (pck.rollupFileName + '.js'))
-
+config.external = ['@plazarjs/core'];
+config.output.globals = {
+    '@plazarjs/core': 'pz'
+};
 export default config;
