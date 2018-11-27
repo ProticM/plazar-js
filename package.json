@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "lerna exec --parallel -- rimraf dist",
     "build": "lerna exec --parallel -- rollup -c",
-    "prepublishOnly": "lerna exec --parallel -- rollup -c"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "save-dev": "^2.0.0"
