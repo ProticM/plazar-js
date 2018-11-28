@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import $ from 'jquery';
 import uiBase from '../base/ui-base.component';
 
 const alert = () => {
