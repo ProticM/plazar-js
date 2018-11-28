@@ -12,7 +12,6 @@ $ npm install @plazarjs/bootstrap-ui
 Create a folder called `plugins`. Inside of it create a file called `bootstrap.js` and copy the following snippet:
 
 ```javascript
-import Popper from 'popper.js';
 import 'bootstrap';
 import pz from '@plazarjs/core';
 import pzBootstrap from '@plazarjs/bootstrap-ui';
