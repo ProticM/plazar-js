@@ -24,7 +24,7 @@
     <tr>
       <td>Dependencies</td>
       <td>
-      <code>@plazarjs/core</code>, <code>jquery</code>
+      <code>@plazarjs/core</code>, <code>jquery</code>, <code>bootstrap</code>, <code>popper</code>
       </td>
     </tr>
     <tr>
