@@ -93,13 +93,9 @@ const component = () => {
                 let conditionOk = childComponent.type == value ||
                     childComponent.id == value || childComponent.alias == value;
                 return conditionOk;
+            }).map(function (childComponent) {
+                return pz.getInstanceOf(childComponent.id);
             });
-            
-            if(!pz.isModularEnv()) {
-                children = children.map(function (childComponent) {
-                    return pz.getInstanceOf(childComponent.id);
-                });
-            };
 
             return children.length == 1 ? children[0] : children;
         },
@@ -268,7 +264,7 @@ const component = () => {
     
             let hasChildren, parentSelector, instance, childReference, renderTo,
                 replace = child.$replace, isValidObj = pz.isObject(child) && !(pz.isEmpty(child) || pz.isEmpty(child.type)),
-                isValidFn = pz.isPzDefinition(child), isModuleEnv,
+                isValidFn = pz.isPzDefinition(child),
                 isComponent = pz.isComponent(child);
 
             if (!isValidObj && !isValidFn && !isComponent) {
@@ -276,7 +272,6 @@ const component = () => {
             };
             
             delete child.$replace;
-            isModuleEnv = pz.isModularEnv();
             parentSelector = '*[data-componentid="' + this.id + '"]';
             
             child.autoLoad = false; // prevent auto load since we might be missing [renderTo] from config
@@ -287,12 +282,12 @@ const component = () => {
                 parentSelector.concat(!pz.isEmpty(this.containerElement) ? ' ' + this.containerElement : '') :
                 (renderTo == 'root' ? parentSelector : parentSelector.concat(' ').concat(renderTo));
         
-            instance.parentComponent = isModuleEnv ? this : {
+            instance.parentComponent = {
                 type: this.type,
                 id: this.id
             };
         
-            if(!isModuleEnv && (!pz.isEmpty(instance.renderAfter) || !pz.isEmpty(instance.renderBefore))) {
+            if((!pz.isEmpty(instance.renderAfter) || !pz.isEmpty(instance.renderBefore))) {
                 instance.parentComponent.$ref = this;
             };
         
@@ -309,12 +304,12 @@ const component = () => {
                 this.components = [];
             };
         
-            childReference = isModuleEnv ? instance : {
+            childReference = {
                 type: instance.type,
                 id: instance.id
             };
         
-            if (!isModuleEnv && !pz.isEmpty(instance.alias)) {
+            if (!pz.isEmpty(instance.alias)) {
                 childReference.alias = instance.alias;
             };
         
@@ -400,7 +395,7 @@ const component = () => {
                 return null;
             };
         
-            childComponent = (pz.isModularEnv() ? childRef : pz.getInstanceOf(childRef.id));
+            childComponent = pz.getInstanceOf(childRef.id);
             return childComponent || null;
         },
         removeChild: function (component, destroy) {

@@ -125,9 +125,7 @@ base.extend = function extend(props) {
 					};
                 };
                 
-                if(!pz.isModularEnv()) {
-                    pz.application.instances.push(instance);
-                };
+                pz.application.instances.push(instance);
 
 				return instance;
 			}
