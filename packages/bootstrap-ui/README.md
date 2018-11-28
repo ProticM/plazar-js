@@ -12,14 +12,17 @@ $ npm install @plazarjs/bootstrap-ui
 Create a folder called `plugins`. Inside of it create a file called `bootstrap.js` and copy the following snippet:
 
 ```javascript
+import 'jquery';
+// or use the slim version: import 'jquery/dist/jquery.slim';
+import 'popper';
+import 'bootstrap';
 import pz from '@plazarjs/core';
 import pzBootstrap from '@plazarjs/bootstrap-ui';
 pz.plugin(pzBootstrap);
 ```
-The snippet above will register each bootstrap component and the UI will be ready for use. Then, import the jquery library and register the bootstrap plugin in your app entry point:
+The snippet above will import the module dependencies and register each bootstrap-ui component. Then, import the plugin script in your app entry point:
 
 ```javascript
-import $ from 'jquery';
 import '..my-app-relative-path/plugins/bootstrap';
 ```
 
@@ -32,18 +35,20 @@ import { navbar } from '@plazarjs/bootstrap-ui/dist/esmodules/components';
 Inheritance is enabled on each component. We could have our custom component created like so:
 
 ```javascript
-navbar.extend(/* configs */);
+export default navbar.extend(/* configs */);
 ```
 
 ## Usage - cdn
 
 ```html
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@plazarjs/core/dist/core.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@plazarjs/bootstrap-ui/dist/bootstrap-ui.min.js"></script>
 ```
 
-Next, we could define our custom derived components via `pz.define` and the `extend` API, or simply create them via `pz.create`.
+Next, we could define our custom derived components via `pz.define` and the `extend` API, or simply create them via `pz.create` if no modifications are required. A quick example:
 
 ```javascript 
 pz.create({ 
@@ -82,5 +87,17 @@ Output:
     <img src="http://www.plazarjs.com/content/images/bootstrap-example-2.png" width="600" />
   </a>
 </p>
+
+## CSS - es
+
+To import the CSS files you can use your favorite plugin. For example, `rollup.js` or `webpack`.
+
+## CSS - cdn
+
+Place the following `link` tag at the top of your page, within the html `head` tag.
+
+```html
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+```
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
