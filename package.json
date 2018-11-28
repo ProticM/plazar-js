@@ -5,9 +5,9 @@
   "scripts": {
     "clean": "lerna exec --parallel -- rimraf dist",
     "rollup": "lerna exec --parallel -- rollup -c",
-    "es": "lerna run modularize",
+    "buildModules": "lerna run buildESModules",
     "uglifyAll": "lerna run uglify",
-    "build": "npm run clean & npm run rollup & npm run es & npm run uglifyAll",
+    "build": "npm run clean & npm run rollup & npm run buildModules & npm run uglifyAll",
     "prepublishOnly": "npm run build"
   },
   "author": "Miloš Protić <protic023@gmail.com> (https://github.com/ProticM)",
