@@ -10,9 +10,8 @@ config.input = path.resolve(src, 'index.js');
 config.output.name = pck.rollupName;
 config.output.banner = commonRollup.buildBanner(pck);
 config.output.file = path.resolve(dist, (pck.rollupFileName + '.js'));
-config.external = ['jquery', '@plazarjs/core'];
+config.external = ['@plazarjs/core']; // Include only @plazarjs/core into dist as external. jquery, popper and bootstrap are expected to be added later
 config.output.globals = {
-    'jquery': '$',
     '@plazarjs/core': 'pz'
 };
 export default config;
