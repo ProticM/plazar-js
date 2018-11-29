@@ -23,6 +23,10 @@
     <a href="https://www.jsdelivr.com/package/npm/@plazarjs/core">
     <img src="https://data.jsdelivr.com/v1/package/npm/@plazarjs/core/badge?style=rounded" alt="jsdelivr" />
     </a>
+    <a href="https://travis-ci.org/ProticM/plazar-js">
+    <img src="https://travis-ci.org/ProticM/plazar-js.svg?branch=master" alt="travis" />
+    </a>
+    
   </h1>
 
   <p align="center">
