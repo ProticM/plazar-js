@@ -82,125 +82,48 @@ PlazarJS is a un-opinionated framework for JavaScript. It has no dependencies an
 A quick example:
 
 ```javascript
-// button definition with default options
-pz.define('button-component', {
-  ownerType: 'component',
-  template: '<button type="button"></button>',
-  text: 'Button',
-  renderTo: 'div.buttons',
-  init: function() {
-    this.base();
-    this.html.innerText = this.text;
-  },
-  handlers: [{
-    on: 'click',
-    fn: 'onClick'
-  }],
-  onClick: function() { }
-});
+// define the component
 
-pz.define('header-component', {
-  ownerType: 'component',
-  template: '<header>Welcome to PlazarJS - {year}</header>',
-  viewModel: {
-    year: '2018'
-  },
-  components: [{ // reuse the button with another config
-    type: 'button-component',
-    text: 'Header button',
-    renderTo: 'root', // we don't have div.buttons element within our header
-    onClick: function() { 
-      alert('Hello from Header!');
-    }
-  }]
-});
+import pz from '@plazarjs/core';
 
-pz.define('body-component', {
+const helloWorld = {
   ownerType: 'component',
-  template: '<main>{text}<div class="buttons"></div></main>',
-  viewModel: {
-    text: 'This is the body component! I can have child component as well. Like the button bellow:'
-  },
-  components: [{ // reuse the button with another config
-    type: 'button-component',
-    onClick: function() { 
-      alert('Hello from Body!');
-    }
-  }]
-});
-
-pz.define('layout-component', {
-  ownerType: 'component',
-  templateSelector: 'body',
+  template: '<div>Hello from {fw}</div>',
+  renderTo: 'body',
   autoLoad: true,
-  components: [{
-    type: 'header-component'
-  },{
-    type: 'body-component'
-  }]
-}).create(); // automatically creates the component upon definition
+  viewModel: {
+    fw: 'plazarjs'
+  }
+};
+
+export default pz.define('hello-world', helloWorld);
+
+// create the component
+import helloWorld from 'my-path/helloWorld';
+helloWorld.create();
 ```
 
 The equivalent of the code above written with the extend API, which is recommended when in modular environments, looks like this:
 
 ```javascript
-// button definition with default options
-var button = pz.component.extend({ // we would export the definition as a module
-  type: 'button-component',
-  template: '<button type="button"></button>',
-  text: 'Button',
-  renderTo: 'div.buttons',
-  init: function() {
-    this.base();
-    this.html.innerText = this.text;
-  },
-  handlers: [{
-    on: 'click',
-    fn: 'onClick'
-  }],
-  onClick: function() { }
-});
+// define the component
+import pz from '@plazarjs/core';
 
-// here we could also use button.extend({ // configs })
-var headerButton = button.create({
-    text: 'Header button',
-    renderTo: 'root', // we don't have div.buttons element within our header
-    onClick: function() { 
-      alert('Hello from Header!');
-    }
-});
-
-var headerComponent = pz.component.extend({
-  type: 'header-component',
-  template: '<header>Welcome to PlazarJS - {year}</header>',
-  viewModel: {
-    year: '2018'
-  },
-  components: [headerButton]
-});
-
-var bodyButton = button.extend({
-    type: 'body-button-component',
-    onClick: function() { 
-      alert('Hello from Body!');
-    }
-});
-
-var bodyComponent = pz.component.extend({ // we would export the definition as a module
-  type: 'body-component',
-  template: '<main>{text}<div class="buttons"></div></main>',
-  viewModel: {
-    text: 'This is the body component! I can have child component as well. Like the button bellow:'
-  },
-  components: [bodyButton]
-});
-
-pz.component.extend({ // we would export the definition as a module
-  type: 'layout-component',
-  templateSelector: 'body',
+const helloWorld = {
+  type: 'hello-world',
+  template: '<div>Hello from {fw}</div>',
+  renderTo: 'body',
   autoLoad: true,
-  components: [headerComponent, bodyComponent]
-}).create(); // automatically creates the component upon definition
+  viewModel: {
+    fw: 'plazarjs'
+  }
+};
+
+export default pz.component.extend('hello-world', helloWorld);
+
+// create the component
+import helloWorld from 'my-path/helloWorld';
+helloWorld.create();
 ```
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
