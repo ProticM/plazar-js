@@ -118,7 +118,7 @@ const helloWorld = {
   }
 };
 
-export default pz.component.extend('hello-world', helloWorld);
+export default pz.component.extend(helloWorld);
 
 // create the component where required
 import helloWorld from 'my-path/helloWorld';
