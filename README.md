@@ -83,7 +83,6 @@ A quick example:
 
 ```javascript
 // define the component
-
 import pz from '@plazarjs/core';
 
 const helloWorld = {
@@ -98,7 +97,7 @@ const helloWorld = {
 
 export default pz.define('hello-world', helloWorld);
 
-// create the component
+// create the component where required
 import helloWorld from 'my-path/helloWorld';
 helloWorld.create();
 ```
@@ -121,7 +120,7 @@ const helloWorld = {
 
 export default pz.component.extend('hello-world', helloWorld);
 
-// create the component
+// create the component where required
 import helloWorld from 'my-path/helloWorld';
 helloWorld.create();
 ```
