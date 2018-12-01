@@ -205,6 +205,8 @@ pz.component.extend({ // we would export the definition as a module
 
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
+Live demo can be found <a href="http://www.plazarjs.com/livedemo">here</a>.
+
 ## Bootstrap Integration
 
 Checkout the module integration <a href="https://github.com/ProticM/plazar-js/tree/master/packages/bootstrap-ui">here</a>.
