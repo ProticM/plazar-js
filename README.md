@@ -209,7 +209,7 @@ Live demo can be found <a href="http://www.plazarjs.com/livedemo">here</a>.
 
 ## Bootstrap Integration
 
-Checkout the module integration <a href="https://github.com/ProticM/plazar-js/tree/master/packages/bootstrap-ui">here</a>.
+Checkout the module integration <a href="https://github.com/ProticM/plazar-js/blob/master/packages/bootstrap-ui/README.md">here</a>.
 
 ## Contribution
 
