@@ -142,7 +142,9 @@ const component = () => {
         render: function () {
             let templateSelectorEmpty = pz.isEmpty(this.templateSelector), me = this,
                 renderToDefined, container, child, childDomIdx, renderBeforeDefined,
-                renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector, isChild, containerErr;
+                renderAfterDefined, siblingContainer, insertBeforeOrAfter, containerSelector, isChild, containerErr, 
+                scriptTags;
+
             this.html = !templateSelectorEmpty ? pz.dom.getEl(this.templateSelector) :
                 pz.dom.clone(pz.dom.parseTemplate(this.template)), me = this;
             this.addAttr({
@@ -157,7 +159,15 @@ const component = () => {
                 this.init();
                 return;
             };
-        
+
+            scriptTags = pz.dom.findElement(this.html, 'script', true);
+            scriptTags = !pz.isEmpty(scriptTags) ? (pz.isNodeList(scriptTags) ? scriptTags : [scriptTags]) : [];
+            pz.forEach(scriptTags, tag => {
+                pz.dom.remove(tag);
+                console.warn('Script tags are not allowed in inline templates. The following tag has been removed: ' + tag.outerHTML);
+                tag = null;
+            });
+            
             renderToDefined = !pz.isEmpty(this.renderTo);
             renderAfterDefined = !pz.isEmpty(this.renderAfter);
             renderBeforeDefined = !pz.isEmpty(this.renderBefore);
