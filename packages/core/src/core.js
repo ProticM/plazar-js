@@ -11,7 +11,7 @@
         string: '[object String]',
         nodeList: '[object NodeList]'
     },
-    typeNotFound: 'Type [{0}] was not found within definitions. INFO: In modular environment definitions and instances are not stored globally.',
+    typeNotFound: 'Type [{0}] was not found within definitions. INFO: In modular environment definitions are not stored globally. To store the definition manually, use pz.storeDefinition method.',
     typeMustBeStringOrObject: 'First parameter can be string or object.',
     canNotCreate: 'Cannot create an instance based on provided arguments. Example invocation: pz.create({ // config }) or pz.create(\'my-type\')',
     canNotDefine: 'Cannot define type based on provided arguments. Example invocation: pz.define(\'my-type\', { // config })',
