@@ -371,7 +371,7 @@ const binder = () => {
                     let ctx = buildContext(keypath, me.vm, me.ctx);
                     let prop = keypath.split('.').pop();
                     let observer = ctx[prop];
-                    if (observer) {
+                    if (observer && observer.subscribe) {
                         observer.subscribe(function () {
                             pz.forEach(elsData, function (data) {
                                 updateContent(data, true);
