@@ -36,13 +36,13 @@ A versatile framework built to enrich the developer experience in terms of simpl
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Introduction](#introduction)
-- [Getting Started and Documentation](#getting-started-and-documentation)
-- [Bootstrap Integration](#bootstrap-integration)
-- [Contribution](#contribution)
-- [Browser Support](#browser-support)
-- [Plans](#plans)
+- :hammer: [Installation](#installation)
+- :loudspeaker: [Introduction](#introduction)
+- :book: [Getting Started and Documentation](#getting-started-and-documentation)
+- :electric_plug: [Bootstrap Integration](#bootstrap-integration)
+- :thumbsup: [Contribution](#contribution)
+- :signal_strength: [Browser Support](#browser-support)
+- :clipboard: [Plans](#plans)
 
 ## Installation
 
