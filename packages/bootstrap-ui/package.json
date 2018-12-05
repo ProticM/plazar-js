@@ -42,6 +42,6 @@
     "@plazarjs/core": "^2.1.1-alpha.0",
     "bootstrap": "^4.1.3",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.5"
+    "popper.js": "^1.14.6"
   }
 }
