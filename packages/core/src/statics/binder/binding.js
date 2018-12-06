@@ -36,58 +36,54 @@ class binding {
         view = null;
         return this;
     };
-};
+    bind() {
 
-binding.prototype.bind = function () {
-
-    let observer = this.vm[this.prop];
-
-    if (this.binder.bind) {
-        this.binder.bind.call(this);
+        let observer = this.vm[this.prop];
+    
+        if (this.binder.bind) {
+            this.binder.bind.call(this);
+        };
+    
+        if (this.binder.react && observer && observer.subscribe) {
+            (function (me, obs) {
+                obs.subscribe(function () {
+                    me.binder.react.call(me);
+                }, me.id);
+            })(this, observer);
+        };
+    
+        if (this.binder.react) {
+            this.binder.react.call(this);
+        };
     };
-
-    if (this.binder.react && observer && observer.subscribe) {
-        (function (me, obs) {
-            obs.subscribe(function () {
-                me.binder.react.call(me);
-            }, me.id);
-        })(this, observer);
+    unbind() {
+        let observer = this.vm[this.prop];
+        if (observer && observer.unsubscribe) {
+            observer.unsubscribe(this.id);
+        };
+        if (pz.isFunction(this.binder.unbind)) {
+            this.binder.unbind.call(this);
+        };
     };
+    getValue() {
 
-    if (this.binder.react) {
-        this.binder.react.call(this);
+        let prop, isFn;
+    
+        if (this.prop == reservedKeys.current) {
+            return this.vm;
+        };
+    
+        if (this.prop == reservedKeys.idx) {
+            return this.view.index;
+        };
+    
+        prop = this.vm[this.prop];
+        isFn = pz.isFunction(prop);
+        return isFn ? this.vm[this.prop].call(this) : this.vm[this.prop];
     };
-};
-
-binding.prototype.unbind = function () {
-    let observer = this.vm[this.prop];
-    if (observer && observer.unsubscribe) {
-        observer.unsubscribe(this.id);
+    setValue(value) {
+        return this.vm[this.prop] = value;
     };
-    if (pz.isFunction(this.binder.unbind)) {
-        this.binder.unbind.call(this);
-    };
-};
-
-binding.prototype.getValue = function () {
-
-    let prop, isFn;
-
-    if (this.prop == reservedKeys.current) {
-        return this.vm;
-    };
-
-    if (this.prop == reservedKeys.idx) {
-        return this.view.index;
-    };
-
-    prop = this.vm[this.prop];
-    isFn = pz.isFunction(prop);
-    return isFn ? this.vm[this.prop].call(this) : this.vm[this.prop];
-};
-
-binding.prototype.setValue = function (value) {
-    return this.vm[this.prop] = value;
 };
 
 export default binding;

@@ -13,7 +13,7 @@ import stringUtils from './utils/string';
 pz.obj = objectUtils;
 pz.arr = arrayUtils;
 pz.str = stringUtils;
-pz.binder = binder();
+pz.binder = binder;
 pz.dom = dom();
 pz.events = events();
 pz.base = base;
