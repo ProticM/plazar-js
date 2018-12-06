@@ -25,8 +25,6 @@ const binder = {
         };
     },
     toJSON: function (viewModel) {
-        // TODO: Multidimensional arrays
-
         let getProperties = function (value) {
             return Object.keys(value).filter(function (key) {
                 return key != reservedKeys.observed && key != reservedKeys.view;
