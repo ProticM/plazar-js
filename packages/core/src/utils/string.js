@@ -17,7 +17,7 @@ const stringUtil = {
             return '';
         };
 
-        var result = str.charAt(0).toUpperCase() + str.substr(1);
+        let result = str.charAt(0).toUpperCase() + str.substr(1);
         return result || '';
     },
 
@@ -27,9 +27,9 @@ const stringUtil = {
     },
 
     format: function() {
-        var args = Array.prototype.slice.call(arguments);
-        var baseString = args[0];
-        var params = args.splice(1), result = '';
+        let args = Array.prototype.slice.call(arguments);
+        let baseString = args[0];
+        let params = args.splice(1), result = '';
     
         if (pz.isEmpty(baseString) || pz.isEmpty(params)) {
             return result;

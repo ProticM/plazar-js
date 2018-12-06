@@ -1,10 +1,10 @@
 const events = () => {
-    var _subscriptions = {};
-    var _hasOwn = _subscriptions.hasOwnProperty;
+    let _subscriptions = {};
+    let _hasOwn = _subscriptions.hasOwnProperty;
 
     return {
         subscribe: (name, listener) => {
-            var index;
+            let index;
 
             if(!_hasOwn.call(_subscriptions, name)) {
                 _subscriptions[name] = [];

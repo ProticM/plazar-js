@@ -13,7 +13,7 @@ const objectUtil = {
 
     getValues: (obj) => {
 
-        var vals = [], prop,
+        let vals = [], prop,
             valuesSupported = ('values' in Object);
 
         if (valuesSupported) {
