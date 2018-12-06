@@ -1,5 +1,5 @@
 ﻿import pz from '../../core';
-import { observableArray, observe } from './observables';
+import { observableArray, observe } from './observableArray';
 import view from './view';
 import reservedKeys from './reserved-keys';
 
