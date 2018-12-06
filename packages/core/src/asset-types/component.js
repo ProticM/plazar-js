@@ -9,7 +9,7 @@ const component = () => {
         tplContainerNotFoundWithinComponent: 'Template container not found within parent retrieved via selector: [{0}]. Please review one of these options in your component config: 1. [renderTo]; 2. [templateSelector]; 3. [renderBefore]; 4. [renderAfter];',
         loadingMaskMarkup: '<div class="loading-mask" style="color:#fff;background-color: #fff;position:absolute;top:0;left:0;bottom:0;width:100%;text-align:center;vertical-align:middle;height:100%">'
             .concat('<p style="position: absolute;top:40%;left:41.5%;background-color: #fff;padding: 5px;border: 1px solid #f1f1f1;color: #c0c0c0;z-index:1">loading...</p></div>'),
-        addChildParamErr: 'Component you\'re trying to add, or it\'s [type] property has not been provided via parameter for [addChild] function. Example invocation: parent.addChild({ type: \'myType\' })',
+        addChildParamErr: 'Method [addChild] has been invoked with invalid parameters. Example invocation: 1. parent.addChild({ type: \'myType\' }); 2. parent.addChild(myDefinition)',
         renderBeforeAndAfterDefined: '[renderBefore] and [renderAfter] config can not be defined on the same component.',
         handlerFnNotProvided: 'Handler function was not provided.',
         canNotDestroyComponent: 'You cannot destroy a component with attached pre-rendered template.',
