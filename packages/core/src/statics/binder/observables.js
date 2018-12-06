@@ -1,4 +1,5 @@
 import pz from '../../core';
+//observe and observableArray will throw a circular reference error if they get separated as modules
 
 let observe = function (value) {
 
@@ -86,35 +87,32 @@ class observable {
         defineReactive(this, obj, key);
         return this;
     };
-};
-
-observable.prototype.notify = function () {
-    if (this.subscriptions.length == 0) {
-        return;
+    notify() {
+        if (this.subscriptions.length == 0) {
+            return;
+        };
+    
+        pz.forEach(this.subscriptions, function (subscription) {
+            subscription.update.call(this, subscription);
+        }, this);
     };
-
-    pz.forEach(this.subscriptions, function (subscription) {
-        subscription.update.call(this, subscription);
-    }, this);
-};
-
-observable.prototype.subscribe = function (callback, bindingId) {
-    let length = this.subscriptions.length;
-    this.subscriptions.push({
-        id: bindingId || length++,
-        update: callback
-    });
-};
-
-observable.prototype.unsubscribe = function (bindingId) {
-    let bindingSubs = this.subscriptions.filter(function (sub) {
-        return sub.id == bindingId;
-    });
-
-    pz.forEach(bindingSubs, function (sub) {
-        let idx = this.subscriptions.indexOf(sub);
-        this.subscriptions.splice(idx, 1);
-    }, this);
+    subscribe(callback, bindingId) {
+        let length = this.subscriptions.length;
+        this.subscriptions.push({
+            id: bindingId || length++,
+            update: callback
+        });
+    };
+    unsubscribe(bindingId) {
+        let bindingSubs = this.subscriptions.filter(function (sub) {
+            return sub.id == bindingId;
+        });
+    
+        pz.forEach(bindingSubs, function (sub) {
+            let idx = this.subscriptions.indexOf(sub);
+            this.subscriptions.splice(idx, 1);
+        }, this);
+    };
 };
 
 let observableMethods = 'pop push shift unshift splice reverse sort'.split(' '),
