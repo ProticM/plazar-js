@@ -1,44 +1,44 @@
 import pz from '../../core';
 
-let defineReactive = function (me, obj, key) {
-    let value = obj[key];
-
-    delete obj[key];
-    Object.defineProperty(obj, key, {
-        configurable: true,
-        enumerable: true,
-        set: function (newValue) {
-            let val = newValue.value != null || newValue.value != undefined ? newValue.value : newValue;
-            let shouldNotify = val != value && me.notify != undefined;
-            value = val;
-            if (shouldNotify) {
-                me.notify();
-            };
-        },
-        get: function () {
-            let get = function () {
-                return value;
-            };
-
-            get.subscribe = function (callback, bindingId) {
-                me.subscribe.call(me, callback, bindingId);
-            };
-
-            get.unsubscribe = function (bindingId) {
-                me.unsubscribe.call(me, bindingId);
-            };
-
-            return get;
-        }
-    });
-};
-
 class observable {
+    _defineReactive(obj, key) {
+        let me = this;
+        let value = obj[key];
+    
+        delete obj[key];
+        Object.defineProperty(obj, key, {
+            configurable: true,
+            enumerable: true,
+            set: function (newValue) {
+                let val = newValue.value != null || newValue.value != undefined ? newValue.value : newValue;
+                let shouldNotify = val != value && me.notify != undefined;
+                value = val;
+                if (shouldNotify) {
+                    me.notify();
+                };
+            },
+            get: function () {
+                let get = () => {
+                    return value;
+                };
+    
+                get.subscribe = (callback, bindingId) => {
+                    me.subscribe.call(me, callback, bindingId);
+                };
+    
+                get.unsubscribe = (bindingId) => {
+                    me.unsubscribe.call(me, bindingId);
+                };
+    
+                return get;
+            }
+        });
+    };
     constructor(obj, key) {
         this.value = obj[key];
         this.prop = key;
         this.subscriptions = [];
-        defineReactive(this, obj, key);
+        this._defineReactive(obj, key);
         return this;
     };
     notify() {

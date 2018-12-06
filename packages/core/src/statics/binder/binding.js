@@ -2,24 +2,23 @@ import pz from '../../core';
 import reservedKeys from './reserved-keys';
 import { buildContext } from './util';
 
-let parseAlias = function (keypath) {
-    let as = keypath.indexOf(reservedKeys.as) != -1,
-        parts, result = { keypath: keypath, alias: null };
-
-    if (!as) {
+class binding {
+    _parseAlias(keypath) {
+        let as = keypath.indexOf(reservedKeys.as) != -1,
+            parts, result = { keypath: keypath, alias: null };
+    
+        if (!as) {
+            return result;
+        };
+    
+        parts = keypath.split(reservedKeys.as);
+        result.keypath = parts.shift().trim();
+        result.alias = parts.pop().trim();
+        parts = null;
         return result;
     };
-
-    parts = keypath.split(reservedKeys.as);
-    result.keypath = parts.shift().trim();
-    result.alias = parts.pop().trim();
-    parts = null;
-    return result;
-};
-
-class binding {
     constructor(el, type, keypath, bindingAttr, view) {
-        let result = parseAlias(keypath);
+        let result = this._parseAlias(keypath);
 
         this.id = pz.guid();
         this.el = el;

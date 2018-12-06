@@ -2,38 +2,28 @@ import pz from '../../core';
 import textParser from './parser';
 import binding from './binding';
 
-let bindingRegex;
-
-let getBindingRegex = function () {
-    if (pz.isEmpty(bindingRegex)) {
-        bindingRegex = RegExp('^' + pz.binder.prefix + '-', 'i');
-    };
-
-    return bindingRegex;
-};
-
-let parseAttrName = function (name) {
-    let startIdx, endIdx;
-    let inBrackets = ((startIdx = name.indexOf('[')) != -1) &&
-        ((endIdx = name.indexOf(']')) != -1), attrToBind, parts;
-
-    if (!inBrackets) {
-        return name.split('-');
-    };
-
-    attrToBind = name.substring((startIdx + 1), endIdx);
-    name = name.replace('-[' + attrToBind + ']', '');
-    parts = name.split('-');
-    parts.push(attrToBind);
-    return parts;
-};
-
 class view {
+    _parseAttrName(name) {
+        let startIdx, endIdx;
+        let inBrackets = ((startIdx = name.indexOf('[')) != -1) &&
+            ((endIdx = name.indexOf(']')) != -1), attrToBind, parts;
+    
+        if (!inBrackets) {
+            return name.split('-');
+        };
+    
+        attrToBind = name.substring((startIdx + 1), endIdx);
+        name = name.replace('-[' + attrToBind + ']', '');
+        parts = name.split('-');
+        parts.push(attrToBind);
+        return parts;
+    };
     constructor(el, vm, ctx, index) {
         this.els = pz.isArray(el) || pz.isNodeList(el) ? el : [el];
         this.vm = vm;
         this.ctx = ctx || null;
         this.index = !pz.isEmpty(index) ? index : null;
+        this._bindingRegex = new RegExp('^' + pz.binder.prefix + '-', 'i');
         this.buildBindings();
         vm = null;
         return this;
@@ -58,8 +48,8 @@ class view {
                         attrs = isBlock ? [el.getAttributeNode(pz.binder.prefix + '-each')] : (el.attributes || []);
     
                     pz.forEach(attrs, function (attr) {
-                        if (getBindingRegex().test(attr.name)) {
-                            let parts = parseAttrName(attr.name);
+                        if (me._bindingRegex.test(attr.name)) {
+                            let parts = me._parseAttrName(attr.name);
                             let bType = parts[1], attrToBind = parts[2];
     
                             if (!pz.isEmpty(pz.binder.binders[bType])) {
