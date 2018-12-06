@@ -62,7 +62,7 @@ const nav = () => {
                     link.setAttribute('role', 'tab');
                     href = (menuItem.href.replace('#', ''));
                     contentCls = idx == 0 ? ('tab-pane active tab-' + href) : ('tab-pane tab-' + href);
-                    pz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel">' + menuItem.text + ' content' + '</div>');
+                    pz.dom.append(tabContent, '<div class="' + contentCls + '" id="' + href + '" role="tabpanel"></div>');
                 };
 
                 link.setAttribute('href', (menuItem.href || '#'));
