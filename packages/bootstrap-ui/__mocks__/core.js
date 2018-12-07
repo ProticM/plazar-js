@@ -1,3 +1,5 @@
 'use strict';
-const core = jest.genMockFromModule('@plazarjs/core');
-export default core;
+import pz from '../node_modules/@plazarjs/core/src';
+jest.mock('@plazarjs/core', () => {
+    return pz;
+});
