@@ -3,7 +3,7 @@
 import http from '../src';
 
 describe('http', () => {
-    it('should have init function', () => {
+    it('should have an initialization function defined', () => {
         expect(http.init).toBeDefined();
     });
 });
