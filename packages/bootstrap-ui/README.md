@@ -26,7 +26,7 @@ import '..my-app-relative-path/plugins/bootstrap';
 ## Import a Specific Component
 
 ```javascript
-import { navbar } from '@plazarjs/bootstrap-ui/dist/esmodules/components';
+import navbar from '@plazarjs/bootstrap-ui/dist/esmodules/components/ui-navbar.component'
 ```
 
 Inheritance is enabled on each component. We could have our custom component created like so:
