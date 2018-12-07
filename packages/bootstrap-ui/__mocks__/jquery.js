@@ -1,3 +1,3 @@
 'use strict';
-const $ = jest.genMockFromModule('jquery');
-export default $;
+const jquery = jest.genMockFromModule('jquery');
+export default jquery;
