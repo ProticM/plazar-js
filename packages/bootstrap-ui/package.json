@@ -44,8 +44,8 @@
     "popper.js": "^1.14.6"
   },
   "jest":{
-    "moduleNameMapper": {
-      "jquery": "./node_modules/jquery/dist/jquery"
-    }
+    "setupFiles": [
+      "./jest/globals.js"
+    ]
   }
 }
