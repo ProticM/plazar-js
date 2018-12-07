@@ -19,7 +19,7 @@ describe('visible binder', () => {
         component = componentDef.create();
     });
 
-    it('should check if span is rendered', () => {
+    it('should check if span is visible', () => {
         expect(component.html.innerHTML).toBe('<span>foo</span>');
         component.viewModel.ok = false;
         expect(component.html.innerHTML).toBe('<span style=\"display: none;\">foo</span>');
