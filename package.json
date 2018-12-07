@@ -30,7 +30,7 @@
     "rollup-plugin-node-resolve": "^3.4.0",
     "uglify-js": "^3.4.9"
   },
-  "jest":{
+  "jest": {
     "moduleNameMapper": {
       "@plazarjs/core": "<rootDir>/packages/core/src/index"
     }
