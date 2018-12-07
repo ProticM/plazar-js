@@ -1,7 +1,9 @@
 'use strict';
 
-const http = require('..');
+import http from '../src';
 
 describe('http', () => {
-    it('needs tests');
+    it('should have init function', () => {
+        expect(http.init).toBeDefined();
+    });
 });

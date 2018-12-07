@@ -1,7 +1,9 @@
 'use strict';
 
-const bootstrapUi = require('..');
+import bootstrapUi from '../src';
 
 describe('bootstrap-ui', () => {
-    it('needs tests');
+    it('should have init function', () => {
+        expect(bootstrapUi.init).toBeDefined();
+    });
 });

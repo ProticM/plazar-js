@@ -1,7 +1,9 @@
 'use strict';
 
-const core = require('..');
+import pz from '../src/core';
 
-describe('core', () => {
-    it('needs tests');
+describe('core', function() {
+    it('should be defined', () => {
+        expect(pz).toBeDefined();
+    });
 });
