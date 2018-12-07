@@ -1,3 +1,4 @@
+// Taken from the jquery module. Add method mocks when required
 const jQuery = function(selector, context) {
 	return new jQuery.fn(selector, context);
 };
