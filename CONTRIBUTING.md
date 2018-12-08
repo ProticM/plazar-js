@@ -14,6 +14,7 @@ Hello, and Welcome to the PlazarJS contribution guide. I'm very proud of the fac
 
 - The issue is considered as valid only if it can be reproduced on the latest master.
 - Open an issue on GitHub. The more information you provide, the easier it will be to validate and fix.
+- If applicable, create a JSFiddle
 
 ## Pull Request
 
