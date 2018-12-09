@@ -67,6 +67,9 @@ class observable {
             this.subscriptions.splice(idx, 1);
         }, this);
     };
+    static create(obj, key) {
+        return new observable(obj, key);
+    }
 };
 
 export default observable;

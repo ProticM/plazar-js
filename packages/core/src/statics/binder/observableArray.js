@@ -22,7 +22,7 @@ let observe = function (value) {
 
         if (!obsArray && !pz.isInstanceOf(value, observable) && !observe(propValue) &&
             !pz.isFunction(propValue)) {
-            value[prop] = new observable(value, prop);
+            observable.create(value, prop);
         };
     });
 
@@ -63,6 +63,7 @@ class observableArray {
         };
 
         let length = this.length;
+        let me = this;
         this.hasData = length > 0;
 
         Object.defineProperty(this, 'length', {
@@ -86,7 +87,32 @@ class observableArray {
             }
         });
 
-        this.hasData = new observable(this, 'hasData');
+        delete obj[prop];
+        Object.defineProperty(obj, prop, {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+                return me;
+            },
+            set: function (newValue) {
+                let shouldNotify = me.length != newValue.length;
+                let last = newValue.length - 1;
+
+                if (shouldNotify) {
+                    me.$pauseNotify = true;
+                    me.removeAll();
+
+                    pz.forEach(newValue, (item, index) => {
+                        me.$pauseNotify = (index != last);
+                        me.push(item);
+                    });
+
+                    delete me.$pauseNotify;
+                };
+            }
+        });
+
+        observable.create(this, 'hasData');
         return this;
     };
 };
@@ -105,7 +131,7 @@ pz.forEach(observableMethods, function (methodName) {
             return subscription.name == methodName;
         }, this.subscriptions);
 
-        if (subscription) {
+        if (subscription && !this.$pauseNotify) {
             let args = arrPrototype.slice.call(arguments);
             subscription.callback.apply(this, args);
         };
@@ -162,7 +188,7 @@ observableArray.prototype.getAt = function (index) {
 };
 
 observableArray.prototype.removeAll = function () {
-    this.splice(0, this.length);
+    return this.splice(0, this.length);
 };
 
 export {
