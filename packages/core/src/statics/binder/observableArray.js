@@ -13,12 +13,7 @@ let observe = function (value) {
     pz.forEach(properties, function (prop) {
 
         let propValue = value[prop];
-
         let obsArray = observeArray(value, propValue, prop);
-
-        if (obsArray && !pz.isInstanceOf(value, observableArray)) {
-            value[prop] = obsArray;
-        };
 
         if (!obsArray && !pz.isInstanceOf(value, observable) && !observe(propValue) &&
             !pz.isFunction(propValue)) {
