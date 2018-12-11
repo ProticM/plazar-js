@@ -35,7 +35,7 @@ const textParser = {
                     if (isPath) {
                         val = value.split('.').pop();
                         vmValue = ((me.ctx && me.ctx[val]) || me.vm[val]) ||
-                            buildContext(value, me.vm, me.ctx)[val];
+                            buildContext(value, me)[val];
                         val = null;
                     };
 
@@ -65,7 +65,7 @@ const textParser = {
 
         (function (me, elsData) {
             pz.forEach(keypaths, function (keypath) {
-                let ctx = buildContext(keypath, me.vm, me.ctx);
+                let ctx = buildContext(keypath, me);
                 let prop = keypath.split('.').pop();
                 let observer = ctx[prop];
                 if (observer && observer.subscribe) {

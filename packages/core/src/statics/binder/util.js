@@ -19,7 +19,8 @@ let parseKeyPath = function (keypath, target) {
     }, target);
 };
 
-let buildContext = function (keypath, vm, ctx) {
+let buildContext = function (keypath, view) {
+    let ctx = view.ctx, vm = view.vm;
     let hasCtx = ctx != null,
         isPath = /^[a-z$][a-z0-9]*(?:\.[a-z0-9]+)+$/i.test(keypath),
         fromRoot = isPath && keypath.indexOf(reservedKeys.root) != -1;

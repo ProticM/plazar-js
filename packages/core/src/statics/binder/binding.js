@@ -29,7 +29,7 @@ class binding {
         this.bindingAttr = bindingAttr;
         this.prop = result.keypath.split('.').pop();
         this.rootVm = view.vm;
-        this.vm = buildContext(result.keypath, view.vm, view.ctx);
+        this.vm = buildContext(result.keypath, view);
         this.binder = pz.binder.binders[this.type];
         this.handler = this.binder.handler ? pz.proxy(this.binder.handler, this) : undefined;
         view = null;
