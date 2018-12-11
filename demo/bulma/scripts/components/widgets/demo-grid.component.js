@@ -10,7 +10,7 @@ pz.define('grid-component', function() {
                 '<div class="column is-marginless b-1" data-each="columns" data-attr-[data-colidx]="$index" data-attr-[data-dindex]="dataIndex" data-html="text"></div>' +
             '</div>' +
             '<div class="columns is-marginless" data-each="data as row" data-visible="data.hasData">' +
-                '<div class="column is-marginless" data-each="$root.columns" data-attr-[data-rowidx]="$root.getRowIndex" data-attr-[data-colidx]="$index" data-text="$root.getColumnValue" data-attr-[data-dindex]="dataIndex"></div>' +
+                '<div class="column is-marginless" data-each="$root.columns as column" data-attr-[data-rowidx]="$root.getRowIndex" data-attr-[data-colidx]="$index" data-text="row[0].dataIndex" data-attr-[data-dindex]="dataIndex"></div>' +
             '</div>' +
             '<div class="has-text-centered p-1" data-hidden="data.hasData">No data available</div>' +
             '<div>' +
@@ -21,7 +21,7 @@ pz.define('grid-component', function() {
             columns: [],
             data: [],
             getRowIndex: function() {
-                var idx = this.rootVm.data.indexOf(this.rootVm.row);
+                var idx = this.rootVm.data.indexOf(this.view.parent.alias.row);
                 return idx;
             },
             getColumnValue: function() {

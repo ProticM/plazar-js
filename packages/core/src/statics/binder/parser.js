@@ -1,6 +1,6 @@
 import pz from '../../core';
 import reservedKeys from './reserved-keys';
-import { buildContext } from './util';
+import { buildContext, pathRegex } from './util';
 
 const textParser = {
     parse: function (el) {
@@ -30,7 +30,7 @@ const textParser = {
                     curr = value.indexOf(reservedKeys.current) != -1;
                     idx = value.indexOf(reservedKeys.idx) != -1;
                     vmValue = (!curr ? (!idx ? _vm[value] : me.index) : _vm);
-                    isPath = /^[a-z$][a-z0-9]*(?:\.[a-z0-9]+)+$/i.test(value);
+                    isPath = pathRegex.test(value);
 
                     if (isPath) {
                         val = value.split('.').pop();
