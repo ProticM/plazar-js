@@ -1,6 +1,6 @@
 import pz from '../../core';
 import reservedKeys from './reserved-keys';
-import { buildContext, pathRegex } from './util';
+import { buildContext, pathRegex, pathToParts } from './util';
 
 const textParser = {
     parse: function (el) {
@@ -33,7 +33,7 @@ const textParser = {
                     isPath = pathRegex.test(value);
 
                     if (isPath) {
-                        val = value.split('.').pop();
+                        val = pathToParts(value).pop();
                         vmValue = ((me.ctx && me.ctx[val]) || me.vm[val]) ||
                             buildContext(value, me)[val];
                         val = null;
@@ -66,8 +66,9 @@ const textParser = {
         (function (me, elsData) {
             pz.forEach(keypaths, function (keypath) {
                 let ctx = buildContext(keypath, me);
-                let prop = keypath.split('.').pop();
+                let prop = pathToParts(keypath).pop();
                 let observer = ctx[prop];
+
                 if (observer && observer.subscribe) {
                     observer.subscribe(function () {
                         pz.forEach(elsData, function (data) {

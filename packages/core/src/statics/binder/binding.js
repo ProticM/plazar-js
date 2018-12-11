@@ -1,6 +1,6 @@
 import pz from '../../core';
 import reservedKeys from './reserved-keys';
-import { buildContext } from './util';
+import { buildContext, pathToParts } from './util';
 
 class binding {
     _parseAlias(keypath) {
@@ -27,7 +27,7 @@ class binding {
         this.keypath = result.keypath.trim();
         this.alias = result.alias || null;
         this.bindingAttr = bindingAttr;
-        this.prop = result.keypath.split('.').pop();
+        this.prop = pathToParts(result.keypath).pop();
         this.rootVm = view.vm;
         this.vm = buildContext(result.keypath, view);
         this.binder = pz.binder.binders[this.type];

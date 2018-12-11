@@ -46,5 +46,6 @@ let buildContext = function (keypath, view) {
 export {
     buildContext,
     parseKeyPath,
+    pathToParts,
     pathRegex
 };
