@@ -5,8 +5,8 @@ let pathRegex = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2
 
 let pathToParts = (keypath) => {
     let result = [];
-    keypath.replace(pathRegex, function(match, number) {
-        result.push((number || match));
+    keypath.replace(pathRegex, function(match, num, quote, str) {
+        result.push(!pz.isEmpty(quote) ? str : (num || match));
     });
     return result;
 };
