@@ -27,6 +27,13 @@ class view {
         this.parent = !pz.isEmpty(parent) ? parent : null;
         this._bindingRegex = new RegExp('^' + pz.binder.prefix + '-', 'i');
         if(!pz.isEmpty(alias)) {
+            let parentEmpty = pz.isEmpty(parent);
+
+            if(!parentEmpty && parent.alias.hasOwnProperty(alias)) {
+                throw new Error('Nested loops must have a different alias name than its parent.');
+            };
+
+            pz.assignTo(this.alias, (!parentEmpty ? parent.alias : {}), false);
             this.alias[alias] = ctx;
         };
         this.buildBindings();
