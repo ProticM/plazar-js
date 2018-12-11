@@ -1,7 +1,7 @@
 import pz from '../../core';
 import reservedKeys from './reserved-keys';
-// /^[a-z$][a-z0-9]*(?:\.[a-z0-9]+)+$/i
-let pathRegex = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+// /^[a-z$][a-z0-9]*(?:\.[a-z0-9]+)+$/i // this one mathes only dotted keypath
+let pathRegex = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g; // this one is used by lodash to parse the path
 
 let pathToParts = (keypath) => {
     let result = [];
