@@ -30,7 +30,7 @@ class view {
             let parentEmpty = pz.isEmpty(parent);
 
             if(!parentEmpty && parent.alias.hasOwnProperty(alias)) {
-                throw new Error('Nested loops must have a different alias name than its parent.');
+                throw new Error('Alias name must be unique.');
             };
 
             pz.assignTo(this.alias, (!parentEmpty ? parent.alias : {}), false);
