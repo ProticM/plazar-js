@@ -29,12 +29,12 @@ class view {
         if(!pz.isEmpty(alias)) {
             let parentEmpty = pz.isEmpty(parent);
 
-            if(!parentEmpty && parent.alias.hasOwnProperty(alias)) {
+            if(!parentEmpty && parent.alias.hasOwnProperty(alias.name)) {
                 throw new Error('Alias name must be unique.');
             };
 
             pz.assignTo(this.alias, (!parentEmpty ? parent.alias : {}), false);
-            this.alias[alias] = ctx;
+            this.alias[alias.name] = pz.str.format(alias.path, this.index);
         };
         this.buildBindings();
         vm = null;

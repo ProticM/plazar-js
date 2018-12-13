@@ -25,9 +25,10 @@ class binding {
         this.view = view;
         this.type = type;
         this.keypath = result.keypath.trim();
-        this.alias = result.alias || null;
-        this.bindingAttr = bindingAttr;
         this.prop = pathToParts(result.keypath).pop();
+        this.alias = type == 'each' && !pz.isEmpty(result.alias) ? 
+            { name: result.alias, path: (this.prop + '[{0}]') } : null;
+        this.bindingAttr = bindingAttr;
         this.rootVm = view.vm;
         this.vm = buildContext(result.keypath, view);
         this.binder = pz.binder.binders[this.type];

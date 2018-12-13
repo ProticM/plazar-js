@@ -6,6 +6,11 @@ import reservedKeys from './reserved-keys';
 // this one is used by lodash to parse the path
 let pathRegex = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
 
+// alias regex
+let getAliasRegex = (keys) => {
+    return new RegExp('\\b' + keys.join('|') + '\\b', 'gi');
+};
+
 let pathToParts = (keypath) => {
     let result = [];
     keypath.replace(pathRegex, function(match, num, quote, str) {
@@ -37,13 +42,20 @@ let parseKeyPath = function (parts, target) {
 
 let buildContext = function (keypath, view) {
     let ctx = view.ctx, vm = view.vm;
-    let hasAlias = Object.keys(view.alias).length > 0,
+    let aliases = Object.keys(view.alias), hasAlias = aliases.length > 0,
         isPath = pathRegex.test(keypath),
-        fromRoot = isPath && keypath.indexOf(reservedKeys.root) != -1, parts;
+        fromRoot = isPath && keypath.indexOf(reservedKeys.root) != -1, 
+        parts, aliasRegex;
 
-    keypath = fromRoot ? keypath.split('.').slice(1).join('.') : keypath;
+    keypath = fromRoot ? keypath.replace((reservedKeys.root), '') : keypath;
+    if(hasAlias) {
+        aliasRegex = getAliasRegex(aliases);
+        keypath = keypath.replace(aliasRegex, function(matched){
+            return view.alias[matched];
+        });
+    };
     parts = pathToParts(keypath);
-    return parseKeyPath(parts, ctx) || parseKeyPath(parts, (hasAlias ? view.alias : undefined)) || parseKeyPath(parts, vm);
+    return parseKeyPath(parts, ctx) || parseKeyPath(parts, vm);
 };
 
 export {
