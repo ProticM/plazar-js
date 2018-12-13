@@ -65,9 +65,14 @@ const textParser = {
 
         (function (me, elsData) {
             pz.forEach(keypaths, function (keypath) {
-                let ctx = buildContext(keypath, me);
+                let ctx = buildContext(keypath, me), observer;
                 let prop = pathToParts(keypath).pop();
-                let observer = ctx[prop];
+
+                if(pz.isEmpty(ctx) || pz.isEmpty(ctx[prop])) {
+                    return;
+                };
+
+                observer = ctx[prop];
 
                 if (observer && observer.subscribe) {
                     observer.subscribe(function () {
