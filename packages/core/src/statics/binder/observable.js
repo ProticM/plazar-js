@@ -46,7 +46,7 @@ class observable {
         };
     
         pz.forEach(this.subscriptions, function (subscription) {
-            subscription.update.call(this, subscription);
+            subscription.update.call(this, this.value);
         }, this);
     };
     subscribe(callback, bindingId) {
