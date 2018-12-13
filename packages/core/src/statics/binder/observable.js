@@ -3,23 +3,22 @@ import pz from '../../core';
 class observable {
     _defineReactive(obj, key) {
         let me = this;
-        let value = obj[key];
-    
+
         delete obj[key];
         Object.defineProperty(obj, key, {
             configurable: true,
             enumerable: true,
             set: function (newValue) {
                 let val = newValue.value != null || newValue.value != undefined ? newValue.value : newValue;
-                let shouldNotify = val != value && me.notify != undefined;
-                value = val;
+                let shouldNotify = val != me.value && me.notify != undefined;
+                me.value = val;
                 if (shouldNotify) {
                     me.notify();
                 };
             },
             get: function () {
                 let get = () => {
-                    return value;
+                    return me.value;
                 };
     
                 get.subscribe = (callback, bindingId) => {
