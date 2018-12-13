@@ -90,8 +90,9 @@ class observableArray {
                 return me;
             },
             set: function (newValue) {
-                let shouldNotify = me.length != newValue.length;
-                let last = newValue.length - 1;
+                let shouldNotify = me.length != newValue.length,
+                    newLength = newValue.length, 
+                    last = newLength - 1;
 
                 if (shouldNotify) {
                     me.$pauseNotify = true;
@@ -103,6 +104,8 @@ class observableArray {
                     });
 
                     delete me.$pauseNotify;
+
+                    if(newLength == 0) {  me.removeAll(); } // trigger UI update
                 };
             }
         });
