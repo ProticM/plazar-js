@@ -32,7 +32,7 @@ const textParser = {
                     vmValue = (!curr ? (!idx ? _vm[value] : me.index) : _vm);
                     isPath = pathRegex.test(value);
 
-                    if (isPath) {
+                    if (isPath && !curr && !idx) {
                         val = pathToParts(value).pop();
                         vmValue = ((me.ctx && me.ctx[val]) || me.vm[val]) ||
                             buildContext(value, me)[val];
