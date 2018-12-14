@@ -1,8 +1,19 @@
 import pz from '../../core';
 import reservedKeys from './reserved-keys';
-import { buildContext } from './util';
+import { buildContext, pathRegex, pathToParts } from './util';
 
 const textParser = {
+    regex: null,
+    setRegex: () => {
+        if(pz.isEmpty(textParser.regex)) {
+            textParser.regex = 
+                new RegExp(pz.str.format('{0}([^{1}]*){2}', 
+                    pz.binder.delimiters[0], 
+                    pz.binder.delimiters[1], 
+                    pz.binder.delimiters[1]), 
+                'g');
+        };
+    },
     parse: function (el) {
 
         let hasInterpolations,
@@ -19,23 +30,27 @@ const textParser = {
             return;
         };
 
+        textParser.setRegex();
         keypaths = [];
 
         updateContent = (function (me, _vm) {
             return function (data, parsed) {
-                data.el.textContent = data.tpl.replace(/{([^}]*)}/g, function (template, value) {
-                    let isPath, val, vmValue, curr, idx;
+                data.el.textContent = data.tpl.replace(textParser.regex, function (template, value) {
+                    let isPath, val, vmValue, curr, idx, ctx;
 
                     value = value.replace(/ +?/g, '');
                     curr = value.indexOf(reservedKeys.current) != -1;
                     idx = value.indexOf(reservedKeys.idx) != -1;
                     vmValue = (!curr ? (!idx ? _vm[value] : me.index) : _vm);
-                    isPath = /^[a-z$][a-z0-9]*(?:\.[a-z0-9]+)+$/i.test(value);
+                    isPath = pathRegex.test(value);
 
-                    if (isPath) {
-                        val = value.split('.').pop();
-                        vmValue = ((me.ctx && me.ctx[val]) || me.vm[val]) ||
-                            buildContext(value, me.vm, me.ctx)[val];
+                    if (isPath && !curr && !idx) {
+                        val = pathToParts(value).pop();
+                        vmValue = ((me.ctx && me.ctx[val]) || me.vm[val]);
+                        if(pz.isEmpty(vmValue)) {
+                            ctx = buildContext(value, me);
+                            vmValue = !pz.isEmpty(ctx) ? ctx[val] : undefined;
+                        };
                         val = null;
                     };
 
@@ -65,9 +80,15 @@ const textParser = {
 
         (function (me, elsData) {
             pz.forEach(keypaths, function (keypath) {
-                let ctx = buildContext(keypath, me.vm, me.ctx);
-                let prop = keypath.split('.').pop();
-                let observer = ctx[prop];
+                let ctx = buildContext(keypath, me), observer;
+                let prop = pathToParts(keypath).pop();
+
+                if(pz.isEmpty(ctx) || pz.isEmpty(ctx[prop])) {
+                    return;
+                };
+
+                observer = ctx[prop];
+
                 if (observer && observer.subscribe) {
                     observer.subscribe(function () {
                         pz.forEach(elsData, function (data) {

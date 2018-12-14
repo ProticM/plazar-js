@@ -40,7 +40,7 @@ const binder = {
                     isObsArray = pz.isInstanceOf(value[prop], observableArray);
 
                 if (isObject) {
-                    toJSON(value[prop], res);
+                    res[prop] = toJSON(value[prop], {});
                 };
 
                 if (isObsArray) {
@@ -57,7 +57,7 @@ const binder = {
                     });
                 };
 
-                if (isFunction) {
+                if (isFunction && !pz.isEmpty(value[prop].subscribe)) {
                     res[prop] = value[prop]();
                 };
             });
@@ -146,19 +146,12 @@ const binder = {
                 this.views.splice(0, this.views.length);
 
                 pz.forEach(value, function (item, idx) {
-
-                    if (this.alias) {
-                        this.rootVm[this.alias] = item;
-                    };
-
                     template = this.el.cloneNode(true);
-                    let v = new view(template, this.rootVm, item, idx);
+                    let v = new view(template, this.rootVm, item, idx, this.alias, this.view);
                     v.bind();
                     this.mark.parentNode.insertBefore(template, this.mark);
                     this.views.push(v);
                 }, this);
-
-                delete this.rootVm[this.alias];
             },
             unbind: function () {
                 pz.forEach(this.views, function (view) {
@@ -316,7 +309,7 @@ const binder = {
                     template.setAttribute('data-value', this.binder.tempAttrs.val);
                     template.setAttribute('data-text', this.binder.tempAttrs.text);
 
-                    let v = new view(template, this.rootVm, item, idx);
+                    let v = new view(template, this.rootVm, item, idx, this.alias, this.view);
                     v.bind();
                     this.el.appendChild(template);
                     this.views.push(v);

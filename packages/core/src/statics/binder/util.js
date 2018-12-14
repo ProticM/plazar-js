@@ -1,36 +1,63 @@
 import pz from '../../core';
 import reservedKeys from './reserved-keys';
 
-let parseKeyPath = function (keypath, target) {
+let pathRegex = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g, 
+    backslashRegex = /\\(\\)?/g; // these are used by lodash to parse the path
 
-    let parts = keypath.split('.');
-    let globalScope;
+let getAliasRegex = (keys) => { // alias regex
+    return new RegExp('\\b' + keys.join('|') + '\\b', 'gi');
+};
+
+let pathToParts = (keypath) => {
+    let result = [];
+    keypath.replace(pathRegex, (match, num, quote, str) => {
+        result.push(!pz.isEmpty(quote) ? str.replace(backslashRegex, '$1') : (num || match));
+    });
+    return result;
+};
+
+let parseKeyPath = (parts, target) => {
+    let globalScope = pz.getGlobal(), result, p;
 
     if (parts.length == 1) {
-        return target;
+        return ((!pz.isEmpty(target) && 
+            !pz.isEmpty(target[parts[0]])) || 
+                pz.arr.contains([reservedKeys.idx, reservedKeys.current], parts[0])) ? 
+                    target : null;
     };
-    
-    globalScope = pz.getGlobal();
-    parts.pop();
-    return parts.reduce(function (previous, current) {
+
+    p = parts.slice();
+    p.pop();
+    result = p.reduce((previous, current) => {
         let isString = pz.isString(previous);
         return isString ? globalScope[previous][current] :
             (pz.isEmpty(previous) ? null : previous[current]);
     }, target);
+    
+    return result;
 };
 
-let buildContext = function (keypath, vm, ctx) {
-    let hasCtx = ctx != null,
-        isPath = /^[a-z$][a-z0-9]*(?:\.[a-z0-9]+)+$/i.test(keypath),
-        fromRoot = isPath && keypath.indexOf(reservedKeys.root) != -1;
+let buildContext = (keypath, view) => {
+    let ctx = view.ctx, vm = view.vm;
+    let aliases = Object.keys(view.alias), hasAlias = aliases.length > 0,
+        isPath = pathRegex.test(keypath),
+        fromRoot = isPath && keypath.indexOf(reservedKeys.root) != -1, 
+        parts, aliasRegex;
 
-    keypath = fromRoot ? keypath.split('.').slice(1).join('.') : keypath;
-
-    return (hasCtx && !isPath && !fromRoot ? ctx : parseKeyPath(keypath, vm)) ||
-        parseKeyPath(keypath, ctx);
+    keypath = fromRoot ? keypath.replace((reservedKeys.root), '') : keypath;
+    if(hasAlias) {
+        aliasRegex = getAliasRegex(aliases);
+        keypath = keypath.replace(aliasRegex, (matched) => {
+            return view.alias[matched];
+        });
+    };
+    parts = pathToParts(keypath);
+    return parseKeyPath(parts, ctx) || parseKeyPath(parts, vm);
 };
 
 export {
     buildContext,
-    parseKeyPath
+    parseKeyPath,
+    pathToParts,
+    pathRegex
 };

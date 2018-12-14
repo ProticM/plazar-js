@@ -18,13 +18,27 @@ class view {
         parts.push(attrToBind);
         return parts;
     };
-    constructor(el, vm, ctx, index) {
+    constructor(el, vm, ctx, index, alias, parent) {
+        let parentEmpty = pz.isEmpty(parent);
+
         this.els = pz.isArray(el) || pz.isNodeList(el) ? el : [el];
+        this.alias = {};
         this.vm = vm;
-        this.ctx = ctx || null;
+        this.ctx = !pz.isEmpty(ctx) ? ctx : null;
         this.index = !pz.isEmpty(index) ? index : null;
+        this.parent = !parentEmpty ? parent : null;
         this._bindingRegex = new RegExp('^' + pz.binder.prefix + '-', 'i');
+        
+        if(!pz.isEmpty(alias)) {
+            if(!parentEmpty && parent.alias.hasOwnProperty(alias.name)) {
+                throw new Error('Alias name must be unique.');
+            };
+            this.alias[alias.name] = pz.str.format(alias.path, this.index);
+        };
+
+        pz.assignTo(this.alias, (!parentEmpty ? parent.alias : {}), false);
         this.buildBindings();
+
         vm = null;
         return this;
     };

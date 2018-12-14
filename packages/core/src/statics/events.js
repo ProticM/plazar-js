@@ -13,7 +13,7 @@ const events = () => {
             index = _subscriptions[name].push(listener) -1;
 
             return {
-                remove: function() {
+                remove: () => {
                     delete _subscriptions[name][index];
                 }
             };
@@ -24,7 +24,7 @@ const events = () => {
                 return;
             };
 
-            _subscriptions[name].forEach(function(subscription) {
+            _subscriptions[name].forEach((subscription) => {
                 subscription((args != undefined ? args : null));
             });
         }

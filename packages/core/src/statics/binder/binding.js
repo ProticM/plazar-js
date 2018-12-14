@@ -1,6 +1,6 @@
 import pz from '../../core';
 import reservedKeys from './reserved-keys';
-import { buildContext } from './util';
+import { buildContext, pathToParts } from './util';
 
 class binding {
     _parseAlias(keypath) {
@@ -25,11 +25,12 @@ class binding {
         this.view = view;
         this.type = type;
         this.keypath = result.keypath.trim();
-        this.alias = result.alias || null;
+        this.prop = pathToParts(result.keypath).pop();
+        this.alias = type == 'each' && !pz.isEmpty(result.alias) ? 
+            { name: result.alias, path: (this.prop + '[{0}]') } : null;
         this.bindingAttr = bindingAttr;
-        this.prop = result.keypath.split('.').pop();
         this.rootVm = view.vm;
-        this.vm = buildContext(result.keypath, view.vm, view.ctx);
+        this.vm = buildContext(result.keypath, view);
         this.binder = pz.binder.binders[this.type];
         this.handler = this.binder.handler ? pz.proxy(this.binder.handler, this) : undefined;
         view = null;
