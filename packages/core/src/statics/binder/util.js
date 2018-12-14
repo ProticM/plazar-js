@@ -10,13 +10,13 @@ let getAliasRegex = (keys) => { // alias regex
 
 let pathToParts = (keypath) => {
     let result = [];
-    keypath.replace(pathRegex, function(match, num, quote, str) {
+    keypath.replace(pathRegex, (match, num, quote, str) => {
         result.push(!pz.isEmpty(quote) ? str.replace(backslashRegex, '$1') : (num || match));
     });
     return result;
 };
 
-let parseKeyPath = function (parts, target) {
+let parseKeyPath = (parts, target) => {
     let globalScope = pz.getGlobal(), result, p;
 
     if (parts.length == 1) {
@@ -28,7 +28,7 @@ let parseKeyPath = function (parts, target) {
 
     p = parts.slice();
     p.pop();
-    result = p.reduce(function (previous, current) {
+    result = p.reduce((previous, current) => {
         let isString = pz.isString(previous);
         return isString ? globalScope[previous][current] :
             (pz.isEmpty(previous) ? null : previous[current]);
@@ -37,7 +37,7 @@ let parseKeyPath = function (parts, target) {
     return result;
 };
 
-let buildContext = function (keypath, view) {
+let buildContext = (keypath, view) => {
     let ctx = view.ctx, vm = view.vm;
     let aliases = Object.keys(view.alias), hasAlias = aliases.length > 0,
         isPath = pathRegex.test(keypath),
@@ -47,7 +47,7 @@ let buildContext = function (keypath, view) {
     keypath = fromRoot ? keypath.replace((reservedKeys.root), '') : keypath;
     if(hasAlias) {
         aliasRegex = getAliasRegex(aliases);
-        keypath = keypath.replace(aliasRegex, function(matched) {
+        keypath = keypath.replace(aliasRegex, (matched) => {
             return view.alias[matched];
         });
     };
