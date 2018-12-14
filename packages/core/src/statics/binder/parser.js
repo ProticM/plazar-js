@@ -7,7 +7,11 @@ const textParser = {
     setRegex: () => {
         if(pz.isEmpty(textParser.regex)) {
             textParser.regex = 
-                new RegExp(pz.str.format('{0}([^{1}]*){2}', pz.binder.delimiters[0], pz.binder.delimiters[1], pz.binder.delimiters[1]), 'g');
+                new RegExp(pz.str.format('{0}([^{1}]*){2}', 
+                    pz.binder.delimiters[0], 
+                    pz.binder.delimiters[1], 
+                    pz.binder.delimiters[1]), 
+                'g');
         };
     },
     parse: function (el) {
