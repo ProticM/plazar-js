@@ -40,7 +40,7 @@ const binder = {
                     isObsArray = pz.isInstanceOf(value[prop], observableArray);
 
                 if (isObject) {
-                    toJSON(value[prop], res);
+                    res[prop] = toJSON(value[prop], {});
                 };
 
                 if (isObsArray) {
@@ -57,7 +57,7 @@ const binder = {
                     });
                 };
 
-                if (isFunction) {
+                if (isFunction && !pz.isEmpty(value[prop].subscribe)) {
                     res[prop] = value[prop]();
                 };
             });
