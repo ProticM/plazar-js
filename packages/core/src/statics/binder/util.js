@@ -1,20 +1,17 @@
 import pz from '../../core';
 import reservedKeys from './reserved-keys';
-// this one mathes only dotted keypath
-// /^[a-z$][a-z0-9]*(?:\.[a-z0-9]+)+$/i
 
-// this one is used by lodash to parse the path
-let pathRegex = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+let pathRegex = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g, 
+    backslashRegex = /\\(\\)?/g; // these are used by lodash to parse the path
 
-// alias regex
-let getAliasRegex = (keys) => {
+let getAliasRegex = (keys) => { // alias regex
     return new RegExp('\\b' + keys.join('|') + '\\b', 'gi');
 };
 
 let pathToParts = (keypath) => {
     let result = [];
     keypath.replace(pathRegex, function(match, num, quote, str) {
-        result.push(!pz.isEmpty(quote) ? str : (num || match));
+        result.push(!pz.isEmpty(quote) ? str.replace(backslashRegex, '$1') : (num || match));
     });
     return result;
 };
