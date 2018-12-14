@@ -2,7 +2,7 @@
   "name": "@plazarjs/http",
   "rollupName": "pzHttp",
   "rollupFileName": "http",
-  "version": "2.1.1-alpha.1",
+  "version": "2.1.1-alpha.2",
   "description": "PlazarJS http package",
   "keywords": [
     "javascript",
@@ -36,6 +36,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@plazarjs/core": "^2.1.1-alpha.1"
+    "@plazarjs/core": "^2.1.1-alpha.2"
   }
 }
