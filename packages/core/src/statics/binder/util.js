@@ -47,7 +47,7 @@ let buildContext = function (keypath, view) {
     keypath = fromRoot ? keypath.replace((reservedKeys.root), '') : keypath;
     if(hasAlias) {
         aliasRegex = getAliasRegex(aliases);
-        keypath = keypath.replace(aliasRegex, function(matched){
+        keypath = keypath.replace(aliasRegex, function(matched) {
             return view.alias[matched];
         });
     };
