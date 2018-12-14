@@ -3,6 +3,13 @@ import reservedKeys from './reserved-keys';
 import { buildContext, pathRegex, pathToParts } from './util';
 
 const textParser = {
+    regex: null,
+    setRegex: () => {
+        if(pz.isEmpty(textParser.regex)) {
+            textParser.regex = 
+                new RegExp(pz.str.format('{0}([^{1}]*){2}', pz.binder.delimiters[0], pz.binder.delimiters[1], pz.binder.delimiters[1]), 'g');
+        };
+    },
     parse: function (el) {
 
         let hasInterpolations,
@@ -19,12 +26,13 @@ const textParser = {
             return;
         };
 
+        textParser.setRegex();
         keypaths = [];
 
         updateContent = (function (me, _vm) {
             return function (data, parsed) {
-                data.el.textContent = data.tpl.replace(/{([^}]*)}/g, function (template, value) {
-                    let isPath, val, vmValue, curr, idx;
+                data.el.textContent = data.tpl.replace(textParser.regex, function (template, value) {
+                    let isPath, val, vmValue, curr, idx, ctx;
 
                     value = value.replace(/ +?/g, '');
                     curr = value.indexOf(reservedKeys.current) != -1;
@@ -34,8 +42,11 @@ const textParser = {
 
                     if (isPath && !curr && !idx) {
                         val = pathToParts(value).pop();
-                        vmValue = ((me.ctx && me.ctx[val]) || me.vm[val]) ||
-                            buildContext(value, me)[val];
+                        vmValue = ((me.ctx && me.ctx[val]) || me.vm[val]);
+                        if(pz.isEmpty(vmValue)) {
+                            ctx = buildContext(value, me);
+                            vmValue = !pz.isEmpty(ctx) ? ctx[val] : undefined;
+                        };
                         val = null;
                     };
 
