@@ -457,15 +457,15 @@ const component = () => {
             pz.dom.remove(this.html);
             this.html = null;
             this.viewModel = null;
-            pz.arr.clean(this.components);
+            pz.arr.clear(this.components);
             this.components = null;
-            pz.arr.clean(this.handlers);
+            pz.arr.clear(this.handlers);
             this.handlers = null;
             this.mixins = null;
             pz.forEach(this.subscriptions, function(subscription) {
                 subscription.remove();
             });
-            pz.arr.clean(this.subscriptions);
+            pz.arr.clear(this.subscriptions);
             this.subscriptions = null;
             parent = this.traceUp();
             if (!pz.isEmpty(parent)) {
