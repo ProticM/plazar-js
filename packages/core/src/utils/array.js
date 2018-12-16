@@ -6,7 +6,7 @@ const arr = {
             return;
         };
 
-        array.splice(0, array.length);
+        return array.splice(0, array.length);
     },
 
     find: (callback, arr, scope) => {

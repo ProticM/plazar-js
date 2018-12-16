@@ -32,13 +32,7 @@ const component = () => {
         xhr.open('GET', options.url, true);
         xhr.send();
     };
-
-    let _cleanArray = function(array) {
-        if(!pz.isEmpty(array)) {
-            array.splice(0, array.length);
-        };
-    };
-
+    
     return {
         type: 'component',
         constructor: function () {
@@ -463,15 +457,15 @@ const component = () => {
             pz.dom.remove(this.html);
             this.html = null;
             this.viewModel = null;
-            _cleanArray(this.components);
+            pz.arr.clean(this.components);
             this.components = null;
-            _cleanArray(this.handlers);
+            pz.arr.clean(this.handlers);
             this.handlers = null;
             this.mixins = null;
             pz.forEach(this.subscriptions, function(subscription) {
                 subscription.remove();
             });
-            _cleanArray(this.subscriptions);
+            pz.arr.clean(this.subscriptions);
             this.subscriptions = null;
             parent = this.traceUp();
             if (!pz.isEmpty(parent)) {
