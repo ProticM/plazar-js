@@ -324,13 +324,14 @@ const binder = {
         },
         'on': {
             priority: 1,
-            bind: function bind() {
+            bind: function() {
                 this.el.removeAttribute(this.bindingAttr);
                 this.event = this.attrToBind;
-                this.el.addEventListener(this.attrToBind, this.handler);
+                this.capture = ['blur', 'focus', 'focusout', 'focusin'].indexOf(this.event) != -1;
+                this.el.addEventListener(this.attrToBind, this.handler, this.capture);
             },
-            unbind: function unbind() {
-                this.el.removeEventListener(this.attrToBind, this.handler);
+            unbind: function() {
+                this.el.removeEventListener(this.attrToBind, this.handler, this.capture);
             },
             handler: function() {
                 let value = this.getValue();
