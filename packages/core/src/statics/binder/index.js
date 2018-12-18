@@ -336,7 +336,7 @@ const binder = {
             handler: function() {
                 let value = this.getValue();
 
-                if(!pz.isEmpty(value)) { 
+                if(!pz.isEmpty(value) && pz.isFunction(value)) { 
                     value.call(this, this.el);
                 };
             }
