@@ -315,12 +315,30 @@ const binder = {
                     this.views.push(v);
                     template = null;
                 }, this);
+            },
+            unbind: function () {
+                pz.forEach(this.views, function (view) {
+                    view.unbind();
+                });
             }
         },
-        unbind: function () {
-            pz.forEach(this.views, function (view) {
-                view.unbind();
-            });
+        'on': {
+            priority: 1,
+            bind: function bind() {
+                this.el.removeAttribute(this.bindingAttr);
+                this.event = this.attrToBind;
+                this.el.addEventListener(this.attrToBind, this.handler);
+            },
+            unbind: function unbind() {
+                this.el.removeEventListener(this.attrToBind, this.handler);
+            },
+            handler: function() {
+                let value = this.getValue();
+
+                if(!pz.isEmpty(value)) { 
+                    value.call(this, this.el);
+                };
+            }
         }
     }
 };
