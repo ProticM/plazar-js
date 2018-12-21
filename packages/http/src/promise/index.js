@@ -1,5 +1,5 @@
 import handler from './handler';
-import { resolve, handle } from './util';
+import { resolve, handle, getThen } from './util';
 
 class promise {
     constructor(fn) {
@@ -11,27 +11,42 @@ class promise {
         this.state = this.states.PENDING;
         this.handlers = [];
         this.value = null;
-        resolve(fn);
+        resolve(fn, this);
     }
     done() {
-        handle(this);
+        let me = this;
+        setTimeout(() => {
+            handle(me);
+        }, 0);
     }
     then(onSuccess, onFail) {
         
-        let promise = new promise((resolve, reject) => {
+        let p = new promise((resolve, reject) => {
             
         });
 
-        promise.handlers.push(new handler(onSuccess, onFail));
-        return promise;
+        p.handlers.push(new handler(onSuccess, onFail));
+        handle(p);
+        return p;
     }
     resolve(value) {
-        this.state = this.states.REJECTED;
-        this.value = value;
+        try {
+            let then = getThen(value);
+            if(pz.isFunction(then)) {
+                return then(this.resolve, this.reject);
+            };
+
+            this.state = this.states.RESOLVED;
+            this.value = value;
+            handle(this);
+        } catch(e) {
+            this.reject(e);
+        };
     }
     reject(value) {
-        this.state = this.states.RESOLVED;
+        this.state = this.states.REJECTED;
         this.value = value;
+        handle(this);
     }
 }
 
