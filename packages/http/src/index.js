@@ -1,4 +1,5 @@
 ﻿import pz from '@plazarjs/core';
+import promise from './promise';
 
 const pzHttp = () => {
     let _requests = {}, _const = {

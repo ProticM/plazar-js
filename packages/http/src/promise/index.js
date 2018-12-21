@@ -20,14 +20,34 @@ class promise {
         }, 0);
     }
     then(onSuccess, onFail) {
-        
-        let p = new promise((resolve, reject) => {
-            
-        });
+        let me = this;
+        return new promise((resolve, reject) => {
+            me.handlers.push(new handler((value) => {
+                
+                if(pz.isEmpty(onSuccess)) {
+                    return resolve(value);
+                };
 
-        p.handlers.push(new handler(onSuccess, onFail));
-        handle(p);
-        return p;
+                try {
+                    return resolve(onSuccess(value));
+                } catch (e) {
+                    return reject(e);
+                };
+            }, (value) => {
+
+                if(pz.isEmpty(onFail)) {
+                    return resolve(value);
+                };
+
+                try {
+                    return resolve(onFail(value));
+                } catch (e) {
+                    return reject(e);
+                };
+            }));
+
+            return handle(me);
+        });
     }
     resolve(value) {
         try {
@@ -38,15 +58,15 @@ class promise {
 
             this.state = this.states.RESOLVED;
             this.value = value;
-            handle(this);
+            return handle(this);
         } catch(e) {
-            this.reject(e);
+            return this.reject(e);
         };
     }
     reject(value) {
         this.state = this.states.REJECTED;
         this.value = value;
-        handle(this);
+        return handle(this);
     }
 }
 

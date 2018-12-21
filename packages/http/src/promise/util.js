@@ -2,7 +2,7 @@ import pz from '@plazarjs/core';
 
 function resolve(fn, promise) {
     try {
-        fn.call(this, promise.resolve.bind(promise), promise.reject, promise.resolve.bind(promise));
+        fn(promise.resolve.bind(promise), promise.reject.bind(promise));
     } catch(e) {
         promise.reject(e);
     };
