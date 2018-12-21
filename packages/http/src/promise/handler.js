@@ -1,7 +1,7 @@
 class handler {
-    constructor(fn, type) {
-        this.callback = fn;
-        this.type = type;
+    constructor(onSuccess, onFail) {
+        this.onSuccess = onSuccess;
+        this.onFail = onFail;
     }
 };
 

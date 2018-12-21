@@ -1,23 +1,37 @@
 import handler from './handler';
-import { resolve } from './util';
+import { resolve, handle } from './util';
 
 class promise {
     constructor(fn) {
         this.states = {
-            pending: 0,
-            resolved: 1,
-            rejected: 2
+            PENDING: 0,
+            RESOLVED: 1,
+            REJECTED: 2
         };
-        this.state = this.states.pending;
+        this.state = this.states.PENDING;
         this.handlers = [];
         this.value = null;
         resolve(fn);
     }
     done() {
-
+        handle(this);
     }
-    then(success, fail) {
-        this.handlers.push(new handler(fn, 'success'));
+    then(onSuccess, onFail) {
+        
+        let promise = new promise((resolve, reject) => {
+            
+        });
+
+        promise.handlers.push(new handler(onSuccess, onFail));
+        return promise;
+    }
+    resolve(value) {
+        this.state = this.states.REJECTED;
+        this.value = value;
+    }
+    reject(value) {
+        this.state = this.states.RESOLVED;
+        this.value = value;
     }
 }
 
