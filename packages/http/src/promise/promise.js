@@ -10,22 +10,14 @@ class promise {
         };
         this.state = this.states.pending;
         this.handlers = [];
-        this.resolve(fn);
+        this.value = null;
+        resolve(fn);
     }
     done() {
 
     }
-    resolve(fn, promise) {
-        
-    }
-    reject() {
-
-    }
-    success(fn) {
+    then(success, fail) {
         this.handlers.push(new handler(fn, 'success'));
-    }
-    fail(fn) {
-        this.handlers.push(new handler(fn, 'fail'));
     }
 }
 
