@@ -328,10 +328,10 @@ const binder = {
                 this.el.removeAttribute(this.bindingAttr);
                 this.event = this.attrToBind;
                 this.capture = ['blur', 'focus', 'focusout', 'focusin'].indexOf(this.event) != -1;
-                this.el.addEventListener(this.attrToBind, this.handler, this.capture);
+                this.el.addEventListener(this.event, this.handler, this.capture);
             },
             unbind: function() {
-                this.el.removeEventListener(this.attrToBind, this.handler, this.capture);
+                this.el.removeEventListener(this.event, this.handler, this.capture);
             },
             handler: function() {
                 let value = this.getValue();
