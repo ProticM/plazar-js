@@ -7,7 +7,7 @@
     "rollup": "lerna exec --parallel -- rollup -c",
     "buildModules": "lerna run buildESModules",
     "uglifyAll": "lerna run uglify",
-    "build": "npm run test & npm run clean & npm run rollup & npm run buildModules & npm run uglifyAll",
+    "build": "npm run clean & npm run rollup & npm run buildModules & npm run uglifyAll",
     "prepublishOnly": "npm run build",
     "test": "jest"
   },

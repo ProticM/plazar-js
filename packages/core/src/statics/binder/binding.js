@@ -79,7 +79,8 @@ class binding {
     
         prop = this.vm[this.prop];
         isFn = pz.isFunction(prop);
-        return isFn ? this.vm[this.prop].call(this) : this.vm[this.prop];
+        return isFn && this.type != 'on' ? 
+            this.vm[this.prop].call(this) : this.vm[this.prop];
     };
     setValue(value) {
         return this.vm[this.prop] = value;
