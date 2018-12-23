@@ -18,7 +18,7 @@
     <tr>
       <td>CDN</td>
       <td>
-      <code><script src="https://cdn.jsdelivr.net/npm/@plazarjs/bootstrap-ui/dist/bootstrap-ui.min.js"></script></code>
+      <code><script src="https://cdn.jsdelivr.net/npm/@plazarjs/bootstrap-ui"></script></code>
       </td>
     </tr>
     <tr>
@@ -43,7 +43,7 @@
     <tr>
       <td>CDN</td>
       <td>
-      <code><script src="https://cdn.jsdelivr.net/npm/@plazarjs/http/dist/http.min.js"></script></code>
+      <code><script src="https://cdn.jsdelivr.net/npm/@plazarjs/http"></script></code>
       </td>
     </tr>
     <tr>

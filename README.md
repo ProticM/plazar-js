@@ -52,7 +52,7 @@ $ npm install @plazarjs/core
 ```
 Or, place the script tag on your page:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@plazarjs/core/dist/core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@plazarjs/core"></script>
 ```
 Check out the list of available dependant <a href="https://github.com/ProticM/plazar-js/blob/master/PACKAGES.md">packages</a>.
 

@@ -315,12 +315,31 @@ const binder = {
                     this.views.push(v);
                     template = null;
                 }, this);
+            },
+            unbind: function () {
+                pz.forEach(this.views, function (view) {
+                    view.unbind();
+                });
             }
         },
-        unbind: function () {
-            pz.forEach(this.views, function (view) {
-                view.unbind();
-            });
+        'on': {
+            priority: 1,
+            bind: function() {
+                this.el.removeAttribute(this.bindingAttr);
+                this.event = this.attrToBind;
+                this.capture = ['blur', 'focus', 'focusout', 'focusin'].indexOf(this.event) != -1;
+                this.el.addEventListener(this.event, this.handler, this.capture);
+            },
+            unbind: function() {
+                this.el.removeEventListener(this.event, this.handler, this.capture);
+            },
+            handler: function() {
+                let value = this.getValue();
+
+                if(!pz.isEmpty(value) && pz.isFunction(value)) { 
+                    value.call(this, this.el);
+                };
+            }
         }
     }
 };
