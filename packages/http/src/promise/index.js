@@ -1,12 +1,12 @@
 import handler from './handler';
-import { resolve, handle, states, setResult } from './util';
+import { doResolve, handle, states } from './util';
 
 class promise {
     constructor(fn) {
         this.state = states.PENDING;
         this.handlers = [];
         this.value = null;
-        resolve(fn, this);
+        doResolve(fn, this);
     }
     done() {
         let me = this;
@@ -43,12 +43,6 @@ class promise {
 
             return handle(me);
         });
-    }
-    resolve(value) {
-        return setResult(this, value, states.RESOLVED);
-    }
-    reject(value) {
-        return setResult(this, value, states.REJECTED);
     }
 }
 

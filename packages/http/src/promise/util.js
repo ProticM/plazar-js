@@ -6,9 +6,17 @@ const states = {
     REJECTED: 2
 };
 
-let resolve = (fn, promise) => {
+function resolve(value) {
+    return setResult(this, value, states.RESOLVED);
+};
+
+function reject(value) {
+    return setResult(this, value, states.REJECTED);
+};
+
+let doResolve = (fn, promise) => {
     try {
-        fn(promise.resolve.bind(promise), promise.reject.bind(promise));
+        fn(resolve.bind(promise), reject.bind(promise));
     } catch(e) {
         promise.reject(e);
     };
@@ -57,7 +65,7 @@ let setResult = (promise, value, state) => {
 };
 
 export {
-    resolve,
+    doResolve,
     handle,
     setResult,
     states
