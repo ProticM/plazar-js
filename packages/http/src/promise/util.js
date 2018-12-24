@@ -18,7 +18,7 @@ let doResolve = (fn, promise) => {
     try {
         fn(resolve.bind(promise), reject.bind(promise));
     } catch(e) {
-        promise.reject(e);
+        reject(e);
     };
 };
 
@@ -52,14 +52,14 @@ let setResult = (promise, value, state) => {
     
             let then = getThen(value);
             if(pz.isFunction(then)) {
-                return then(promise.resolve, promise.reject);
+                return then(resolve.bind(promise), reject.bind(promise));
             };
     
             promise.state = state;
             promise.value = value;
             return handle(promise);
         } catch(e) {
-            return promise.reject(e);
+            return reject(e);
         };
     }, 0);
 };
