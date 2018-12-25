@@ -21,7 +21,7 @@ class factory {
     static configureAndInvokeXHR(request, options) {
         let xhr = request.xhr, callback = options.success,
             eCallback = options.fail, aCallback = options.abort,
-            dataType = options.dataType || types.data.json;
+            dataType = options.dataType;
     
         xhr.onreadystatechange = function () {
     
