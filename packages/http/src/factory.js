@@ -56,8 +56,11 @@ class factory {
         xhr.open(options.method, options.url, true);
         request.setHeaders();
 
-        if (pz.isString(options.data)) {
-            options.data = pz.toJSON(options.data);
+        if (pz.isObject(options.data)) {
+            request.setHeaders({
+                'Content-Type': 'application/json;charset=UTF-8'
+            });
+            options.data = pz.toJSON(options.data, false, true);
         };
     
         xhr.send(options.data || null);

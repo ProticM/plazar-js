@@ -14,19 +14,20 @@ class request {
         this.xhr = null;
         this.aborted = true;
     }
-    setHeaders() {
-        
-        if(pz.isEmpty(this.options.headers)) {
+    setHeaders(headers) {
+        let h = pz.isEmpty(headers) ? this.options.headers : headers;
+
+        if(pz.isEmpty(h)) {
             return;
         };
 
-        if(!pz.isObject(this.options.headers)) {
+        if(!pz.isObject(h)) {
             throw new Error(headersNotAnObject);
         };
 
-        let headerKeys = Object.keys(this.options.headers);
+        let headerKeys = Object.keys(h);
         pz.forEach(headerKeys, (key) => {
-            this.xhr.setRequestHeader(key, this.options.headers[key]);
+            this.xhr.setRequestHeader(key, h[key]);
         }, this);
     }
 }
