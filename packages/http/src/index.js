@@ -1,27 +1,26 @@
 ﻿import pz from '@plazarjs/core';
-import { checkMinimalConfiguration, configureAndInvokeXHR, types } from './util';
+import { types, optionsRequred } from './constants';
+import factory from './factory';
 import request from './request';
 
 const pzHttp = () => {
 
     let _requests = {};
-    const _optionsRequred = 'Can not instantiate http request without options defined';
     
     return {
-        requests: {},
         latestRequestId: null,
         request: function (options) {
     
             if (pz.isEmpty(options)) {
-                throw new Error(_optionsRequred);
+                throw new Error(optionsRequred);
             };
     
-            checkMinimalConfiguration(options);
+            factory.checkMinimalConfiguration(options);
     
             let req = new request(options);
     
             this.latestRequestId = request.id;
-            configureAndInvokeXHR(request, options);
+            factory.configureAndInvokeXHR(request, options);
             _requests[req.id] = req;
             return req;
         },

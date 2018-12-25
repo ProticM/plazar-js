@@ -1,12 +1,12 @@
 import pz from '@plazarjs/core';
-import { createXHR } from './util';
+import factory from './factory';
 
 class request {
     constructor(options) {
         this.id = pz.guid();
         this.aborted = false;
         this.options = options;
-        this.xhr = createXHR();
+        this.xhr = factory.createXHR();
     }
     abort() {
         this.xhr.abort();

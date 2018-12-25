@@ -1,5 +1,5 @@
 import pz from '@plazarjs/core';
-import { types } from './util';
+import { types } from './constants';
 
 class response {
     constructor(request, dataType) {
