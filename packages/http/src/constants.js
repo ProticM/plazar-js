@@ -14,12 +14,14 @@ const minConfigNotProfided = 'Minimal configuration for ajax call was not provid
             html: 'html'
         }
     },
-    optionsRequred = 'Can not instantiate http request without options defined'
+    optionsRequred = 'Can not instantiate http request without options defined',
+    headersNotAnObject = 'Headers property must be an object containing key/value pairs.'
 
 export {
     minConfigNotProfided,
     requestStates,
     requestStatus,
     types,
-    optionsRequred
+    optionsRequred,
+    headersNotAnObject
 }

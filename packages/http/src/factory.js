@@ -2,7 +2,6 @@ import pz from '@plazarjs/core';
 import response from './response';
 import { minConfigNotProfided, requestStates, requestStatus } from './constants';
 
-
 class factory {
     static createXHR() {
         // TODO: Add support for active x object?
@@ -57,7 +56,8 @@ class factory {
         };
     
         xhr.open(options.method, options.url, true);
-    
+        request.setHeaders();
+
         if (pz.isString(options.data)) {
             options.data = pz.toJSON(options.data);
         };
