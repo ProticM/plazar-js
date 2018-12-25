@@ -1,85 +1,11 @@
 ﻿import pz from '@plazarjs/core';
+import { checkMinimalConfiguration, configureAndInvokeXHR, types } from './util';
+import request from './request';
 
 const pzHttp = () => {
-    let _requests = {}, _const = {
-        optionsRequred: 'Can not instantiate http request without options defined',
-        minConfigNotProfided: 'Minimal configuration for ajax call was not provided. Please check you setup for following options [url], [method]',
-        requestStates: {
-            done: 4
-        },
-        requestStatus: {
-            abort: 0
-        }
-    }, _types = {
-        post: 'POST',
-        get: 'GET',
-        put: 'PUT',
-        data: {
-            json: 'json',
-            html: 'html'
-        }
-    }, _createXHR = function () {
-        // TODO: Add support for active x object?
-        // ActiveXObject('MSXML2.XMLHTTP.3.0');
-        // ActiveXObject('MSXML2.XMLHTTP');
-        // ActiveXObject('Microsoft.XMLHTTP');
-        return new XMLHttpRequest();
-    }, _checkMinimalConfiguration = function (options) {
-        // add more if needed
-    
-        let isOK = !pz.isEmpty(options.url) &&
-            !pz.isEmpty(options.method);
-    
-        if (!isOK) {
-            throw new Error(_const.minConfigNotProfided);
-        };
-    }, _configureAndInvokeXHR = function (request, options) {
-        let xhr = request.xhr, callback = options.success,
-            eCallback = options.fail, aCallback = options.abort,
-            dataType = options.dataType || _types.data.json;
-    
-        xhr.onreadystatechange = function () {
-    
-            if (this.readyState == _const.requestStates.done
-                && this.status == _const.requestStatus.abort) {
-                return;
-            };
-    
-            if (this.readyState == _const.requestStates.done && !pz.isEmpty(callback)) {
-                let result = {
-                    request: this,
-                    data: (dataType == _types.data.json ? pz.toJSON(this.responseText) : this.responseText),
-                    dataType: dataType
-                };
-                callback.call(this, result);
-                delete _requests[request.id];
-            };
-        };
-    
-        xhr.onerror = function (e) {
-            delete _requests[request.id];
-    
-            if (eCallback) {
-                eCallback(e.target);
-            } else {
-                throw new Error(e.target.statusText);
-            };
-        };
-    
-        xhr.onabort = function (e) {
-            if (aCallback) {
-                aCallback(e);
-            };
-        };
-    
-        xhr.open(options.method, options.url, true);
-    
-        if (pz.isString(options.data)) {
-            options.data = pz.toJSON(options.data);
-        };
-    
-        xhr.send(options.data || null);
-    };
+
+    let _requests = {};
+    const _optionsRequred = 'Can not instantiate http request without options defined';
     
     return {
         requests: {},
@@ -87,32 +13,22 @@ const pzHttp = () => {
         request: function (options) {
     
             if (pz.isEmpty(options)) {
-                throw new Error(_const.optionsRequred);
+                throw new Error(_optionsRequred);
             };
     
-            _checkMinimalConfiguration(options);
+            checkMinimalConfiguration(options);
     
-            let request = {
-                id: pz.guid(),
-                aborted: false,
-                options: options,
-                xhr: _createXHR(),
-                abort: function myfunction() {
-                    this.xhr.abort();
-                    this.xhr = null;
-                    this.aborted = true;
-                }
-            };
+            let req = new request(options);
     
             this.latestRequestId = request.id;
-            _configureAndInvokeXHR(request, options);
-            _requests[request.id] = request;
-            return request;
+            configureAndInvokeXHR(request, options);
+            _requests[req.id] = req;
+            return req;
         },
         abort: function (all) {
             let abortAll = all || false, requestIds;
-            let requestToAbort = abortAll ? _requests :
-            _requests[this.latestRequestId];
+            let requestToAbort = abortAll ? _requests : 
+                _requests[this.latestRequestId];
     
             if (pz.isEmpty(requestToAbort)) {
                 return;
@@ -137,11 +53,19 @@ const pzHttp = () => {
             this.latestRequestId = null;
         },
         post: function (options) {
-            options.method = _types.post;
+            options.method = types.post;
             return this.request(options);
         },
         get: function (options) {
-            options.method = _types.get;
+            options.method = types.get;
+            return this.request(options);
+        },
+        put: function (options) {
+            options.method = types.put;
+            return this.request(options);
+        },
+        delete: function (options) {
+            options.method = types.delete;
             return this.request(options);
         }
     };
