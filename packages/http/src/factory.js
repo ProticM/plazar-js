@@ -1,6 +1,6 @@
 import pz from '@plazarjs/core';
 import response from './response';
-import { minConfigNotProfided, requestStates, requestStatus } from './constants';
+import { minConfigNotProfided, requestStates, requestStatus, types, requests } from './constants';
 
 class factory {
     static createXHR() {
@@ -11,8 +11,6 @@ class factory {
         return new XMLHttpRequest();
     }
     static checkMinimalConfiguration(options) {
-        // add more if needed
-
         let isOK = !pz.isEmpty(options.url) && 
             !pz.isEmpty(options.method);
 
@@ -35,12 +33,12 @@ class factory {
             if (this.readyState == requestStates.done && !pz.isEmpty(callback)) {
                 let result = new response(this, dataType);
                 callback.call(this, result);
-                delete _requests[request.id];
+                delete requests[request.id];
             };
         };
     
         xhr.onerror = function (e) {
-            delete _requests[request.id];
+            delete requests[request.id];
     
             if (eCallback) {
                 eCallback(e.target);

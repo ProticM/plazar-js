@@ -1,12 +1,10 @@
 ﻿import pz from '@plazarjs/core';
-import { types, optionsRequred } from './constants';
+import { types, optionsRequred, requests } from './constants';
 import factory from './factory';
 import request from './request';
 
 const pzHttp = () => {
 
-    let _requests = {};
-    
     return {
         latestRequestId: null,
         request: function (options) {
@@ -19,15 +17,15 @@ const pzHttp = () => {
     
             let req = new request(options);
     
-            this.latestRequestId = request.id;
-            factory.configureAndInvokeXHR(request, options);
-            _requests[req.id] = req;
+            this.latestRequestId = req.id;
+            factory.configureAndInvokeXHR(req, options);
+            requests[req.id] = req;
             return req;
         },
         abort: function (all) {
             let abortAll = all || false, requestIds;
-            let requestToAbort = abortAll ? _requests : 
-                _requests[this.latestRequestId];
+            let requestToAbort = abortAll ? requests : 
+            requests[this.latestRequestId];
     
             if (pz.isEmpty(requestToAbort)) {
                 return;
@@ -35,17 +33,17 @@ const pzHttp = () => {
     
             if (!abortAll) {
                 requestToAbort.abort();
-                delete _requests[this.latestRequestId];
+                delete requests[this.latestRequestId];
                 this.latestRequestId = null;
                 return;
             };
     
             requestIds = Object.keys(requestToAbort);
             pz.forEach(requestIds, function (id) {
-                let request = _requests[id];
-                request.abort();
-                delete _requests[id];
-                request = null;
+                let req = requests[id];
+                req.abort();
+                delete requests[id];
+                req = null;
             }, this);
     
             requestToAbort = null;
