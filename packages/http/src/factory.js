@@ -53,8 +53,15 @@ class factory {
             };
         };
     
+        xhr.ontimeout = function (e) {
+            if (aCallback) {
+                aCallback(e);
+            };
+        };
+
         xhr.open(options.method, options.url, true);
         request.setHeaders();
+        request.setXHROptions();
 
         if (pz.isObject(options.data)) {
             request.setHeaders({

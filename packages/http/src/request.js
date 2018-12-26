@@ -8,7 +8,6 @@ class request {
         this.aborted = false;
         this.options = options;
         this.xhr = factory.createXHR();
-        this.xhr.withCredentials = options.withCredentials || false;
     }
     abort() {
         this.xhr.abort();
@@ -30,6 +29,12 @@ class request {
         pz.forEach(headerKeys, (key) => {
             this.xhr.setRequestHeader(key, h[key]);
         }, this);
+    }
+    setXHROptions(options) {
+        let o = pz.isEmpty(options) ? this.options : options;
+
+        this.xhr.withCredentials = o.withCredentials || false;
+        this.xhr.timeout = o.timeout || 0;
     }
 }
 
