@@ -30,9 +30,9 @@ class factory {
                 return;
             };
     
-            if (this.readyState == requestStates.done && !pz.isEmpty(callback)) {
+            if (this.readyState == requestStates.done && pz.isFunction(callback)) {
                 let result = new response(this, dataType);
-                callback.call(this, result);
+                callback(result);
                 delete requests[request.id];
             };
         };
@@ -40,7 +40,7 @@ class factory {
         xhr.onerror = function (e) {
             delete requests[request.id];
     
-            if (eCallback) {
+            if (pz.isFunction(eCallback)) {
                 eCallback(e.target);
             } else {
                 throw new Error(e.target.statusText);
@@ -48,13 +48,13 @@ class factory {
         };
     
         xhr.onabort = function (e) {
-            if (aCallback) {
+            if (pz.isFunction(aCallback)) {
                 aCallback(e);
             };
         };
     
         xhr.ontimeout = function (e) {
-            if (aCallback) {
+            if (pz.isFunction(aCallback)) {
                 aCallback(e);
             };
         };
