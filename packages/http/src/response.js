@@ -1,12 +1,12 @@
 import pz from '@plazarjs/core';
-import { types } from './constants';
+import { types, requestStatus } from './constants';
 
 class response {
     constructor(request, dataType) {
         this.request = request;
-        this.data = (dataType == types.data.json ? pz.toJSON(request.responseText) : request.responseText);
-        this.rawData = request.responseText;
-        this.dataType = dataType;
+        let dt = request.status == requestStatus.ok && !pz.isEmpty(dataType) ? dataType.toLowerCase() : 'text';
+        this.data = (dt == types.data.json ? pz.toJSON(request.responseText) : request.responseText);
+        this.dataType = dt;
     }
 }
 

@@ -8,6 +8,7 @@ class request {
         this.aborted = false;
         this.options = options;
         this.xhr = factory.createXHR();
+        this.xhr.withCredentials = options.withCredentials || false;
     }
     abort() {
         this.xhr.abort();

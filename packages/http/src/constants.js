@@ -3,7 +3,8 @@ const minConfigNotProfided = 'Minimal configuration for ajax call was not provid
     requestStates = {
         done: 4
     }, requestStatus = {
-        abort: 0
+        abort: 0,
+        ok: 200
     }, types = {
         post: 'POST',
         get: 'GET',

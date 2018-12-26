@@ -7,6 +7,7 @@ const pzHttp = () => {
 
     return {
         latestRequestId: null,
+        defaultDataType: 'json',
         request: function (options) {
     
             if (pz.isEmpty(options)) {
@@ -14,7 +15,8 @@ const pzHttp = () => {
             };
     
             factory.checkMinimalConfiguration(options);
-    
+            
+            options.dataType = options.dataType || this.defaultDataType;
             let req = new request(options);
     
             this.latestRequestId = req.id;
