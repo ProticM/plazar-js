@@ -59,7 +59,10 @@ class factory {
             };
         };
 
-        xhr.open(options.method, options.url, true);
+        xhr.open(options.method, options.url, true, 
+            !pz.isEmpty(options.username) ? options.username : null, 
+            !pz.isEmpty(options.password) ? options.password : null);
+            
         request.setHeaders();
         request.setXHROptions();
 
