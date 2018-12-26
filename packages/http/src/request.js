@@ -1,6 +1,6 @@
 import pz from '@plazarjs/core';
 import factory from './factory';
-import { headersNotAnObject } from './constants';
+import { notAnObject } from './constants';
 
 class request {
     constructor(options) {
@@ -22,19 +22,34 @@ class request {
         };
 
         if(!pz.isObject(h)) {
-            throw new Error(headersNotAnObject);
+            throw new Error(pz.str.format(notAnObject, '[headers]'));
         };
 
         let headerKeys = Object.keys(h);
         pz.forEach(headerKeys, (key) => {
             this.xhr.setRequestHeader(key, h[key]);
-        }, this);
+        });
     }
     setXHROptions(options) {
         let o = pz.isEmpty(options) ? this.options : options;
 
         this.xhr.withCredentials = o.withCredentials || false;
         this.xhr.timeout = o.timeout || 0;
+    }
+    parseUrlParams(params) {
+        let p = pz.isEmpty(params) ? this.options.params : params;
+
+        if(pz.isEmpty(p)) {
+            return;
+        };
+
+        if(!pz.isObject(p)) {
+            throw new Error(pz.str.format(notAnObject, '[params]'));
+        };
+
+        this.options.url = this.options.url.replace(/\{(.*?)\}/g, (pattern, value) => {
+            return p[value];
+        })
     }
 }
 

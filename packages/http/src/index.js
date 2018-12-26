@@ -20,7 +20,7 @@ const pzHttp = () => {
             let req = new request(options);
     
             this.latestRequestId = req.id;
-            factory.configureAndInvokeXHR(req, options);
+            factory.configureAndInvokeXHR(req);
             requests[req.id] = req;
             return req;
         },

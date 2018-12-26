@@ -18,8 +18,8 @@ class factory {
             throw new Error(minConfigNotProfided);
         };
     }
-    static configureAndInvokeXHR(request, options) {
-        let xhr = request.xhr, callback = options.success,
+    static configureAndInvokeXHR(request) {
+        let options = request.options, xhr = request.xhr, callback = options.success,
             eCallback = options.fail, aCallback = options.abort,
             dataType = options.dataType;
     
@@ -58,6 +58,8 @@ class factory {
                 aCallback(e);
             };
         };
+
+        request.parseUrlParams();
 
         xhr.open(options.method, options.url, true, 
             !pz.isEmpty(options.username) ? options.username : null, 
