@@ -1,6 +1,6 @@
 import pz from '@plazarjs/core';
 import response from './response';
-import { minConfigNotProfided, requestStates, requestStatus, types, requests } from './constants';
+import { minConfigNotProfided, requestStates, requestStatus, requests } from './constants';
 
 class factory {
     static createXHR() {
