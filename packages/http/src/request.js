@@ -48,7 +48,7 @@ class request {
         };
 
         this.options.url = this.options.url.replace(/\{(.*?)\}/g, (pattern, value) => {
-            return p[value];
+            return encodeURIComponent(p[value]);
         });
     }
 }
