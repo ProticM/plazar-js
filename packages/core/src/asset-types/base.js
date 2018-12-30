@@ -96,38 +96,7 @@ class base {
             });
     
             pz_type.extend = _parentClass.extend;
-            pz_type.create = (function(t) {
-                return function create(config) {
-                    let params, instance;
-    
-                    if(!pz.isEmpty(config)) {
-                        params = pz.assignTo({}, config, false);
-                        delete params.type;
-                        delete config.type;
-                        instance = new t(params);
-                        pz.assignTo(instance, config, false);
-                    } else {
-                        instance = new t();
-                    };
-    
-                    instance.id = pz.guid();
-                    instance.autoLoad = !pz.isEmpty(t.autoLoad) ? t.autoLoad : instance.autoLoad;
-                    delete t.autoLoad;
-                    instance.setRequiredInstances();
-    
-                    if (pz.isComponent(instance) || pz.isClass(instance)) {
-                        instance.applyMixins();
-    
-                        if (instance.autoLoad) {
-                            instance.load();
-                        };
-                    };
-                    
-                    pz.application.instances.push(instance);
-    
-                    return instance;
-                }
-            })(pz_type);
+            pz_type.create = _parentClass.create;
             pz_type.$isPz = true;
             pz_type.$type = _properties.type;
             return pz_type;
@@ -139,6 +108,36 @@ class base {
     
         return returnVal;
     };
+    static create(config) {
+        let params, instance;
+    
+        if(!pz.isEmpty(config)) {
+            params = pz.assignTo({}, config, false);
+            delete params.type;
+            delete config.type;
+            instance = new this(params);
+            pz.assignTo(instance, config, false);
+        } else {
+            instance = new this();
+        };
+
+        instance.id = pz.guid();
+        instance.autoLoad = !pz.isEmpty(this.autoLoad) ? this.autoLoad : instance.autoLoad;
+        delete this.autoLoad;
+        instance.setRequiredInstances();
+
+        if (pz.isComponent(instance) || pz.isClass(instance)) {
+            instance.applyMixins();
+
+            if (instance.autoLoad) {
+                instance.load();
+            };
+        };
+        
+        pz.application.instances.push(instance);
+
+        return instance;
+    }
 };
 
 export default base;
