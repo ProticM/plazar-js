@@ -102,7 +102,7 @@ import helloWorld from 'my-path/helloWorld';
 helloWorld.create();
 ```
 
-The equivalent of the code above written with the extend API, which is recommended when in modular environments, looks like this:
+The equivalent of the code above written with the extend API looks like this:
 
 ```javascript
 // define the component
