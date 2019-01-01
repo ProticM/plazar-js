@@ -124,7 +124,28 @@ export default pz.component.extend(helloWorld);
 import helloWorld from 'my-path/helloWorld';
 helloWorld.create();
 ```
+Or, if you prefer a class syntax
+```javascript
+// define the component
+import pz from '@plazarjs/core';
 
+export default class helloWorld extends pz.component {
+  constructor() {
+    super();
+    this.type = 'hello-world';
+    this.template = '<div>Hello from {fw}</div>';
+    this.renderTo = 'body';
+    this.autoLoad = true;
+    this.viewModel = {
+      fw: 'plazarjs'
+    };
+  }
+}
+
+// create the component where required
+import helloWorld from 'my-path/helloWorld';
+helloWorld.create();
+```
 Detailed documentation can be found <a href="http://www.plazarjs.com">here</a>.
 
 Live demo can be found <a href="http://www.plazarjs.com/livedemo">here</a>.
