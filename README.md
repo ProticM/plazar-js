@@ -124,7 +124,7 @@ export default pz.component.extend(helloWorld);
 import helloWorld from 'my-path/helloWorld';
 helloWorld.create();
 ```
-Or, if you prefer a class syntax
+Or, if you prefer a class syntax:
 ```javascript
 // define the component
 import pz from '@plazarjs/core';
