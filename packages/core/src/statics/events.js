@@ -8,7 +8,7 @@ const events = () => {
 
 			if (!_hasOwn.call(_subscriptions, name)) {
 				_subscriptions[name] = [];
-			};
+			}
 
 			index = _subscriptions[name].push(listener) - 1;
 
@@ -22,7 +22,7 @@ const events = () => {
 
 			if (!_hasOwn.call(_subscriptions, name)) {
 				return;
-			};
+			}
 
 			_subscriptions[name].forEach((subscription) => {
 				subscription((args != undefined ? args : null));

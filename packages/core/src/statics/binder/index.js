@@ -11,7 +11,7 @@ const binder = {
 		if (viewModel.$view) {
 			viewModel.$view.bind();
 			return;
-		};
+		}
 
 		observe(viewModel);
 		let v = new view(els, viewModel);
@@ -22,48 +22,48 @@ const binder = {
 	unbind: function (viewModel) {
 		if (viewModel.$view) {
 			viewModel.$view.unbind();
-		};
+		}
 	},
 	toJSON: function (viewModel) {
 		let getProperties = function (value) {
-			return Object.keys(value).filter(function (key) {
-				return key != reservedKeys.observed && key != reservedKeys.view;
-			})
-		}, toJSON = function (value, res) {
+				return Object.keys(value).filter(function (key) {
+					return key != reservedKeys.observed && key != reservedKeys.view;
+				});
+			}, toJSON = function (value, res) {
 
-			let properties = getProperties(value);
+				let properties = getProperties(value);
 
-			pz.forEach(properties, function (prop) {
+				pz.forEach(properties, function (prop) {
 
-				let isObject = pz.isObject(value[prop]),
-					isFunction = pz.isFunction(value[prop]),
-					isObsArray = pz.isInstanceOf(value[prop], observableArray);
+					let isObject = pz.isObject(value[prop]),
+						isFunction = pz.isFunction(value[prop]),
+						isObsArray = pz.isInstanceOf(value[prop], observableArray);
 
-				if (isObject) {
-					res[prop] = toJSON(value[prop], {});
-				};
+					if (isObject) {
+						res[prop] = toJSON(value[prop], {});
+					}
 
-				if (isObsArray) {
-					res[prop] = [];
-					let dataKeys = Object.keys(value[prop]).filter(function (key) {
-						return !isNaN(parseInt(key));
-					});
+					if (isObsArray) {
+						res[prop] = [];
+						let dataKeys = Object.keys(value[prop]).filter(function (key) {
+							return !isNaN(parseInt(key));
+						});
 
-					pz.forEach(dataKeys, function (key) {
-						let item = value[prop][key];
-						let val = (pz.isObject(item) ? toJSON(item, {}) :
-							(pz.isFunction(item) ? item() : item));
-						res[prop].push(val);
-					});
-				};
+						pz.forEach(dataKeys, function (key) {
+							let item = value[prop][key];
+							let val = (pz.isObject(item) ? toJSON(item, {}) :
+								(pz.isFunction(item) ? item() : item));
+							res[prop].push(val);
+						});
+					}
 
-				if (isFunction && !pz.isEmpty(value[prop].subscribe)) {
-					res[prop] = value[prop]();
-				};
-			});
+					if (isFunction && !pz.isEmpty(value[prop].subscribe)) {
+						res[prop] = value[prop]();
+					}
+				});
 
-			return res;
-		};
+				return res;
+			};
 
 		return toJSON(viewModel, {});
 	},
@@ -80,7 +80,7 @@ const binder = {
 
 				if (!isInput && !isOption && !isSelect && !isTextArea) {
 					throw new Error('Value binding is supported only on INPUT, OPTION or SELECT element');
-				};
+				}
 
 				globalScope = pz.getGlobal();
 				event = isInput || isTextArea ? (('oninput' in globalScope) ? 'input' : 'keyup') : 'change';
@@ -90,7 +90,7 @@ const binder = {
 					this.el.removeEventListener(event, this.handler, false);
 					this.el.addEventListener(event, this.handler, false);
 					this.event = event;
-				};
+				}
 
 				this.el.removeAttribute(this.bindingAttr);
 			},
@@ -105,7 +105,7 @@ const binder = {
 					this.el.value = this.getValue();
 				} else {
 					this.el.setAttribute('value', this.getValue());
-				};
+				}
 			},
 			handler: function () {
 				this.setValue(this.el.value);
@@ -124,11 +124,11 @@ const binder = {
 					this.el.removeAttribute(this.bindingAttr);
 					this.el.parentNode.insertBefore(this.mark, this.el);
 					this.el.parentNode.removeChild(this.el);
-				};
+				}
 
 				if (!this.views) {
 					this.views = [];
-				};
+				}
 			},
 			react: function () {
 
@@ -177,7 +177,7 @@ const binder = {
 
 				if (!value && !pz.isEmpty(this.el.parentNode)) {
 					this.el.parentNode.removeChild(this.el);
-				};
+				}
 			}
 		},
 		'ifnot': {
@@ -197,7 +197,7 @@ const binder = {
 
 				if (this.initialValue == undefined) {
 					this.initialValue = this.el.style.display;
-				};
+				}
 
 				this.el.style.display = (value == true ?
 					(this.initialValue == 'none' ? '' : this.initialValue) : 'none');
@@ -231,7 +231,7 @@ const binder = {
 
 				if (isClassAttr && this.el.hasAttribute(this.attrToBind)) {
 					value = (this.el.getAttribute(this.attrToBind) + ' ' + value).trim();
-				};
+				}
 
 				this.el.setAttribute(this.attrToBind, value.toString());
 			}
@@ -251,7 +251,7 @@ const binder = {
 					this.el.checked = value == this.el.value;
 				} else {
 					this.el.checked = value;
-				};
+				}
 			},
 			handler: function () {
 				let isRadio = this.el.type == 'radio';
@@ -283,7 +283,7 @@ const binder = {
 
 				if (!this.views) {
 					this.views = [];
-				};
+				}
 
 				this.binder.tempAttrs.val = this.binder.tempAttrs.val || this.el.getAttribute('data-optionsvalue');
 				this.binder.tempAttrs.text = this.binder.tempAttrs.text || this.el.getAttribute('data-optionstext');
@@ -338,7 +338,7 @@ const binder = {
 
 				if (!pz.isEmpty(value) && pz.isFunction(value)) {
 					value.call(this, this.el);
-				};
+				}
 			}
 		}
 	}

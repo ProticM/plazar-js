@@ -5,11 +5,11 @@ const dom = () => {
 	let _tagNameReg = /<([^\s>]+)(\s|>)+/;
 
 	let _wrapMap = {
-		option: [1, "<select multiple='multiple'>", "</select>"],
-		thead: [1, "<table>", "</table>"],
-		col: [2, "<table><colgroup>", "</colgroup></table>"],
-		tr: [2, "<table><tbody>", "</tbody></table>"],
-		td: [3, "<table><tbody><tr>", "</tr></tbody></table>"]
+		option: [1, '<select multiple=\'multiple\'>', '</select>'],
+		thead: [1, '<table>', '</table>'],
+		col: [2, '<table><colgroup>', '</colgroup></table>'],
+		tr: [2, '<table><tbody>', '</tbody></table>'],
+		td: [3, '<table><tbody><tr>', '</tr></tbody></table>']
 	};
 	_wrapMap.optgroup = _wrapMap.option;
 	_wrapMap.tbody = _wrapMap.tfoot = _wrapMap.colgroup = _wrapMap.caption = _wrapMap.thead;
@@ -19,7 +19,7 @@ const dom = () => {
 
 		if (pz.isEmpty(element) || pz.isEmpty(newNode)) {
 			return;
-		};
+		}
 
 		element.insertAdjacentHTML(where, (pz.isString(newNode) ?
 			newNode : newNode.outerHTML));
@@ -36,10 +36,10 @@ const dom = () => {
 		listeners: [],
 		remove: function (element, event) {
 			let i, j, listenerIndexes = this.listeners.reduce(function (acc, lst, idx) {
-				let isOk = (lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true));
-				if (isOk) { acc.push(idx); };
-				return acc;
-			}, []), dataIndexes, listenerIdx, listener;
+					let isOk = (lst.el == element && (!pz.isEmpty(event) ? (lst.event == event) : true));
+					if (isOk) { acc.push(idx); }
+					return acc;
+				}, []), dataIndexes, listenerIdx, listener;
 
 			i = listenerIndexes.length - 1;
 			for (; i >= 0; i--) {
@@ -49,15 +49,15 @@ const dom = () => {
 				this.listeners.splice(listenerIdx, 1);
 
 				dataIndexes = this.data.reduce(function (acc, dataItem, idx) {
-					if (dataItem.id == listener.id) { acc.push(idx) };
+					if (dataItem.id == listener.id) { acc.push(idx); }
 					return acc;
 				}, []);
 				j = dataIndexes.length - 1;
 				for (; j >= 0; j--) {
 					let idx = dataIndexes[j];
 					this.data.splice(idx, 1);
-				};
-			};
+				}
+			}
 			listener = null;
 		},
 		fn: function (e) {
@@ -72,7 +72,7 @@ const dom = () => {
 			while (!pz.isEmpty(dataItem = data[i])
 				&& !(match = pz.dom.elementMatches(e.target, dataItem.selector))) {
 				i++;
-			};
+			}
 
 			selector = (match ? dataItem.selector : undefined);
 			fn = (match ? dataItem.fn : undefined);
@@ -81,25 +81,25 @@ const dom = () => {
 
 			if (targetMatches) {
 				target = e.target;
-			};
+			}
 
 			if (!targetMatches) {
 				let parent = pz.dom.findParent(e.target, selector);
 				parentEmpty = pz.isEmpty(parent);
 				if (!parentEmpty) {
 					target = parent;
-				};
-			};
+				}
+			}
 
 			triggerEvent = targetMatches || !parentEmpty;
 
 			if (triggerEvent && pz.isEmpty(target)) {
 				target = this;
-			};
+			}
 
 			if (triggerEvent) {
 				fn.call(this, target, e);
-			};
+			}
 		}
 	};
 
@@ -111,7 +111,7 @@ const dom = () => {
 		replaceWith: function (node, newNode) {
 			if (pz.isEmpty(node) || pz.isEmpty(newNode)) {
 				return;
-			};
+			}
 
 			node.parentNode.replaceChild(newNode, node);
 			node = null;
@@ -120,11 +120,11 @@ const dom = () => {
 		append: function (parent, element) {
 			if (pz.isEmpty(parent) || pz.isEmpty(element)) {
 				return;
-			};
+			}
 
 			if (pz.isString(element)) {
 				element = this.parseTemplate(element);
-			};
+			}
 
 			parent.appendChild(element);
 		},
@@ -145,7 +145,7 @@ const dom = () => {
 
 			if (pz.isEmpty(selector)) {
 				return null;
-			};
+			}
 
 			return this.getEl(selector, { rootEl: rootEl, all: (all || false) });
 		},
@@ -154,7 +154,7 @@ const dom = () => {
 			let fn = Element.prototype.matches || Element.prototype.msMatchesSelector || function (s) {
 				let matches = (this.document || this.ownerDocument).querySelectorAll(s),
 					i = matches.length;
-				while (--i >= 0 && matches.item(i) !== this) { };
+				while (--i >= 0 && matches.item(i) !== this) { }
 				return i > -1;
 			};
 			return fn.call(element, selector);
@@ -168,9 +168,9 @@ const dom = () => {
 					break;
 				} else if (stopSelector && this.elementMatches(el, stopSelector)) {
 					break;
-				};
+				}
 				el = el.parentElement;
-			};
+			}
 			return retval;
 		},
 
@@ -179,7 +179,7 @@ const dom = () => {
 
 			if (pz.isEmpty(fn)) {
 				return;
-			};
+			}
 
 			rootEl = !pz.isEmpty(element) ? element : document;
 			lst = _getListener(rootEl, event);
@@ -195,7 +195,7 @@ const dom = () => {
 
 			if (!pz.isEmpty(lst)) {
 				return;
-			};
+			}
 
 			capture = ['blur', 'focus', 'focusout', 'focusin'].indexOf(event) != -1;
 			rootEl.addEventListener(event, _delegate.fn, capture);
@@ -229,13 +229,13 @@ const dom = () => {
 
 			if (!pz.isString(template)) {
 				return null;
-			};
+			}
 
 			trimmed = template.trim();
 			regResult = _tagNameReg.exec(trimmed);
 			if (pz.isEmpty(regResult)) {
 				return null;
-			};
+			}
 
 			fragment = document.createDocumentFragment();
 			tagName = regResult[1];
@@ -248,7 +248,7 @@ const dom = () => {
 			i = wrapperEmpty ? 0 : wrapper[0];
 			while (i--) {
 				temp = temp.lastChild;
-			};
+			}
 
 			result = temp.childNodes.length == 1 ?
 				temp.lastChild : temp.childNodes;
@@ -264,7 +264,7 @@ const dom = () => {
 				el = document.createElement(tagName);
 			} catch (e) {
 				throw e;
-			};
+			}
 			return el;
 		},
 
@@ -273,12 +273,12 @@ const dom = () => {
 
 			if (pz.isEmpty(element)) {
 				return;
-			};
+			}
 
 			parent = element.parentNode;
 			if (!pz.isEmpty(parent)) {
 				parent.removeChild(element);
-			};
+			}
 			element = null;
 		},
 
@@ -286,18 +286,18 @@ const dom = () => {
 			let referenceNode;
 			if (pz.isEmpty(parent) || pz.isEmpty(index)) {
 				return;
-			};
+			}
 
 			if (pz.isEmpty(parent.childNodes)) {
 				this.prepend(parent, newNode);
 				return;
-			};
+			}
 
 			referenceNode = parent.childNodes[index];
 
 			if (pz.isEmpty(referenceNode)) {
 				throw new Error('Node at index: ' + index + ' was not found.');
-			};
+			}
 
 			parent.insertBefore(newNode, referenceNode);
 		},
@@ -312,7 +312,7 @@ const dom = () => {
 				i++;
 			return i;
 		}
-	}
+	};
 
 };
 

@@ -6,7 +6,7 @@ let observe = function (value) {
 
 	if (!pz.isObject(value) || value.$observed) {
 		return false;
-	};
+	}
 
 	let properties = Object.keys(value);
 
@@ -18,7 +18,7 @@ let observe = function (value) {
 		if (!obsArray && !pz.isInstanceOf(value, observable) && !observe(propValue) &&
 			!pz.isFunction(propValue)) {
 			observable.create(value, prop);
-		};
+		}
 	});
 
 	value.$observed = true;
@@ -32,7 +32,7 @@ let observeArray = function (obj, collection, prop) {
 
 	if (!isArray) {
 		return obsArray;
-	};
+	}
 
 	obsArray = new observableArray(obj, collection, prop);
 	pz.forEach(obsArray, function (item) {
@@ -55,7 +55,7 @@ class observableArray {
 
 		for (let i = 0; i < collection.length; i++) {
 			this.push(collection[i]);
-		};
+		}
 
 		let length = this.length;
 		let me = this;
@@ -70,12 +70,12 @@ class observableArray {
 				if (newValue > length) { // push or unshift
 					newItem = this.$action == 'push' ? this[length] : this[0];
 					observe(newItem);
-				};
+				}
 
 				if (newValue != length) {
 					length = newValue;
 					this.hasData = length > 0;
-				};
+				}
 			},
 			get: function () {
 				return length;
@@ -106,14 +106,14 @@ class observableArray {
 					delete me.$pauseNotify;
 
 					if (newLength == 0) { me.removeAll(); } // trigger UI update
-				};
+				}
 			}
 		});
 
 		observable.create(this, 'hasData');
 		return this;
-	};
-};
+	}
+}
 
 observableArray.prototype = [];
 
@@ -132,7 +132,7 @@ pz.forEach(observableMethods, function (methodName) {
 		if (subscription && !this.$pauseNotify) {
 			let args = arrPrototype.slice.call(arguments);
 			subscription.callback.apply(this, args);
-		};
+		}
 
 		delete this.$action;
 		return returnValue;
@@ -180,7 +180,7 @@ observableArray.prototype.getAt = function (index) {
 
 	if (pz.isEmpty(index)) {
 		return null;
-	};
+	}
 
 	return this[index];
 };

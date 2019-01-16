@@ -18,13 +18,13 @@ const objectUtil = {
 
 		if (valuesSupported) {
 			return Object.values(obj);
-		};
+		}
 
 		for (prop in obj) {
 			if (obj.hasOwnProperty(prop)) {
 				vals.push(obj[prop]);
-			};
-		};
+			}
+		}
 
 		return vals;
 	}

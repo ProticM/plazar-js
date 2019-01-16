@@ -11,8 +11,8 @@ const textParser = {
 					pz.binder.delimiters[0],
 					pz.binder.delimiters[1],
 					pz.binder.delimiters[1]),
-					'g');
-		};
+				'g');
+		}
 	},
 	parse: function (el) {
 
@@ -21,14 +21,14 @@ const textParser = {
 
 		if (el.nodeType != 3 || el.textContent.length == 0) {
 			return;
-		};
+		}
 
 		hasInterpolations = (el.textContent.indexOf(pz.binder.delimiters[0]) != -1 &&
 			el.textContent.indexOf(pz.binder.delimiters[1]) != -1);
 
 		if (!hasInterpolations) {
 			return;
-		};
+		}
 
 		textParser.setRegex();
 		keypaths = [];
@@ -50,13 +50,13 @@ const textParser = {
 						if (pz.isEmpty(vmValue)) {
 							ctx = buildContext(value, me);
 							vmValue = !pz.isEmpty(ctx) ? ctx[val] : undefined;
-						};
+						}
 						val = null;
-					};
+					}
 
 					if (!parsed) {
 						keypaths.push(value);
-					};
+					}
 
 					let result = (!pz.isEmpty(vmValue) ?
 						(pz.isFunction(vmValue) ? vmValue() : vmValue) : template);
@@ -68,7 +68,7 @@ const textParser = {
 
 		if (!this.elsData) {
 			this.elsData = [];
-		};
+		}
 
 		elData = {
 			el: el,
@@ -85,7 +85,7 @@ const textParser = {
 
 				if (pz.isEmpty(ctx) || pz.isEmpty(ctx[prop])) {
 					return;
-				};
+				}
 
 				observer = ctx[prop];
 
@@ -95,7 +95,7 @@ const textParser = {
 							updateContent(data, true);
 						});
 					});
-				};
+				}
 				ctx = null;
 			});
 		})(this, this.elsData);

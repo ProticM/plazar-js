@@ -10,14 +10,14 @@ class view {
 
 		if (!inBrackets) {
 			return name.split('-');
-		};
+		}
 
 		attrToBind = name.substring((startIdx + 1), endIdx);
 		name = name.replace('-[' + attrToBind + ']', '');
 		parts = name.split('-');
 		parts.push(attrToBind);
 		return parts;
-	};
+	}
 	constructor(el, vm, ctx, index, alias, parent) {
 		let parentEmpty = pz.isEmpty(parent);
 
@@ -32,26 +32,26 @@ class view {
 		if (!pz.isEmpty(alias)) {
 			if (!parentEmpty && parent.alias.hasOwnProperty(alias.name)) {
 				throw new Error('Alias name must be unique.');
-			};
+			}
 			this.alias[alias.name] = pz.str.format(alias.path, this.index);
-		};
+		}
 
 		pz.assignTo(this.alias, (!parentEmpty ? parent.alias : {}), false);
 		this.buildBindings();
 
 		vm = null;
 		return this;
-	};
+	}
 	bind() {
 		pz.forEach(this.bindings, function (binding) {
 			binding.bind();
 		});
-	};
+	}
 	unbind() {
 		pz.forEach(this.bindings, function (binding) {
 			binding.unbind();
 		});
-	};
+	}
 	buildBindings() {
 		this.bindings = [];
 
@@ -68,13 +68,13 @@ class view {
 
 							if (!pz.isEmpty(pz.binder.binders[bType])) {
 								let b = new binding(el, bType.toLowerCase(), attr.value, attr.name, me);
-								if (attrToBind) { b.attrToBind = attrToBind; };
+								if (attrToBind) { b.attrToBind = attrToBind; }
 
 								me.bindings.push(b);
 								isBlock = isBlock || b.binder.block;
 								b = null;
-							};
-						};
+							}
+						}
 					});
 
 					if (!isBlock) {
@@ -82,7 +82,7 @@ class view {
 							build([childNode]);
 							textParser.parse.call(me, childNode);
 						});
-					};
+					}
 				});
 			};
 		})(this);
@@ -91,7 +91,7 @@ class view {
 		this.bindings.sort(function (a, b) {
 			return a.binder.priority - b.binder.priority;
 		});
-	};
-};
+	}
+}
 
 export default view;

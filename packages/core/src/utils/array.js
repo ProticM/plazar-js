@@ -4,7 +4,7 @@ const arr = {
 	clear: (array) => {
 		if (pz.isEmpty(array)) {
 			return;
-		};
+		}
 
 		return array.splice(0, array.length);
 	},
@@ -48,7 +48,7 @@ const arr = {
 	removeAt: (array, index) => {
 		if (pz.isEmpty(array) || pz.isEmpty(index)) {
 			return;
-		};
+		}
 
 		array.splice(index, 1);
 	}

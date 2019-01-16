@@ -25,28 +25,28 @@ function _find(array, fn, scope) {
 	for (; i < len; i++) {
 		if (fn.call(scope || array, array[i], i)) {
 			return array[i];
-		};
-	};
+		}
+	}
 	return null;
-};
+}
 
 function _invokeIfExists(functionName, namespace) {
 	if (pz.isEmpty(namespace)) {
 		return;
-	};
+	}
 
 	if (pz.isFunction(namespace[functionName])) {
 		let fn = namespace[functionName];
 		return fn.call(namespace);
-	};
-};
+	}
+}
 
 function _get(me, typeOrIdOrAlias, instance, all) {
 	let i = pz.isEmpty(instance) ? false : instance,
 		sourceArray,
 		fnCallback = function (item) {
 			return i && (item.id == typeOrIdOrAlias || item.type == typeOrIdOrAlias) ||
-				item.type == typeOrIdOrAlias || (!pz.isEmpty(item.alias) && item.alias == typeOrIdOrAlias)
+				item.type == typeOrIdOrAlias || (!pz.isEmpty(item.alias) && item.alias == typeOrIdOrAlias);
 		}, result;
 
 	sourceArray = (i ? me.application.instances : me.definitions);
@@ -54,7 +54,7 @@ function _get(me, typeOrIdOrAlias, instance, all) {
 	fnCallback = null;
 	sourceArray = null;
 	return result;
-};
+}
 
 function _getObjectByNamespaceString(namespace) {
 	let parts = namespace.split('.');
@@ -62,16 +62,16 @@ function _getObjectByNamespaceString(namespace) {
 
 	if (parts.length == 1) {
 		return globalScope[namespace];
-	};
+	}
 
 	return parts.reduce(function (previous, current) {
 		if (pz.isString(previous)) {
 			return globalScope[previous][current];
-		};
+		}
 
 		return previous[current];
 	});
-};
+}
 
 const pz = {
 	definitions: [],
@@ -85,7 +85,7 @@ const pz = {
 
 		if (pz.isEmpty(type) || pz.isEmpty(object)) {
 			throw new Error(_const.canNotDefine);
-		};
+		}
 
 		obj = pz.toObject(object);
 		obj.ownerType = pz.isEmpty(obj.ownerType) ? 'base' : obj.ownerType;
@@ -97,7 +97,7 @@ const pz = {
 
 		if (!pz.isModularEnv()) {
 			this.storeDefinition(type, cls);
-		};
+		}
 
 		return cls;
 	},
@@ -106,7 +106,7 @@ const pz = {
 
 		if (pz.isEmpty(config)) {
 			throw new Error(_const.canNotCreate);
-		};
+		}
 
 		isObject = pz.isObject(config);
 		type = isObject ? config.type : config;
@@ -119,7 +119,7 @@ const pz = {
 
 			if (pz.isEmpty(target)) {
 				throw new TypeError(_const.canNotConvertNullOrEmptyObj);
-			};
+			}
 
 			let to = Object(target);
 
@@ -134,10 +134,10 @@ const pz = {
 							to[nextKey] = pz.deepClone(nextSource[nextKey]);
 						} else if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
 							to[nextKey] = nextSource[nextKey];
-						};
-					};
-				};
-			};
+						}
+					}
+				}
+			}
 			return to;
 		};
 
@@ -152,7 +152,7 @@ const pz = {
 		return pz.isFunction(obj) ? (i ? new obj() : obj()) : obj;
 	},
 	toFunction: (obj) => {
-		let fn = function () { this.constructor = obj.constructor };
+		let fn = function () { this.constructor = obj.constructor; };
 		fn.prototype = obj;
 		return pz.isFunction(obj) ? obj : fn;
 	},
@@ -204,8 +204,8 @@ const pz = {
 			let result = fn.call(scope || subject[i], subject[i], i, subject);
 			if (result == false) {
 				return result;
-			};
-		};
+			}
+		}
 		fn = null;
 	},
 	proxy: function (fn, context) {
@@ -213,7 +213,7 @@ const pz = {
 
 		if (!pz.isFunction(fn)) {
 			return;
-		};
+		}
 
 		args = Array.prototype.slice.call(arguments, 2);
 		return function () {
@@ -235,8 +235,8 @@ const pz = {
 		} catch (e) {
 			if (!safe) {
 				throw new Error(e);
-			};
-		};
+			}
+		}
 		return json;
 	},
 	getGlobal: () => {
@@ -251,7 +251,7 @@ const pz = {
 		for (i in value) {
 			result[i] = (pz.isObject(value[i]) ?
 				pz.deepClone(value[i]) : value[i]);
-		};
+		}
 
 		return result;
 	},
@@ -272,7 +272,7 @@ const pz = {
 			current = names[i];
 			parent[current] = parent[current] || {};
 			parent = parent[current];
-		};
+		}
 	},
 	defineStatic: function (type, object, namespace) {
 
@@ -283,18 +283,18 @@ const pz = {
 
 		if (pz.isEmpty(globalScope[ns]) && !isDefault) {
 			this.ns(ns);
-		};
+		}
 
 		let o = (isDefault ? this : _getObjectByNamespaceString(ns));
 		if (pz.isEmpty(type)) {
 			pz.assignTo(o, obj, false);
 		} else {
 			o[type] = obj;
-		};
+		}
 	},
 	defineApplication: function (config) {
 		let rootComponents = !pz.isEmpty(config.components) && pz.isArray(config.components) ?
-			config.components : [], globalScope = pz.getGlobal();
+				config.components : [], globalScope = pz.getGlobal();
 		delete config.components;
 		delete config.instances;
 		_invokeIfExists('preInit', config);
@@ -306,13 +306,13 @@ const pz = {
 			pz.assignTo(globalScope[config.namespace], config, false);
 		} else {
 			pz.assignTo(globalScope[config.namespace], config, false);
-		};
+		}
 
 		pz.forEach(rootComponents, function (item) {
 			let def = (pz.isPzDefinition(item) ? item : pz.getDefinitionOf(item));
 			if (pz.isFunction(def.create)) {
 				def.create();
-			};
+			}
 		});
 
 		_invokeIfExists('init', config);
@@ -330,7 +330,7 @@ const pz = {
 		if (pz.isEmpty(item)) {
 			let msg = _const.typeNotFound.replace('{0}', type);
 			throw new Error(msg);
-		};
+		}
 
 		return item.definition;
 	},
@@ -341,11 +341,11 @@ const pz = {
 
 		if (pz.isEmpty(value)) {
 			throw new Error(_const.pluginInvalid);
-		};
+		}
 
 		if (!pz.isFunction(value.init)) {
 			throw new Error(_const.pluginInitFnMissing);
-		};
+		}
 
 		return value.init(pz);
 	}

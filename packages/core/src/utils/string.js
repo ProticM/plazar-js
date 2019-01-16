@@ -4,7 +4,7 @@ const stringUtil = {
 	camelize: (str) => {
 		if (pz.isEmpty(str)) {
 			return '';
-		};
+		}
 
 		return str.replace(/^([A-Z])|[\s-_](\w)/g, function (match, p1, p2, offset) {
 			if (p2) return p2.toUpperCase();
@@ -15,7 +15,7 @@ const stringUtil = {
 	capitalize: (str) => {
 		if (pz.isEmpty(str)) {
 			return '';
-		};
+		}
 
 		let result = str.charAt(0).toUpperCase() + str.substr(1);
 		return result || '';
@@ -33,7 +33,7 @@ const stringUtil = {
 
 		if (pz.isEmpty(baseString) || pz.isEmpty(params)) {
 			return result;
-		};
+		}
 
 		pz.forEach(params, function (param, idx) {
 			result = pz.isEmpty(result) ? baseString.replace('{' + idx + '}', param) :

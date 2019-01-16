@@ -24,7 +24,7 @@ let parseKeyPath = (parts, target) => {
 			!pz.isEmpty(target[parts[0]])) ||
 			pz.arr.contains([reservedKeys.idx, reservedKeys.current], parts[0])) ?
 			target : null;
-	};
+	}
 
 	p = parts.slice();
 	p.pop();
@@ -50,7 +50,7 @@ let buildContext = (keypath, view) => {
 		keypath = keypath.replace(aliasRegex, (matched) => {
 			return view.alias[matched];
 		});
-	};
+	}
 	parts = pathToParts(keypath);
 	return parseKeyPath(parts, ctx) || parseKeyPath(parts, vm);
 };
