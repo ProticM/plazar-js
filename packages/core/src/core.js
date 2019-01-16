@@ -265,7 +265,7 @@ const pz = {
 			definition: definition
 		});
 	},
-	ns: (namespace, config) => {
+	ns: (namespace) => {
 		let names = namespace.split('.');
 		let parent = pz.getGlobal(), current = '';
 		for (let i = 0, len = names.length; i < len; i++) {
