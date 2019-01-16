@@ -20,10 +20,10 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "jest": "^23.6.0",
-    "lerna": "^3.8.0",
-    "rimraf": "^2.6.2",
+    "lerna": "^3.10.5",
+    "rimraf": "^2.6.3",
     "rollup": "^0.67.4",
-    "rollup-plugin-babel": "^4.1.0",
+    "rollup-plugin-babel": "^4.3.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^3.4.0",
     "uglify-js": "^3.4.9"
