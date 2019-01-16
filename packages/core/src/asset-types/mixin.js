@@ -1,6 +1,6 @@
 ﻿const mixin = {
-    type: 'mixin'
-    // common
+	type: 'mixin'
+	// common
 };
 
 export default mixin;

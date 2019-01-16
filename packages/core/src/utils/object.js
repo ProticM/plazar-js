@@ -1,33 +1,33 @@
 import pz from '../core';
 
 const objectUtil = {
-    assignTo: (target, source, clone) => {
-        return pz.assignTo(target, source, clone);
-    },
+	assignTo: (target, source, clone) => {
+		return pz.assignTo(target, source, clone);
+	},
 
-    clone: function (obj) {
-        return this.assignTo({}, obj);
-    },
+	clone: function (obj) {
+		return this.assignTo({}, obj);
+	},
 
-    getKeys: Object.keys, // create polyfill?
+	getKeys: Object.keys, // create polyfill?
 
-    getValues: (obj) => {
+	getValues: (obj) => {
 
-        let vals = [], prop,
-            valuesSupported = ('values' in Object);
+		let vals = [], prop,
+			valuesSupported = ('values' in Object);
 
-        if (valuesSupported) {
-            return Object.values(obj);
-        };
+		if (valuesSupported) {
+			return Object.values(obj);
+		};
 
-        for (prop in obj) {
-            if (obj.hasOwnProperty(prop)) {
-                vals.push(obj[prop]);
-            };
-        };
+		for (prop in obj) {
+			if (obj.hasOwnProperty(prop)) {
+				vals.push(obj[prop]);
+			};
+		};
 
-        return vals;
-    }
+		return vals;
+	}
 };
 
 export default objectUtil;
