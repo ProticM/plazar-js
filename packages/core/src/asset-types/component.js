@@ -25,7 +25,7 @@ const component = () => {
 					data: (options.dataType == 'json' && !pz.isObject(this.responseText) ? pz.toJSON(this.responseText) : this.responseText),
 					dataType: options.dataType
 				});
-			};
+			}
 		};
 
 		xhr.onerror = options.error;
@@ -52,7 +52,7 @@ const component = () => {
 
 			if (pz.isEmpty(this.viewModel) || !pz.isFunction(this.applyBindings)) {
 				return;
-			};
+			}
 
 			templateSelectorEmpty = pz.isEmpty(this.templateSelector);
 			this.applyBindings();
@@ -61,7 +61,7 @@ const component = () => {
 				let tpl = pz.dom.getEl(this.templateSelector);
 				pz.dom.replaceWith(tpl, this.html);
 				tpl = null;
-			};
+			}
 
 			this.publish('bindings-complete');
 		},
@@ -81,7 +81,7 @@ const component = () => {
 
 			if (pz.isEmpty(this.components)) {
 				return null;
-			};
+			}
 
 			children = this.components.filter(function (childComponent) {
 				let conditionOk = childComponent.type == value ||
@@ -101,12 +101,12 @@ const component = () => {
 
 			if (templateEmpty && templateSelectorEmpty && urlEmpty) {
 				throw new Error(_const.tplSourceNotDefined);
-			};
+			}
 
 			if (urlEmpty) {
 				this.render();
 				return;
-			};
+			}
 
 			this.showLoadingMask();
 			componentLoaded = pz.proxy(function (result) {
@@ -152,7 +152,7 @@ const component = () => {
 			if (!templateSelectorEmpty) {
 				this.init();
 				return;
-			};
+			}
 
 			scriptTags = pz.dom.findElement(this.html, 'script', true);
 			scriptTags = !pz.isEmpty(scriptTags) ? (pz.isNodeList(scriptTags) ? scriptTags : [scriptTags]) : [];
@@ -168,7 +168,7 @@ const component = () => {
 
 			if (!renderToDefined && !renderAfterDefined && !renderBeforeDefined) {
 				throw new Error(_const.tplContainerNotDefined);
-			};
+			}
 
 			isChild = !pz.isEmpty(this.parentComponent);
 			containerSelector = (isChild ? pz.str.format('{0} {1}', this.renderTo, ((renderBeforeDefined ? this.renderBefore : this.renderAfter) || '')).trim() :
@@ -179,7 +179,7 @@ const component = () => {
 				containerErr = (isChild ? pz.str.format(_const.tplContainerNotFoundWithinComponent, containerSelector.split(']').pop().trim()) :
 					_const.tplContainerNotFound);
 				throw new Error(containerErr);
-			};
+			}
 
 			insertBeforeOrAfter = function (selector, method) {
 				let parent = me.traceUp();
@@ -201,7 +201,7 @@ const component = () => {
 				pz.dom.insertAt(container, this.html, childDomIdx);
 			} else {
 				pz.dom[this.replace ? 'replaceWith' : 'append'](container, this.html);
-			};
+			}
 
 			this.publish('render-complete');
 			this.init();
@@ -215,7 +215,7 @@ const component = () => {
 				pz.forEach(this.handlers, function (handler) {
 					me.handle(handler);
 				});
-			};
+			}
 
 			this.hideLoadingMask();
 			this.initialized = true;
@@ -230,7 +230,7 @@ const component = () => {
 							index: idx,
 							component: cmpRef
 						});
-					};
+					}
 					return acc;
 				}, []);
 
@@ -240,22 +240,22 @@ const component = () => {
 				});
 
 				childrenToInitialize = null;
-			};
+			}
 
 			if (!pz.isEmpty(this.parentComponent) && !pz.isEmpty(this.parentComponent.ref)) {
 				this.parentComponent.$ref = null;
 				delete this.parentComponent.$ref;
-			};
+			}
 		},
 		subscribe: function (name, listener) {
 			let subscription;
 			if (pz.isEmpty(name) || pz.isObject(listener)) {
 				throw new Error(_const.evArgsMissing);
-			};
+			}
 
 			if (pz.isEmpty(this.subscriptions)) {
 				this.subscriptions = [];
-			};
+			}
 
 			subscription = pz.events.subscribe(name, listener);
 			this.subscriptions.push(subscription);
@@ -273,7 +273,7 @@ const component = () => {
 
 			if (!isValidObj && !isValidFn && !isComponent) {
 				throw new Error(_const.addChildParamErr);
-			};
+			}
 
 			delete child.$replace;
 			parentSelector = '*[data-componentid="' + this.id + '"]';
@@ -293,20 +293,20 @@ const component = () => {
 
 			if ((!pz.isEmpty(instance.renderAfter) || !pz.isEmpty(instance.renderBefore))) {
 				instance.parentComponent.$ref = this;
-			};
+			}
 
 			if (!pz.isEmpty(index) && !replace) {
 				instance.insertAt = index;
-			};
+			}
 
 			if (!instance.autoLoad) {
 				instance.load();
-			};
+			}
 
 			hasChildren = !pz.isEmpty(this.components);
 			if (!hasChildren) {
 				this.components = [];
-			};
+			}
 
 			childReference = {
 				type: instance.type,
@@ -315,13 +315,13 @@ const component = () => {
 
 			if (!pz.isEmpty(instance.alias)) {
 				childReference.alias = instance.alias;
-			};
+			}
 
 			if (!pz.isEmpty(index)) {
 				this.components.splice(index, (replace ? 1 : 0), childReference);
 			} else {
 				this.components.push(childReference);
-			};
+			}
 
 			childReference = null;
 			return instance;
@@ -331,10 +331,10 @@ const component = () => {
 				selector, args;
 			if (pz.isEmpty(fn)) {
 				throw new Error(_const.handlerFnNotProvided);
-			};
+			}
 
 			selector = !pz.isEmpty(handler.selector) ? handler.selector :
-				(pz.str.format("{0}[{1}\"{2}\"]", this.html.tagName, 'data-componentid=', this.id));
+				(pz.str.format('{0}[{1}\"{2}\"]', this.html.tagName, 'data-componentid=', this.id));
 			args = [handler.on, me.html, selector, pz.proxy(fn, handler.scope || me)];
 			pz.dom.on.apply(pz.dom, args);
 			handler = null;
@@ -343,36 +343,36 @@ const component = () => {
 			let renderToDefined = !pz.isEmpty(this.renderTo), container;
 			if (!this.showLoading) {
 				return;
-			};
+			}
 
 			container = this.html;
 			if (pz.isEmpty(container)) {
 				container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getEl(this.templateSelector);
-			};
+			}
 
 			if (!pz.isEmpty(container)) {
 				pz.dom.append(container, _const.loadingMaskMarkup);
-			};
+			}
 			container = null;
 		},
 		hideLoadingMask: function () {
 			let renderToDefined = !pz.isEmpty(this.renderTo), container, mask;
 			if (!this.showLoading) {
 				return;
-			};
+			}
 
 			container = this.html;
 			if (pz.isEmpty(container)) {
 				container = renderToDefined ? pz.dom.getEl(this.renderTo) : pz.dom.getEl(this.templateSelector);
-			};
+			}
 
 			if (!pz.isEmpty(container)) {
 				mask = pz.dom.findElement(container, 'div.loading-mask');
 				if (!pz.isEmpty(mask)) {
 					pz.dom.remove(mask);
 					mask = null;
-				};
-			};
+				}
+			}
 
 			container = null;
 		},
@@ -380,7 +380,7 @@ const component = () => {
 
 			if (pz.isEmpty(this.components)) {
 				return null;
-			};
+			}
 
 			return this.childAt(this.components.length - 1);
 		},
@@ -391,13 +391,13 @@ const component = () => {
 			let childRef, childComponent;
 			if (pz.isEmpty(this.components) || pz.isEmpty(index)) {
 				return null;
-			};
+			}
 
 			childRef = this.components[index];
 
 			if (pz.isEmpty(childRef)) {
 				return null;
-			};
+			}
 
 			childComponent = pz.getInstanceOf(childRef.id);
 			return childComponent || null;
@@ -407,18 +407,18 @@ const component = () => {
 			let doDestroy, compIndex;
 			if (pz.isEmpty(component)) {
 				return;
-			};
+			}
 
 			doDestroy = pz.isEmpty(destroy) ? true : destroy;
 			compIndex = this.childIndex(component);
 
 			if (doDestroy) {
 				component.destroy();
-			};
+			}
 
 			if (compIndex != -1) {
 				this.components.splice(compIndex, 1);
-			};
+			}
 
 			component = null;
 		},
@@ -429,12 +429,12 @@ const component = () => {
 			let resultIdx = -1;
 			if (pz.isEmpty(component)) {
 				return resultIdx;
-			};
+			}
 
 			pz.find(function (child, idx) {
 				if (child.id == component.id) {
 					resultIdx = idx;
-				};
+				}
 
 				return child.id == component.id;
 			}, this.components);
@@ -446,14 +446,14 @@ const component = () => {
 
 			if (!pz.isEmpty(this.templateSelector)) {
 				throw new Error(_const.canNotDestroyComponent);
-			};
+			}
 
 			this.publish('before-destroy');
 			this.destroyChildren();
 			pz.dom.off(this.html);
 			if (!pz.isEmpty(this.viewModel)) {
 				this.unapplyBindings();
-			};
+			}
 			pz.dom.remove(this.html);
 			this.html = null;
 			this.viewModel = null;
@@ -470,7 +470,7 @@ const component = () => {
 			parent = this.traceUp();
 			if (!pz.isEmpty(parent)) {
 				parent.removeChild(this, false);
-			};
+			}
 			this.destroyed = true;
 			this.base(arguments);
 			this.publish('destroy-complete');
@@ -483,21 +483,21 @@ const component = () => {
 				instance = (pz.isFunction(child.destroy) ? child : pz.getInstanceOf(child.id));
 				instance.destroy();
 				instance = null;
-			};
+			}
 		},
 		addCss: function (value, el) {
 
 			let isArray, hasClasses, html, cls;
 			if (pz.isEmpty(value)) {
 				return;
-			};
+			}
 
 			html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
 				pz.dom.findElement(this.html, el) : el);
 
 			if (pz.isEmpty(html)) {
 				return;
-			};
+			}
 
 			isArray = pz.isArray(value);
 			hasClasses = !pz.isEmpty(html.className);
@@ -509,14 +509,14 @@ const component = () => {
 			let isArray, hasStyle, html, style;
 			if (pz.isEmpty(value)) {
 				return;
-			};
+			}
 
 			html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
 				pz.dom.findElement(this.html, el) : el);
 
 			if (pz.isEmpty(html)) {
 				return;
-			};
+			}
 
 			isArray = pz.isArray(value);
 			hasStyle = !pz.isEmpty(html.style.cssText);
@@ -528,14 +528,14 @@ const component = () => {
 			let html, isArray, val;
 			if (pz.isEmpty(value)) {
 				return;
-			};
+			}
 
 			html = pz.isEmpty(el) ? this.html : (pz.isString(el) ?
 				pz.dom.findElement(this.html, el) : el);
 
 			if (pz.isEmpty(html)) {
 				return;
-			};
+			}
 
 			isArray = pz.isArray(value);
 			val = isArray ? value : [value];
