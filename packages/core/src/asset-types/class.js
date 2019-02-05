@@ -1,6 +1,6 @@
 ﻿const cls = {
-    type: 'class'
-    // common
+	type: 'class'
+	// common
 };
 
 export default cls;
